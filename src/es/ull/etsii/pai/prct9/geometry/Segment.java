@@ -12,7 +12,7 @@ public class Segment extends Line {
 		return super.getFirstPoint();
 	}
 	public Point2D end(){
-		return super.getFirstPoint();
+		return super.getSecondPoint();
 	}
 	public double lenght(){
 		Point2D cartesianVectorPoint = getSecondPoint().substract(getFirstPoint());

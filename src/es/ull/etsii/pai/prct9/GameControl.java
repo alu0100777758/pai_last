@@ -110,7 +110,7 @@ public final class GameControl implements ActionListener {
 	}
 	public void moveCyclic1(short direction){
 		mainChar.move(actorSpeed, direction);
-		if (!scenario.isIn(mainChar) && scenario.) {
+		if (!scenario.isIn(mainChar) /*&& scenario*/) {
 			mainChar.move(Math.abs(scenario.lenghtToLimit(mainChar)), (short)-direction);
 			getStepTimer().stop();
 		}
