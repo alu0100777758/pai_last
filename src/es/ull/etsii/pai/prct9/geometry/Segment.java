@@ -19,10 +19,16 @@ public class Segment extends Line {
 		return Math.sqrt(Math.pow(cartesianVectorPoint.x(),2) + Math.pow(cartesianVectorPoint.y(), 2));
 	}
 	public double segmentToPoint(Point2D point){
-		double min;
-		min = Math.min(lineToPoint(point), (new Segment(getFirstPoint(), point)).lenght());
-		min = Math.min(min,(new Segment(getSecondPoint(), point)).lenght());
-		return min;	
+		Segment v = new Segment(new Point2D(0,0), getSecondPoint().substract(getFirstPoint()));
+		Segment w = new Segment(new Point2D(0,0), point.substract(getFirstPoint()));
+		// TODO añadir dotProduct a dot pasando un Collection o un punto aislado,  pensar en la estructura, ante nada mejor dejar v y w como puntos.
+	     double c1 = w.getSecondPoint().x()*point.x() +  w.getSecondPoint().y()*point.y();
+	     if ( c1 <= 0 )
+	          return new Segment(point, getFirstPoint()).lenght();
+	     double c2 = v.getSecondPoint().x()*v.getSecondPoint().x() +  v.getSecondPoint().y()*v.getSecondPoint().y(); // dot(v,v);
+	     if ( c2 <= c1 )
+	    	 return new Segment(point, getSecondPoint()).lenght();
+	     return lineToPoint(point);
 	}
 	public double segmentToSegment(Segment other){
 		double min;
