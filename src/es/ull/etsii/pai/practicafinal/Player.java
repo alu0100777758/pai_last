@@ -21,7 +21,7 @@ public class Player extends Actor {
 	public Player(Point2D position) {
 		super(position);
 		setMovement(new Point2D(0,0));
-		setSpeed(new Point2D(0,-40));
+		setSpeed(new Point2D(0,0));
 		setPhysicalShape(new PhysicalRectangle(getPosition(), new Point2D((double)(getPosition().x() + WIDTH), (double)(getPosition().y() + HEIGHT))));
 		setOnPlatform(false);
 	}

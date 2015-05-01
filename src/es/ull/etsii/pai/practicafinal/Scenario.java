@@ -61,7 +61,7 @@ public class Scenario {
 				System.out.println(distance);
 				Point2D move = ((Player) getActors().get(i)).getMovement();
 				double angle = move.getAngle();
-				((Player) getActors().get(i)).setMovement(new Point2D(distance*Math.cos(Math.toRadians(angle)), distance * Math.sin(Math.toRadians(angle))));
+				((Player) getActors().get(i)).setMovement(new Point2D(distance*Math.cos(Math.toRadians(angle)), distance * Math.sin(Math.toRadians(angle) - 20)));
 				((Player) getActors().get(i)).setOnPlatform(true);
 			}
 				
