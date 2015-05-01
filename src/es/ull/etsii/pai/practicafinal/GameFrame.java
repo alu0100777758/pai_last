@@ -33,7 +33,7 @@ public class GameFrame extends JFrame{
 
 		@Override
 		public void keyReleased(KeyEvent arg0) {
-			System.out.println("Released");
+			//System.out.println("Released");
 			
 		}
 

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
@@ -22,8 +23,9 @@ public class Scenario {
 		setStaticMap(new ArrayList<Entity>());
 		setActors(new ArrayList<Actor>());
 		setGUI(new ArrayList<Entity>());
-		///////******************** Para probar poner un unico actor.
+		///////******************** Para probar poner un unico actor y un suelo.
 		getActors().add(new Player(new Point2D(200, 200)));
+		getStaticMap().add(new StaticPlatform(new Point2D(50, 600), new Point2D(600, 650)));
 		
 	}
 	public void processKey(int keyCode, char keyChar) {
@@ -41,9 +43,28 @@ public class Scenario {
 		}
 			
 	}
+	/**
+	 * De forma provisional se miran las colisiones aqui, se deberá crear
+	 * un gestor de colisiones mas adelante.
+	 * @param g
+	 */
 	public void paint(Graphics g) {
 		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		for (int i = 0; i < getStaticMap().size(); i++) {
+			((StaticPlatform) getStaticMap().get(i)).paint(g.create());
+		}
 		for (int i = 0; i < getActors().size(); i++) {
+			((Player) getActors().get(i)).updateMovement();
+			if (((StaticPlatform) getStaticMap().get(0)).collides(getActors().get(i))) {
+				double distance = ((StaticPlatform) getStaticMap().get(0)).collisionDistance(getActors().get(i));
+				System.out.println(distance);
+				Point2D move = ((Player) getActors().get(i)).getMovement();
+				double angle = move.getAngle();
+				((Player) getActors().get(i)).setMovement(new Point2D(distance*Math.cos(Math.toRadians(angle)), distance * Math.sin(Math.toRadians(angle))));
+				((Player) getActors().get(i)).setOnPlatform(true);
+			}
+				
 			getActors().get(i).paint(g.create());
 		}
 	}

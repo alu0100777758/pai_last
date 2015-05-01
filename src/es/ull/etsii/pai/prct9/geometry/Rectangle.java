@@ -22,19 +22,19 @@ public class Rectangle extends Geometry implements Resizable{
 	}
 
 	public Segment getTop_segment() {
-		return new Segment(start, start.add(new Point2D(end.x(), 0)));
+		return new Segment(start, (new Point2D(end.x(), start.y())));
 	}
 
 	public Segment getLeft_segment() {
-		return new Segment(start, start.add(new Point2D(0, end.y())));
+		return new Segment(start, (new Point2D(start.x(), end.y())));
 	}
 
 	public Segment getRight_segment() {
-		return new Segment(start.add(new Point2D(end.x(), 0)), end);
+		return new Segment((new Point2D(end.x(), start.y())), end);
 	}
 
 	public Segment getBottom_segment() {
-		return new Segment(start.add(new Point2D(0, end.y())), end);
+		return new Segment((new Point2D(start.x(), end.y())), end);
 	}
 
 	public Rectangle(Point2D start, Point2D end) {

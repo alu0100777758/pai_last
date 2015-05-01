@@ -2,10 +2,12 @@ package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Graphics;
 
+import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Actor extends Entity {
 	private Point2D position;
+	private PhysicalRectangle physicalShape;
 	
 	public Actor(Point2D position) {
 		setPosition(position);
@@ -28,6 +30,11 @@ public class Actor extends Entity {
 	public void setPosition(Point2D position) {
 		this.position = position;
 	}
-	
+	public PhysicalRectangle getPhysicalShape() {
+		return physicalShape;
+	}
+	public void setPhysicalShape(PhysicalRectangle physicalShape) {
+		this.physicalShape = physicalShape;
+	}
 	
 }

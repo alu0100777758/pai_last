@@ -24,7 +24,13 @@ public class Point2D {
 	public void setY(double val) {
 		this.y = val;
 	}
-
+	/**
+	 * Cuidado con el signo de la y.
+	 * @return
+	 */
+	public double getAngle() {
+		return Math.toDegrees(Math.atan(y()/x()));
+	}
 	public Point2D add(Point2D other) {
 		return new Point2D(this.x() + other.x(), this.y() + other.y());
 	}
