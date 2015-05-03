@@ -30,11 +30,25 @@ public class Actor extends Entity {
 	public void setPosition(Point2D position) {
 		this.position = position;
 	}
+	public void setXPosition(double xposition) {
+		this.position.setX(xposition);
+	}
+	public void setYPosition(double yposition) {
+		this.position.setY(yposition);
+	}
+	public void addXPosition(double xposition) {
+		this.position.setX(this.position.x() + xposition);
+	}
+	public void addYPosition(double yposition) {
+		this.position.setY(this.position.y() + yposition);
+	}
 	public PhysicalRectangle getPhysicalShape() {
 		return physicalShape;
 	}
 	public void setPhysicalShape(PhysicalRectangle physicalShape) {
 		this.physicalShape = physicalShape;
 	}
-	
+	public void addPosition(Point2D point){
+		setPosition(getPosition().add(point));
+	}
 }

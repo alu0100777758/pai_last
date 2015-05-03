@@ -1,14 +1,16 @@
 package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
+import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Interceptable;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
-public class StaticPlatform extends Entity {
+public class StaticPlatform extends Entity implements Physical_passive {
 	private GraphicRectangle graphicRectangle;
 	private PhysicalRectangle pyhsicalRectangle;
 	
@@ -53,6 +55,59 @@ public class StaticPlatform extends Entity {
 	}
 	public void setPyhsicalRectangle(PhysicalRectangle pyhsicalRectangle) {
 		this.pyhsicalRectangle = pyhsicalRectangle;
+	}
+
+	@Override
+	public boolean belongs(Point2D point) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean intercepts(Segment segment) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public double interceptionDistance(Point2D point) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public double interceptionDistance(Segment segment) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public Point2D getCentroid() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Point2D getPos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPos(Point2D newpos) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean collides(Physical_passive actor) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ArrayList<Segment> getSegmentList() {
+		return getPyhsicalRectangle().getSegmentList();
 	}	
 	
 

@@ -1,11 +1,14 @@
 package es.ull.etsii.pai.practicafinal.physics;
 
+import java.io.ObjectInputStream.GetField;
+import java.util.ArrayList;
+
 import es.ull.etsii.pai.prct9.geometry.Interceptable;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Rectangle;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
-public class PhysicalRectangle extends Rectangle implements Interceptable{
+public class PhysicalRectangle extends Rectangle implements Physical_passive{
 	
 	public PhysicalRectangle(Point2D start, Point2D end) {
 		super(start, end);
@@ -16,7 +19,6 @@ public class PhysicalRectangle extends Rectangle implements Interceptable{
 	 */
 	@Override
 	public Point2D getPos() {
-		// TODO Auto-generated method stub
 		return getStart();
 	}
 	/**
@@ -31,15 +33,15 @@ public class PhysicalRectangle extends Rectangle implements Interceptable{
 	}
 
 	@Override
-	public boolean intercepts(Point2D point) {
+	public boolean belongs(Point2D point) {
 		return getStart().x() <= point.x() && getEnd().x() >= point.x() && getStart().y() <= point.y() && getEnd().y() >= point.y();
 		//return interceptionDistance(point) < 0;
 	}
 
 	@Override
-	public boolean intercepts(Segment segment) {
+	public boolean intercepts(Segment segment) { // implementar bien 
 
-		return intercepts(segment.start()) || intercepts(segment.end());
+		return belongs(segment.start()) || belongs(segment.end());
 		//return interceptionDistance(segment) < 0;
 	}
 
@@ -71,6 +73,29 @@ public class PhysicalRectangle extends Rectangle implements Interceptable{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public boolean collides(Physical_passive actor) {
+		for(Segment segment : actor.getSegmentList()){
+			if(intercepts(segment))
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public ArrayList<Segment> getSegmentList() {
+		ArrayList<Segment> res = new ArrayList<Segment>();
+		res.add(getTop_segment());
+		res.add(getBottom_segment());
+		res.add(getLeft_segment());
+		res.add(getRight_segment());
+		return res;
+	}
+
+//	public boolean belongs(Point2D point) {
+//		return((point.x() > getStart().x() && point.x() < getEnd().x()) && (point.y() > getStart().y() && point.y() < getEnd().y()) );
+//	}
 	
 
 }

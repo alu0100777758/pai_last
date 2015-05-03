@@ -19,7 +19,7 @@ public class InterceptableCircle extends Circle implements Interceptable {
 		return segment.segmentToPoint(getCenter());
 	}
 
-	public boolean intercepts(Point2D point) {
+	public boolean belongs(Point2D point) {
 		return interceptionDistance(point) < 0;
 	}
 

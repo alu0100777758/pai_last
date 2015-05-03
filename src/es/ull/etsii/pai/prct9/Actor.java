@@ -67,10 +67,10 @@ public abstract class Actor implements Drawable, Interceptable {
 		}
 	}
 	@Override
-	public boolean intercepts(Point2D point) {
+	public boolean belongs(Point2D point) {
 		boolean res = true;
 		for(Interceptable object : physicalGeometry){
-			res &= object.intercepts(point);
+			res &= object.belongs(point);
 			if(!res)
 				return res;
 		}

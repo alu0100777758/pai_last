@@ -7,11 +7,13 @@ import javax.swing.JFrame;
 
 public class GameFrame extends JFrame{
 	private ScenarioPanel scenarioPanel;
-
 	public GameFrame() {
 		setScenarioPanel(new ScenarioPanel());
+		setScenarioPanel(getScenarioPanel());
 		this.add(getScenarioPanel());
 		this.addKeyListener(new KeyHandler());
+		GameLoop.setDisplayer(scenarioPanel);
+		GameLoop.setUpdater(scenarioPanel.getScenario());
 	}
 	public ScenarioPanel getScenarioPanel() {
 		return scenarioPanel;
@@ -26,15 +28,15 @@ public class GameFrame extends JFrame{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			//System.out.println("pressed");
-			getScenarioPanel().getScenario().processKey(e.getKeyCode(), e.getKeyChar());
-			getScenarioPanel().repaint();
+			getScenarioPanel().getScenario().pulsedKey(e.getKeyCode(), e.getKeyChar());
+//			getScenarioPanel().repaint();
 			
 		}
 
 		@Override
 		public void keyReleased(KeyEvent arg0) {
 			//System.out.println("Released");
-			
+			getScenarioPanel().getScenario().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
 		}
 
 		@Override
