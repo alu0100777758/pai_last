@@ -8,6 +8,7 @@ import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Interceptable;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+import es.ull.etsii.pai.prct9.geometry.Rectangle;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class StaticPlatform extends Entity implements Physical_passive {
@@ -108,6 +109,17 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	@Override
 	public ArrayList<Segment> getSegmentList() {
 		return getPyhsicalRectangle().getSegmentList();
+	}
+
+	@Override
+	public Rectangle interception(Rectangle target) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void intercept(Rectangle r1, Rectangle r2, Rectangle res) {
+		
 	}	
 	
 

@@ -54,4 +54,21 @@ public class Rectangle extends Geometry implements Resizable{
 	public double getHeight() {
 		return getLeft_segment().lenght();
 	}
+
+	public int getMinX() {
+		return (int)Math.min(getStart().x(), getEnd().x());
+	}
+
+	public int getMinY() {
+		return (int)Math.min(getStart().y(), getEnd().y());
+	}
+
+	public int getMaxX() {
+		return (int)Math.max(getStart().x(), getEnd().x());
+	}
+
+	public int getMaxY() {
+		return (int)Math.max(getStart().y(), getEnd().y());
+	}
+
 }

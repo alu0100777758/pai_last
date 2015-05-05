@@ -3,6 +3,8 @@ package es.ull.etsii.pai.prct9.geometry;
 public class Point2D {
 	private double x = 0;
 	private double y = 0;
+	
+	public static final Point2D ORIGIN = new Point2D(0,0);
 
 	public Point2D(double x, double y) {
 		this.x = x;

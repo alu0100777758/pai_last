@@ -12,7 +12,7 @@ public class Main {
 	 	frame.setLocationRelativeTo(null); // Center the frame
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		GameLoop.init();
+		GameLoop.init(frame);
 	}
 
 }

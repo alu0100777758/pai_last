@@ -9,6 +9,7 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.EcuacionesMovimientoParabolico;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+import es.ull.etsii.pai.prct9.geometry.Rectangle;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class Player extends Actor implements Physical_active {
@@ -256,9 +257,22 @@ public class Player extends Actor implements Physical_active {
 	}
 	@Override
 	public void updatePos() {
+		ResolveUnreleasedMovements();
 //		System.out.println(getSpeed());
 //		addPosition(getSpeed());
 //		System.out.println(getPosition());
+	}
+
+	@Override
+	public Rectangle interception(Rectangle target) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void intercept(Rectangle r1, Rectangle r2, Rectangle res) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

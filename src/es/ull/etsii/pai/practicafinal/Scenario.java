@@ -94,13 +94,13 @@ public class Scenario {
 		}
 	}
 	/**
-	 * De forma provisional se miran las colisiones aqui, se deberá crear
+	 * De forma provisional se miran las colisiones aqui, se deberï¿½ crear
 	 * un gestor de colisiones mas adelante.
 	 * @param g
 	 */
 	public void update(){
 		Physical_passive map = (Physical_passive)(getStaticMap().get(0));
-//		getPlayer_one().updatePos();
+		getPlayer_one().updatePos();
 		if(getPlayer_one().collides(map)){
 			getPlayer_one().repair_collision(map);
 			System.out.println("collision");

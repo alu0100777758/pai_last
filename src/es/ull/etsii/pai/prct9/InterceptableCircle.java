@@ -3,6 +3,7 @@ package es.ull.etsii.pai.prct9;
 import es.ull.etsii.pai.prct9.geometry.Circle;
 import es.ull.etsii.pai.prct9.geometry.Interceptable;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+import es.ull.etsii.pai.prct9.geometry.Rectangle;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class InterceptableCircle extends Circle implements Interceptable {
@@ -51,5 +52,17 @@ public class InterceptableCircle extends Circle implements Interceptable {
 	@Override
 	public void setPos(Point2D newpos) {
 		setCenter(newpos);
+	}
+
+	@Override
+	public Rectangle interception(Rectangle target) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void intercept(Rectangle r1, Rectangle r2, Rectangle res) {
+		// TODO Auto-generated method stub
+		
 	}
 }
