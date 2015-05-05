@@ -1,5 +1,7 @@
 package es.ull.etsii.pai.prct9.geometry;
 
+import java.awt.Rectangle;
+
 /**
  * @author Javier Mart�n Hern�ndez
  * Interfaz que permite discernir si un objeto intercepta o es interceptado por un punto o segmento.
