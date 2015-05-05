@@ -1,10 +1,6 @@
 package es.ull.etsii.pai.practicafinal.physics;
 
-import java.awt.geom.Rectangle2D;
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
-
-import es.ull.etsii.pai.prct9.geometry.Interceptable;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Rectangle;
 import es.ull.etsii.pai.prct9.geometry.Segment;
@@ -79,10 +75,12 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 
 	@Override
 	public boolean collides(Physical_passive actor) {
-		for (Segment segment : actor.getSegmentList()) {
+		/*for (Segment segment : actor.getSegmentList()) {
 			if (intercepts(segment))
 				return true;
-		}
+		}*/
+		Rectangle interception = this.interception(actor.getPhysicalRectangle());
+		System.out.println(interception);
 		return false;
 	}
 
@@ -110,8 +108,13 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 		double x2 = Math.min(r1.getMaxX(), r2.getMaxX());
 		double y2 = Math.min(r1.getMaxY(), r2.getMaxY());
 		res.setStart(new Point2D(x1, y1));
-		res.setEnd(new Point2D(x2 - x1, y2 - y1));
+		res.setEnd(new Point2D(x2 , y2 ));
+	}
 
+	@Override
+	public PhysicalRectangle getPhysicalRectangle() {
+		
+		return this;
 	}
 
 	// public boolean belongs(Point2D point) {

@@ -13,11 +13,11 @@ import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class StaticPlatform extends Entity implements Physical_passive {
 	private GraphicRectangle graphicRectangle;
-	private PhysicalRectangle pyhsicalRectangle;
+	private PhysicalRectangle physicalRectangle;
 	
 	public StaticPlatform(Point2D start, Point2D end) {
 		setGraphicRectangle(new GraphicRectangle(start, end));
-		setPyhsicalRectangle(new PhysicalRectangle(start, end));
+		setPhysicalRectangle(new PhysicalRectangle(start, end));
 	}
 	
 	public void paint(Graphics g) {
@@ -27,8 +27,8 @@ public class StaticPlatform extends Entity implements Physical_passive {
 		PhysicalRectangle actorShape = actor.getPhysicalShape(); 
 		
 		
-		System.out.println(getPyhsicalRectangle().intercepts(actorShape.getBottom_segment()));
-		return getPyhsicalRectangle().intercepts(actorShape.getBottom_segment());
+		System.out.println(getPhysicalRectangle().intercepts(actorShape.getBottom_segment()));
+		return getPhysicalRectangle().intercepts(actorShape.getBottom_segment());
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	public double collisionDistance(Actor actor) {
 		PhysicalRectangle actorShape = actor.getPhysicalShape(); 
 		
-		return getPyhsicalRectangle().interceptionDistance(actorShape.getBottom_segment());
+		return getPhysicalRectangle().interceptionDistance(actorShape.getBottom_segment());
 	}
 	@Override
 	public void reproduce() {
@@ -51,11 +51,12 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	public void setGraphicRectangle(GraphicRectangle graphicRectangle) {
 		this.graphicRectangle = graphicRectangle;
 	}
-	public PhysicalRectangle getPyhsicalRectangle() {
-		return pyhsicalRectangle;
+	@Override
+	public PhysicalRectangle getPhysicalRectangle() {
+		return physicalRectangle;
 	}
-	public void setPyhsicalRectangle(PhysicalRectangle pyhsicalRectangle) {
-		this.pyhsicalRectangle = pyhsicalRectangle;
+	public void setPhysicalRectangle(PhysicalRectangle pyhsicalRectangle) {
+		this.physicalRectangle = pyhsicalRectangle;
 	}
 
 	@Override
@@ -108,7 +109,7 @@ public class StaticPlatform extends Entity implements Physical_passive {
 
 	@Override
 	public ArrayList<Segment> getSegmentList() {
-		return getPyhsicalRectangle().getSegmentList();
+		return getPhysicalRectangle().getSegmentList();
 	}
 
 	@Override
@@ -120,7 +121,5 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	@Override
 	public void intercept(Rectangle r1, Rectangle r2, Rectangle res) {
 		
-	}	
-	
-
+	}
 }

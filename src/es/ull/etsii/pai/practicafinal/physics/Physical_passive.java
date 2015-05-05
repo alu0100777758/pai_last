@@ -11,4 +11,6 @@ public interface Physical_passive extends Interceptable{
 //	boolean interceptsX(Point2D point);
 	boolean collides(Physical_passive actor);
 	ArrayList<Segment> getSegmentList();
+	PhysicalRectangle getPhysicalRectangle();
 }
+

@@ -30,9 +30,9 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_right = false;
 	public static final double WIDTH = 10;
 	public static final double HEIGHT = 20;
-	public static final int SPEED = 10;
-	public static final double TIME = 0.5;
-	public static double GRAVITY = -9.0;
+	public static final int SPEED = 1;
+	public static final double TIME = 1.0;
+	public static double GRAVITY = -0.0;
 
 	public boolean isMove_up() {
 		return move_up;
@@ -272,6 +272,12 @@ public class Player extends Actor implements Physical_active {
 	@Override
 	public void intercept(Rectangle r1, Rectangle r2, Rectangle res) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PhysicalRectangle getPhysicalRectangle() {
+		return getPhysicalShape();
 		
 	}
 
