@@ -3,6 +3,7 @@ package es.ull.etsii.pai.practicafinal;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
@@ -224,6 +225,11 @@ public class Player extends Actor implements Physical_active {
 	public PhysicalRectangle getPhysicalRectangle() {
 		return getPhysicalShape();
 		
+	}
+
+	@Override
+	public Rectangle getCollisionedRectangle(Physical_passive actor) {
+		return getPhysicalRectangle().getCollisionedRectangle(actor.getPhysicalRectangle());
 	}
 
 }

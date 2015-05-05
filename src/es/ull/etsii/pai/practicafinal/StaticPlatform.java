@@ -1,6 +1,7 @@
 package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
@@ -71,6 +72,11 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	@Override
 	public ArrayList<Segment> getSegmentList() {
 		return getPhysicalRectangle().getSegmentList();
+	}
+
+	@Override
+	public Rectangle getCollisionedRectangle(Physical_passive actor) {
+		return getPhysicalRectangle().getCollisionedRectangle(actor.getPhysicalRectangle());
 	}
 
 }

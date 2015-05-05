@@ -25,13 +25,7 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 	}
 	@Override
 	public boolean collides(Physical_passive actor) {
-		/*for (Segment segment : actor.getSegmentList()) {
-			if (intercepts(segment))
-				return true;
-		}*/
-		Rectangle interception = intersection(actor.getPhysicalRectangle());
-		System.out.println(interception);
-		return false;
+		return this.intersects(actor.getPhysicalRectangle());
 	}
 
 	public ArrayList<Segment> getSegmentList() {
@@ -69,6 +63,10 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 		
 		return this;
 	}
+@Override
+public Rectangle getCollisionedRectangle(Physical_passive actor) {
+	return intersection(actor.getPhysicalRectangle());
+}
 
 	// public boolean belongs(Point2D point) {
 	// return((point.x() > getStart().x() && point.x() < getEnd().x()) &&

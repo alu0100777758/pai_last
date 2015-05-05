@@ -1,10 +1,11 @@
 package es.ull.etsii.pai.practicafinal;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
@@ -108,7 +109,7 @@ public class Scenario {
 	}
 	public void paint(Graphics g) {
 		g.fillRect(0, 0, getWidth(), getHeight());
-		
+		Graphics2D g2 = (Graphics2D)g.create();
 		for (int i = 0; i < getStaticMap().size(); i++) {
 			((StaticPlatform) getStaticMap().get(i)).paint(g.create());
 		}
@@ -125,6 +126,10 @@ public class Scenario {
 				
 			getActors().get(i).paint(g.create());
 		}
+		Physical_passive map = (Physical_passive)(getStaticMap().get(0));
+		g2.setColor(Color.GREEN);
+		if(getPlayer_one().collides(map))
+		g2.draw(getPlayer_one().getCollisionedRectangle(map));
 	}
 	/**
 	 * Getters y Setters**************
