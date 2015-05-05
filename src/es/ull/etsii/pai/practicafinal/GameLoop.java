@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 public class GameLoop{
 	private static GameLoop instance = null;
-	  public static final int FRAMES_PER_SECOND = 60;
+	  public static final int FRAMES_PER_SECOND = 120;
 	  public static final long SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
 	  public static Scenario updater ;
 	  public static ScenarioPanel displayer ;

@@ -1,9 +1,9 @@
 package es.ull.etsii.pai.practicafinal.physics;
 
+	
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class PhysicalRectangle extends Rectangle implements Physical_passive {
@@ -20,13 +20,20 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 //		return getStart();
 //	}
 
-
+	public PhysicalRectangle(int x1, int y1, int width, int height) {
+		super(x1, y1, width, height);
+	}
 	@Override
 	public boolean collides(Physical_passive actor) {
-
+		/*for (Segment segment : actor.getSegmentList()) {
+			if (intercepts(segment))
+				return true;
+		}*/
+		Rectangle interception = intersection(actor.getPhysicalRectangle());
+		System.out.println(interception);
+		return false;
 	}
 
-	@Override
 	public ArrayList<Segment> getSegmentList() {
 //		ArrayList<Segment> res = new ArrayList<Segment>();
 //		res.add(getTop_segment());
@@ -54,6 +61,14 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 //		res.setEnd(new Point2D(x2 - x1, y2 - y1));
 //
 //	}
+
+
+
+	@Override
+	public PhysicalRectangle getPhysicalRectangle() {
+		
+		return this;
+	}
 
 	// public boolean belongs(Point2D point) {
 	// return((point.x() > getStart().x() && point.x() < getEnd().x()) &&

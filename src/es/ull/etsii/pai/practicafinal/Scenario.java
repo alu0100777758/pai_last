@@ -33,7 +33,7 @@ public class Scenario {
 		setGUI(new ArrayList<Entity>());
 		///////******************** Para probar poner un unico actor y un suelo.
 		getActors().add(getPlayer_one());
-		getStaticMap().add(new StaticPlatform(new Point2D(50, 600), new Point2D(600, 650)));
+		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
 		
 	}
 	public void processKey(int keyCode, char keyChar) {
@@ -102,7 +102,7 @@ public class Scenario {
 		Physical_passive map = (Physical_passive)(getStaticMap().get(0));
 		getPlayer_one().updatePos();
 		if(getPlayer_one().collides(map)){
-			getPlayer_one().repair_collision(map);
+//			getPlayer_one().repair_collision(map);
 			System.out.println("collision");
 		}
 	}

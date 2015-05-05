@@ -2,6 +2,7 @@ package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
@@ -9,7 +10,6 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.EcuacionesMovimientoParabolico;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
-import es.ull.etsii.pai.prct9.geometry.Rectangle;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class Player extends Actor implements Physical_active {
@@ -28,11 +28,11 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_down = false;
 	private boolean move_left = false;
 	private boolean move_right = false;
-	public static final double WIDTH = 10;
-	public static final double HEIGHT = 20;
-	public static final int SPEED = 10;
-	public static final double TIME = 0.5;
-	public static double GRAVITY = -9.0;
+	public static final int WIDTH = 10;
+	public static final int HEIGHT = 20;
+	public static final int SPEED = 1;
+	public static final double TIME = 1.0;
+	public static double GRAVITY = -0.0;
 
 	public boolean isMove_up() {
 		return move_up;
@@ -86,9 +86,7 @@ public class Player extends Actor implements Physical_active {
 		super(position);
 		setMovement(new Point2D(0, 0));
 		setSpeed(new Point2D(0, 0));
-		setPhysicalShape(new PhysicalRectangle(getPosition(), new Point2D(
-				(double) (getPosition().x() + WIDTH), (double) (getPosition()
-						.y() + HEIGHT))));
+		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
 	}
 
 	@Override
@@ -113,7 +111,7 @@ public class Player extends Actor implements Physical_active {
 	public Point2D updateMovement() {
 		Point2D newmove = EcuacionesMovimientoParabolico.posicion(
 				getPosition(), getSpeed(), TIME, GRAVITY);
-		getPhysicalShape().setPos(newmove);
+		getPhysicalShape().setLocation(new Point((int)newmove.x(),(int)newmove.y()));
 		setMovement(newmove.substract(getPosition()));
 		return getMovement();
 	}
@@ -157,48 +155,7 @@ public class Player extends Actor implements Physical_active {
 		this.movement = movement;
 	}
 
-	@Override
-	public boolean belongs(Point2D point) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean intercepts(Segment segment) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public double interceptionDistance(Point2D point) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double interceptionDistance(Segment segment) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Point2D getCentroid() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Point2D getPos() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void setPos(Point2D newpos) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 	@Override
 	public boolean repair_collisionY(Point2D point) {
 		// TODO Auto-generated method stub
@@ -264,14 +221,8 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	@Override
-	public Rectangle interception(Rectangle target) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void intercept(Rectangle r1, Rectangle r2, Rectangle res) {
-		// TODO Auto-generated method stub
+	public PhysicalRectangle getPhysicalRectangle() {
+		return getPhysicalShape();
 		
 	}
 
