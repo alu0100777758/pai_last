@@ -16,15 +16,17 @@ public class Scenario {
 	ArrayList<Entity> GUI;
 	private Integer width;
 	private Integer height;
-//	public static final int PLAYER_ONE = 0;
-	private Player player_one  = new Player(new Point2D(200, 200));
-	
+	// public static final int PLAYER_ONE = 0;
+	private Player player_one = new Player(new Point2D(200, 200));
+
 	public Player getPlayer_one() {
 		return player_one;
 	}
+
 	public void setPlayer_one(Player player_one) {
 		this.player_one = player_one;
 	}
+
 	public Scenario(Integer width, Integer height) {
 		setWidth(width);
 		setHeight(height);
@@ -32,11 +34,13 @@ public class Scenario {
 		setStaticMap(new ArrayList<Entity>());
 		setActors(new ArrayList<Actor>());
 		setGUI(new ArrayList<Entity>());
-		///////******************** Para probar poner un unico actor y un suelo.
+		// /////******************** Para probar poner un unico actor y un
+		// suelo.
 		getActors().add(getPlayer_one());
 		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
-		
+
 	}
+
 	public void processKey(int keyCode, char keyChar) {
 		if (keyCode == KeyEvent.VK_LEFT)
 			getPlayer_one().moveLeft();
@@ -44,11 +48,11 @@ public class Scenario {
 			getPlayer_one().moveRight();
 		if (keyChar == 'a') {
 			getPlayer_one().moveLeft();
-//			System.out.println("Pressed a");
+			// System.out.println("Pressed a");
 		}
 		if (keyChar == 'd') {
 			getPlayer_one().moveRight();
-//			System.out.println("Pressed d");
+			// System.out.println("Pressed d");
 		}
 		if (keyChar == 'w') {
 			getPlayer_one().moveUP();
@@ -56,8 +60,9 @@ public class Scenario {
 		if (keyChar == 's') {
 			getPlayer_one().moveDown();
 		}
-//		System.out.println("pulsed: " + keyChar);
+		// System.out.println("pulsed: " + keyChar);
 	}
+
 	public void pulsedKey(int keyCode, char keyChar) {
 		if (keyCode == KeyEvent.VK_LEFT)
 			getPlayer_one().setLeft(true);
@@ -65,17 +70,16 @@ public class Scenario {
 			getPlayer_one().setRight(true);
 		else if (keyChar == 'a') {
 			getPlayer_one().setLeft(true);
-		}
-		else if (keyChar == 'd') {
+		} else if (keyChar == 'd') {
 			getPlayer_one().setRight(true);
-		}
-		else if (keyChar == 'w') {
-			getPlayer_one().setUP(true);
-		}
-		else if (keyChar == 's') {
+		} else if (keyChar == 'w') {
+			// getPlayer_one().setUP(true);
+			getPlayer_one().jump();
+		} else if (keyChar == 's') {
 			getPlayer_one().setDown(true);
 		}
 	}
+
 	public void releasedKey(int keyCode, char keyChar) {
 		if (keyCode == KeyEvent.VK_LEFT)
 			getPlayer_one().setLeft(false);
@@ -83,54 +87,67 @@ public class Scenario {
 			getPlayer_one().setRight(false);
 		else if (keyChar == 'a') {
 			getPlayer_one().setLeft(false);
-		}
-		else if (keyChar == 'd') {
+		} else if (keyChar == 'd') {
 			getPlayer_one().setRight(false);
-		}
-		else if (keyChar == 'w') {
-			getPlayer_one().setUP(false);
-		}
-		else if (keyChar == 's') {
+		} else if (keyChar == 'w') {
+			// getPlayer_one().setUP(false);
+		} else if (keyChar == 's') {
 			getPlayer_one().setDown(false);
 		}
 	}
+
 	/**
-	 * De forma provisional se miran las colisiones aqui, se deber� crear
-	 * un gestor de colisiones mas adelante.
+	 * De forma provisional se miran las colisiones aqui, se deber� crear un
+	 * gestor de colisiones mas adelante.
+	 * 
 	 * @param g
 	 */
-	public void update(){
-		Physical_passive map = (Physical_passive)(getStaticMap().get(0));
+	public void update() {
+		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
 		getPlayer_one().updatePos();
-		if(getPlayer_one().collides(map)){
-//			getPlayer_one().repair_collision(map);
+		if (!getPlayer_one().isBlock_down()) {
+			if (getPlayer_one().getJumpTTL() != 0) {
+				getPlayer_one().moveJump();
+				getPlayer_one().setJumpTTL(getPlayer_one().getJumpTTL() - 1);
+			} else
+				getPlayer_one().addYPosition(3);
+		}
+		if (getPlayer_one().collides(map)) {
+			getPlayer_one().repair_collision(map);
+			getPlayer_one().setBlock_down(true);
 			System.out.println("collision");
 		}
 	}
+
 	public void paint(Graphics g) {
 		g.fillRect(0, 0, getWidth(), getHeight());
-		Graphics2D g2 = (Graphics2D)g.create();
+		Graphics2D g2 = (Graphics2D) g.create();
 		for (int i = 0; i < getStaticMap().size(); i++) {
 			((StaticPlatform) getStaticMap().get(i)).paint(g.create());
 		}
 		for (int i = 0; i < getActors().size(); i++) {
-//			((Player) getActors().get(i)).updateMovement();
-//			if (((StaticPlatform) getStaticMap().get(0)).collides(getActors().get(i))) {
-//				double distance = ((StaticPlatform) getStaticMap().get(0)).collisionDistance(getActors().get(i));
-//				System.out.println(distance);
-//				Point2D move = ((Player) getActors().get(i)).getMovement();
-//				double angle = move.getAngle();
-//				((Player) getActors().get(i)).setMovement(new Point2D(distance*Math.cos(Math.toRadians(angle)), distance * Math.sin(Math.toRadians(angle) - 20)));
-//				((Player) getActors().get(i)).setOnPlatform(true);
-//			}
-				
+			// ((Player) getActors().get(i)).updateMovement();
+			// if (((StaticPlatform)
+			// getStaticMap().get(0)).collides(getActors().get(i))) {
+			// double distance = ((StaticPlatform)
+			// getStaticMap().get(0)).collisionDistance(getActors().get(i));
+			// System.out.println(distance);
+			// Point2D move = ((Player) getActors().get(i)).getMovement();
+			// double angle = move.getAngle();
+			// ((Player) getActors().get(i)).setMovement(new
+			// Point2D(distance*Math.cos(Math.toRadians(angle)), distance *
+			// Math.sin(Math.toRadians(angle) - 20)));
+			// ((Player) getActors().get(i)).setOnPlatform(true);
+			// }
+
 			getActors().get(i).paint(g.create());
 		}
-		Physical_passive map = (Physical_passive)(getStaticMap().get(0));
+		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
 		g2.setColor(Color.GREEN);
-		if(getPlayer_one().collides(map))
-		g2.draw(getPlayer_one().getCollisionedRectangle(map));
+		if (getPlayer_one().collides(map))
+			g2.draw(getPlayer_one().getCollisionedRectangle(map));
 	}
+
 	/**
 	 * Getters y Setters**************
 	 */
@@ -181,5 +198,5 @@ public class Scenario {
 	public void setGUI(ArrayList<Entity> gUI) {
 		GUI = gUI;
 	}
-	
+
 }

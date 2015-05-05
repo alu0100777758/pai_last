@@ -1,5 +1,6 @@
 package es.ull.etsii.pai.practicafinal;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -51,6 +52,7 @@ public class GameFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		 getScenarioPanel().getScenario().update();
 	        getScenarioPanel().repaint();
+	        Toolkit.getDefaultToolkit().sync();
 	        System.out.println("updating");
 		// TODO Auto-generated method stub
 		
