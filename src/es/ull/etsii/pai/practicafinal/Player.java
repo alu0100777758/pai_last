@@ -33,8 +33,16 @@ public class Player extends Actor implements Physical_active {
 	public static final int HEIGHT = 20;
 	public static final int SPEED = 1;
 	public static final double TIME = 1.0;
-	public static double GRAVITY = -0.0;
+	public static double GRAVITY = -3.0;
 
+	
+	public Player(Point2D position) {
+		super(position);
+		setMovement(new Point2D(0, 0));
+		setSpeed(new Point2D(0, 0));
+		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+	}
+	
 	public int getJumpTTL() {
 		return jumpTTL;
 	}
@@ -123,12 +131,7 @@ public class Player extends Actor implements Physical_active {
 		this.jumpSpeed = velY;
 	}
 
-	public Player(Point2D position) {
-		super(position);
-		setMovement(new Point2D(0, 0));
-		setSpeed(new Point2D(0, 0));
-		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
-	}
+
 
 	@Override
 	public void paint(Graphics g) {
@@ -149,33 +152,32 @@ public class Player extends Actor implements Physical_active {
 //
 //	}
 
-	public Point2D updateMovement() {
+	/*public Point2D updateMovement() {
 		Point2D newmove = EcuacionesMovimientoParabolico.posicion(
 				getPosition(), getSpeed(), TIME, GRAVITY);
 		getPhysicalShape().setLocation(new Point((int)newmove.x(),(int)newmove.y()));
 		setMovement(newmove.substract(getPosition()));
 		return getMovement();
-	}
+	}*/
 
 	public boolean moveLeft() {
 		addXPosition(-SPEED);
+		setVelX(-SPEED);
 		return true;
 	}
 
 	public boolean moveRight() {
-		// getSpeed().setX(SPEED);
 		addXPosition(SPEED);
+		setVelX(SPEED);
 		return true;
 	}
 
 	public boolean moveUP() {
-		// getSpeed().setX(SPEED);
 		addYPosition(-SPEED);
 		return true;
 	}
 
 	public boolean moveDown() {
-		// getSpeed().setX(SPEED);
 		addYPosition(SPEED);
 		return true;
 	}
@@ -213,9 +215,22 @@ public class Player extends Actor implements Physical_active {
 		return this.getPhysicalShape().collides(actor);
 	}
 
+	/**
+	 * Afinar esto.
+	 */
 	@Override
 	public boolean repair_collision(Physical_passive actor) {
-		this.setPosition(getPosition().add(new Point2D(0, this.getPhysicalRectangle().intersection(actor.getPhysicalRectangle()).getLocation().getY() - (getPhysicalRectangle().getLocation().getY() + getPhysicalRectangle().getHeight()) ) ));
+		Rectangle intersection = actor.getCollisionedRectangle(this.getPhysicalRectangle());
+		
+		if (Math.abs(this.getVelX()) >= intersection.getWidth()) {
+			this.setPosition(getPosition().add(intersection.getWidth(), 0));
+		}
+		else
+			
+			this.setPosition(getPosition().add(new Point2D(0, this.getPhysicalRectangle().intersection(actor.getPhysicalRectangle()).getLocation().getY() - (getPhysicalRectangle().getLocation().getY() + getPhysicalRectangle().getHeight()) ) ));
+		
+		
+		
 		return false;
 	}
 
@@ -224,7 +239,7 @@ public class Player extends Actor implements Physical_active {
 		return getPhysicalShape().getSegmentList();
 	}
 	public void setLeft(boolean b) {
-		setMove_left(b);
+		setMove_left(b);	
 		ResolveUnreleasedMovements();
 	}
 
@@ -252,13 +267,12 @@ public class Player extends Actor implements Physical_active {
 		if(isMove_up())
 			moveUP();
 		setBlock_down(false);
+		if (!isMove_left() && !isMove_right())
+			setVelX(0);
 	}
 	@Override
 	public void updatePos() {
 		ResolveUnreleasedMovements();
-//		System.out.println(getSpeed());
-//		addPosition(getSpeed());
-//		System.out.println(getPosition());
 	}
 
 	@Override
@@ -282,7 +296,11 @@ public class Player extends Actor implements Physical_active {
 
 	public void moveJump() {
 		addYPosition(-getJumpVelY());
+		setJumpTTL(getJumpTTL() - 1);
 		
 	}
 
+	public void fall() {
+		addYPosition(- GRAVITY);
+	}
 }

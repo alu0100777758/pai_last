@@ -16,7 +16,6 @@ public class Scenario {
 	ArrayList<Entity> GUI;
 	private Integer width;
 	private Integer height;
-	// public static final int PLAYER_ONE = 0;
 	private Player player_one = new Player(new Point2D(200, 200));
 
 	public Player getPlayer_one() {
@@ -48,11 +47,9 @@ public class Scenario {
 			getPlayer_one().moveRight();
 		if (keyChar == 'a') {
 			getPlayer_one().moveLeft();
-			// System.out.println("Pressed a");
 		}
 		if (keyChar == 'd') {
 			getPlayer_one().moveRight();
-			// System.out.println("Pressed d");
 		}
 		if (keyChar == 'w') {
 			getPlayer_one().moveUP();
@@ -60,7 +57,6 @@ public class Scenario {
 		if (keyChar == 's') {
 			getPlayer_one().moveDown();
 		}
-		// System.out.println("pulsed: " + keyChar);
 	}
 
 	public void pulsedKey(int keyCode, char keyChar) {
@@ -73,7 +69,6 @@ public class Scenario {
 		} else if (keyChar == 'd') {
 			getPlayer_one().setRight(true);
 		} else if (keyChar == 'w') {
-			// getPlayer_one().setUP(true);
 			getPlayer_one().jump();
 		} else if (keyChar == 's') {
 			getPlayer_one().setDown(true);
@@ -105,12 +100,13 @@ public class Scenario {
 	public void update() {
 		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
 		getPlayer_one().updatePos();
-		if (!getPlayer_one().isBlock_down()) {
+		if (!getPlayer_one().isBlock_down()) {													// Por lo visto esto controla el salto
 			if (getPlayer_one().getJumpTTL() != 0) {
 				getPlayer_one().moveJump();
-				getPlayer_one().setJumpTTL(getPlayer_one().getJumpTTL() - 1);
+				//getPlayer_one().setJumpTTL(getPlayer_one().getJumpTTL() - 1);					// Paso esto al move jump, debería ser cosa del jugador modificar su ttl.
 			} else
-				getPlayer_one().addYPosition(3);
+				//getPlayer_one().addYPosition(3);												// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
+				;//getPlayer_one().fall();
 		}
 		if (getPlayer_one().collides(map)) {
 			getPlayer_one().repair_collision(map);
@@ -126,20 +122,6 @@ public class Scenario {
 			((StaticPlatform) getStaticMap().get(i)).paint(g.create());
 		}
 		for (int i = 0; i < getActors().size(); i++) {
-			// ((Player) getActors().get(i)).updateMovement();
-			// if (((StaticPlatform)
-			// getStaticMap().get(0)).collides(getActors().get(i))) {
-			// double distance = ((StaticPlatform)
-			// getStaticMap().get(0)).collisionDistance(getActors().get(i));
-			// System.out.println(distance);
-			// Point2D move = ((Player) getActors().get(i)).getMovement();
-			// double angle = move.getAngle();
-			// ((Player) getActors().get(i)).setMovement(new
-			// Point2D(distance*Math.cos(Math.toRadians(angle)), distance *
-			// Math.sin(Math.toRadians(angle) - 20)));
-			// ((Player) getActors().get(i)).setOnPlatform(true);
-			// }
-
 			getActors().get(i).paint(g.create());
 		}
 		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
