@@ -103,10 +103,9 @@ public class Scenario {
 		if (!getPlayer_one().isBlock_down()) {													// Por lo visto esto controla el salto
 			if (getPlayer_one().getJumpTTL() != 0) {
 				getPlayer_one().moveJump();
-				//getPlayer_one().setJumpTTL(getPlayer_one().getJumpTTL() - 1);					// Paso esto al move jump, debería ser cosa del jugador modificar su ttl.
 			} else
-				//getPlayer_one().addYPosition(3);												// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
-				;//getPlayer_one().fall();
+				getPlayer_one().addYPosition(3);												// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
+				getPlayer_one().fall();
 		}
 		if (getPlayer_one().collides(map)) {
 			getPlayer_one().repair_collision(map);
