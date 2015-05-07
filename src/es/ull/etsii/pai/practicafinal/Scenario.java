@@ -39,7 +39,8 @@ public class Scenario {
 		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
 
 	}
-
+	// TODO cuando se implemente en su propia clase recordar resolver el trato de mayusculas 
+	// según la lógica del scenario EJ: al moverse pulsar "d" y soltar "D" puede ser conflictivo
 	public void processKey(int keyCode, char keyChar) {
 		if (keyCode == KeyEvent.VK_LEFT)
 			getPlayer_one().moveLeft();
@@ -60,6 +61,7 @@ public class Scenario {
 	}
 
 	public void pulsedKey(int keyCode, char keyChar) {
+	
 		if (keyCode == KeyEvent.VK_LEFT)
 			getPlayer_one().setLeft(true);
 		if (keyCode == KeyEvent.VK_RIGHT)
