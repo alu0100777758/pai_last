@@ -99,19 +99,7 @@ public class Scenario {
 	 */
 	public void update() {
 		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
-		getPlayer_one().updatePos();
-		if (!getPlayer_one().isBlock_down()) {													// Por lo visto esto controla el salto
-			if (getPlayer_one().getJumpTTL() != 0) {
-				getPlayer_one().moveJump();
-			} else
-				getPlayer_one().addYPosition(3);												// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
-				getPlayer_one().fall();
-		}
-		if (getPlayer_one().collides(map)) {
-			getPlayer_one().repair_collision(map);
-			getPlayer_one().setBlock_down(true);
-			System.out.println("collision");
-		}
+		getPlayer_one().updatePos(map);
 	}
 
 	public void paint(Graphics g) {

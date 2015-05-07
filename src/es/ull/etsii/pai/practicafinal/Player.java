@@ -271,8 +271,20 @@ public class Player extends Actor implements Physical_active {
 			setVelX(0);
 	}
 	@Override
-	public void updatePos() {
+	public void updatePos(Physical_passive map) {
 		ResolveUnreleasedMovements();
+		if (!isBlock_down()) {													// Por lo visto esto controla el salto
+			if (getJumpTTL() != 0) {
+				moveJump();
+			} else
+				addYPosition(3);												// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
+				fall();
+		}
+		if (collides(map)) {
+			repair_collision(map);
+			setBlock_down(true);
+			System.out.println("collision");
+		}
 	}
 
 	@Override
