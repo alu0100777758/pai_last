@@ -104,6 +104,11 @@ public class Scenario {
 	 * 
 	 * @param g
 	 */
+	/**
+	 * TODO implementarlo como objeto contenido en escenario.
+	 * 		Uso de lista de objetos pasivos y activos.
+	 * 		desplazar la responsabilidad de la actualización a cada objeto.
+	 */
 	public void update() {
 		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
 		getPlayer_one().updatePos(map);
