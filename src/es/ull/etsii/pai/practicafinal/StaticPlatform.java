@@ -19,6 +19,7 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	}
 	
 	public void paint(Graphics g) {
+		System.out.println("dibujando");
 		getGraphicRectangle().paint(g.create());
 	}
 	/**

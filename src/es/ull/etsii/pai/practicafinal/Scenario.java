@@ -10,31 +10,36 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
-	ArrayList<Entity> background;
-	ArrayList<Entity> staticMap;
-	ArrayList<Actor> actors;
-	ArrayList<Entity> GUI;
-	private Integer width;
-	private Integer height;
-	private Player player_one = new Player(new Point2D(200, 200));
+	BvsR_Map mapData = new BvsR_Map(new Player(new Point2D(200, 200)));
 
 	public Player getPlayer_one() {
-		return player_one;
+		return mapData.getPlayer_one();
 	}
 
 	public void setPlayer_one(Player player_one) {
-		this.player_one = player_one;
+		this.mapData.setPlayer_one(player_one);
+	}
+	
+	
+	public BvsR_Map getMapData() {
+		return mapData;
+	}
+
+	public void setMapData(BvsR_Map mapData) {
+		this.mapData = mapData;
 	}
 
 	public Scenario(Integer width, Integer height) {
 		setWidth(width);
 		setHeight(height);
+		
 		setBackground(new ArrayList<Entity>());
 		setStaticMap(new ArrayList<Entity>());
 		setActors(new ArrayList<Actor>());
 		setGUI(new ArrayList<Entity>());
 		// /////******************** Para probar poner un unico actor y un
 		// suelo.
+//		setMapData(BvsR_Map.load("default"));
 		getActors().add(getPlayer_one());
 		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
 
@@ -123,51 +128,51 @@ public class Scenario {
 	 * Getters y Setters**************
 	 */
 	public Integer getWidth() {
-		return width;
+		return mapData.getWidth();
 	}
 
 	public void setWidth(Integer width) {
-		this.width = width;
+		this.mapData.setWidth(width);
 	}
 
 	public Integer getHeight() {
-		return height;
+		return mapData.getHeight();
 	}
 
 	public void setHeight(Integer height) {
-		this.height = height;
+		this.mapData.setHeight(height);
 	}
 
 	public ArrayList<Entity> getBackground() {
-		return background;
+		return mapData.getBackground();
 	}
 
 	public void setBackground(ArrayList<Entity> background) {
-		this.background = background;
+		this.mapData.setBackground(background);
 	}
 
 	public ArrayList<Entity> getStaticMap() {
-		return staticMap;
+		return mapData.getStaticMap();
 	}
 
 	public void setStaticMap(ArrayList<Entity> staticMap) {
-		this.staticMap = staticMap;
+		this.mapData.setStaticMap(staticMap);
 	}
 
 	public ArrayList<Actor> getActors() {
-		return actors;
+		return mapData.getActors();
 	}
 
 	public void setActors(ArrayList<Actor> actors) {
-		this.actors = actors;
+		this.mapData.setActors(actors);
 	}
 
 	public ArrayList<Entity> getGUI() {
-		return GUI;
+		return mapData.getGUI();
 	}
 
 	public void setGUI(ArrayList<Entity> gUI) {
-		GUI = gUI;
+		mapData.setGUI(gUI);
 	}
 
 }
