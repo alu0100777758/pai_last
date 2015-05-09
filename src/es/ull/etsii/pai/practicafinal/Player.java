@@ -15,11 +15,9 @@ import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class Player extends Actor implements Physical_active {
 
-	private Point2D speed; // Vector velocidad.
-	private Point2D movement; // Vector que indica el angulo y cantidad que se
-								// movera.
-	private int velX = 0;
-	private int jumpSpeed = 5;
+	private Point2D speed; 		// Vector velocidad.
+
+	private int maxJumpTTL = 20;
 	private boolean block_up = false;
 	private boolean block_down = false;
 	private boolean block_left = false;
@@ -29,20 +27,200 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_down = false;
 	private boolean move_left = false;
 	private boolean move_right = false;
+	
 	public static final int WIDTH = 10;
 	public static final int HEIGHT = 20;
-	public static final int SPEED = 2;
+	public static final int SPEED = 5;
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
 
 	
 	public Player(Point2D position) {
 		super(position);
-		setMovement(new Point2D(0, 0));
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
 	}
 	
+	@Override
+	public void paint(Graphics g) {
+		g.setColor(Color.BLUE);
+		g.fillRect((int) getPosition().x(), (int) getPosition().y(),
+				(int) WIDTH, (int) HEIGHT);
+	}
+
+	public boolean moveLeft() {
+		getSpeed().setX(-SPEED);
+		return true;
+	}
+
+	public boolean moveRight() {
+		getSpeed().setX(SPEED);
+		return true;
+	}
+
+	public boolean moveUP() {
+		return true;
+	}
+
+	public boolean moveDown() {
+		getPosition().setY(getPosition().y() + 5);
+		return true;
+	}
+	
+	@Override
+	public boolean repair_collisionY(Point2D point) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean repair_collisionX(Point2D point) {
+		
+		
+		return false;
+	}
+
+	@Override
+	public boolean collides(Physical_passive actor) {
+		return this.getPhysicalShape().collides(actor);
+	}
+
+	/**
+	 * Afinar esto.
+	 */
+	@Override
+	public boolean repair_collision(Physical_passive actor) {
+		Rectangle intersection = actor.getCollisionedRectangle(this.getPhysicalRectangle());
+		boolean repaired = false;
+		// Resolvemos colisiones primero en Y mejor.
+		
+		// Miramos si colisiona con la cabeza o los pies:
+		
+		// Si alguno es true colisiona con la cabeza. 
+		if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMinY()))  || 
+				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMinY())) ) {
+			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {
+				this.setPosition(getPosition().add(new Point2D(0, intersection.getHeight()))); // Tocado con la cabeza
+				repaired = true;
+				setJumpTTL(0);
+			}
+		}
+		// Si alguno es true colisiona con los pies.
+		else if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMaxY()))  || 
+				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMaxY())) ) {
+			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {	
+				this.setPosition(getPosition().add(new Point2D(0, -intersection.getHeight())));;// Tocado con los pies.
+				repaired = true;
+				setBlock_down(true);
+			}
+		}
+
+		if (!repaired) {
+			if (Math.abs(2 * getSpeed().x()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
+				if (getSpeed().x() > 0)
+					this.setPosition(getPosition().substract(intersection.getWidth(), 0));
+				else
+					this.setPosition(getPosition().add(intersection.getWidth(), 0));
+				
+			}
+		}
+		System.out.println("Vel: " + getSpeed().x() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());
+		return false;
+	}
+
+	void ResolveUnreleasedMovements(){
+		if(isMove_down())
+			moveDown();
+		if(isMove_left())
+			moveLeft();
+		if(isMove_right())
+			moveRight();
+		if(isMove_up())
+			moveUP();
+		setBlock_down(false);
+		if (!isMove_left() && !isMove_right())
+			getSpeed().setX(0);
+	}
+	/**
+	 * Mueve el jugador según marca la velocidad.
+	 */
+	@Override
+	public void updatePos(Physical_passive map) {
+		ResolveUnreleasedMovements();
+		if (!isBlock_down()) {													// Por lo visto esto controla el salto
+			if (getJumpTTL() != 0) {
+				moveJump();
+			} else																// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
+				fall();
+		}
+		setPosition(getPosition().add(getSpeed()));								// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
+		
+		/*if (collides(map)) {
+			repair_collision(map);
+			System.out.println("collision");
+		}*/
+	}
+
+
+	public void jump() {
+		if(isBlock_down()){
+			jumpTTL = 20;
+			setBlock_down(false);
+		}
+		
+	}
+
+	public void moveJump() {
+		getSpeed().setY(-SPEED);
+		setJumpTTL(getJumpTTL() - 1);
+		
+	}
+
+	public void fall() {
+		getSpeed().setY(-GRAVITY);
+	}
+	
+	@Override
+	public PhysicalRectangle getPhysicalRectangle() {
+		return getPhysicalShape();
+		
+	}
+
+	@Override
+	public Rectangle getCollisionedRectangle(Physical_passive actor) {
+		return getPhysicalRectangle().getCollisionedRectangle(actor.getPhysicalRectangle());
+	}
+
+	@Override
+	public ArrayList<Segment> getSegmentList() {
+		return getPhysicalShape().getSegmentList();
+	}
+	public void setLeft(boolean b) {
+		setMove_left(b);	
+		ResolveUnreleasedMovements();
+	}
+
+	public void setRight(boolean b) {
+		setMove_right(b);
+		ResolveUnreleasedMovements();
+	}
+
+	public void setUP(boolean b) {
+		setMove_up(b);
+		ResolveUnreleasedMovements();
+	}
+
+	public void setDown(boolean b) {
+		setMove_down(b);
+		ResolveUnreleasedMovements();
+	}
+	public Point2D getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(Point2D speed) {
+		this.speed = speed;
+	}
 	public int getJumpTTL() {
 		return jumpTTL;
 	}
@@ -115,211 +293,11 @@ public class Player extends Actor implements Physical_active {
 		this.move_right = move_right;
 	}
 
-	public int getVelX() {
-		return velX;
+	public int getMaxJumpTTL() {
+		return maxJumpTTL;
 	}
 
-	public void setVelX(int velX) {
-		this.velX = velX;
-	}
-
-	public int getJumpVelY() {
-		return jumpSpeed;
-	}
-
-	public void setVelY(int velY) {
-		this.jumpSpeed = velY;
-	}
-
-
-
-	@Override
-	public void paint(Graphics g) {
-		g.setColor(Color.BLUE);
-		g.fillRect((int) getPosition().x(), (int) getPosition().y(),
-				(int) WIDTH, (int) HEIGHT);
-	}
-
-
-	public boolean moveLeft() {
-		addXPosition(-SPEED);
-		setVelX(-SPEED);
-		return true;
-	}
-
-	public boolean moveRight() {
-		addXPosition(SPEED);
-		setVelX(SPEED);
-		return true;
-	}
-
-	public boolean moveUP() {
-		addYPosition(-SPEED);
-		return true;
-	}
-
-	public boolean moveDown() {
-		addYPosition(SPEED);
-		return true;
-	}
-
-	public Point2D getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(Point2D speed) {
-		this.speed = speed;
-	}
-
-	public Point2D getMovement() {
-		return movement;
-	}
-
-	public void setMovement(Point2D movement) {
-		this.movement = movement;
-	}
-
-	
-	@Override
-	public boolean repair_collisionY(Point2D point) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean repair_collisionX(Point2D point) {
-		
-		
-		return false;
-	}
-
-	@Override
-	public boolean collides(Physical_passive actor) {
-		return this.getPhysicalShape().collides(actor);
-	}
-
-	/**
-	 * Afinar esto.
-	 */
-	@Override
-	public boolean repair_collision(Physical_passive actor) {
-		Rectangle intersection = actor.getCollisionedRectangle(this.getPhysicalRectangle());
-		boolean repaired = false;
-		// Resolvemos colisiones primero en Y mejor.
-		
-		// Miramos si colisiona con la cabeza o los pies:
-		
-		// Si alguno es true colisiona con la cabeza. 
-		if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMinY()))  || 
-				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMinY())) ) {
-			if (getJumpVelY() >= intersection.getHeight()) {
-				this.setPosition(getPosition().add(new Point2D(0, intersection.getHeight()))); // Tocado con la cabeza
-				repaired = true;
-			}
-		}
-		// Si alguno es true colisiona con los pies.
-		else if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMaxY()))  || 
-				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMaxY())) ) {
-			if (-GRAVITY >= intersection.getHeight()) {
-				this.setPosition(getPosition().add(new Point2D(0, -intersection.getHeight())));;// Tocado con los pies.
-				repaired = true;
-			}
-		}
-			
-		
-		
-		if (!repaired) {
-			if (Math.abs(2 * getVelX()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
-				if (getVelX() > 0)
-					this.setPosition(getPosition().substract(intersection.getWidth(), 0));
-				else
-					this.setPosition(getPosition().add(intersection.getWidth(), 0));
-				
-			}
-		}
-		System.out.println("Vel: " + getVelX() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());
-		return false;
-	}
-
-
-	@Override
-	public ArrayList<Segment> getSegmentList() {
-		return getPhysicalShape().getSegmentList();
-	}
-	public void setLeft(boolean b) {
-		setMove_left(b);	
-		ResolveUnreleasedMovements();
-	}
-
-	public void setRight(boolean b) {
-		setMove_right(b);
-		ResolveUnreleasedMovements();
-	}
-
-	public void setUP(boolean b) {
-		setMove_up(b);
-		ResolveUnreleasedMovements();
-	}
-
-	public void setDown(boolean b) {
-		setMove_down(b);
-		ResolveUnreleasedMovements();
-	}
-	void ResolveUnreleasedMovements(){
-		if(isMove_down())
-			moveDown();
-		if(isMove_left())
-			moveLeft();
-		if(isMove_right())
-			moveRight();
-		if(isMove_up())
-			moveUP();
-		setBlock_down(false);
-		if (!isMove_left() && !isMove_right())
-			setVelX(0);
-	}
-	@Override
-	public void updatePos(Physical_passive map) {
-		ResolveUnreleasedMovements();
-		if (!isBlock_down()) {													// Por lo visto esto controla el salto
-			if (getJumpTTL() != 0) {
-				moveJump();
-			} else																// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
-				fall();
-		}
-		if (collides(map)) {
-			repair_collision(map);
-			setBlock_down(true);
-			System.out.println("collision");
-		}
-	}
-
-	@Override
-	public PhysicalRectangle getPhysicalRectangle() {
-		return getPhysicalShape();
-		
-	}
-
-	@Override
-	public Rectangle getCollisionedRectangle(Physical_passive actor) {
-		return getPhysicalRectangle().getCollisionedRectangle(actor.getPhysicalRectangle());
-	}
-
-	public void jump() {
-		if(isBlock_down()){
-			jumpTTL = 20;
-			setBlock_down(false);
-		}
-		
-	}
-
-	public void moveJump() {
-		addYPosition(-getJumpVelY());
-		setJumpTTL(getJumpTTL() - 1);
-		
-	}
-
-	public void fall() {
-		addYPosition(- GRAVITY);
+	public void setMaxJumpTTL(int velY) {
+		this.maxJumpTTL = velY;
 	}
 }
