@@ -27,9 +27,10 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_down = false;
 	private boolean move_left = false;
 	private boolean move_right = false;
+	private boolean crounched = false;
 	
 	public static final int WIDTH = 10;
-	public static final int HEIGHT = 20;
+	public static int HEIGHT = 20;
 	public static final int SPEED = 5;
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
@@ -59,11 +60,19 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public boolean moveUP() {
+		getPosition().setY(getPosition().y() - 10);
+		HEIGHT = 20;
+		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setUP(false);
+		setCrounched(false);
 		return true;
 	}
 
 	public boolean moveDown() {
-		getPosition().setY(getPosition().y() + 5);
+		getPosition().setY(getPosition().y() + 10);
+		HEIGHT = 10;
+		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setCrounched(true);
 		return true;
 	}
 	
@@ -114,7 +123,6 @@ public class Player extends Actor implements Physical_active {
 				setBlock_down(true);
 			}
 		}
-
 		if (!repaired) {
 			if (Math.abs(2 * getSpeed().x()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
 				if (getSpeed().x() > 0)
@@ -124,12 +132,12 @@ public class Player extends Actor implements Physical_active {
 				
 			}
 		}
-		System.out.println("Vel: " + getSpeed().x() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());
+		System.out.println("Vel: " + getSpeed().x() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());			//
 		return false;
 	}
 
 	void ResolveUnreleasedMovements(){
-		if(isMove_down())
+		if(isMove_down() && !isCrounched())
 			moveDown();
 		if(isMove_left())
 			moveLeft();
@@ -154,11 +162,7 @@ public class Player extends Actor implements Physical_active {
 				fall();
 		}
 		setPosition(getPosition().add(getSpeed()));								// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
-		
-		/*if (collides(map)) {
-			repair_collision(map);
-			System.out.println("collision");
-		}*/
+
 	}
 
 
@@ -300,4 +304,13 @@ public class Player extends Actor implements Physical_active {
 	public void setMaxJumpTTL(int velY) {
 		this.maxJumpTTL = velY;
 	}
+
+	public boolean isCrounched() {
+		return crounched;
+	}
+
+	public void setCrounched(boolean crounched) {
+		this.crounched = crounched;
+	}
+	
 }

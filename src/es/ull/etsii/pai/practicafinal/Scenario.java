@@ -52,17 +52,8 @@ public class Scenario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		ArrayList<Actor> actorarr = new ArrayList<Actor>();
-//		actorarr.add(new Player(new Point2D(200, 200)));
-//		setActors(actorarr);
+
 		getActors().add(getPlayer_one());
-
-		//getStaticMap().add(new StaticPlatform(50, 500, 200, 50));
-
-//		setPlayer_one(new Player(new Point2D(200, 200)));
-//		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
-
-
 	}
 	// TODO cuando se implemente en su propia clase recordar resolver el trato de mayusculas 
 	// según la lógica del scenario EJ: al moverse pulsar "d" y soltar "D" puede ser conflictivo
@@ -115,6 +106,7 @@ public class Scenario {
 			// getPlayer_one().setUP(false);
 		} else if (keyChar == 's') {
 			getPlayer_one().setDown(false);
+			getPlayer_one().setUP(true);
 		}
 	}
 
