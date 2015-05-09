@@ -24,7 +24,7 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 //		return res;
 		return null;														// vacio EMPTY NAAAAA
 	}
-
+ 
 	@Override
 	public PhysicalRectangle getPhysicalRectangle() {
 		

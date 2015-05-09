@@ -15,7 +15,7 @@ public class BvsR_Map implements Serializable{
 	private ArrayList<Entity> background = new ArrayList<Entity>();
 	private ArrayList<Entity> staticMap = new ArrayList<Entity>();
 	private ArrayList<Actor> actors = new ArrayList<Actor>();
-	private ArrayList<Entity> GUI = new ArrayList<Entity>();
+	private ArrayList<Entity> GUI = new ArrayList<Entity>(); 
 	private int width;
 	private int height;
 	private Player player_one;

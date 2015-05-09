@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 
 public class Editor{
-	private void JFrame() {
+	private void JFrame() { 
 
 	}
 	public static void main(String[] args) {

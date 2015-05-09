@@ -12,7 +12,6 @@ public class GameFrame extends JFrame implements ActionListener{
 	private ScenarioPanel scenarioPanel;
 	public GameFrame() {
 		setScenarioPanel(new ScenarioPanel());
-		setScenarioPanel(getScenarioPanel());
 		this.add(getScenarioPanel());
 		this.addKeyListener(new KeyHandler());
 		GameLoop.setDisplayer(scenarioPanel);

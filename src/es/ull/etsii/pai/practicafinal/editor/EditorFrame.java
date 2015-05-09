@@ -1,6 +1,7 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -20,25 +21,42 @@ import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
+import es.ull.etsii.pai.practicafinal.RelativeLayout;
+import es.ull.etsii.pai.practicafinal.ScenarioPanel;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class EditorFrame extends JFrame implements ActionListener , MouseListener{
 	BvsR_Map map = new BvsR_Map(new Player(new Point2D(200, 200)));
+	EditorToolbar toolbar = new EditorToolbar();
+	JPanel paintZone = new JPanel();
 	public EditorFrame() {
 		
 //		setScenarioPanel(new ScenarioPanel());
 //		setScenarioPanel(getScenarioPanel());
 //		this.add(getScenarioPanel());
+		setLayout(new RelativeLayout(RelativeLayout.Y_AXIS));
 		KeyHandler keys = new KeyHandler();
 		this.addKeyListener(keys);
 		this.addMouseListener(this);
 		JButton save = new JButton("save");
 		save.addActionListener(this);
+		JPanel top = new JPanel();
+		top.add(toolbar);
+
+//		top.validate();
+		top.setBackground(Color.WHITE);
+		this.add(top);
+		paintZone.setBackground(Color.BLACK);
+//		paintZone.setPreferredSize(get);
+//		paintZone.setSize(new Dimension(getSize().width,getSize().height-top.getSize().height));
+//		add(paintZone);
+		add(new ScenarioPanel());
 //		this.add(save);
 //		this.add
 	}
@@ -115,13 +133,13 @@ public class EditorFrame extends JFrame implements ActionListener , MouseListene
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		Graphics2D g2 = (Graphics2D) g.create();
-		for (int i = 0; i < map.getStaticMap().size(); i++) {
-			((StaticPlatform) map.getStaticMap().get(i)).paint(g.create());
-		}
-		for (int i = 0; i < map.getActors().size(); i++) {
-			map.getActors().get(i).paint(g.create());
-		}
+//		g.fillRect(0, 0, getWidth(), getHeight());
+//		Graphics2D g2 = (Graphics2D) g.create();
+//		for (int i = 0; i < map.getStaticMap().size(); i++) {
+//			((StaticPlatform) map.getStaticMap().get(i)).paint(g.create());
+//		}
+//		for (int i = 0; i < map.getActors().size(); i++) {
+//			map.getActors().get(i).paint(g.create());
+//		}
 	}
 }
