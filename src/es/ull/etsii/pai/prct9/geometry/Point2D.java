@@ -1,6 +1,9 @@
 package es.ull.etsii.pai.prct9.geometry;
 
-public class Point2D {
+import java.io.Serializable;
+
+public class Point2D implements Serializable{
+	private static final long serialVersionUID = -4084401623947396424L;
 	private double x = 0;
 	private double y = 0;
 	

@@ -22,11 +22,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
+import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class EditorFrame extends JFrame implements ActionListener , MouseListener{
-	BvsR_Map map = new BvsR_Map();
+	BvsR_Map map = new BvsR_Map(new Player(new Point2D(200, 200)));
 	public EditorFrame() {
 		
 //		setScenarioPanel(new ScenarioPanel());

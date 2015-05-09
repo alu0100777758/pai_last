@@ -1,6 +1,8 @@
 package es.ull.etsii.pai.practicafinal;
 
-public abstract class Entity {
+import java.io.Serializable;
+
+public abstract class Entity implements Serializable {
 
 	public abstract void reproduce();
 }
