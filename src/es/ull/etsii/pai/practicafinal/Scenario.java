@@ -41,6 +41,7 @@ public class Scenario {
 		// suelo.
 //		setMapData(BvsR_Map.load("default"));
 		getActors().add(getPlayer_one());
+		getStaticMap().add(new StaticPlatform(50, 500, 200, 50));
 		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
 
 	}
@@ -110,8 +111,13 @@ public class Scenario {
 	 * 		desplazar la responsabilidad de la actualización a cada objeto.
 	 */
 	public void update() {
-		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
-		getPlayer_one().updatePos(map);
+		Physical_passive map;
+		getPlayer_one().updatePos(null);
+		for (int i = 0; i < getStaticMap().size(); i++) {
+			map = (Physical_passive) (getStaticMap().get(i));
+			if (getPlayer_one().collides(map))
+				getPlayer_one().repair_collision(map);
+		}
 	}
 
 	public void paint(Graphics g) {
