@@ -16,7 +16,7 @@ public class ScenarioPanel extends JPanel{
 		setScenario(new Scenario(getWidth(), getHeight()));
 		this.addComponentListener(new SizeChangeListener());
 		this.requestFocus();
-	}
+	} 
 	public void paintComponent(Graphics g){
 		super.paintComponent(g.create());
 		getScenario().paint(g.create());

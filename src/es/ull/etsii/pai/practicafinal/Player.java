@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
-import es.ull.etsii.pai.prct9.geometry.EcuacionesMovimientoParabolico;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
@@ -18,6 +17,7 @@ public class Player extends Actor implements Physical_active {
 	private Point2D speed; 		// Vector velocidad.
 
 	private int maxJumpTTL = 20;
+	private Side lookingAt;
 	private boolean block_up = false;
 	private boolean block_down = false;
 	private boolean block_left = false;
@@ -28,7 +28,7 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_left = false;
 	private boolean move_right = false;
 	private boolean crounched = false;
-	
+	private boolean shooting = false;
 	public static final int WIDTH = 10;
 	public int HEIGHT = 20;
 	public static final int SPEED = 5;
@@ -40,6 +40,7 @@ public class Player extends Actor implements Physical_active {
 		super(position);
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setLookingAt(Side.RIGHT);
 	}
 	
 	@Override
@@ -51,11 +52,15 @@ public class Player extends Actor implements Physical_active {
 
 	public boolean moveLeft() {
 		getSpeed().setX(-SPEED);
+		setBlock_right(false);
+		setLookingAt(Side.LEFT);
 		return true;
 	}
 
 	public boolean moveRight() {
 		getSpeed().setX(SPEED);
+		setBlock_left(false);
+		setLookingAt(Side.RIGHT);
 		return true;
 	}
 
@@ -75,7 +80,10 @@ public class Player extends Actor implements Physical_active {
 		setCrounched(true);
 		return true;
 	}
-	
+	public Bullet shoot ()  {
+		int side = getLookingAt() == Side.LEFT? -20 : 20;
+		return new Bullet(getPosition(), new Point2D (side, 0));
+	}
 	@Override
 	public boolean repair_collisionY(Point2D point) {
 		// TODO Auto-generated method stub
@@ -106,29 +114,34 @@ public class Player extends Actor implements Physical_active {
 		// Miramos si colisiona con la cabeza o los pies:
 		
 		// Si alguno es true colisiona con la cabeza. 
-		if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMinY()))  || 
-				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMinY())) ) {
+		if ((actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMinY()))  || 
+				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMinY())) ) && !isBlock_down()) {
 			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {
 				this.setPosition(getPosition().add(new Point2D(0, intersection.getHeight()))); // Tocado con la cabeza
 				repaired = true;
 				setJumpTTL(0);
+				setBlock_up(true);
 			}
 		}
 		// Si alguno es true colisiona con los pies.
-		else if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMaxY()))  || 
-				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMaxY())) ) {
+		else if ((actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMaxY()))  || 
+				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMaxY()))) && !isBlock_up()) {
 			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {	
-				this.setPosition(getPosition().add(new Point2D(0, -intersection.getHeight())));;// Tocado con los pies.
+				this.setPosition(getPosition().add(new Point2D(0, -intersection.getHeight())));// Tocado con los pies.
 				repaired = true;
 				setBlock_down(true);
 			}
 		}
 		if (!repaired) {
 			if (Math.abs(2 * getSpeed().x()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
-				if (getSpeed().x() > 0)
+				if (getSpeed().x() > 0) {
 					this.setPosition(getPosition().substract(intersection.getWidth(), 0));
-				else
+					setBlock_right(true);
+				}
+				else {
 					this.setPosition(getPosition().add(intersection.getWidth(), 0));
+					setBlock_left(true);
+				}
 				
 			}
 		}
@@ -153,7 +166,7 @@ public class Player extends Actor implements Physical_active {
 	 * Mueve el jugador según marca la velocidad.
 	 */
 	@Override
-	public void updatePos(Physical_passive map) {
+	public boolean updatePos(Physical_passive map) {
 		ResolveUnreleasedMovements();
 		if (!isBlock_down()) {													// Por lo visto esto controla el salto
 			if (getJumpTTL() != 0) {
@@ -162,16 +175,15 @@ public class Player extends Actor implements Physical_active {
 				fall();
 		}
 		setPosition(getPosition().add(getSpeed()));								// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
-
+		return true;
 	}
 
 
 	public void jump() {
 		if(isBlock_down()){
-			jumpTTL = 20;
+			setJumpTTL(getMaxJumpTTL());
 			setBlock_down(false);
-		}
-		
+		}	
 	}
 
 	public void moveJump() {
@@ -182,6 +194,7 @@ public class Player extends Actor implements Physical_active {
 
 	public void fall() {
 		getSpeed().setY(-GRAVITY);
+		setBlock_up(false);
 	}
 	
 	@Override
@@ -311,6 +324,22 @@ public class Player extends Actor implements Physical_active {
 
 	public void setCrounched(boolean crounched) {
 		this.crounched = crounched;
+	}
+
+	public boolean isShooting() {
+		return shooting;
+	}
+
+	public void setShooting(boolean shooting) {
+		this.shooting = shooting;
+	}
+
+	public Side getLookingAt() {
+		return lookingAt;
+	}
+
+	public void setLookingAt(Side lookingAt) {
+		this.lookingAt = lookingAt;
 	}
 	
 }

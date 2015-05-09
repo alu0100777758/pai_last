@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
+import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
@@ -53,31 +55,18 @@ public class Scenario {
 			e.printStackTrace();
 		}
 		
-		playerTwo = new Player(new Point2D(200, 200));
+		playerTwo = new Player(new Point2D(300, 200));
 		getActors().add(getPlayer_one());
 		getActors().add(playerTwo);
 	}
-	// TODO cuando se implemente en su propia clase recordar resolver el trato de mayusculas 
-	// según la lógica del scenario EJ: al moverse pulsar "d" y soltar "D" puede ser conflictivo
-	public void processKey(int keyCode, char keyChar) {
-		if (keyCode == KeyEvent.VK_LEFT)
-			getPlayer_one().moveLeft();
-		if (keyCode == KeyEvent.VK_RIGHT)
-			getPlayer_one().moveRight();
-		if (keyChar == 'a') {
-			getPlayer_one().moveLeft();
-		}
-		if (keyChar == 'd') {
-			getPlayer_one().moveRight();
-		}
-		if (keyChar == 'w') {
-			getPlayer_one().moveUP();
-		}
-		if (keyChar == 's') {
-			getPlayer_one().moveDown();
-		}
-	}
-
+/**
+ * TODO: 
+ * 		- Mejorar el disparo, hacer q se pueda hacer correctamente manteniendo presionado.
+ * 		- Delegar el control de estas cosas a otra clase que no sea escenario.
+ * 		
+ * @param keyCode
+ * @param keyChar
+ */
 	public void pulsedKey(int keyCode, char keyChar) {
 	
 		if (keyCode == KeyEvent.VK_LEFT)
@@ -96,6 +85,9 @@ public class Scenario {
 			getPlayer_one().jump();
 		} else if (keyChar == 's') {
 			getPlayer_one().setDown(true);
+		}
+		 else if (keyChar == 'j') {
+				getActors().add(getPlayer_one().shoot());
 		}
 	}
 
@@ -133,9 +125,14 @@ public class Scenario {
 	 */
 	public void update() {
 		Physical_passive map;
-		getPlayer_one().updatePos(null);
-		playerTwo.updatePos(null);
-		
+	//	getPlayer_one().updatePos(null);
+	//	playerTwo.updatePos(null);
+		for (int i = 0; i < getActors().size(); i++) {
+			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(0, 0, 1200, 800))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
+				getActors().remove(i);	
+			}
+			
+		}
 		for (int i = 0; i < getStaticMap().size(); i++) {
 			map = (Physical_passive) (getStaticMap().get(i));
 			if (getPlayer_one().collides(map))
@@ -143,6 +140,9 @@ public class Scenario {
 			if (playerTwo.collides(map))
 				playerTwo.repair_collision(map);
 		}
+		
+	
+		
 	}
 
 	public void paint(Graphics g) {
@@ -154,10 +154,11 @@ public class Scenario {
 		for (int i = 0; i < getActors().size(); i++) {
 			getActors().get(i).paint(g.create());
 		}
-		Physical_passive map = (Physical_passive) (getStaticMap().get(0));
+	/*	Physical_passive map = (Physical_passive) (getStaticMap().get(0));
 		g2.setColor(Color.GREEN);
 		if (getPlayer_one().collides(map))
 			g2.draw(getPlayer_one().getCollisionedRectangle(map));
+	*/
 	}
 
 	/**
