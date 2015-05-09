@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -39,10 +41,27 @@ public class Scenario {
 		setGUI(new ArrayList<Entity>());
 		// /////******************** Para probar poner un unico actor y un
 		// suelo.
-//		setMapData(BvsR_Map.load("default"));
+		try {
+			setMapData(BvsR_Map.load("default"));
+		} catch (FileNotFoundException e) {
+			System.out.println("file not found");
+		} catch (ClassNotFoundException e) {
+			System.out.println("class not found");
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		ArrayList<Actor> actorarr = new ArrayList<Actor>();
+//		actorarr.add(new Player(new Point2D(200, 200)));
+//		setActors(actorarr);
 		getActors().add(getPlayer_one());
-		getStaticMap().add(new StaticPlatform(50, 500, 200, 50));
-		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
+
+		//getStaticMap().add(new StaticPlatform(50, 500, 200, 50));
+
+//		setPlayer_one(new Player(new Point2D(200, 200)));
+//		getStaticMap().add(new StaticPlatform(50, 600, 550, 50));
+
 
 	}
 	// TODO cuando se implemente en su propia clase recordar resolver el trato de mayusculas 

@@ -2,6 +2,7 @@ package es.ull.etsii.pai.practicafinal;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
@@ -10,13 +11,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class BvsR_Map implements Serializable{
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8439640060806465321L;
 	private ArrayList<Entity> background = new ArrayList<Entity>();
 	private ArrayList<Entity> staticMap = new ArrayList<Entity>();
 	private ArrayList<Actor> actors = new ArrayList<Actor>();
 	private ArrayList<Entity> GUI = new ArrayList<Entity>();
-	private Integer width;
-	private Integer height;
+	private int width;
+	private int height;
 	private Player player_one;
 
 	public BvsR_Map(Player player_one) {
@@ -91,24 +92,11 @@ public class BvsR_Map implements Serializable{
 		
 	}
 
-	public static BvsR_Map load(String string) {
+	public static BvsR_Map load(String string) throws FileNotFoundException, IOException, ClassNotFoundException {
 		BvsR_Map map = null;
-		try(
-			      InputStream file = new FileInputStream(string);
-			      InputStream buffer = new BufferedInputStream(file);
-			      ObjectInput input = new ObjectInputStream (buffer);
-			    ){
-			      //deserialize the List
-			      map = (BvsR_Map)input.readObject();
-			      //display its data
-			      
-			    }
-			    catch(ClassNotFoundException ex){
-
-			    }
-			    catch(IOException ex){
-
-			    }
+		ObjectInputStream save = new ObjectInputStream(new FileInputStream(string));
+		map = (BvsR_Map) save.readObject();
+		save.close();
 	return map;
 	}
 }
