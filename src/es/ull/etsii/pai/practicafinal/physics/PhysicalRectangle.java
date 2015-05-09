@@ -32,7 +32,7 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 	}
 	@Override
 	public Rectangle getCollisionedRectangle(Physical_passive actor) {
-	return intersection(actor.getPhysicalRectangle());
+		return intersection(actor.getPhysicalRectangle());
 	}
 
 

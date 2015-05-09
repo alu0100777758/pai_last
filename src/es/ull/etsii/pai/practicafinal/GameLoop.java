@@ -45,7 +45,6 @@ public class GameLoop{
 	    boolean game_is_running = true;
 
 //	    while( game_is_running ) {
-	    	System.out.println("updating    ");
 	        update_game();
 	        display_game();
 	        next_game_tick += SKIP_TICKS *1000;

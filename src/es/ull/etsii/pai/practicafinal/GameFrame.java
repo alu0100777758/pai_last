@@ -53,7 +53,7 @@ public class GameFrame extends JFrame implements ActionListener{
 		 getScenarioPanel().getScenario().update();
 	        getScenarioPanel().repaint();
 	        Toolkit.getDefaultToolkit().sync();
-	        System.out.println("updating");
+	      //  System.out.println("updating");
 		// TODO Auto-generated method stub
 		
 	}

@@ -31,9 +31,9 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_right = false;
 	public static final int WIDTH = 10;
 	public static final int HEIGHT = 20;
-	public static final int SPEED = 1;
+	public static final int SPEED = 2;
 	public static final double TIME = 1.0;
-	public static double GRAVITY = -3.0;
+	public static double GRAVITY = -5.0;
 
 	
 	public Player(Point2D position) {
@@ -140,25 +140,6 @@ public class Player extends Actor implements Physical_active {
 				(int) WIDTH, (int) HEIGHT);
 	}
 
-//	public void updatePosition() {
-//		// setPosition(EcuacionesMovimientoParabolico.posicion(getPosition(),
-//		// getSpeed(), TIME, GRAVITY));
-//		// setPosition(getPosition().add(getMovement()));
-//		// getPhysicalShape().setPos(getPosition());
-//		// if (onPlatform)
-//		// GRAVITY = 0;
-//		// setSpeed(EcuacionesMovimientoParabolico.velocidadInstantanea(getSpeed(),
-//		// TIME, GRAVITY));
-//
-//	}
-
-	/*public Point2D updateMovement() {
-		Point2D newmove = EcuacionesMovimientoParabolico.posicion(
-				getPosition(), getSpeed(), TIME, GRAVITY);
-		getPhysicalShape().setLocation(new Point((int)newmove.x(),(int)newmove.y()));
-		setMovement(newmove.substract(getPosition()));
-		return getMovement();
-	}*/
 
 	public boolean moveLeft() {
 		addXPosition(-SPEED);
@@ -207,6 +188,8 @@ public class Player extends Actor implements Physical_active {
 
 	@Override
 	public boolean repair_collisionX(Point2D point) {
+		
+		
 		return false;
 	}
 
@@ -221,18 +204,43 @@ public class Player extends Actor implements Physical_active {
 	@Override
 	public boolean repair_collision(Physical_passive actor) {
 		Rectangle intersection = actor.getCollisionedRectangle(this.getPhysicalRectangle());
+		boolean repaired = false;
+		// Resolvemos colisiones primero en Y mejor.
 		
-		if (Math.abs(this.getVelX()) >= intersection.getWidth()) {
-			this.setPosition(getPosition().add(intersection.getWidth(), 0));
+		// Miramos si colisiona con la cabeza o los pies:
+		
+		// Si alguno es true colisiona con la cabeza. 
+		if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMinY()))  || 
+				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMinY())) ) {
+			if (getJumpVelY() >= intersection.getHeight()) {
+				this.setPosition(getPosition().add(new Point2D(0, intersection.getHeight()))); // Tocado con la cabeza
+				repaired = true;
+			}
 		}
-		else
+		// Si alguno es true colisiona con los pies.
+		else if (actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMaxY()))  || 
+				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMaxY())) ) {
+			if (-GRAVITY >= intersection.getHeight()) {
+				this.setPosition(getPosition().add(new Point2D(0, -intersection.getHeight())));;// Tocado con los pies.
+				repaired = true;
+			}
+		}
 			
-			this.setPosition(getPosition().add(new Point2D(0, this.getPhysicalRectangle().intersection(actor.getPhysicalRectangle()).getLocation().getY() - (getPhysicalRectangle().getLocation().getY() + getPhysicalRectangle().getHeight()) ) ));
 		
 		
-		
+		if (!repaired) {
+			if (Math.abs(2 * getVelX()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
+				if (getVelX() > 0)
+					this.setPosition(getPosition().substract(intersection.getWidth(), 0));
+				else
+					this.setPosition(getPosition().add(intersection.getWidth(), 0));
+				
+			}
+		}
+		System.out.println("Vel: " + getVelX() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());
 		return false;
 	}
+
 
 	@Override
 	public ArrayList<Segment> getSegmentList() {
@@ -276,8 +284,7 @@ public class Player extends Actor implements Physical_active {
 		if (!isBlock_down()) {													// Por lo visto esto controla el salto
 			if (getJumpTTL() != 0) {
 				moveJump();
-			} else
-				addYPosition(3);												// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
+			} else																// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
 				fall();
 		}
 		if (collides(map)) {
