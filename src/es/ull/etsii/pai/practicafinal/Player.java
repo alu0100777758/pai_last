@@ -30,7 +30,7 @@ public class Player extends Actor implements Physical_active {
 	private boolean crounched = false;
 	
 	public static final int WIDTH = 10;
-	public static int HEIGHT = 20;
+	public int HEIGHT = 20;
 	public static final int SPEED = 5;
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;

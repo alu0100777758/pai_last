@@ -13,7 +13,8 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
 	BvsR_Map mapData = new BvsR_Map(new Player(new Point2D(200, 200)));
-
+	Player playerTwo;
+	
 	public Player getPlayer_one() {
 		return mapData.getPlayer_one();
 	}
@@ -21,7 +22,6 @@ public class Scenario {
 	public void setPlayer_one(Player player_one) {
 		this.mapData.setPlayer_one(player_one);
 	}
-	
 	
 	public BvsR_Map getMapData() {
 		return mapData;
@@ -52,8 +52,10 @@ public class Scenario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		playerTwo = new Player(new Point2D(200, 200));
 		getActors().add(getPlayer_one());
+		getActors().add(playerTwo);
 	}
 	// TODO cuando se implemente en su propia clase recordar resolver el trato de mayusculas 
 	// según la lógica del scenario EJ: al moverse pulsar "d" y soltar "D" puede ser conflictivo
@@ -79,10 +81,14 @@ public class Scenario {
 	public void pulsedKey(int keyCode, char keyChar) {
 	
 		if (keyCode == KeyEvent.VK_LEFT)
-			getPlayer_one().setLeft(true);
-		if (keyCode == KeyEvent.VK_RIGHT)
-			getPlayer_one().setRight(true);
-		else if (keyChar == 'a') {
+			playerTwo.setLeft(true);
+		else if (keyCode == KeyEvent.VK_RIGHT)
+			playerTwo.setRight(true);
+		else if (keyCode == KeyEvent.VK_DOWN)
+			playerTwo.setDown(true);
+		else if (keyCode == KeyEvent.VK_UP)
+			playerTwo.jump();
+		if (keyChar == 'a') {
 			getPlayer_one().setLeft(true);
 		} else if (keyChar == 'd') {
 			getPlayer_one().setRight(true);
@@ -95,10 +101,14 @@ public class Scenario {
 
 	public void releasedKey(int keyCode, char keyChar) {
 		if (keyCode == KeyEvent.VK_LEFT)
-			getPlayer_one().setLeft(false);
+			playerTwo.setLeft(false);
 		else if (keyCode == KeyEvent.VK_RIGHT)
-			getPlayer_one().setRight(false);
-		else if (keyChar == 'a') {
+			playerTwo.setRight(false);
+		else if (keyCode == KeyEvent.VK_DOWN) {
+			playerTwo.setDown(false);
+			playerTwo.setUP(true);
+		}
+		if (keyChar == 'a') {
 			getPlayer_one().setLeft(false);
 		} else if (keyChar == 'd') {
 			getPlayer_one().setRight(false);
@@ -124,10 +134,14 @@ public class Scenario {
 	public void update() {
 		Physical_passive map;
 		getPlayer_one().updatePos(null);
+		playerTwo.updatePos(null);
+		
 		for (int i = 0; i < getStaticMap().size(); i++) {
 			map = (Physical_passive) (getStaticMap().get(i));
 			if (getPlayer_one().collides(map))
 				getPlayer_one().repair_collision(map);
+			if (playerTwo.collides(map))
+				playerTwo.repair_collision(map);
 		}
 	}
 
