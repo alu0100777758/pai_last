@@ -1,0 +1,5 @@
+package es.ull.etsii.pai.practicafinal;
+
+public enum KeyActions {
+	P1UP, P1LEFT, P1RIGHT, P1DOWN, P2UP, P2LEFT, P2RIGHT, P2DOWN, P1SHOOTLEFT, P1SHOOTRIGHT, P2SHOOTLEFT, P2SHOOTRIGHT
+}

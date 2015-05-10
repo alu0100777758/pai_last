@@ -17,7 +17,7 @@ public class Bullet extends Actor implements Physical_active{
 	private GraphicRectangle graphicShape;
 	private Point2D speed;
 	
-	public static final int BULLET_SIZE = 5;
+	public static final int BULLET_SIZE = 7;
 	
 	public Bullet (Point2D pos) {
 		super(pos);

@@ -153,7 +153,7 @@ public class Player extends Actor implements Physical_active {
 				
 			}
 		}
-		System.out.println("Vel: " + getSpeed().x() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());			//
+		//System.out.println("Vel: " + getSpeed().x() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());			//
 		return false;
 	}
 
