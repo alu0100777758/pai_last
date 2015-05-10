@@ -34,8 +34,16 @@ public class Player extends Actor implements Physical_active {
 	public static final int SPEED = 5;
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
-
+	private	Color color = Color.BLUE;
 	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 	public Player(Point2D position) {
 		super(position);
 		setSpeed(new Point2D(0, 0));
@@ -45,7 +53,7 @@ public class Player extends Actor implements Physical_active {
 	
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(Color.BLUE);
+		g.setColor(getColor());
 		g.fillRect((int) getPosition().x(), (int) getPosition().y(),
 				(int) WIDTH, (int) HEIGHT);
 	}

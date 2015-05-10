@@ -1,5 +1,6 @@
 package es.ull.etsii.pai.practicafinal;
 
+import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class BvsR_Map implements Serializable {
 				setPlayer_one(player);
 				addActor(getPlayer_one());
 			}else if (getPlayer_two() == null) {
+				player.setColor(Color.RED);
 				setPlayer_two(player);
 				addActor(getPlayer_two());
 			}

@@ -1,5 +1,6 @@
 package es.ull.etsii.pai.practicafinal;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
@@ -18,12 +19,12 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	
 	public StaticPlatform(int x1, int y1, int width, int height) {
 		setGraphicRectangle(new GraphicRectangle(x1, y1, width, height));
+		getGraphicRectangle().setColor(Color.GREEN);
 		setPhysicalRectangle(new PhysicalRectangle(x1, y1, width, height));
 	}
 	
 	public void paint(Graphics g) {
-	//	System.out.println("dibujando");
-		getGraphicRectangle().paint(g.create());
+		getGraphicRectangle().paint(g);
 	}
 	/**
 	 *  TODO
