@@ -33,6 +33,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.GameFrame;
+import es.ull.etsii.pai.practicafinal.GameLoop;
+import es.ull.etsii.pai.practicafinal.Main;
 import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.RelativeLayout;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
@@ -42,6 +45,7 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
 	protected static final String SAVEMAP_SUFFIX = ".rvsbm";
+	protected static final String TEMP_FILE_MAP = "map.temp";
 	BvsR_Map map;
 	EditorToolbar toolbar;
 	TopPanel toppanel = new TopPanel();
@@ -142,14 +146,34 @@ public class EditorFrame extends JFrame implements ActionListener,
 			}
 
 			private void resetMap() {
-				setMap(new BvsR_Map(new Player(new Point2D(200, 200))));
+				setMap(new BvsR_Map());
 			}
 		});
+		JMenuItem lanzarGameScenario= new JMenuItem("Lanzar partida");
+		lanzarGameScenario.setMnemonic(KeyEvent.VK_C);
+		lanzarGameScenario.setToolTipText("Lanzar partida");
+		lanzarGameScenario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("ill try to launch");
+				saveMap(TEMP_FILE_MAP);
+				GameFrame frame = new GameFrame(TEMP_FILE_MAP);
+				frame.setTitle("Red VS Blue");
+				frame.setSize(1200, 800);
+			//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			 	frame.setLocationRelativeTo(null); // Center the frame
+			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+				GameLoop.init(frame);
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			}});
+		JMenu launch = new JMenu("Lanzar");
+		launch.setMnemonic(KeyEvent.VK_L);
 		file.add(nuevo);
 		file.add(guardar);
 		file.add(cargar);
+		launch.add(lanzarGameScenario);
 		menubar.add(file);
-
+		menubar.add(launch);
 		setJMenuBar(menubar);
 	}
 

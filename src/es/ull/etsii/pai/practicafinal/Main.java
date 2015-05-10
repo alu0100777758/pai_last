@@ -3,9 +3,12 @@ package es.ull.etsii.pai.practicafinal;
 import javax.swing.JFrame;
 
 public class Main {
-
+	public static final String DEFAULT_MAP = "testingPlayerInit.rvsbm";
 	public static void main(String[] args) {
-		GameFrame frame = new GameFrame();
+		String mapPath = DEFAULT_MAP;
+		if(args.length>0)
+			mapPath = args[0];
+		GameFrame frame = new GameFrame(mapPath);
 		frame.setTitle("Red VS Blue");
 		frame.setSize(1200, 800);
 	//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
