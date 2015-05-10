@@ -7,26 +7,29 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BvsR_Map implements Serializable{
+public class BvsR_Map implements Serializable {
 	private static final long serialVersionUID = 8439640060806465321L;
 	private ArrayList<Entity> background = new ArrayList<Entity>();
 	private ArrayList<Entity> staticMap = new ArrayList<Entity>();
 	private ArrayList<Actor> actors = new ArrayList<Actor>();
-	private ArrayList<Entity> GUI = new ArrayList<Entity>(); 
+	private ArrayList<Entity> GUI = new ArrayList<Entity>();
 	private int width;
 	private int height;
 	private Player player_one = null;
 	private Player player_two = null;
-	public void addPlayer(Player player){
-		if(getPlayer_one() == null){
-			setPlayer_one(player);
-			addActor(player);
-		}
-		else if (getPlayer_two() == null){
-			setPlayer_two(player);
-			addActor(player);
+
+	public void addPlayer(Player player) {
+		if (player != null) {
+			if (getPlayer_one() == null) {
+				setPlayer_one(player);
+				addActor(getPlayer_one());
+			}else if (getPlayer_two() == null) {
+				setPlayer_two(player);
+				addActor(getPlayer_two());
+			}
 		}
 	}
+
 	public Player getPlayer_two() {
 		return player_two;
 	}
@@ -98,18 +101,22 @@ public class BvsR_Map implements Serializable{
 	public void setPlayer_one(Player player_one) {
 		this.player_one = player_one;
 	}
-	public void addStaticMap(Entity map){
+
+	public void addStaticMap(Entity map) {
 		staticMap.add(map);
 	}
+
 	public void addActor(Actor actor) {
-			getActors().add(actor);
+		getActors().add(actor);
 	}
 
-	public static BvsR_Map load(String string) throws FileNotFoundException, IOException, ClassNotFoundException {
+	public static BvsR_Map load(String string) throws FileNotFoundException,
+			IOException, ClassNotFoundException {
 		BvsR_Map map = null;
-		ObjectInputStream save = new ObjectInputStream(new FileInputStream(string));
+		ObjectInputStream save = new ObjectInputStream(new FileInputStream(
+				string));
 		map = (BvsR_Map) save.readObject();
 		save.close();
-	return map;
+		return map;
 	}
 }

@@ -2,6 +2,7 @@ package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
@@ -9,7 +10,7 @@ import javax.swing.JButton;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 
-public abstract class EditorTool implements  ActionListener , MouseListener, MouseMotionListener{
+public abstract class EditorTool implements  ActionListener , MouseListener, MouseMotionListener,KeyListener{
 	private JButton button;
 	int toolid = 0;
 	BvsR_Map map = null;
