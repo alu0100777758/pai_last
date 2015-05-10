@@ -53,7 +53,7 @@ public class EditorFrame extends JFrame implements ActionListener , MouseListene
 		
 	}
 	public EditorFrame() {
-		map = new BvsR_Map(new Player(new Point2D(200, 200)));
+		map = new BvsR_Map();
 		toolbar = new EditorToolbar(map);
 		setLayout(new BorderLayout());
 		KeyHandler keys = new KeyHandler();

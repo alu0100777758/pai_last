@@ -53,7 +53,7 @@ public class RectangleTool extends EditorTool {
 		int beginY = Math.min(j, j2);
 		int endX = Math.max(i, i2);
 		int endY = Math.max(j, j2);
-		map.addActor(new StaticPlatform(beginX,beginY, endX-beginX, endY-beginY),1);
+		getMap().addStaticMap(new StaticPlatform(beginX,beginY, endX-beginX, endY-beginY));
 	}
 
 	@Override

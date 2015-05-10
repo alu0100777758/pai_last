@@ -6,6 +6,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import es.ull.etsii.pai.practicafinal.Player;
+import es.ull.etsii.pai.prct9.geometry.Point2D;
+
 public class PlayerInitTool extends EditorTool {
 	public PlayerInitTool() {
 		setButton(new JButton(new ImageIcon("PlayerInitTool.png")));
@@ -36,6 +39,7 @@ public class PlayerInitTool extends EditorTool {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		getMap().addPlayer(new Player(new Point2D(e.getX(), e.getY())));
 		// TODO Auto-generated method stub
 
 	}

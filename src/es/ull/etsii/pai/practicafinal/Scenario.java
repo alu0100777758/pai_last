@@ -14,9 +14,15 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
-	BvsR_Map mapData = new BvsR_Map(new Player(new Point2D(200, 200)));
-	Player playerTwo;
-	
+	public static final String DEFAULT_MAP = "testingPlayerInit.rvsbm";
+	BvsR_Map mapData = new BvsR_Map();
+	public Player getPlayer_two() {
+		return mapData.getPlayer_two();
+	}
+
+	public void setPlayer_two(Player player_two) {
+		this.mapData.setPlayer_one(player_two);
+	}
 	public Player getPlayer_one() {
 		return mapData.getPlayer_one();
 	}
@@ -44,7 +50,7 @@ public class Scenario {
 		// /////******************** Para probar poner un unico actor y un
 		// suelo.
 		try {
-			setMapData(BvsR_Map.load("test2.rvsbm"));
+			setMapData(BvsR_Map.load(DEFAULT_MAP));
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
 		} catch (ClassNotFoundException e) {
@@ -54,10 +60,6 @@ public class Scenario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		playerTwo = new Player(new Point2D(300, 200));
-		getActors().add(getPlayer_one());
-		getActors().add(playerTwo);
 	}
 /**
  * TODO: 
@@ -70,13 +72,13 @@ public class Scenario {
 	public void pulsedKey(int keyCode, char keyChar) {
 	
 		if (keyCode == KeyEvent.VK_LEFT)
-			playerTwo.setLeft(true);
+			getPlayer_two().setLeft(true);
 		else if (keyCode == KeyEvent.VK_RIGHT)
-			playerTwo.setRight(true);
+			getPlayer_two().setRight(true);
 		else if (keyCode == KeyEvent.VK_DOWN)
-			playerTwo.setDown(true);
+			getPlayer_two().setDown(true);
 		else if (keyCode == KeyEvent.VK_UP)
-			playerTwo.jump();
+			getPlayer_two().jump();
 		if (keyChar == 'a') {
 			getPlayer_one().setLeft(true);
 		} else if (keyChar == 'd') {
@@ -89,18 +91,18 @@ public class Scenario {
 		 else if (keyChar == 'j') {
 				getActors().add(getPlayer_one().shoot());
 		}else if (keyChar == '0') {
-			getActors().add(playerTwo.shoot());
+			getActors().add(getPlayer_two().shoot());
 	}
 	}
 
 	public void releasedKey(int keyCode, char keyChar) {
 		if (keyCode == KeyEvent.VK_LEFT)
-			playerTwo.setLeft(false);
+			getPlayer_two().setLeft(false);
 		else if (keyCode == KeyEvent.VK_RIGHT)
-			playerTwo.setRight(false);
+			getPlayer_two().setRight(false);
 		else if (keyCode == KeyEvent.VK_DOWN) {
-			playerTwo.setDown(false);
-			playerTwo.setUP(true);
+			getPlayer_two().setDown(false);
+			getPlayer_two().setUP(true);
 		}
 		if (keyChar == 'a') {
 			getPlayer_one().setLeft(false);
@@ -139,8 +141,8 @@ public class Scenario {
 			map = (Physical_passive) (getStaticMap().get(i));
 			if (getPlayer_one().collides(map))
 				getPlayer_one().repair_collision(map);
-			if (playerTwo.collides(map))
-				playerTwo.repair_collision(map);
+			if (getPlayer_two().collides(map))
+				getPlayer_two().repair_collision(map);
 		}
 		
 	

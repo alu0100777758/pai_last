@@ -15,10 +15,28 @@ public class BvsR_Map implements Serializable{
 	private ArrayList<Entity> GUI = new ArrayList<Entity>(); 
 	private int width;
 	private int height;
-	private Player player_one;
+	private Player player_one = null;
+	private Player player_two = null;
+	public void addPlayer(Player player){
+		if(getPlayer_one() == null){
+			setPlayer_one(player);
+			addActor(player);
+		}
+		else if (getPlayer_two() == null){
+			setPlayer_two(player);
+			addActor(player);
+		}
+	}
+	public Player getPlayer_two() {
+		return player_two;
+	}
+
+	public void setPlayer_two(Player player_two) {
+		this.player_two = player_two;
+	}
 
 	public BvsR_Map(Player player_one) {
-		this.player_one = player_one;
+		addPlayer(player_one);
 	}
 
 	public BvsR_Map() {
@@ -80,13 +98,11 @@ public class BvsR_Map implements Serializable{
 	public void setPlayer_one(Player player_one) {
 		this.player_one = player_one;
 	}
-
-	public void addActor(StaticPlatform staticPlatform, int i) {
-		switch(i){
-		case 1 :
-			staticMap.add(staticPlatform);
-		}
-		
+	public void addStaticMap(Entity map){
+		staticMap.add(map);
+	}
+	public void addActor(Actor actor) {
+			getActors().add(actor);
 	}
 
 	public static BvsR_Map load(String string) throws FileNotFoundException, IOException, ClassNotFoundException {
