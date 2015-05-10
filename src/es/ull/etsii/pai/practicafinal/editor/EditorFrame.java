@@ -1,7 +1,7 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,47 +20,115 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.logging.Level;
 
+import javax.swing.AbstractButton;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.RelativeLayout;
-import es.ull.etsii.pai.practicafinal.ScenarioPanel;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
-public class EditorFrame extends JFrame implements ActionListener , MouseListener{
-	BvsR_Map map = new BvsR_Map(new Player(new Point2D(200, 200)));
-	EditorToolbar toolbar = new EditorToolbar();
-	JPanel paintZone = new JPanel();
-	public EditorFrame() {
+public class EditorFrame extends JFrame implements ActionListener , MouseListener, MouseMotionListener{
+	protected static final String SAVEMAP_SUFFIX = ".rvsbm";
+	BvsR_Map map;
+	EditorToolbar toolbar;
+	TopPanel toppanel = new TopPanel();
+	MapPainter bottomPanel;
+	public BvsR_Map getMap() {
+		return map;
+	}
+	public void setMap(BvsR_Map map) {
+		this.map = map;
+		this.toolbar.setMap(map);
+		this.bottomPanel.setMap(map);
 		
-//		setScenarioPanel(new ScenarioPanel());
-//		setScenarioPanel(getScenarioPanel());
-//		this.add(getScenarioPanel());
-		setLayout(new RelativeLayout(RelativeLayout.Y_AXIS));
+	}
+	public EditorFrame() {
+		map = new BvsR_Map(new Player(new Point2D(200, 200)));
+		toolbar = new EditorToolbar(map);
+		setLayout(new BorderLayout());
 		KeyHandler keys = new KeyHandler();
 		this.addKeyListener(keys);
-		this.addMouseListener(this);
-		JButton save = new JButton("save");
-		save.addActionListener(this);
-		JPanel top = new JPanel();
-		top.add(toolbar);
-
-//		top.validate();
-		top.setBackground(Color.WHITE);
-		this.add(top);
-		paintZone.setBackground(Color.BLACK);
-//		paintZone.setPreferredSize(get);
-//		paintZone.setSize(new Dimension(getSize().width,getSize().height-top.getSize().height));
-//		add(paintZone);
-		add(new ScenarioPanel());
-//		this.add(save);
-//		this.add
+		toppanel.add(toolbar);
+		this.add(toppanel,BorderLayout.NORTH);
+		bottomPanel = new MapPainter(map);
+		bottomPanel.addMouseListener(this);
+		bottomPanel.addMouseMotionListener(this);
+		this.add(bottomPanel, BorderLayout.CENTER);
+		createMenuBar();
 	}
+	private void createMenuBar() {
+
+        JMenuBar menubar = new JMenuBar();
+
+        JMenu file = new JMenu("File");
+        file.setMnemonic(KeyEvent.VK_F);
+
+        JMenuItem guardar = new JMenuItem("guardar");
+        guardar.setMnemonic(KeyEvent.VK_S);
+        guardar.setToolTipText("Guardar el nivel");
+        guardar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	      JFileChooser c = new JFileChooser(System.getProperty("user.dir"));
+        	      int rVal = c.showOpenDialog(EditorFrame.this);
+				if (rVal == JFileChooser.APPROVE_OPTION) {
+        	        saveMap(c.getCurrentDirectory().toString()+System.getProperty("file.separator")+c.getSelectedFile().getName()+SAVEMAP_SUFFIX);
+        	      }
+        	      if (rVal == JFileChooser.CANCEL_OPTION) {
+        	      }
+        	    }
+        
+        });
+        
+        JMenuItem cargar = new JMenuItem("cargar");
+        cargar.setMnemonic(KeyEvent.VK_C);
+        cargar.setToolTipText("Guardar el nivel");
+        cargar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	      JFileChooser c = new JFileChooser(System.getProperty("user.dir"));
+        	      int rVal = c.showOpenDialog(EditorFrame.this);
+				if (rVal == JFileChooser.APPROVE_OPTION) {
+					try {
+						setMap(BvsR_Map.load(c.getCurrentDirectory().toString()+System.getProperty("file.separator")+c.getSelectedFile().getName()));
+					} catch (ClassNotFoundException | IOException e1) {
+						e1.printStackTrace();
+					}
+        	        System.out.println("load: "+ c.getCurrentDirectory().toString() + System.getProperty("file.separator")+c.getSelectedFile().getName());
+        	      }
+        	      if (rVal == JFileChooser.CANCEL_OPTION) {
+        	      }
+        	    }
+        
+        });
+        
+        JMenuItem nuevo = new JMenuItem("nuevo");
+        nuevo.setMnemonic(KeyEvent.VK_C);
+        nuevo.setToolTipText("Eliminar nivel actual y empezar desde cero");
+        nuevo.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		resetMap();
+        	}
+
+			private void resetMap() {
+				setMap(new BvsR_Map(new Player(new Point2D(200, 200))));	
+			}
+        });
+        file.add(nuevo);
+        file.add(guardar);
+        file.add(cargar);
+        menubar.add(file);
+
+        setJMenuBar(menubar);
+    }
 
 	class KeyHandler implements KeyListener {
 
@@ -82,7 +151,7 @@ public class EditorFrame extends JFrame implements ActionListener , MouseListene
 		
 	}
 	public void actionPerformed(ActionEvent e) {
-	        Toolkit.getDefaultToolkit().sync();
+	        
 	        System.out.println("updating");
 		// TODO Auto-generated method stub
 		
@@ -96,50 +165,59 @@ public class EditorFrame extends JFrame implements ActionListener , MouseListene
 			      output.writeObject(map);
 			    }  
 			    catch(IOException ex){
+			    	System.out.println("error");
+			    	ex.printStackTrace();
 			    }
 		
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		addRectangle(e.getX(),e.getY());
+		toolbar.getSelectedTool().mouseClicked(e);
+//		addRectangle(e.getX(),e.getY());
+		repaint();
 		// TODO Auto-generated method stub
 		
 	}
-	private void addRectangle(int i, int j) {
-		System.out.println("añadiendo");
-		map.addActor(new StaticPlatform(i,j, 100, 30),1);
+//	private void addRectangle(int i, int j) {
+//		System.out.println("añadiendo");
+//		map.addActor(new StaticPlatform(i-5,j, 100, 30),1);
+//		repaint();
+//	}
+	@Override
+	public void mousePressed(MouseEvent e) {
+		toolbar.getSelectedTool().mousePressed(e);
 		repaint();
 	}
 	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		toolbar.getSelectedTool().mouseReleased(e);
+		repaint();
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		toolbar.getSelectedTool().mouseEntered(e);
+		repaint();
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		toolbar.getSelectedTool().mouseExited(e);
+		repaint();
 	}
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-//		g.fillRect(0, 0, getWidth(), getHeight());
-//		Graphics2D g2 = (Graphics2D) g.create();
-//		for (int i = 0; i < map.getStaticMap().size(); i++) {
-//			((StaticPlatform) map.getStaticMap().get(i)).paint(g.create());
-//		}
-//		for (int i = 0; i < map.getActors().size(); i++) {
-//			map.getActors().get(i).paint(g.create());
-//		}
+		toolbar.getSelectedTool().paint(bottomPanel.getGraphics());
+	}
+	@Override
+	public void mouseDragged(MouseEvent arg0) {
+		toolbar.getSelectedTool().mouseDragged(arg0);
+		repaint();
+		
+	}
+	@Override
+	public void mouseMoved(MouseEvent arg0) {
+		toolbar.getSelectedTool().mouseMoved(arg0);
+		repaint();
+		
 	}
 }

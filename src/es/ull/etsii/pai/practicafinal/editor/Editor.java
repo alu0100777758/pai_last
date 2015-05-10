@@ -16,6 +16,7 @@ public class Editor{
 	 	frame.setLocationRelativeTo(null); // Center the frame
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.setFocusable(true);
 
 	}
 

@@ -44,7 +44,7 @@ public class Scenario {
 		// /////******************** Para probar poner un unico actor y un
 		// suelo.
 		try {
-			setMapData(BvsR_Map.load("default"));
+			setMapData(BvsR_Map.load("test2.rvsbm"));
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
 		} catch (ClassNotFoundException e) {
@@ -88,7 +88,9 @@ public class Scenario {
 		}
 		 else if (keyChar == 'j') {
 				getActors().add(getPlayer_one().shoot());
-		}
+		}else if (keyChar == '0') {
+			getActors().add(playerTwo.shoot());
+	}
 	}
 
 	public void releasedKey(int keyCode, char keyChar) {
