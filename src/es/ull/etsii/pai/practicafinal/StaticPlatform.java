@@ -70,8 +70,8 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	
 	@Override
 	public boolean collides(Physical_passive actor) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return getPhysicalRectangle().collides(actor);
 	}
 
 	@Override

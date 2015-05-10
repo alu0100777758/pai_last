@@ -50,7 +50,7 @@ public class Scenario {
 		// /////******************** Para probar poner un unico actor y un
 		// suelo.
 		try {
-			setMapData(BvsR_Map.load(DEFAULT_MAP));
+			setMapData(BvsR_Map.load("m.rvsbm"));
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
 		} catch (ClassNotFoundException e) {
@@ -129,20 +129,42 @@ public class Scenario {
 	 */
 	public void update() {
 		Physical_passive map;
-	//	getPlayer_one().updatePos(null);
-	//	playerTwo.updatePos(null);
+
 		for (int i = 0; i < getActors().size(); i++) {
 			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(0, 0, 1200, 800))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
 				getActors().remove(i);	
 			}
 			
 		}
+		/**
+		 * Aqui es donde se comprueban colisiones.
+		 */
 		for (int i = 0; i < getStaticMap().size(); i++) {
 			map = (Physical_passive) (getStaticMap().get(i));
 			if (getPlayer_one().collides(map))
 				getPlayer_one().repair_collision(map);
 			if (getPlayer_two().collides(map))
 				getPlayer_two().repair_collision(map);
+			for (int j = 0; j < getActors().size(); j++) {
+				if (getActors().get(j) instanceof Bullet) {
+					if (((Bullet) getActors().get(j)).collides(map)) 
+						getActors().remove(j);
+				}
+			}
+		}
+		/**
+		 * Verifica si le pego a algun jugador
+		 */
+		
+		for (int i = 0; i < getActors().size(); i++) {
+			if (getActors().get(i) instanceof Bullet) {
+				if (getPlayer_one().collides(getActors().get(i).getPhysicalShape())) {
+					getActors().remove(getActors().get(i));
+				}
+				else if (getPlayer_two().collides(getActors().get(i).getPhysicalShape())) {
+					getActors().remove(getActors().get(i));
+				}
+			}
 		}
 		
 	

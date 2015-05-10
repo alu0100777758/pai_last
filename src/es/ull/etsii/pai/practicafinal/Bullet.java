@@ -62,8 +62,8 @@ public class Bullet extends Actor implements Physical_active{
 
 	@Override
 	public boolean collides(Physical_passive actor) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return actor.getPhysicalRectangle().collides(getPhysicalRectangle());
 	}
 
 	@Override
