@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class DefaultTool extends EditorTool {
+	
 	public DefaultTool() {
 		setButton(new JButton(new ImageIcon("DefaultTool.png")));
 	}

@@ -81,7 +81,10 @@ public class EditorFrame extends JFrame implements ActionListener , MouseListene
         	      JFileChooser c = new JFileChooser(System.getProperty("user.dir"));
         	      int rVal = c.showOpenDialog(EditorFrame.this);
 				if (rVal == JFileChooser.APPROVE_OPTION) {
-        	        saveMap(c.getCurrentDirectory().toString()+System.getProperty("file.separator")+c.getSelectedFile().getName()+SAVEMAP_SUFFIX);
+					String path = c.getCurrentDirectory().toString()+System.getProperty("file.separator")+c.getSelectedFile().getName();
+					if(!path.substring(path.length()-SAVEMAP_SUFFIX.length(), path.length()).equals(SAVEMAP_SUFFIX))
+						path+=SAVEMAP_SUFFIX;
+        	        saveMap(path);
         	      }
         	      if (rVal == JFileChooser.CANCEL_OPTION) {
         	      }
@@ -116,6 +119,7 @@ public class EditorFrame extends JFrame implements ActionListener , MouseListene
         nuevo.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		resetMap();
+        		repaint();
         	}
 
 			private void resetMap() {
