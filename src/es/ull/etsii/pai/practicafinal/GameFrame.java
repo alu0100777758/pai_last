@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 
 public class GameFrame extends JFrame implements ActionListener{
 	private ScenarioPanel scenarioPanel;
-	public GameFrame() {
-		setScenarioPanel(new ScenarioPanel());
+	public GameFrame(String mapName) {
+		setScenarioPanel(new ScenarioPanel(mapName));
 		this.add(getScenarioPanel());
 		this.addKeyListener(new KeyHandler());
 		GameLoop.setDisplayer(scenarioPanel);

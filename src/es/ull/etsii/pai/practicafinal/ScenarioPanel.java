@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 public class ScenarioPanel extends JPanel{
 	private Scenario scenario;
 	
-	public ScenarioPanel() {
-		setScenario(new Scenario(getWidth(), getHeight()));
+	public ScenarioPanel(String mapName) {
+		setScenario(new Scenario(getWidth(), getHeight(),mapName));
 		this.addComponentListener(new SizeChangeListener());
 		this.requestFocus();
 	} 
@@ -34,7 +34,7 @@ public class ScenarioPanel extends JPanel{
 
 		@Override
 		public void componentResized(ComponentEvent e) {
-			setScenario(new Scenario(getWidth(), getHeight()));				// Solo para probar, desde que funcione que se modifique con getters y setters.
+//			setScenario(new Scenario(getWidth(), getHeight()));				// Solo para probar, desde que funcione que se modifique con getters y setters.
 		}
 
 		

@@ -14,7 +14,6 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
-	public static final String DEFAULT_MAP = "testingPlayerInit.rvsbm";
 	BvsR_Map mapData = new BvsR_Map();
 	public Player getPlayer_two() {
 		return mapData.getPlayer_two();
@@ -39,7 +38,7 @@ public class Scenario {
 		this.mapData = mapData;
 	}
 
-	public Scenario(Integer width, Integer height) {
+	public Scenario(Integer width, Integer height, String mapName) {
 		setWidth(width);
 		setHeight(height);
 		
@@ -50,7 +49,8 @@ public class Scenario {
 		// /////******************** Para probar poner un unico actor y un
 		// suelo.
 		try {
-			setMapData(BvsR_Map.load("m.rvsbm"));
+			setMapData(BvsR_Map.load(mapName));
+
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
 		} catch (ClassNotFoundException e) {
