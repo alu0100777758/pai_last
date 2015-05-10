@@ -224,4 +224,11 @@ public class EditorFrame extends JFrame implements ActionListener , MouseListene
 		repaint();
 		
 	}
+	@Override
+	public void repaint() {
+		if(toolbar.getSelectedTool().isModified()){
+			super.repaint();
+			toolbar.getSelectedTool().setModified(false);
+		}
+	}
 }

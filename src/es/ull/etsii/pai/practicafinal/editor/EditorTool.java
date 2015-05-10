@@ -13,7 +13,15 @@ public abstract class EditorTool implements  ActionListener , MouseListener, Mou
 	private JButton button;
 	int toolid = 0;
 	BvsR_Map map = null;
+	boolean modified = false;
 	
+	public boolean isModified() {
+		return modified;
+	}
+
+	public void setModified(boolean modified) {
+		this.modified = modified;
+	}
 
 	public BvsR_Map getMap() {
 		return map;
@@ -41,4 +49,5 @@ public abstract class EditorTool implements  ActionListener , MouseListener, Mou
 	}
 	public void paint(Graphics g) {
 	}
+
 }

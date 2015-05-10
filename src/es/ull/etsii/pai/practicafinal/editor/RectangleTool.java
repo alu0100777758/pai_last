@@ -78,6 +78,7 @@ public class RectangleTool extends EditorTool {
 			addRectangle((int)begin.getX(),(int)begin.getY(),arg0.getX(),arg0.getY());
 			setDrawing(false);
 		}
+		setModified(true);
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class RectangleTool extends EditorTool {
 			setDrawing(false);
 		}
 		// TODO Auto-generated method stub
-
+		setModified(true);
 	}
 	@Override
 	public void paint(Graphics g) {
@@ -99,6 +100,7 @@ public class RectangleTool extends EditorTool {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		setLastVisited(e.getPoint());
+		setModified(true);
 		// TODO Auto-generated method stub
 		
 	}

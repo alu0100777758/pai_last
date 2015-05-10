@@ -2,7 +2,10 @@ package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
+
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
@@ -78,6 +81,35 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	@Override
 	public Rectangle getCollisionedRectangle(Physical_passive actor) {
 		return getPhysicalRectangle().getCollisionedRectangle(actor.getPhysicalRectangle());
+	}
+
+	@Override
+	public RectangularShape getShape() {
+		return getPhysicalRectangle();
+	}
+
+	@Override
+	public void setLocation(int x, int y) {
+		translatePhysicalShape(x, y);
+		translateGraphicalShape(x,y);
+	}
+
+	private void translateGraphicalShape(int x, int y) {
+		getGraphicRectangle().setLocation(x, y);
+	}
+
+	private void translatePhysicalShape(int x, int y) {
+		getPhysicalRectangle().setLocation(x,y);
+	}
+
+	@Override
+	public int getX() {
+		return (int)getPhysicalRectangle().getLocation().getX();
+	}
+
+	@Override
+	public int gety() {
+		return (int)getPhysicalRectangle().getLocation().getY();
 	}
 
 }

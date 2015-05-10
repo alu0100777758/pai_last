@@ -1,6 +1,7 @@
 package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Graphics;
+import java.awt.geom.RectangularShape;
 
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
@@ -56,5 +57,21 @@ public class Actor extends Entity {
 	}
 	public void addPosition(Point2D point){
 		setPosition(getPosition().add(point));
+	}
+	@Override
+	public RectangularShape getShape() {
+		return getPhysicalShape();
+	}
+	@Override
+	public void setLocation(int x, int y) {
+		setPosition(new Point2D(x, y));
+	}
+	@Override
+	public int getX() {
+		return (int)getPosition().x();
+	}
+	@Override
+	public int gety() {
+		return (int)getPosition().y();
 	}
 }
