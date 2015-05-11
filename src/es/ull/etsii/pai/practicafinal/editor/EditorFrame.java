@@ -1,16 +1,13 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.Toolkit;
+import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -20,27 +17,16 @@ import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.util.logging.Level;
 
-import javax.swing.AbstractButton;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
-import es.ull.etsii.pai.practicafinal.Main;
-import es.ull.etsii.pai.practicafinal.Player;
-import es.ull.etsii.pai.practicafinal.RelativeLayout;
-import es.ull.etsii.pai.practicafinal.StaticPlatform;
-import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
-import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
@@ -82,8 +68,8 @@ public class EditorFrame extends JFrame implements ActionListener,
 
 		JMenuBar menubar = new JMenuBar();
 
-		JMenu file = new JMenu("File");
-		file.setMnemonic(KeyEvent.VK_F);
+		JMenu file = new JMenu("Archivo");
+		file.setMnemonic(KeyEvent.VK_A);
 
 		JMenuItem guardar = new JMenuItem("guardar");
 		guardar.setMnemonic(KeyEvent.VK_S);
@@ -142,11 +128,11 @@ public class EditorFrame extends JFrame implements ActionListener,
 		nuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetMap();
-				repaint();
 			}
 
 			private void resetMap() {
 				setMap(new BvsR_Map());
+				repaint();
 			}
 		});
 		JMenuItem lanzarGameScenario= new JMenuItem("Lanzar partida");
@@ -253,7 +239,6 @@ public class EditorFrame extends JFrame implements ActionListener,
 			toolbar.getSelectedTool().setModified(false);
 		}
 	}
-
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent e) {
 		if (e.getID() == KeyEvent.KEY_PRESSED) {
