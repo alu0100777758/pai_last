@@ -18,7 +18,9 @@ public class ParabolicLocomotion implements MovementEquation {
 	@Override
 	public Point2D getNewpos(Point2D vector, Point2D oldPos) {
 		Point2D res =  new Point2D(0,0).add(oldPos);
-		vector = vector.add(new Point2D(0, getGravity())); // se aplica aceleración
+		System.out.println("BEFORE -> pos : "+res +" | vel = " + vector);
+		vector.setY(vector.y()+getGravity());
+		System.out.println("pos : "+res +" | vel = " + vector);
 		return res.add(vector);
 	}
 
