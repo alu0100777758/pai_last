@@ -47,9 +47,9 @@ public class KeyController {
 			getPlayerOne().setDown(true);
 		}
 		 else if (keyChar == 'j') {
-				getActors().add(getPlayerOne().shoot());
+			;//	getActors().add(getPlayerOne().shoot());
 		}else if (keyChar == '0') {
-			getActors().add(getPlayerTwo().shoot());
+			;//getActors().add(getPlayerTwo().shoot());
 	}
 	}
 
