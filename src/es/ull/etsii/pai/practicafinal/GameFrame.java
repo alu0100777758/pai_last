@@ -30,7 +30,7 @@ public class GameFrame extends JFrame implements ActionListener{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			//System.out.println("pressed");
-			getScenarioPanel().getScenario().pulsedKey(e.getKeyCode(), e.getKeyChar());
+			getScenarioPanel().getScenario().getKeyController().pulsedKey(e.getKeyCode(), e.getKeyChar());
 //			getScenarioPanel().repaint();
 			
 		}
@@ -39,7 +39,7 @@ public class GameFrame extends JFrame implements ActionListener{
 		public void keyReleased(KeyEvent arg0) {
 			System.out.println(arg0.getKeyCode());
 			
-			getScenarioPanel().getScenario().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
+			getScenarioPanel().getScenario().getKeyController().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
 		}
 
 		@Override

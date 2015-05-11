@@ -15,6 +15,8 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
 	BvsR_Map mapData = new BvsR_Map();
+	RvsBKeyController keyController = new RvsBKeyController();
+	
 	public Player getPlayer_two() {
 		return mapData.getPlayer_two();
 	}
@@ -237,5 +239,62 @@ public class Scenario {
 	public void setGUI(ArrayList<Entity> gUI) {
 		mapData.setGUI(gUI);
 	}
+	
+	public RvsBKeyController getKeyController() {
+		return keyController;
+	}
 
+	public void setKeyController(RvsBKeyController keyController) {
+		this.keyController = keyController;
+	}
+
+	class RvsBKeyController extends KeyController{
+
+		public void pulsedKey(int keyCode, char keyChar) {
+			
+			if (keyCode == getKeyMap().get(KeyActions.P2LEFT))
+				getPlayer_two().setLeft(true);
+			else if (keyCode == getKeyMap().get(KeyActions.P2RIGHT))
+				getPlayer_two().setRight(true);
+			else if (keyCode == getKeyMap().get(KeyActions.P2DOWN))
+				getPlayer_two().setDown(true);
+			else if (keyCode == getKeyMap().get(KeyActions.P2UP))
+				getPlayer_two().jump();
+			if (keyCode == getKeyMap().get(KeyActions.P1LEFT)) {
+				getPlayer_one().setLeft(true);
+			} else if (keyCode == getKeyMap().get(KeyActions.P1RIGHT)) {
+				getPlayer_one().setRight(true);
+			} else if (keyCode == getKeyMap().get(KeyActions.P1UP)) {
+				getPlayer_one().jump();
+			} else if (keyCode == getKeyMap().get(KeyActions.P1DOWN)) {
+				getPlayer_one().setDown(true);
+			}
+			 else if (keyCode == getKeyMap().get(KeyActions.P1SHOOTLEFT)) {
+					getActors().add(getPlayer_one().shoot());
+			}else if (keyCode == getKeyMap().get(KeyActions.P2SHOOTLEFT)) {
+				getActors().add(getPlayer_two().shoot());
+		}
+		}
+
+		public void releasedKey(int keyCode, char keyChar) {
+			if (keyCode == getKeyMap().get(KeyActions.P2LEFT))
+				getPlayer_two().setLeft(false);
+			else if ((keyCode == getKeyMap().get(KeyActions.P2RIGHT)))
+				getPlayer_two().setRight(false);
+			else if (keyCode == getKeyMap().get(KeyActions.P2DOWN)) {
+				getPlayer_two().setDown(false);
+				getPlayer_two().setUP(true);
+			}
+			if (keyCode == getKeyMap().get(KeyActions.P1LEFT)) {
+				getPlayer_one().setLeft(false);
+			} else if (keyCode == getKeyMap().get(KeyActions.P1RIGHT)) {
+				getPlayer_one().setRight(false);
+			} else if (keyChar == 'w') {
+				// getPlayer_one().setUP(false);
+			} else if (keyCode == getKeyMap().get(KeyActions.P1DOWN)) {
+				getPlayer_one().setDown(false);
+				getPlayer_one().setUP(true);
+			}
+		}
+	}
 }
