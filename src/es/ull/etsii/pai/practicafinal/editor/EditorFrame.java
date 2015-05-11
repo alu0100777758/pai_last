@@ -72,7 +72,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 		file.setMnemonic(KeyEvent.VK_A);
 
 		JMenuItem guardar = new JMenuItem("guardar");
-		guardar.setMnemonic(KeyEvent.VK_S);
+		guardar.setMnemonic(KeyEvent.VK_G);
 		guardar.setToolTipText("Guardar el nivel");
 		guardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -108,6 +108,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 						setMap(BvsR_Map.load(c.getCurrentDirectory().toString()
 								+ System.getProperty("file.separator")
 								+ c.getSelectedFile().getName()));
+						repaint();
 					} catch (ClassNotFoundException | IOException e1) {
 						e1.printStackTrace();
 					}
@@ -123,7 +124,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 		});
 
 		JMenuItem nuevo = new JMenuItem("nuevo");
-		nuevo.setMnemonic(KeyEvent.VK_C);
+		nuevo.setMnemonic(KeyEvent.VK_N);
 		nuevo.setToolTipText("Eliminar nivel actual y empezar desde cero");
 		nuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -136,7 +137,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 			}
 		});
 		JMenuItem lanzarGameScenario= new JMenuItem("Lanzar partida");
-		lanzarGameScenario.setMnemonic(KeyEvent.VK_C);
+		lanzarGameScenario.setMnemonic(KeyEvent.VK_L);
 		lanzarGameScenario.setToolTipText("Lanzar partida");
 		lanzarGameScenario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
