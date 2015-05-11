@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
-import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -30,6 +29,7 @@ import es.ull.etsii.pai.practicafinal.GameLoop;
 
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
+	private static final long serialVersionUID = -5172144293412925652L;
 	protected static final String SAVEMAP_SUFFIX = ".rvsbm";
 	protected static final String TEMP_FILE_MAP = "map.temp";
 	BvsR_Map map;

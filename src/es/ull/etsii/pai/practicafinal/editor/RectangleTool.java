@@ -1,7 +1,6 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.Graphics;
-import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -9,7 +8,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.RepaintManager;
 
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
@@ -37,7 +35,7 @@ public class RectangleTool extends EditorTool {
 		this.drawing = drawing;
 	}
 	public RectangleTool() {
-		setButton(new JButton(new ImageIcon("RectangleTool.png")));
+		setButton(new JButton(new ImageIcon(getClass().getResource("/icons/rectangleTool.png"))));
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

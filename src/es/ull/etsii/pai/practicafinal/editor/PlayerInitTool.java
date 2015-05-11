@@ -12,7 +12,7 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class PlayerInitTool extends EditorTool {
 	public PlayerInitTool() {
-		setButton(new JButton(new ImageIcon("PlayerInitTool.png")));
+		setButton(new JButton(new ImageIcon(getClass().getResource("/icons/PlayerInitTool.png"))));
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {

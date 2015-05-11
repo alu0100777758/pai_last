@@ -10,12 +10,16 @@ import javax.swing.JButton;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 
-public abstract class EditorTool implements  ActionListener , MouseListener, MouseMotionListener,KeyListener{
+public abstract class EditorTool implements ActionListener, MouseListener,
+		MouseMotionListener, KeyListener {
+
 	private JButton button;
 	int toolid = 0;
 	BvsR_Map map = null;
 	boolean modified = false;
-	
+	public EditorTool(){
+	}
+
 	public boolean isModified() {
 		return modified;
 	}
@@ -38,7 +42,7 @@ public abstract class EditorTool implements  ActionListener , MouseListener, Mou
 
 	public void setToolid(int toolid) {
 		this.toolid = toolid;
-		getButton().setName(""+getToolid());
+		getButton().setName("" + getToolid());
 	}
 
 	public JButton getButton() {
@@ -48,6 +52,7 @@ public abstract class EditorTool implements  ActionListener , MouseListener, Mou
 	public void setButton(JButton button) {
 		this.button = button;
 	}
+
 	public void paint(Graphics g) {
 	}
 

@@ -3,13 +3,13 @@ package es.ull.etsii.pai.practicafinal.editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 
 public class EditorToolbar extends JToolBar implements ActionListener {
+	private static final long serialVersionUID = 6391135058169913712L;
 	EditorTool [] tools = {new DefaultTool(), new RectangleTool(), new PlayerInitTool()};
 	int selectedToolIndex = 0;
 	BvsR_Map workingOn = null;

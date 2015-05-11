@@ -1,5 +1,4 @@
 package es.ull.etsii.pai.practicafinal.editor;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -13,8 +12,6 @@ import javax.swing.JButton;
 
 import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.Entity;
-import es.ull.etsii.pai.practicafinal.Player;
-import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class DefaultTool extends EditorTool {
 	Entity selectedEntity = null;
@@ -55,7 +52,7 @@ public class DefaultTool extends EditorTool {
 	}
 
 	public DefaultTool() {
-		setButton(new JButton(new ImageIcon("DefaultTool.png")));
+		setButton(new JButton(new ImageIcon(getClass().getResource("/icons/DefaultTool.png"))));
 	}
 
 	@Override

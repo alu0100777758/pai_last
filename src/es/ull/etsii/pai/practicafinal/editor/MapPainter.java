@@ -9,6 +9,7 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class MapPainter extends JPanel {
+	private static final long serialVersionUID = -4939012327823614215L;
 	BvsR_Map map = null;
 	public BvsR_Map getMap() {
 		return map;
