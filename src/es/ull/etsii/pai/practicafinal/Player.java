@@ -90,7 +90,7 @@ public class Player extends Actor implements Physical_active {
 	}
 	public Bullet shoot ()  {
 		int side = getLookingAt() == Side.LEFT? -20 : 20;
-		return new Bullet(getPosition(), new Point2D (side, 0));
+		return new Bullet(getPosition(), new Point2D (side, -9));
 	}
 	@Override
 	public boolean repair_collisionY(Point2D point) {

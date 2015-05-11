@@ -5,90 +5,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class KeyController {
-	private Player playerOne;
-	private Player playerTwo;
-	private Map<Integer, KeyActions> keyMap ;
+	private Map<KeyActions, Integer> keyMap ;
 	
-	public KeyController(Player playerOne, Player playerTwo) {
-		setKeyMap(new HashMap<Integer, KeyActions> ());
+	public KeyController() {
+		setKeyMap(new HashMap<KeyActions, Integer> ());
 		
-		getKeyMap().put(KeyEvent.VK_A, KeyActions.P1LEFT);
-		getKeyMap().put(KeyEvent.VK_S, KeyActions.P1DOWN);
-		getKeyMap().put(KeyEvent.VK_D, KeyActions.P1RIGHT);
-		getKeyMap().put(KeyEvent.VK_W, KeyActions.P1UP);
-		getKeyMap().put(KeyEvent.VK_J, KeyActions.P1SHOOTLEFT);
-		getKeyMap().put(KeyEvent.VK_K, KeyActions.P1SHOOTRIGHT);
+		getKeyMap().put(KeyActions.P1LEFT, KeyEvent.VK_A);
+		getKeyMap().put(KeyActions.P1DOWN, KeyEvent.VK_S);
+		getKeyMap().put(KeyActions.P1RIGHT, KeyEvent.VK_D);
+		getKeyMap().put(KeyActions.P1UP, KeyEvent.VK_W);
+		getKeyMap().put(KeyActions.P1SHOOTLEFT, KeyEvent.VK_J);
+		getKeyMap().put(KeyActions.P1SHOOTRIGHT, KeyEvent.VK_K);
 		
-		getKeyMap().put(KeyEvent.VK_UP, KeyActions.P2LEFT);
-		getKeyMap().put(KeyEvent.VK_LEFT, KeyActions.P2DOWN);
-		getKeyMap().put(KeyEvent.VK_RIGHT, KeyActions.P2RIGHT);
-		getKeyMap().put(KeyEvent.VK_UP, KeyActions.P2UP);
-		getKeyMap().put(KeyEvent.VK_2, KeyActions.P2SHOOTLEFT);
-		getKeyMap().put(KeyEvent.VK_3, KeyActions.P2SHOOTRIGHT);
+		getKeyMap().put(KeyActions.P2LEFT, KeyEvent.VK_UP);
+		getKeyMap().put(KeyActions.P2DOWN, KeyEvent.VK_LEFT);
+		getKeyMap().put(KeyActions.P2RIGHT, KeyEvent.VK_RIGHT);
+		getKeyMap().put(KeyActions.P2UP, KeyEvent.VK_UP);
+		getKeyMap().put(KeyActions.P2SHOOTLEFT, KeyEvent.VK_2);
+		getKeyMap().put(KeyActions.P2SHOOTRIGHT, KeyEvent.VK_3);
 	}
 	
-	public void pulsedKey(int keyCode, char keyChar) {
-		
-		if (keyCode == KeyEvent.VK_LEFT)
-			getPlayerTwo().setLeft(true);
-		else if (keyCode == KeyEvent.VK_RIGHT)
-			getPlayerTwo().setRight(true);
-		else if (keyCode == KeyEvent.VK_DOWN)
-			getPlayerTwo().setDown(true);
-		else if (keyCode == KeyEvent.VK_UP)
-			getPlayerTwo().jump();
-		if (keyChar == 'a') {
-			getPlayerOne().setLeft(true);
-		} else if (keyChar == 'd') {
-			getPlayerOne().setRight(true);
-		} else if (keyChar == 'w') {
-			getPlayerOne().jump();
-		} else if (keyChar == 's') {
-			getPlayerOne().setDown(true);
-		}
-		 else if (keyChar == 'j') {
-			;//	getActors().add(getPlayerOne().shoot());
-		}else if (keyChar == '0') {
-			;//getActors().add(getPlayerTwo().shoot());
+	public void addKeyValue(KeyActions action, int keyCode) {
+		getKeyMap().put(action, keyCode);
 	}
-	}
-
-	public void releasedKey(int keyCode, char keyChar) {
-		if (keyCode == KeyEvent.VK_LEFT)
-			getPlayerTwo().setLeft(false);
-		else if (keyCode == KeyEvent.VK_RIGHT)
-			getPlayerTwo().setRight(false);
-		else if (keyCode == KeyEvent.VK_DOWN) {
-			getPlayerTwo().setDown(false);
-			getPlayerTwo().setUP(true);
-		}
-		if (keyChar == 'a') {
-			getPlayerOne().setLeft(false);
-		} else if (keyChar == 'd') {
-			getPlayerOne().setRight(false);
-		} else if (keyChar == 'w') {
-			// getPlayer_one().setUP(false);
-		} else if (keyChar == 's') {
-			getPlayerOne().setDown(false);
-			getPlayerOne().setUP(true);
-		}
-	}
-	public Player getPlayerOne() {
-		return playerOne;
-	}
-	public void setPlayerOne(Player playerOne) {
-		this.playerOne = playerOne;
-	}
-	public Player getPlayerTwo() {
-		return playerTwo;
-	}
-	public void setPlayerTwo(Player playerTwo) {
-		this.playerTwo = playerTwo;
-	}
-	public Map<Integer, KeyActions> getKeyMap() {
+	public Map<KeyActions, Integer> getKeyMap() {
 		return keyMap;
 	}
-	public void setKeyMap(Map<Integer, KeyActions> keyMap) {
+	public void setKeyMap(Map<KeyActions, Integer> keyMap) {
 		this.keyMap = keyMap;
 	}
 	
