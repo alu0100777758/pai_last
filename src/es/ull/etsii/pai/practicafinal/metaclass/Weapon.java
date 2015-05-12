@@ -1,11 +1,17 @@
 package es.ull.etsii.pai.practicafinal.metaclass;
 
+import java.io.Serializable;
+
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
 
 
-public abstract class Weapon {
-	private BvsR_Map map;						// mapa en el que está  -> se podría obtener desde el dueño?
+public abstract class Weapon implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2320121838158394980L;
 	private Player owner;						// dueño del arma
 	private int fireRate; 						// cadencia de disparo en forma de periodo en "ticks" suponiendo 60 fps
 	private int mainClipSize;					// número máximo de balas.
@@ -14,11 +20,12 @@ public abstract class Weapon {
 	private int secondaryClipSize;				// número máximo de balas.
 	private int secondaryAmmo;					 // cantidad de balas actualmente en el cargador
 	private int SecondaryBulletCounter = -1;  	// munición disponible, infinito si < 0;
+	private int mainCooldown = 0;
+	private int secondaryCooldown = 0;
 	boolean pulsedMainTrigger = false;
 	boolean pulsedSecondaryTrigger = false;
 	
-	public Weapon(BvsR_Map map, Player owner) {
-		setMap(map);
+	public Weapon(Player owner) {
 		setOwner(owner);
 	}
 	
@@ -30,15 +37,7 @@ public abstract class Weapon {
 		this.owner = owner;
 	}
 
-	public BvsR_Map getMap() {
-		return map;
-	}
-
-	public void setMap(BvsR_Map map) {
-		this.map = map;
-	}
-
-	protected double getFireRate() {
+	protected int getFireRate() {
 		return fireRate;
 	}
 	protected void setFireRate(double fireRate) {
@@ -74,6 +73,22 @@ public abstract class Weapon {
 		this.pulsedMainTrigger = pulsedMainTrigger;
 	}
 	
+	private int getMainCooldown() {
+		return mainCooldown;
+	}
+
+	private void setMainCooldown(int mainCooldown) {
+		this.mainCooldown = mainCooldown;
+	}
+
+	private int getSecondaryCooldown() {
+		return secondaryCooldown;
+	}
+
+	private void setSecondaryCooldown(int secondaryCooldown) {
+		this.secondaryCooldown = secondaryCooldown;
+	}
+
 	protected int getSecondaryCharger() {
 		return secondaryClipSize;
 	}
@@ -117,25 +132,46 @@ public abstract class Weapon {
 	}
 	public void releaseMain(){
 		setPulsedMainTrigger(false);
+		//setMainCooldown(0);
 	}
 	public void releaseSecondary(){
 		setPulsedSecondaryTrigger(false);
+		//setSecondaryCooldown(0);
 	}
-
+	private boolean canShootPrimary() {
+		if (getMainCooldown() <= 0) {
+			setMainCooldown(getFireRate());
+			return true;
+		}
+		else 
+			decreaseCooldowns();
+		
+		return false;
+	}
+	private boolean canShootSecondary() {
+		if (getSecondaryCooldown() <= 0) {
+			setSecondaryCooldown(getFireRate());
+			return true;
+		}
+		else 
+			decreaseCooldowns();
+		
+		return false;
+	}
+	public void decreaseCooldowns() {
+		setMainCooldown(getMainCooldown() - 1);
+		setSecondaryCooldown(getSecondaryCooldown() - 1);
+	}
 	public void update(){
-		if(isPulsedMainTrigger()){
+		if(isPulsedMainTrigger() && canShootPrimary()){
 			shootMain();
-		}else if(isPulsedSecondaryTrigger())
+		}else if(isPulsedSecondaryTrigger() && canShootSecondary())
 			shootSecondary();
+		else
+			decreaseCooldowns();
 	}
 
-	private void shootSecondary() {
-		// TODO Auto-generated method stub
-		
-	}
+	protected abstract void shootSecondary();
 
-	private void shootMain() {
-		// TODO Auto-generated method stub
-		
-	}
+	protected abstract void shootMain();
 }
