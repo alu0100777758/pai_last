@@ -24,6 +24,7 @@ public class Scenario {
 	public void setPlayer_two(Player player_two) {
 		this.mapData.setPlayer_one(player_two);
 	}
+	
 	public Player getPlayer_one() {
 		return mapData.getPlayer_one();
 	}
@@ -71,53 +72,6 @@ public class Scenario {
  * @param keyCode
  * @param keyChar
  */
-	public void pulsedKey(int keyCode, char keyChar) {
-	
-		if (keyCode == KeyEvent.VK_LEFT)
-			getPlayer_two().setLeft(true);
-		else if (keyCode == KeyEvent.VK_RIGHT)
-			getPlayer_two().setRight(true);
-		else if (keyCode == KeyEvent.VK_DOWN)
-			getPlayer_two().setDown(true);
-		else if (keyCode == KeyEvent.VK_UP)
-			getPlayer_two().jump();
-		if (keyChar == 'a') {
-			getPlayer_one().setLeft(true);
-		} else if (keyChar == 'd') {
-			getPlayer_one().setRight(true);
-		} else if (keyChar == 'w') {
-			getPlayer_one().jump();
-		} else if (keyChar == 's') {
-			getPlayer_one().setDown(true);
-		}
-		 else if (keyChar == 'j') {
-				getActors().add(getPlayer_one().shoot());
-		}else if (keyChar == '0') {
-			getActors().add(getPlayer_two().shoot());
-	}
-	}
-
-	public void releasedKey(int keyCode, char keyChar) {
-		if (keyCode == KeyEvent.VK_LEFT)
-			getPlayer_two().setLeft(false);
-		else if (keyCode == KeyEvent.VK_RIGHT)
-			getPlayer_two().setRight(false);
-		else if (keyCode == KeyEvent.VK_DOWN) {
-			getPlayer_two().setDown(false);
-			getPlayer_two().setUP(true);
-		}
-		if (keyChar == 'a') {
-			getPlayer_one().setLeft(false);
-		} else if (keyChar == 'd') {
-			getPlayer_one().setRight(false);
-		} else if (keyChar == 'w') {
-			// getPlayer_one().setUP(false);
-		} else if (keyChar == 's') {
-			getPlayer_one().setDown(false);
-			getPlayer_one().setUP(true);
-		}
-	}
-
 	/**
 	 * De forma provisional se miran las colisiones aqui, se deberï¿½ crear un
 	 * gestor de colisiones mas adelante.
@@ -127,7 +81,7 @@ public class Scenario {
 	/**
 	 * TODO implementarlo como objeto contenido en escenario.
 	 * 		Uso de lista de objetos pasivos y activos.
-	 * 		desplazar la responsabilidad de la actualización a cada objeto.
+	 * 		desplazar la responsabilidad de la actualizaciï¿½n a cada objeto.
 	 */
 	public void update() {
 		Physical_passive map;
@@ -167,10 +121,7 @@ public class Scenario {
 					getActors().remove(getActors().get(i));
 				}
 			}
-		}
-		
-	
-		
+		}		
 	}
 
 	public void paint(Graphics g) {

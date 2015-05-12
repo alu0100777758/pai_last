@@ -56,6 +56,4 @@ public class Weapon {
 	public void releaseSecondary(){
 		setPulsedSecondaryTrigger(false);
 	}
-	
-	
 }

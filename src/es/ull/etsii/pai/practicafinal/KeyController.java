@@ -34,7 +34,4 @@ public class KeyController {
 	public void setKeyMap(Map<KeyActions, Integer> keyMap) {
 		this.keyMap = keyMap;
 	}
-	
-	
-	
 }
