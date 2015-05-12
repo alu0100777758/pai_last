@@ -17,6 +17,7 @@ public class Player extends Actor implements Physical_active {
 	private Point2D speed; 		// Vector velocidad.
 
 	private int maxJumpTTL = 20;
+	private double climbPertTick = 1;
 	private Side lookingAt;
 	private boolean block_up = false;
 	private boolean block_down = false;
@@ -34,12 +35,21 @@ public class Player extends Actor implements Physical_active {
 	public static final int SPEED = 5;
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
-	private	Color color = Color.BLUE;
-	
+	private	Color color = Color.BLUE; // error, usar rectangulo gráfico
+	public void setJump(int height , double timeSeconds ){
+		setMaxJumpTTL((int)(60*timeSeconds));
+		setClimbPertTick((double)height/getMaxJumpTTL());
+	}
 	public Color getColor() {
 		return color;
 	}
-
+	
+	public double getClimbPertTick() {
+		return climbPertTick;
+	}
+	public void setClimbPertTick(double climbPertTick) {
+		this.climbPertTick = climbPertTick;
+	}
 	public void setColor(Color color) {
 		this.color = color;
 	}
