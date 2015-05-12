@@ -12,7 +12,7 @@ bin/es
 *.msi
 *.msm
 *.msp
-
+*.temp
 # Windows shortcuts
 *.lnk
 

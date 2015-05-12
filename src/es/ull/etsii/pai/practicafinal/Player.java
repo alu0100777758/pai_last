@@ -66,6 +66,17 @@ public class Player extends Actor implements Physical_active {
 		this.color = color;
 	}
 
+<<<<<<< HEAD
+=======
+	public Player(Point2D position) {
+		super(position);
+		setSpeed(new Point2D(0, 0));
+		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setLookingAt(Side.RIGHT);
+		setJump(100, 0.333333);
+	}
+	
+>>>>>>> 0a7adf517c469eaae20bd177708e7d4d37817217
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(getColor());
@@ -210,7 +221,7 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public void moveJump() {
-		getSpeed().setY(-SPEED);
+		getSpeed().setY(-getClimbPertTick());
 		setJumpTTL(getJumpTTL() - 1);
 		
 	}
