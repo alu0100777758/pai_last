@@ -59,6 +59,7 @@ public class Player extends Actor implements Physical_active {
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
 		setLookingAt(Side.RIGHT);
+		setJump(100, 0.333333);
 	}
 	
 	@Override
@@ -205,7 +206,7 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public void moveJump() {
-		getSpeed().setY(-SPEED);
+		getSpeed().setY(-getClimbPertTick());
 		setJumpTTL(getJumpTTL() - 1);
 		
 	}
