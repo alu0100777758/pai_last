@@ -40,13 +40,6 @@ public class Player extends Actor implements Physical_active {
 	private	Color color = Color.BLUE; // error, usar rectangulo gráfico
 	
 	
-	public Player(Point2D position) {
-		super(position);
-		setSpeed(new Point2D(0, 0));
-		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
-		setLookingAt(Side.RIGHT);
-		//setWeapon(new Pistol());
-	}
 	
 	public void setJump(int height , double timeSeconds ){
 		setMaxJumpTTL((int)(60*timeSeconds));
@@ -66,8 +59,6 @@ public class Player extends Actor implements Physical_active {
 		this.color = color;
 	}
 
-<<<<<<< HEAD
-=======
 	public Player(Point2D position) {
 		super(position);
 		setSpeed(new Point2D(0, 0));
@@ -76,7 +67,6 @@ public class Player extends Actor implements Physical_active {
 		setJump(100, 0.333333);
 	}
 	
->>>>>>> 0a7adf517c469eaae20bd177708e7d4d37817217
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(getColor());
