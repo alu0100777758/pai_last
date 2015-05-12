@@ -1,18 +1,22 @@
-package es.ull.etsii.pai.practicafinal;
+package es.ull.etsii.pai.practicafinal.metaclass;
+
+import es.ull.etsii.pai.practicafinal.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.Player;
 
 
-public class Weapon {
-	private BvsR_Map map;	// mapa en el que está  -> se podría obtener desde el dueño?
-	private Player owner;	// dueño del arma
-	private int fireRate; 	// cadencia de disparo en forma de periodo en "ticks" suponiendo 60 fps
-	private int mainCharger;		// número máximo de balas.
-	private int mainChargerBulletCounter; 	// cantidad de balas actualmente en el cargador
-	private int mainBulletCounter = -1;  // munición disponible, infinito si < 0;
-	private int SecondaryCharger;		// número máximo de balas.
-	private int SecondaryChargerBulletCounter; 	// cantidad de balas actualmente en el cargador
-	private int SecondaryBulletCounter = -1;  // munición disponible, infinito si < 0;
+public abstract class Weapon {
+	private BvsR_Map map;						// mapa en el que está  -> se podría obtener desde el dueño?
+	private Player owner;						// dueño del arma
+	private int fireRate; 						// cadencia de disparo en forma de periodo en "ticks" suponiendo 60 fps
+	private int mainClipSize;					// número máximo de balas.
+	private int mainAmmo; 						// cantidad de balas actualmente en el cargador
+	private int mainBulletCounter = -1;  		// munición disponible, infinito si < 0;
+	private int secondaryClipSize;				// número máximo de balas.
+	private int secondaryAmmo;					 // cantidad de balas actualmente en el cargador
+	private int SecondaryBulletCounter = -1;  	// munición disponible, infinito si < 0;
 	boolean pulsedMainTrigger = false;
 	boolean pulsedSecondaryTrigger = false;
+	
 	public Weapon(BvsR_Map map, Player owner) {
 		setMap(map);
 		setOwner(owner);
@@ -40,18 +44,23 @@ public class Weapon {
 	protected void setFireRate(double fireRate) {
 		this.fireRate = (int)((double)60/fireRate);
 	}
-	protected int getCharger() {
-		return mainCharger;
+	
+	public int getMainClipSize() {
+		return mainClipSize;
 	}
-	protected void setCharger(int charger) {
-		this.mainCharger = charger;
+
+	public void setMainClipSize(int mainClipSize) {
+		this.mainClipSize = mainClipSize;
 	}
-	protected int getChargerBulletCounter() {
-		return mainChargerBulletCounter;
+
+	public int getSecondaryClipSize() {
+		return secondaryClipSize;
 	}
-	protected void setChargerBulletCounter(int chargerBulletCounter) {
-		mainChargerBulletCounter = chargerBulletCounter;
+
+	public void setSecondaryClipSize(int secondaryClipSize) {
+		this.secondaryClipSize = secondaryClipSize;
 	}
+
 	protected int getBulletCounter() {
 		return mainBulletCounter;
 	}
@@ -65,27 +74,31 @@ public class Weapon {
 		this.pulsedMainTrigger = pulsedMainTrigger;
 	}
 	
-	public int getSecondaryCharger() {
-		return SecondaryCharger;
+	protected int getSecondaryCharger() {
+		return secondaryClipSize;
 	}
 
-	public void setSecondaryCharger(int secondaryCharger) {
-		SecondaryCharger = secondaryCharger;
+	protected int getMainAmmo() {
+		return mainAmmo;
 	}
 
-	public int getSecondaryChargerBulletCounter() {
-		return SecondaryChargerBulletCounter;
+	protected void setMainAmmo(int mainAmmo) {
+		this.mainAmmo = mainAmmo;
 	}
 
-	public void setSecondaryChargerBulletCounter(int secondaryChargerBulletCounter) {
-		SecondaryChargerBulletCounter = secondaryChargerBulletCounter;
+	protected int getSecondaryAmmo() {
+		return secondaryAmmo;
 	}
 
-	public int getSecondaryBulletCounter() {
+	protected void setSecondaryAmmo(int secondaryAmmo) {
+		this.secondaryAmmo = secondaryAmmo;
+	}
+
+	protected int getSecondaryBulletCounter() {
 		return SecondaryBulletCounter;
 	}
 
-	public void setSecondaryBulletCounter(int secondaryBulletCounter) {
+	protected void setSecondaryBulletCounter(int secondaryBulletCounter) {
 		SecondaryBulletCounter = secondaryBulletCounter;
 	}
 
@@ -125,6 +138,4 @@ public class Weapon {
 		// TODO Auto-generated method stub
 		
 	}
-	
-
 }

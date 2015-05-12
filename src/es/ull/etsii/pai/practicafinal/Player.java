@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -19,6 +20,7 @@ public class Player extends Actor implements Physical_active {
 	private int maxJumpTTL = 20;
 	private double climbPertTick = 1;
 	private Side lookingAt;
+	private Weapon weapon;
 	private boolean block_up = false;
 	private boolean block_down = false;
 	private boolean block_left = false;
@@ -36,6 +38,16 @@ public class Player extends Actor implements Physical_active {
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
 	private	Color color = Color.BLUE; // error, usar rectangulo gráfico
+	
+	
+	public Player(Point2D position) {
+		super(position);
+		setSpeed(new Point2D(0, 0));
+		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setLookingAt(Side.RIGHT);
+		//setWeapon(new Pistol());
+	}
+	
 	public void setJump(int height , double timeSeconds ){
 		setMaxJumpTTL((int)(60*timeSeconds));
 		setClimbPertTick((double)height/getMaxJumpTTL());
@@ -54,13 +66,6 @@ public class Player extends Actor implements Physical_active {
 		this.color = color;
 	}
 
-	public Player(Point2D position) {
-		super(position);
-		setSpeed(new Point2D(0, 0));
-		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
-		setLookingAt(Side.RIGHT);
-	}
-	
 	@Override
 	public void paint(Graphics g) {
 		g.setColor(getColor());
@@ -71,14 +76,14 @@ public class Player extends Actor implements Physical_active {
 	public boolean moveLeft() {
 		getSpeed().setX(-SPEED);
 		setBlock_right(false);
-		setLookingAt(Side.LEFT);
+		//setLookingAt(Side.LEFT);
 		return true;
 	}
 
 	public boolean moveRight() {
 		getSpeed().setX(SPEED);
 		setBlock_left(false);
-		setLookingAt(Side.RIGHT);
+		//setLookingAt(Side.RIGHT);
 		return true;
 	}
 
@@ -358,6 +363,14 @@ public class Player extends Actor implements Physical_active {
 
 	public void setLookingAt(Side lookingAt) {
 		this.lookingAt = lookingAt;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
 	}
 	
 }
