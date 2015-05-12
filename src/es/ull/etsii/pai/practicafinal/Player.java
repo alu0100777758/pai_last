@@ -6,6 +6,9 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
+import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.Pistol;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -14,10 +17,18 @@ import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class Player extends Actor implements Physical_active {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3033119409170313204L;
+
 	private Point2D speed; 		// Vector velocidad.
 
 	private int maxJumpTTL = 20;
+	private double climbPertTick = 1;
 	private Side lookingAt;
+	private Weapon weapon;
+	private BvsR_Map map;
 	private boolean block_up = false;
 	private boolean block_down = false;
 	private boolean block_left = false;
@@ -34,47 +45,72 @@ public class Player extends Actor implements Physical_active {
 	public static final int SPEED = 5;
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
-	private	Color color = Color.BLUE;
+	public static final int BODY = 0;
+	public static final int WEAPON = 1;
+	private	 Color color = Color.BLUE; // error, usar rectangulo grÃ¡fico
 	
-	public Color getColor() {
-		return color;
-	}
 
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-	public Player(Point2D position) {
+	public Player(Point2D position, BvsR_Map map) {
 		super(position);
+		setMap(map);
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
 		setLookingAt(Side.RIGHT);
+		setJump(100, 0.33);
+		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y(), 
+								WIDTH, HEIGHT));
+		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
+		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y() + 5, 
+				20, 5));
+		getGraphicShapes().get(WEAPON).setPaint(Color.YELLOW);
+		setWeapon(new Pistol(this));
+	}
+	
+	public void setJump(int height , double timeSeconds ){
+		setMaxJumpTTL((int)(60*timeSeconds));
+		setClimbPertTick((double)height/getMaxJumpTTL());
+	}
+	public Color getColor() {
+		return color;
+	}
+	
+	public double getClimbPertTick() {
+		return climbPertTick;
+	}
+	public void setClimbPertTick(double climbPertTick) {
+		this.climbPertTick = climbPertTick;
+	}
+	public void setColor(Color color) {
+		this.color = color;
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		g.setColor(getColor());
-		g.fillRect((int) getPosition().x(), (int) getPosition().y(),
-				(int) WIDTH, (int) HEIGHT);
+	//	g.setColor(getColor());
+	//	g.fillRect((int) getPosition().x(), (int) getPosition().y(),
+		//		(int) WIDTH, (int) HEIGHT);
+		getGraphicShapes().get(BODY).paint(g.create());
+		getGraphicShapes().get(WEAPON).paint(g.create());
 	}
 
 	public boolean moveLeft() {
 		getSpeed().setX(-SPEED);
 		setBlock_right(false);
-		setLookingAt(Side.LEFT);
 		return true;
 	}
 
 	public boolean moveRight() {
 		getSpeed().setX(SPEED);
 		setBlock_left(false);
-		setLookingAt(Side.RIGHT);
+		//setLookingAt(Side.RIGHT);
 		return true;
 	}
 
 	public boolean moveUP() {
 		getPosition().setY(getPosition().y() - 10);
 		HEIGHT = 20;
+		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
 		setUP(false);
 		setCrounched(false);
@@ -84,13 +120,19 @@ public class Player extends Actor implements Physical_active {
 	public boolean moveDown() {
 		getPosition().setY(getPosition().y() + 10);
 		HEIGHT = 10;
+		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
 		setCrounched(true);
 		return true;
 	}
-	public Bullet shoot ()  {
-		int side = getLookingAt() == Side.LEFT? -20 : 20;
-		return new Bullet(getPosition(), new Point2D (side, -9));
+	public void shoot ()  {
+		getWeapon().triggerMain();
+		setShooting(true);
+	}
+	public void stopShooting() {
+		getWeapon().releaseMain();
+		setShooting(false);
 	}
 	@Override
 	public boolean repair_collisionY(Point2D point) {
@@ -171,18 +213,21 @@ public class Player extends Actor implements Physical_active {
 			getSpeed().setX(0);
 	}
 	/**
-	 * Mueve el jugador según marca la velocidad.
+	 * Mueve el jugador segï¿½n marca la velocidad y actualiza el disparo del arma .
 	 */
 	@Override
 	public boolean updatePos(Physical_passive map) {
 		ResolveUnreleasedMovements();
+		getWeapon().update();
 		if (!isBlock_down()) {													// Por lo visto esto controla el salto
 			if (getJumpTTL() != 0) {
 				moveJump();
 			} else																// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
 				fall();
 		}
-		setPosition(getPosition().add(getSpeed()));								// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
+								// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
+		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+		setPosition(getPosition().add(getSpeed()));		
 		return true;
 	}
 
@@ -195,7 +240,7 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public void moveJump() {
-		getSpeed().setY(-SPEED);
+		getSpeed().setY(-getClimbPertTick());
 		setJumpTTL(getJumpTTL() - 1);
 		
 	}
@@ -348,6 +393,22 @@ public class Player extends Actor implements Physical_active {
 
 	public void setLookingAt(Side lookingAt) {
 		this.lookingAt = lookingAt;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+
+	public BvsR_Map getMap() {
+		return map;
+	}
+
+	private void setMap(BvsR_Map map) {
+		this.map = map;
 	}
 	
 }

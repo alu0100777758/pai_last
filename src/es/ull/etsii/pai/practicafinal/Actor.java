@@ -2,17 +2,21 @@ package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Graphics;
 import java.awt.geom.RectangularShape;
+import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Actor extends Entity {
 	private Point2D position;
 	private PhysicalRectangle physicalShape ;
+	private ArrayList<GraphicRectangle> graphicShapes;
 	
 	public Actor(Point2D position) {
 		physicalShape = new PhysicalRectangle((int)position.x(), (int)position.y(), 10, 20); // cambiar!
 		setPosition(position);
+		setGraphicShapes(new ArrayList<GraphicRectangle>());
 	}
 	@Override
 	public void reproduce() {
@@ -74,4 +78,11 @@ public class Actor extends Entity {
 	public int gety() {
 		return (int)getPosition().y();
 	}
+	public ArrayList<GraphicRectangle> getGraphicShapes() {
+		return graphicShapes;
+	}
+	public void setGraphicShapes(ArrayList<GraphicRectangle> graphicShapes) {
+		this.graphicShapes = graphicShapes;
+	}
+	
 }
