@@ -2,6 +2,7 @@ package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
@@ -22,7 +23,9 @@ public class StaticPlatform extends Entity implements Physical_passive {
 		getGraphicRectangle().setPaint(Color.GREEN);
 		setPhysicalRectangle(new PhysicalRectangle(x1, y1, width, height));
 	}
-	
+	public void setPaint(Paint paint){
+		getGraphicRectangle().setPaint(paint);
+	}
 	public void paint(Graphics g) {
 		getGraphicRectangle().paint(g);
 	}
