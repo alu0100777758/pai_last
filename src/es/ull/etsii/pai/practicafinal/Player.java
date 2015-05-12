@@ -90,7 +90,7 @@ public class Player extends Actor implements Physical_active {
 	}
 	public Bullet shoot ()  {
 		int side = getLookingAt() == Side.LEFT? -20 : 20;
-		return new Bullet(getPosition(), new Point2D (side, -9));
+		return new Bullet(getPosition(), new Point2D (side, 0));
 	}
 	@Override
 	public boolean repair_collisionY(Point2D point) {
@@ -171,7 +171,7 @@ public class Player extends Actor implements Physical_active {
 			getSpeed().setX(0);
 	}
 	/**
-	 * Mueve el jugador según marca la velocidad.
+	 * Mueve el jugador segï¿½n marca la velocidad.
 	 */
 	@Override
 	public boolean updatePos(Physical_passive map) {

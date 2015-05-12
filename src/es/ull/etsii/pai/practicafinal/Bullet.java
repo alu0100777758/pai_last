@@ -21,8 +21,8 @@ public class Bullet extends Actor implements Physical_active{
 	private Point2D speed;
 	private int damage = 0;
 	private int push = 0; 	// empuje, por ahora no usar.
-	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
-//	private MovementEquation motion = new RectilinearLocomotion();
+//	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
+	private MovementEquation motion = new RectilinearLocomotion();
 	public static final int BULLET_SIZE = 7;
 	
 	public Bullet (Point2D pos) {
