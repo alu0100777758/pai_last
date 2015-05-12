@@ -46,7 +46,7 @@ public class Player extends Actor implements Physical_active {
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
 	public static final int BODY = 0;
-	public static final int WEAPON = 0;
+	public static final int WEAPON = 1;
 	private	 Color color = Color.BLUE; // error, usar rectangulo gráfico
 	
 	
@@ -59,8 +59,9 @@ public class Player extends Actor implements Physical_active {
 		setJump(100, 0.33);
 		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y(), 
 								WIDTH, HEIGHT));
-		getGraphicShapes().get(BODY).setPaint(color);
-		
+		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
+		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y() + 5, 
+				20, 5));
 		getGraphicShapes().get(WEAPON).setPaint(Color.YELLOW);
 		setWeapon(new Pistol(this));
 	}
@@ -89,6 +90,7 @@ public class Player extends Actor implements Physical_active {
 	//	g.fillRect((int) getPosition().x(), (int) getPosition().y(),
 		//		(int) WIDTH, (int) HEIGHT);
 		getGraphicShapes().get(BODY).paint(g.create());
+		getGraphicShapes().get(WEAPON).paint(g.create());
 	}
 
 	public boolean moveLeft() {
