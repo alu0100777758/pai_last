@@ -21,6 +21,7 @@ public class Bullet extends Actor implements Physical_active{
 	private Point2D speed;
 	private int damage = 0;
 	private int push = 0; 	// empuje, por ahora no usar.
+	private int maxDistance = 1000; // TODO
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
 	private MovementEquation motion = new RectilinearLocomotion();
 	public static final int BULLET_SIZE = 7;
@@ -30,7 +31,7 @@ public class Bullet extends Actor implements Physical_active{
 		setPhysicalShape(new PhysicalRectangle((int) pos.x(), (int)pos.y(), BULLET_SIZE, BULLET_SIZE));
 		setGraphicShape(new GraphicRectangle((int) pos.x(), (int)pos.y(), BULLET_SIZE, BULLET_SIZE));
 		setSpeed(new Point2D (0, 0));
-		getGraphicShape().setColor(Color.BLACK); 
+		getGraphicShape().setPaint(Color.BLACK); 
 	}
 	
 	public Bullet(Point2D pos, Point2D speed) {
@@ -43,8 +44,6 @@ public class Bullet extends Actor implements Physical_active{
 	}
 	@Override
 	public boolean updatePos(Physical_passive map) {
-//		addXPosition(getSpeed().x());
-//		addYPosition(getSpeed().y());
 		setPosition(motion.getNewpos(getSpeed(), getPosition())); // cambiar a getnewSpeed si se prefiere , tal como está permite aceleracion dentro del motion al modificar y vel
 		getGraphicShape().setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
 		if (!map.getPhysicalRectangle().contains(getPhysicalRectangle()))

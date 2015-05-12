@@ -19,7 +19,7 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	
 	public StaticPlatform(int x1, int y1, int width, int height) {
 		setGraphicRectangle(new GraphicRectangle(x1, y1, width, height));
-		getGraphicRectangle().setColor(Color.GREEN);
+		getGraphicRectangle().setPaint(Color.GREEN);
 		setPhysicalRectangle(new PhysicalRectangle(x1, y1, width, height));
 	}
 	
