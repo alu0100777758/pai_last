@@ -222,19 +222,23 @@ public class Scenario {
 			}
 			else if (keyCode == getKeyMap().get(KeyActions.P1SHOOTLEFT)) {
 				 	getPlayer_one().setLookingAt(Side.LEFT);
-					getActors().add(getPlayer_one().shoot());
+					//getActors().add(getPlayer_one().shoot());
+				 	getPlayer_one().shoot();
 			}
 			else if (keyCode == getKeyMap().get(KeyActions.P2SHOOTLEFT)) {
 				getPlayer_two().setLookingAt(Side.LEFT);
-				getActors().add(getPlayer_two().shoot());
+				//getActors().add(getPlayer_two().shoot());
+				getPlayer_two().shoot();
 			}
 			else if (keyCode == getKeyMap().get(KeyActions.P1SHOOTRIGHT)) {
 			 	getPlayer_one().setLookingAt(Side.RIGHT);
-				getActors().add(getPlayer_one().shoot());
+				//getActors().add(getPlayer_one().shoot());
+			 	getPlayer_one().shoot();
 			}	
 			else if (keyCode == getKeyMap().get(KeyActions.P2SHOOTRIGHT)) {
 				getPlayer_two().setLookingAt(Side.RIGHT);
-				getActors().add(getPlayer_two().shoot());
+				//getActors().add(getPlayer_two().shoot());
+				getPlayer_two().shoot();
 			}
 		}
 
@@ -256,6 +260,18 @@ public class Scenario {
 			} else if (keyCode == getKeyMap().get(KeyActions.P1DOWN)) {
 				getPlayer_one().setDown(false);
 				getPlayer_one().setUP(true);
+			}
+			else if (keyCode == getKeyMap().get(KeyActions.P1SHOOTLEFT)) {
+			 	getPlayer_one().stopShooting();
+			}
+			else if (keyCode == getKeyMap().get(KeyActions.P2SHOOTLEFT)) {
+				getPlayer_two().stopShooting();
+			}
+			else if (keyCode == getKeyMap().get(KeyActions.P1SHOOTRIGHT)) {
+				getPlayer_one().stopShooting();
+			}	
+			else if (keyCode == getKeyMap().get(KeyActions.P2SHOOTRIGHT)) {
+				getPlayer_two().stopShooting();
 			}
 		}
 	}

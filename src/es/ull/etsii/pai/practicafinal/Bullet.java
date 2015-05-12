@@ -38,6 +38,10 @@ public class Bullet extends Actor implements Physical_active{
 		this(pos);
 		setSpeed(speed);
 	}
+	public Bullet(Point2D pos, Point2D speed, int damage) {
+		this(pos, speed);
+		setDamage(damage);
+	}
 	
 	public void paint(Graphics g) {
 		getGraphicShape().paint(g.create());
@@ -50,6 +54,15 @@ public class Bullet extends Actor implements Physical_active{
 			return false;
 		return true;
 	}
+	
+	private int getDamage() {
+		return damage;
+	}
+
+	private void setDamage(int damage) {
+		this.damage = damage;
+	}
+
 	public Point2D getSpeed() {
 		return speed;
 	}
