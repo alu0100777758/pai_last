@@ -119,7 +119,7 @@ public class Scenario {
 					getActors().remove(getActors().get(i));
 				}
 				else if (getPlayer_two().collides(getActors().get(i).getPhysicalShape())) {
-					getPlayer_one().gotHit((Bullet) getActors().get(i));
+					getPlayer_two().gotHit((Bullet) getActors().get(i));
 					getActors().remove(getActors().get(i));
 				}
 			}

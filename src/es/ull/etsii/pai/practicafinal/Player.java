@@ -29,6 +29,7 @@ public class Player extends Actor implements Physical_active {
 	private Side lookingAt;
 	private Weapon weapon;
 	private BvsR_Map map;
+	private boolean dead = false;
 	private boolean block_up = false;
 	private boolean block_down = false;
 	private boolean block_left = false;
@@ -92,8 +93,9 @@ public class Player extends Actor implements Physical_active {
 	//	g.setColor(getColor());
 	//	g.fillRect((int) getPosition().x(), (int) getPosition().y(),
 		//		(int) WIDTH, (int) HEIGHT);
-		getGraphicShapes().get(BODY).paint(g.create());
-		getGraphicShapes().get(WEAPON).paint(g.create());
+		for (int i = 0; i < getGraphicShapes().size(); i++)
+			getGraphicShapes().get(i).paint(g.create());
+
 	}
 
 	public boolean moveLeft() {
@@ -205,7 +207,7 @@ public class Player extends Actor implements Physical_active {
 	public void gotHit(Bullet bullet) {
 		if (bullet.getOwner() != this) {
 			setHp(getHp() - bullet.getDamage());
-			if (getHp() <= 0)
+			if (getHp() <= 0 && !isDead())
 				die();
 		}
 	}
@@ -213,6 +215,11 @@ public class Player extends Actor implements Physical_active {
 	 * TODO Hacer el metodo para morir.
 	 */
 	public void die() {
+		setDead(true);
+		getGraphicShapes().get(BODY).setLocation((int)getPosition().x(), (int)getPosition().y() + HEIGHT - WIDTH);
+		getGraphicShapes().get(BODY).setSize(HEIGHT, WIDTH);
+		
+		getGraphicShapes().remove(WEAPON);
 		System.out.println("Muerto");
 	}
 	void ResolveUnreleasedMovements(){
@@ -233,17 +240,19 @@ public class Player extends Actor implements Physical_active {
 	 */
 	@Override
 	public boolean updatePos(Physical_passive map) {
-		ResolveUnreleasedMovements();
-		getWeapon().update();
-		if (!isBlock_down()) {													// Por lo visto esto controla el salto
-			if (getJumpTTL() != 0) {
-				moveJump();
-			} else																// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
-				fall();
+		if (!isDead()) {
+			ResolveUnreleasedMovements();
+			getWeapon().update();
+			if (!isBlock_down()) {													// Por lo visto esto controla el salto
+				if (getJumpTTL() != 0) {
+					moveJump();
+				} else																// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
+					fall();
+			}
+									// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
+			getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+			setPosition(getPosition().add(getSpeed()));	
 		}
-								// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
-		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
-		setPosition(getPosition().add(getSpeed()));		
 		return true;
 	}
 
@@ -433,6 +442,14 @@ public class Player extends Actor implements Physical_active {
 
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
 	}
 	
 }
