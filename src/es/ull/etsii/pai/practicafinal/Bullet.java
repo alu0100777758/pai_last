@@ -25,12 +25,12 @@ public class Bullet extends Actor implements Physical_active{
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
 	private MovementEquation motion = new RectilinearLocomotion();
 	private Player owner;
-	public static final int BULLET_SIZE = 7;
+	private int bulletSize = 7;
 	
 	public Bullet (Point2D pos) {
 		super(pos);
-		setPhysicalShape(new PhysicalRectangle((int) pos.x(), (int)pos.y(), BULLET_SIZE, BULLET_SIZE));
-		setGraphicShape(new GraphicRectangle((int) pos.x(), (int)pos.y(), BULLET_SIZE, BULLET_SIZE));
+		setPhysicalShape(new PhysicalRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
+		setGraphicShape(new GraphicRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
 		setSpeed(new Point2D (0, 0));
 		getGraphicShape().setPaint(Color.BLACK); 
 	}
@@ -45,6 +45,11 @@ public class Bullet extends Actor implements Physical_active{
 		setDamage(damage);
 		setPush(Push);
 	}
+	public Bullet(Point2D pos, Point2D speed, int damage, int Push,Player owner, int size) {
+		this(pos, speed, damage, Push, owner);
+		setBULLET_SIZE(size);
+	}
+	
 	
 	public void paint(Graphics g) {
 		getGraphicShape().paint(g.create());
@@ -138,6 +143,15 @@ public class Bullet extends Actor implements Physical_active{
 
 	public void setPush(int push) {
 		this.push = push;
+	}
+
+	public int getBULLET_SIZE() {
+		return bulletSize;
+	}
+
+	public void setBULLET_SIZE(int bULLET_SIZE) {
+		bulletSize = bULLET_SIZE;
+		getGraphicShape().setSize(getBULLET_SIZE(), getBULLET_SIZE());
 	}
 	
 	

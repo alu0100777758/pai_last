@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
-import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.RocketLauncher;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -68,7 +68,7 @@ public class Player extends Actor implements Physical_active {
 								WIDTH, HEIGHT));
 		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
 		
-		setWeapon(new UZI(this));
+		setWeapon(new RocketLauncher(this));
 		
 		getGraphicShapes().add(getWeapon().getGraphicShape());
 		getGraphicShapes().get(WEAPON).setPaint(Color.BLACK);
