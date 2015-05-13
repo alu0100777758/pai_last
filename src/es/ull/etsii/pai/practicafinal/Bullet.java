@@ -40,9 +40,10 @@ public class Bullet extends Actor implements Physical_active{
 		setSpeed(speed);
 		setOwner(owner);
 	}
-	public Bullet(Point2D pos, Point2D speed, int damage, Player owner) {
+	public Bullet(Point2D pos, Point2D speed, int damage, int Push,Player owner) {
 		this(pos, speed, owner);
 		setDamage(damage);
+		setPush(Push);
 	}
 	
 	public void paint(Graphics g) {
@@ -131,6 +132,14 @@ public class Bullet extends Actor implements Physical_active{
 		this.owner = owner;
 	}
 
+	public int getPush() {
+		return push;
+	}
+
+	public void setPush(int push) {
+		this.push = push;
+	}
+	
 	
 	
 	
