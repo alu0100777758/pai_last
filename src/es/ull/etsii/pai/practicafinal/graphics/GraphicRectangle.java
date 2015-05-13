@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import es.ull.etsii.pai.practicafinal.Drawable;
+import es.ull.etsii.pai.practicafinal.ResourceManager;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class GraphicRectangle extends Rectangle implements Drawable {
@@ -65,15 +66,7 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 			texturize(getTexturePath());
 		Graphics2D g2 = (Graphics2D) g.create();
 		if(isImage()){
-			
-			BufferedImage image;
-			try {
-				image = ImageIO.read(Texture.class.getClassLoader().getResource(getTexturePath()));
-				g2.drawImage(image, (int)getLocation().getX(),(int)getLocation().getY(),(int) getWidth(),(int)getHeight(), null);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				g2.drawImage(ResourceManager.getInstance().getBufferedImage(getTexturePath()), (int)getLocation().getX(),(int)getLocation().getY(),(int) getWidth(),(int)getHeight(), null);
 		}
 		else{
 			g2.setPaint(getPaint());
