@@ -8,6 +8,7 @@ public class Main {
 		String mapPath = DEFAULT_MAP;
 		if(args.length>0)
 			mapPath = args[0];
+		
 		GameFrame frame = new GameFrame(mapPath);
 		frame.setTitle("Red VS Blue");
 		frame.setSize(1200, 800);

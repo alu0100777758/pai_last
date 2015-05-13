@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
-import es.ull.etsii.pai.practicafinal.metaclass.weapons.Pistol;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -23,7 +23,7 @@ public class Player extends Actor implements Physical_active {
 	private static final long serialVersionUID = -3033119409170313204L;
 
 	private Point2D speed; 		// Vector velocidad.
-
+	private int hp;
 	private int maxJumpTTL = 20;
 	private double climbPertTick = 1;
 	private Side lookingAt;
@@ -40,18 +40,20 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_right = false;
 	private boolean crounched = false;
 	private boolean shooting = false;
-	public static final int WIDTH = 10;
-	public int HEIGHT = 20;
+	public static final int WIDTH = 20;
+	public int HEIGHT = 40;
 	public static final int SPEED = 5;
 	public static final double TIME = 1.0;
 	public static double GRAVITY = -5.0;
 	public static final int BODY = 0;
 	public static final int WEAPON = 1;
+	public static final int DEFAULT_MAX_HP = 20;
 	private	 Color color = Color.BLUE; // error, usar rectangulo gráfico
 	
 
 	public Player(Point2D position, BvsR_Map map) {
 		super(position);
+		setHp(DEFAULT_MAX_HP);
 		setMap(map);
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
@@ -60,10 +62,11 @@ public class Player extends Actor implements Physical_active {
 		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y(), 
 								WIDTH, HEIGHT));
 		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
-		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y() + 5, 
-				20, 5));
-		getGraphicShapes().get(WEAPON).setPaint(Color.YELLOW);
-		setWeapon(new Pistol(this));
+		
+		setWeapon(new UZI(this));
+		
+		getGraphicShapes().add(getWeapon().getGraphicShape());
+		getGraphicShapes().get(WEAPON).setPaint(Color.BLACK);
 	}
 	
 	public void setJump(int height , double timeSeconds ){
@@ -107,8 +110,9 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public boolean moveUP() {
-		getPosition().setY(getPosition().y() - 10);
-		HEIGHT = 20;
+		HEIGHT = 40;
+		getPosition().setY(getPosition().y() - HEIGHT / 2);
+		
 		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
 		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
@@ -118,8 +122,8 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public boolean moveDown() {
-		getPosition().setY(getPosition().y() + 10);
-		HEIGHT = 10;
+		getPosition().setY(getPosition().y() + HEIGHT / 2);
+		HEIGHT = 20;
 		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
 		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
@@ -198,7 +202,19 @@ public class Player extends Actor implements Physical_active {
 		//System.out.println("Vel: " + getSpeed().x() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());			//
 		return false;
 	}
-
+	public void gotHit(Bullet bullet) {
+		if (bullet.getOwner() != this) {
+			setHp(getHp() - bullet.getDamage());
+			if (getHp() <= 0)
+				die();
+		}
+	}
+	/**
+	 * TODO Hacer el metodo para morir.
+	 */
+	public void die() {
+		System.out.println("Muerto");
+	}
 	void ResolveUnreleasedMovements(){
 		if(isMove_down() && !isCrounched())
 			moveDown();
@@ -409,6 +425,14 @@ public class Player extends Actor implements Physical_active {
 
 	private void setMap(BvsR_Map map) {
 		this.map = map;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
 	}
 	
 }

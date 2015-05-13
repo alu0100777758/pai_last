@@ -115,9 +115,11 @@ public class Scenario {
 		for (int i = 0; i < getActors().size(); i++) {
 			if (getActors().get(i) instanceof Bullet) {
 				if (getPlayer_one().collides(getActors().get(i).getPhysicalShape())) {
+					getPlayer_one().gotHit((Bullet) getActors().get(i));
 					getActors().remove(getActors().get(i));
 				}
 				else if (getPlayer_two().collides(getActors().get(i).getPhysicalShape())) {
+					getPlayer_one().gotHit((Bullet) getActors().get(i));
 					getActors().remove(getActors().get(i));
 				}
 			}
