@@ -231,7 +231,8 @@ public class Player extends Actor implements Physical_active {
 		setDead(true);
 		getGraphicShapes().get(BODY).setLocation((int)getPosition().x(), (int)getPosition().y() + HEIGHT - WIDTH);
 		getGraphicShapes().get(BODY).setSize(HEIGHT, WIDTH);
-		
+		getPhysicalRectangle().setLocation((int)getPosition().x(), (int)getPosition().y() + HEIGHT - WIDTH);
+		getPhysicalRectangle().setSize(HEIGHT, WIDTH);
 		getGraphicShapes().remove(WEAPON);
 		System.out.println("Muerto");
 	}
