@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
+import es.ull.etsii.pai.practicafinal.Side;
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 
 public abstract class Weapon implements Serializable{
@@ -22,11 +24,16 @@ public abstract class Weapon implements Serializable{
 	private int SecondaryBulletCounter = -1;  	// munición disponible, infinito si < 0;
 	private int mainCooldown = 0;
 	private int secondaryCooldown = 0;
-	boolean pulsedMainTrigger = false;
-	boolean pulsedSecondaryTrigger = false;
+	private boolean pulsedMainTrigger = false;
+	private boolean pulsedSecondaryTrigger = false;
+	private GraphicRectangle graphicShape;
+	public static final int WIDTH = 25;
+	public static final int HEIGHT = 10;
+	public static final int ADD_TO_Y = 10;
 	
 	public Weapon(Player owner) {
 		setOwner(owner);
+		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x(), (int)getOwner().getPosition().y() + ADD_TO_Y, WIDTH, HEIGHT));
 	}
 	
 	public Player getOwner() {
@@ -124,6 +131,14 @@ public abstract class Weapon implements Serializable{
 		this.pulsedSecondaryTrigger = pulsedSecondaryTrigger;
 	}
 	
+	public GraphicRectangle getGraphicShape() {
+		return graphicShape;
+	}
+
+	public void setGraphicShape(GraphicRectangle graphicShape) {
+		this.graphicShape = graphicShape;
+	}
+
 	public void triggerMain(){
 		setPulsedMainTrigger(true);
 	}
@@ -163,14 +178,22 @@ public abstract class Weapon implements Serializable{
 		setSecondaryCooldown(getSecondaryCooldown() - 1);
 	}
 	public void update(){
+		 int addy = ADD_TO_Y;
 		if(isPulsedMainTrigger() && canShootPrimary()){
 			shootMain();
 		}else if(isPulsedSecondaryTrigger() && canShootSecondary())
 			shootSecondary();
 		else
 			decreaseCooldowns();
+		
+		if (getOwner().isCrounched())
+			addy = ADD_TO_Y /2 ;
+		if (getOwner().getLookingAt() == Side.LEFT)
+			getGraphicShape().setLocation((int)getOwner().getPosition().x() - WIDTH, (int)getOwner().getPosition().y() + addy);
+		else 
+			getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH, (int)getOwner().getPosition().y() + addy);
 	}
-
+	
 	protected abstract void shootSecondary();
 
 	protected abstract void shootMain();

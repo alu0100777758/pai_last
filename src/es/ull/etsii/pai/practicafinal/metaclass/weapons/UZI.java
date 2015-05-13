@@ -7,13 +7,13 @@ import es.ull.etsii.pai.practicafinal.Side;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
-public class Pistol extends Weapon{
-	public static final double FIRE_RATE = 1.0;
-	public static final int CLIP_SIZE = 12;
-	public static final int DAMAGE = 2;
+public class UZI extends Weapon{
+	public static final double FIRE_RATE = 10.0;
+	public static final int CLIP_SIZE = 80;
+	public static final int DAMAGE = 1;
 	public static final int SPEED = 20;
 	
-	public Pistol(Player owner) {
+	public UZI(Player owner) {
 		super(owner);
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);

@@ -1,22 +1,17 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
-import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
-import es.ull.etsii.pai.practicafinal.graphics.Texture;
 
 public class RectangleTool extends EditorTool {
 	private boolean drawing = false;

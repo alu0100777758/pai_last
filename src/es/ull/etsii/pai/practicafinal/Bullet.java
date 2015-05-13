@@ -24,6 +24,7 @@ public class Bullet extends Actor implements Physical_active{
 	private int maxDistance = 1000; // TODO
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
 	private MovementEquation motion = new RectilinearLocomotion();
+	private Player owner;
 	public static final int BULLET_SIZE = 7;
 	
 	public Bullet (Point2D pos) {
@@ -34,12 +35,13 @@ public class Bullet extends Actor implements Physical_active{
 		getGraphicShape().setPaint(Color.BLACK); 
 	}
 	
-	public Bullet(Point2D pos, Point2D speed) {
+	public Bullet(Point2D pos, Point2D speed, Player owner) {
 		this(pos);
 		setSpeed(speed);
+		setOwner(owner);
 	}
-	public Bullet(Point2D pos, Point2D speed, int damage) {
-		this(pos, speed);
+	public Bullet(Point2D pos, Point2D speed, int damage, Player owner) {
+		this(pos, speed, owner);
 		setDamage(damage);
 	}
 	
@@ -55,7 +57,7 @@ public class Bullet extends Actor implements Physical_active{
 		return true;
 	}
 	
-	private int getDamage() {
+	public int getDamage() {
 		return damage;
 	}
 
@@ -121,7 +123,15 @@ public class Bullet extends Actor implements Physical_active{
 		return false;
 	}
 
+	public Player getOwner() {
+		return owner;
+	}
 
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+
+	
 	
 	
 	
