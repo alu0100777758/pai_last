@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
+
 public class BvsR_Map implements Serializable {
 	private static final long serialVersionUID = 8439640060806465321L;
 	private ArrayList<Entity> background = new ArrayList<Entity>();
@@ -24,7 +26,7 @@ public class BvsR_Map implements Serializable {
 			if (getPlayer_one() == null) {
 				setPlayer_one(player);
 				addActor(getPlayer_one());
-			}else if (getPlayer_two() == null) {
+			} else if (getPlayer_two() == null) {
 				player.setColor(Color.RED);
 				setPlayer_two(player);
 				addActor(getPlayer_two());
@@ -110,6 +112,30 @@ public class BvsR_Map implements Serializable {
 
 	public void addActor(Actor actor) {
 		getActors().add(actor);
+	}
+
+	public void markForTexture() {
+		System.out.println("size " + getStaticMap().size());
+		for (int i = 0; i < getStaticMap().size(); i++) {
+			StaticPlatform actor = (StaticPlatform) (getStaticMap().get(i));
+			GraphicRectangle rect = actor.getGraphicRectangle();
+			if (rect.getTexturePath() != null) {
+				rect.setTexturized(true);
+				rect.setPaint(Color.GREEN);
+
+			}
+
+		}
+		for (int i = 0; i < getActors().size(); i++) {
+			Actor actor = (getActors().get(i));
+			for (GraphicRectangle rect : getActors().get(i).getGraphicShapes()) {
+				if (rect.getTexturePath() != null) {
+					rect.setTexturized(true);
+					rect.setPaint(Color.BLUE);
+				}
+
+			}
+		}
 	}
 
 	public static BvsR_Map load(String string) throws FileNotFoundException,

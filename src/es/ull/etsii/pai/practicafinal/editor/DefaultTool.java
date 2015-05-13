@@ -133,6 +133,12 @@ public class DefaultTool extends EditorTool {
 		// TODO Auto-generated method stub
 
 	}
+	public void moveAdd(Point point){
+		if (getSelectedActor() != null) {
+			selectedEntity.setLocation((int)(selectedEntity.getX()+point.getX()),(int)( selectedEntity.gety()+point.getY()));
+			setModified(true);
+		}
+	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
@@ -156,7 +162,18 @@ public class DefaultTool extends EditorTool {
 		case KeyEvent.VK_BACK_SPACE:
 			deleteSelected();
 			break;
-
+		case KeyEvent.VK_DOWN:
+			moveAdd(new Point(0,1));
+			break;
+		case KeyEvent.VK_UP:
+			moveAdd(new Point(0,-1));
+			break;
+		case KeyEvent.VK_LEFT:
+			moveAdd(new Point(-1,0));
+			break;
+		case KeyEvent.VK_RIGHT:
+			moveAdd(new Point(1,0));
+			break;
 		default:
 			break;
 		}

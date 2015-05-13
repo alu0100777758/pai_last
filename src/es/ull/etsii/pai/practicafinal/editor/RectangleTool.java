@@ -71,15 +71,9 @@ public class RectangleTool extends EditorTool {
 		// firstGrasssTextureTestDontJudgeMe.png
 		StaticPlatform rect = new StaticPlatform(beginX, beginY, endX - beginX,
 				endY - beginY);
-		try {
-//			java.awt.image.BufferedImage image = ImageIO.read(getClass().getClassLoader().getResource(
-//					"textures/firstGrasssTextureTestDontJudgeMe.png"));
-
-			rect.setPaint(new Texture("textures/firstGrasssTextureTestDontJudgeMe.png", rect.getPhysicalRectangle()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//			rect.setPaint(new Texture("textures/firstGrasssTextureTestDontJudgeMe.png", rect.getPhysicalRectangle()));
+		rect.getGraphicRectangle().setTexturePath("textures/firstGrasssTextureTestDontJudgeMe.png");
+		rect.getGraphicRectangle().setTexturized(true);
 		getMap().addStaticMap(rect);
 	}
 

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 public class Texture extends TexturePaint implements Serializable {
 	private static final long serialVersionUID = 8536298189505108339L;
 	String name ;
+	Rectangle2D anchor;
 	
 	public String getName() {
 		return name;
@@ -22,12 +23,12 @@ public class Texture extends TexturePaint implements Serializable {
 		super(ImageIO.read(Texture.class.getClassLoader().getResource(txtr)), anchor);
 		setName(txtr);
 	}
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-		out.writeChars(getName());
-	}
-
-	private void readObject(java.io.ObjectInputStream in) throws IOException {
-		setName(getName());
-	}
+//	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+//		out.writeChars(getName());
+//	}
+//
+//	private void readObject(java.io.ObjectInputStream in) throws IOException {
+//		super(Texture.class.getClassLoader().getResource(getName()),anchor);
+//	}
 
 }

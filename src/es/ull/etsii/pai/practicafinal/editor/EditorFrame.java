@@ -172,6 +172,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 	}
 
 	public void saveMap(String string) {
+		getMap().markForTexture();
 		try (OutputStream file = new FileOutputStream(string);
 				OutputStream buffer = new BufferedOutputStream(file);
 				ObjectOutput output = new ObjectOutputStream(buffer);) {
