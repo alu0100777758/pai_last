@@ -27,14 +27,14 @@ public class BvsR_Map implements Serializable {
 				setPlayer_one(player);
 				player.getGraphicShapes().get(Player.BODY).setTexturePath("textures/blue01.png");
 				player.getGraphicShapes().get(Player.BODY).setTextureAnchor(player.getPhysicalRectangle());
-				player.getGraphicShapes().get(Player.BODY).setTexturized(true);
+				player.getGraphicShapes().get(Player.BODY).setImage(true);
 				addActor(getPlayer_one());
 			} else if (getPlayer_two() == null) {
 				player.setColor(Color.RED);
 				setPlayer_two(player);
 				player.getGraphicShapes().get(Player.BODY).setTexturePath("textures/red01.png");
 				player.getGraphicShapes().get(Player.BODY).setTextureAnchor(player.getPhysicalRectangle());
-				player.getGraphicShapes().get(Player.BODY).setTexturized(true);
+				player.getGraphicShapes().get(Player.BODY).setImage(true);;
 				addActor(getPlayer_two());
 			}
 		}
