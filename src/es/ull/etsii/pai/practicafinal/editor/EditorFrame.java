@@ -50,7 +50,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 
 	public EditorFrame() {
 		map = new BvsR_Map();
-		toolbar = new EditorToolbar(map);
+		toolbar = new EditorToolbar(map,this);
 		setLayout(new BorderLayout());
 		toppanel.add(toolbar);
 		this.add(toppanel, BorderLayout.NORTH);

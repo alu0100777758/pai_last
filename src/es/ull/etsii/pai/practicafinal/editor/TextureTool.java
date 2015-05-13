@@ -7,12 +7,18 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.nio.channels.SelectionKey;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
+
+import org.apache.commons.io.FileUtils;
 
 import es.ull.etsii.pai.practicafinal.Actor;
+import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class TextureTool extends DefaultTool {
@@ -75,9 +81,27 @@ public class TextureTool extends DefaultTool {
 		}
 		setModified(true);
 	}
-
+	public void moveFile(String sourcePath, String destPath){
+		File source = new File(sourcePath);
+		File dest = new File(destPath);
+		try {
+			FileUtils.copyDirectory(source, dest);
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}
 	private void SetTexture() {
-
+		JFileChooser c = new JFileChooser(System
+				.getProperty("user.dir"));
+		int rVal = c.showOpenDialog(getFrame());
+		if (rVal == JFileChooser.APPROVE_OPTION) {
+				moveFile(c.getCurrentDirectory().toString()
+						+ System.getProperty("file.separator")
+						+ c.getSelectedFile().getName(), "textures/" + c.getSelectedFile());
+			setName(c.getSelectedFile().toString());
+		}
+		if (rVal == JFileChooser.CANCEL_OPTION) {
+		}
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 
@@ -14,9 +15,19 @@ public abstract class EditorTool implements ActionListener, MouseListener,
 		MouseMotionListener, KeyListener {
 
 	private JButton button;
-	int toolid = 0;
-	BvsR_Map map = null;
+	private int toolid = 0;
+	private BvsR_Map map = null;
+	private JFrame frame = null;
 	boolean modified = false;
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
 	public EditorTool(){
 	}
 

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
@@ -19,12 +20,13 @@ public class EditorToolbar extends JToolBar implements ActionListener {
 	public void setSelectedToolIndex(int selectedToolIndex) {
 		this.selectedToolIndex = selectedToolIndex;
 	}
-	public EditorToolbar(BvsR_Map map) {
+	public EditorToolbar(BvsR_Map map,JFrame frame) {
 		setMap(map);
 		for(int i = 0; i < tools.length; i++){
 			add(tools[i].getButton());
 			tools[i].getButton().addActionListener(this);
 			tools[i].setToolid(i);
+			tools[i].setFrame(frame);
 		}
 		setMapToTools(map);
 		tools[0].getButton().setEnabled(false);
