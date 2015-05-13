@@ -152,6 +152,8 @@ public class Bullet extends Actor implements Physical_active{
 	public void setBULLET_SIZE(int bULLET_SIZE) {
 		bulletSize = bULLET_SIZE;
 		getGraphicShape().setSize(getBULLET_SIZE(), getBULLET_SIZE());
+		getPhysicalShape().setSize(getBULLET_SIZE(), getBULLET_SIZE());
+	
 	}
 	
 	

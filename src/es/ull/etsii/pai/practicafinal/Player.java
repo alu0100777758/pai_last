@@ -198,8 +198,8 @@ public class Player extends Actor implements Physical_active {
 			}
 		}
 		if (!repaired) {
-			if (Math.abs(2 * getSpeed().x()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
-				if (getSpeed().x() > 0) {
+			if (Math.abs(2 * getSpeed().add(getPush()).x()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
+				if (getSpeed().add(getPush()).x() > 0) {
 					this.setPosition(getPosition().substract(intersection.getWidth(), 0));
 					setBlock_right(true);
 				}
