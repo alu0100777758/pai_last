@@ -161,7 +161,12 @@ public class Player extends Actor implements Physical_active {
 	public boolean collides(Physical_passive actor) {
 		return this.getPhysicalShape().collides(actor);
 	}
-
+	@Override
+	public void setLocation(int x, int y) {
+		super.setPosition(new Point2D(x, y));
+		for(GraphicRectangle graphics : getGraphicShapes())
+			graphics.setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+	};
 	/**
 	 * Afinar esto.
 	 */
