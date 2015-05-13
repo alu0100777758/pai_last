@@ -17,17 +17,17 @@ public class DefaultTool extends EditorTool {
 	public static final int PLANE_ACTORS = 0;
 	public static final int PLANE_MAP = 1;
 	public static final int PLANE_BACKGROUND = 2;
-	Entity selectedEntity = null;
-	int xOffset = 0;
-	int yOffset = 0;
-	private int foundInplane = 0;
+	private static Entity selectedEntity = null;
+	private int xOffset = 0;
+	private int yOffset = 0;
+	private static int foundInplane = 0;
 
 	public int getFoundInplane() {
 		return foundInplane;
 	}
 
 	public void setFoundInplane(int foundInplane) {
-		this.foundInplane = foundInplane;
+		DefaultTool.foundInplane = foundInplane;
 	}
 
 	public int getxOffset() {
@@ -51,7 +51,7 @@ public class DefaultTool extends EditorTool {
 	}
 
 	public void setSelectedActor(Entity selectedActor) {
-		this.selectedEntity = selectedActor;
+		DefaultTool.selectedEntity = selectedActor;
 	}
 
 	public DefaultTool() {
