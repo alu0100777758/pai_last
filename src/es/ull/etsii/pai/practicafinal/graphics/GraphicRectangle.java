@@ -18,7 +18,16 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	private Paint paint = Color.RED;
 	private boolean texturized = false;
 	private String texturePath = null;
+	private Rectangle textureAnchor = null;
 	
+	public Rectangle getTextureAnchor() {
+		return textureAnchor;
+	}
+
+	public void setTextureAnchor(Rectangle textureAnchor) {
+		this.textureAnchor = textureAnchor;
+	}
+
 	public boolean isTexturized() {
 		return texturized;
 	}
@@ -50,7 +59,7 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 
 	private void texturize(String texturePath2){
 		try {
-			setPaint( new TexturePaint(ImageIO.read(Texture.class.getClassLoader().getResource(getTexturePath())), getBounds()));
+			setPaint( new TexturePaint(ImageIO.read(Texture.class.getClassLoader().getResource(getTexturePath())), getTextureAnchor()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

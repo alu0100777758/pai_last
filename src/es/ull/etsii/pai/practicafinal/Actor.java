@@ -18,6 +18,7 @@ public class Actor extends Entity {
 		setPosition(position);
 		setGraphicShapes(new ArrayList<GraphicRectangle>());
 	}
+	
 	@Override
 	public void reproduce() {
 		// TODO Auto-generated method stub
