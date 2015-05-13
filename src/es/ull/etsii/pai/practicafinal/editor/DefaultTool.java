@@ -63,18 +63,11 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		addRectangle(e.getX(), e.getY());
-		System.out.println("default clicked");
 		setModified(true);
 		// TODO Auto-generated method stub
 
 	}
 
-	private void addRectangle(int i, int j) {
-		// System.out.println("añadiendo");
-		// map.addActor(new StaticPlatform(i,j, 100, 30),1);
-		// repaint();
-	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {

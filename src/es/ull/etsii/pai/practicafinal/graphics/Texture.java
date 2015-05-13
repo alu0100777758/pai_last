@@ -13,6 +13,12 @@ public class Texture extends TexturePaint implements Serializable {
 	String name ;
 	Rectangle2D anchor;
 	
+	public Rectangle2D getAnchor() {
+		return anchor;
+	}
+	public void setAnchor(Rectangle2D anchor) {
+		this.anchor = anchor;
+	}
 	public String getName() {
 		return name;
 	}
