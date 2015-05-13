@@ -23,7 +23,7 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	private String texturePath = null;
 	private Rectangle textureAnchor = null;
 	private boolean image = false;
-	
+
 	public boolean isImage() {
 		return image;
 	}
@@ -61,28 +61,27 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	}
 
 	@Override
-	public void paint(Graphics g){
-		if(isTexturized() && !isImage())
+	public void paint(Graphics g) {
+		if (isTexturized() && !isImage())
 			texturize(getTexturePath());
 		Graphics2D g2 = (Graphics2D) g.create();
-		if(isImage()){
-				g2.drawImage(ResourceManager.getInstance().getBufferedImage(getTexturePath()), (int)getLocation().getX(),(int)getLocation().getY(),(int) getWidth(),(int)getHeight(), null);
-		}
-		else{
+		if (isImage()) {
+			g2.drawImage(
+					ResourceManager.getInstance().getBufferedImage(
+							getTexturePath()), (int) getLocation().getX(),
+					(int) getLocation().getY(), (int) getWidth(),
+					(int) getHeight(), null);
+		} else {
 			g2.setPaint(getPaint());
 			g2.fill(this);
 		}
-			
+
 		g2.dispose();
 	}
 
-	private void texturize(String texturePath2){
-		try {
-			setPaint( new TexturePaint(ImageIO.read(Texture.class.getClassLoader().getResource(getTexturePath())), getTextureAnchor()));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	private void texturize(String texturePath2) {
+		setPaint(new TexturePaint(ResourceManager.getInstance()
+				.getBufferedImage(getTexturePath()), getTextureAnchor()));
 		setTexturized(false);
 	}
 
