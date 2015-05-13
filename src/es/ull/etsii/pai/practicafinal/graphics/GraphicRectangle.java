@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -19,7 +21,16 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	private boolean texturized = false;
 	private String texturePath = null;
 	private Rectangle textureAnchor = null;
+	private boolean image = false;
 	
+	public boolean isImage() {
+		return image;
+	}
+
+	public void setImage(boolean image) {
+		this.image = image;
+	}
+
 	public Rectangle getTextureAnchor() {
 		return textureAnchor;
 	}
@@ -50,11 +61,26 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 
 	@Override
 	public void paint(Graphics g){
-		if(isTexturized())
+		if(isTexturized() && !isImage())
 			texturize(getTexturePath());
 		Graphics2D g2 = (Graphics2D) g.create();
-		g2.setPaint(getPaint());
-		g2.fill(this);
+		if(isImage()){
+			
+			BufferedImage image;
+			try {
+				image = ImageIO.read(Texture.class.getClassLoader().getResource(getTexturePath()));
+				g2.drawImage(image, (int)getLocation().getX(),(int)getLocation().getY(),(int) getWidth(),(int)getHeight(), null);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else{
+			g2.setPaint(getPaint());
+			g2.fill(this);
+		}
+			
+		g2.dispose();
 	}
 
 	private void texturize(String texturePath2){
