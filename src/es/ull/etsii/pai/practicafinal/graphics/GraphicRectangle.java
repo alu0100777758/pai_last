@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.TexturePaint;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +24,16 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	private String texturePath = null;
 	private Rectangle textureAnchor = null;
 	private boolean image = false;
+	private boolean flipImage = false;
+	
+	
+	public boolean isFlipImage() {
+		return flipImage;
+	}
+
+	public void setFlipImage(boolean flipImage) {
+		this.flipImage = flipImage;
+	}
 
 	public boolean isImage() {
 		return image;
@@ -66,9 +77,12 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 			texturize(getTexturePath());
 		Graphics2D g2 = (Graphics2D) g.create();
 		if (isImage()) {
+			BufferedImage bimage = ResourceManager.getInstance().getBufferedImage(
+					getTexturePath());
+			if(isFlipImage())
+				bimage = createFlipped(bimage);
 			g2.drawImage(
-					ResourceManager.getInstance().getBufferedImage(
-							getTexturePath()), (int) getLocation().getX(),
+					bimage, (int) getLocation().getX(),
 					(int) getLocation().getY(), (int) getWidth(),
 					(int) getHeight(), null);
 		} else {
@@ -92,5 +106,24 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	public void setPaint(Paint color) {
 		this.paint = color;
 	}
+	private static BufferedImage createFlipped(BufferedImage image)
+    {
+        AffineTransform at = new AffineTransform();
+        at.concatenate(AffineTransform.getScaleInstance(-1, 1));
+        at.concatenate(AffineTransform.getTranslateInstance( -image.getWidth(),0));
+        return createTransformed(image, at);
+    }
+	  private static BufferedImage createTransformed(
+		        BufferedImage image, AffineTransform at)
+		    {
+		        BufferedImage newImage = new BufferedImage(
+		            image.getWidth(), image.getHeight(),
+		            BufferedImage.TYPE_INT_ARGB);
+		        Graphics2D g = newImage.createGraphics();
+		        g.transform(at);
+		        g.drawImage(image, 0, 0, null);
+		        g.dispose();
+		        return newImage;
+		    }
 
 }

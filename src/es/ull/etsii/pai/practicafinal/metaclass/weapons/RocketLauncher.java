@@ -4,6 +4,7 @@ import es.ull.etsii.pai.practicafinal.Bullet;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.Side;
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
@@ -18,13 +19,20 @@ public class RocketLauncher extends Weapon{
 		super(owner);
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);
+		setWidth(40);
+		setHeight(15);
+		setX_offset(-30);
+		setGraphicShape();
+		getGraphicShape().setTexturePath("textures/rocketlauncher.png");
+		getGraphicShape().setTextureAnchor(getGraphicShape());
+		getGraphicShape().setImage(true);
 	}	
 
 	protected void shootSecondary() {}
 
 	protected void shootMain() {
 		int side = getOwner().getLookingAt() == Side.LEFT? -SPEED : SPEED;
-		int addy = getOwner().isCrounched()? ADD_TO_Y /2 : ADD_TO_Y;
+		int addy = getOwner().isCrounched()? getY_offset() /2 : getY_offset();
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);

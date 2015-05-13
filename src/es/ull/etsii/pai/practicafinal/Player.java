@@ -22,9 +22,9 @@ public class Player extends Actor implements Physical_active {
 	 */
 	private static final long serialVersionUID = -3033119409170313204L;
 
-	private Point2D speed; 		// Vector velocidad.
+	private Point2D speed; // Vector velocidad.
 	private Point2D push;
-	
+
 	private int hp;
 	private int maxJumpTTL = 20;
 	private double climbPertTick = 1;
@@ -52,51 +52,55 @@ public class Player extends Actor implements Physical_active {
 	public static final int WEAPON = 1;
 	public static final int DEFAULT_MAX_HP = 20;
 	public static final int PUSH_RESIST = 2;
-	private	 Color color = Color.BLUE; // error, usar rectangulo gráfico
-	
+	private Color color = Color.BLUE; // error, usar rectangulo gráfico
 
 	public Player(Point2D position, BvsR_Map map) {
 		super(position);
 		setHp(DEFAULT_MAX_HP);
 		setMap(map);
 		setSpeed(new Point2D(0, 0));
-		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setPhysicalShape(new PhysicalRectangle((int) getPosition().x(),
+				(int) getPosition().y(), WIDTH, HEIGHT));
 		setLookingAt(Side.RIGHT);
 		setPush(new Point2D(0, 0));
 		setJump(100, 0.33);
-		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y(), 
-								WIDTH, HEIGHT));
+		getGraphicShapes().add(
+				new GraphicRectangle((int) getPosition().x(),
+						(int) getPosition().y(), WIDTH, HEIGHT));
 		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
-		
+
 		setWeapon(new RocketLauncher(this));
-		
+
 		getGraphicShapes().add(getWeapon().getGraphicShape());
 		getGraphicShapes().get(WEAPON).setPaint(Color.BLACK);
 	}
-	
-	public void setJump(int height , double timeSeconds ){
-		setMaxJumpTTL((int)(60*timeSeconds));
-		setClimbPertTick((double)height/getMaxJumpTTL());
+
+	public void setJump(int height, double timeSeconds) {
+		setMaxJumpTTL((int) (60 * timeSeconds));
+		setClimbPertTick((double) height / getMaxJumpTTL());
 	}
+
 	public Color getColor() {
 		return color;
 	}
-	
+
 	public double getClimbPertTick() {
 		return climbPertTick;
 	}
+
 	public void setClimbPertTick(double climbPertTick) {
 		this.climbPertTick = climbPertTick;
 	}
+
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
-	//	g.setColor(getColor());
-	//	g.fillRect((int) getPosition().x(), (int) getPosition().y(),
-		//		(int) WIDTH, (int) HEIGHT);
+		// g.setColor(getColor());
+		// g.fillRect((int) getPosition().x(), (int) getPosition().y(),
+		// (int) WIDTH, (int) HEIGHT);
 		for (int i = 0; i < getGraphicShapes().size(); i++)
 			getGraphicShapes().get(i).paint(g.create());
 
@@ -111,17 +115,19 @@ public class Player extends Actor implements Physical_active {
 	private boolean moveRight() {
 		getSpeed().setX(SPEED);
 		setBlock_left(false);
-		//setLookingAt(Side.RIGHT);
+		// setLookingAt(Side.RIGHT);
 		return true;
 	}
 
 	private boolean moveUP() {
 		HEIGHT = 40;
 		getPosition().setY(getPosition().y() - HEIGHT / 2);
-		
-		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+
+		getGraphicShapes().get(BODY).setLocation(
+				new Point((int) getPosition().x(), (int) getPosition().y()));
 		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
-		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setPhysicalShape(new PhysicalRectangle((int) getPosition().x(),
+				(int) getPosition().y(), WIDTH, HEIGHT));
 		setUP(false);
 		setCrounched(false);
 		return true;
@@ -130,20 +136,25 @@ public class Player extends Actor implements Physical_active {
 	private boolean moveDown() {
 		getPosition().setY(getPosition().y() + HEIGHT / 2);
 		HEIGHT = 20;
-		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+		getGraphicShapes().get(BODY).setLocation(
+				new Point((int) getPosition().x(), (int) getPosition().y()));
 		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
-		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
+		setPhysicalShape(new PhysicalRectangle((int) getPosition().x(),
+				(int) getPosition().y(), WIDTH, HEIGHT));
 		setCrounched(true);
 		return true;
 	}
-	public void shoot ()  {
+
+	public void shoot() {
 		getWeapon().triggerMain();
 		setShooting(true);
 	}
+
 	public void stopShooting() {
 		getWeapon().releaseMain();
 		setShooting(false);
 	}
+
 	@Override
 	public boolean repair_collisionY(Point2D point) {
 		// TODO Auto-generated method stub
@@ -152,8 +163,7 @@ public class Player extends Actor implements Physical_active {
 
 	@Override
 	public boolean repair_collisionX(Point2D point) {
-		
-		
+
 		return false;
 	}
 
@@ -161,104 +171,136 @@ public class Player extends Actor implements Physical_active {
 	public boolean collides(Physical_passive actor) {
 		return this.getPhysicalShape().collides(actor);
 	}
+
 	@Override
 	public void setLocation(int x, int y) {
 		super.setPosition(new Point2D(x, y));
-		for(GraphicRectangle graphics : getGraphicShapes())
-			graphics.setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+		for (GraphicRectangle graphics : getGraphicShapes())
+			graphics.setLocation(new Point((int) getPosition().x(),
+					(int) getPosition().y()));
 	};
+
 	/**
 	 * Afinar esto.
 	 */
 	@Override
 	public boolean repair_collision(Physical_passive actor) {
-		Rectangle intersection = actor.getCollisionedRectangle(this.getPhysicalRectangle());
+		Rectangle intersection = actor.getCollisionedRectangle(this
+				.getPhysicalRectangle());
 		boolean repaired = false;
 		// Resolvemos colisiones primero en Y mejor.
-		
+
 		// Miramos si colisiona con la cabeza o los pies:
-		
-		// Si alguno es true colisiona con la cabeza. 
-		if ((actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMinY()))  || 
-				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMinY())) ) && !isBlock_down()) {
+
+		// Si alguno es true colisiona con la cabeza.
+		if ((actor.getPhysicalRectangle().contains(
+				new Point((int) getPhysicalRectangle().getMinX(),
+						(int) getPhysicalRectangle().getMinY())) || actor
+				.getPhysicalRectangle().contains(
+						new Point((int) getPhysicalRectangle().getMaxX(),
+								(int) getPhysicalRectangle().getMinY())))
+				&& !isBlock_down()) {
 			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {
-				this.setPosition(getPosition().add(new Point2D(0, intersection.getHeight()))); // Tocado con la cabeza
+				this.setPosition(getPosition().add(
+						new Point2D(0, intersection.getHeight()))); // Tocado
+																	// con la
+																	// cabeza
 				repaired = true;
 				setJumpTTL(0);
 				setBlock_up(true);
 			}
 		}
 		// Si alguno es true colisiona con los pies.
-		else if ((actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMinX(), (int)getPhysicalRectangle().getMaxY()))  || 
-				actor.getPhysicalRectangle().contains(new Point((int)getPhysicalRectangle().getMaxX(), (int)getPhysicalRectangle().getMaxY()))) && !isBlock_up()) {
-			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {	
-				this.setPosition(getPosition().add(new Point2D(0, -intersection.getHeight())));// Tocado con los pies.
+		else if ((actor.getPhysicalRectangle().contains(
+				new Point((int) getPhysicalRectangle().getMinX(),
+						(int) getPhysicalRectangle().getMaxY())) || actor
+				.getPhysicalRectangle().contains(
+						new Point((int) getPhysicalRectangle().getMaxX(),
+								(int) getPhysicalRectangle().getMaxY())))
+				&& !isBlock_up()) {
+			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {
+				this.setPosition(getPosition().add(
+						new Point2D(0, -intersection.getHeight())));// Tocado
+																	// con los
+																	// pies.
 				repaired = true;
 				setBlock_down(true);
 			}
 		}
 		if (!repaired) {
-			if (Math.abs(2 * getSpeed().add(getPush()).x()) >= intersection.getWidth()) {							// Comentar esto, buscar solucion mejor que multiplicar por 2.
+			if (Math.abs(2 * getSpeed().add(getPush()).x()) >= intersection
+					.getWidth()) { // Comentar esto, buscar solucion mejor que
+									// multiplicar por 2.
 				if (getSpeed().add(getPush()).x() > 0) {
-					this.setPosition(getPosition().substract(intersection.getWidth(), 0));
+					this.setPosition(getPosition().substract(
+							intersection.getWidth(), 0));
 					setBlock_right(true);
-				}
-				else {
-					this.setPosition(getPosition().add(intersection.getWidth(), 0));
+				} else {
+					this.setPosition(getPosition().add(intersection.getWidth(),
+							0));
 					setBlock_left(true);
 				}
-				
+
 			}
 		}
-		//System.out.println("Vel: " + getSpeed().x() + " ancho: " + intersection.getWidth() + " alto: " + intersection.getHeight());			//
+		// System.out.println("Vel: " + getSpeed().x() + " ancho: " +
+		// intersection.getWidth() + " alto: " + intersection.getHeight()); //
 		return false;
 	}
+
 	public void gotHit(Bullet bullet) {
 		if (bullet.getOwner() != this) {
 			setHp(getHp() - bullet.getDamage());
 			if (bullet.getSpeed().x() > 0)
 				getPush().setX(getPush().x() + bullet.getPush());
 			else
-				getPush().setX(getPush().x() -bullet.getPush());
+				getPush().setX(getPush().x() - bullet.getPush());
 			if (getHp() <= 0 && !isDead())
 				die();
 		}
 	}
+
 	/**
 	 * TODO Hacer el metodo para morir.
 	 */
 	public void die() {
 		setDead(true);
-		getGraphicShapes().get(BODY).setLocation((int)getPosition().x(), (int)getPosition().y() + HEIGHT - WIDTH);
+		getGraphicShapes().get(BODY).setLocation((int) getPosition().x(),
+				(int) getPosition().y() + HEIGHT - WIDTH);
 		getGraphicShapes().get(BODY).setSize(HEIGHT, WIDTH);
-		getPhysicalRectangle().setLocation((int)getPosition().x(), (int)getPosition().y() + HEIGHT - WIDTH);
+		getPhysicalRectangle().setLocation((int) getPosition().x(),
+				(int) getPosition().y() + HEIGHT - WIDTH);
 		getPhysicalRectangle().setSize(HEIGHT, WIDTH);
 		getGraphicShapes().remove(WEAPON);
 		System.out.println("Muerto");
 	}
-	void ResolveUnreleasedMovements(){
-		if(isMove_down() && !isCrounched())
+
+	void ResolveUnreleasedMovements() {
+		if (isMove_down() && !isCrounched())
 			moveDown();
-		if(isMove_left())
+		if (isMove_left())
 			moveLeft();
-		if(isMove_right())
+		if (isMove_right())
 			moveRight();
-		if(isMove_up())
+		if (isMove_up())
 			moveUP();
 		setBlock_down(false);
 		if (!isMove_left() && !isMove_right())
 			getSpeed().setX(0);
 	}
+
 	private void updatePush() {
-		if ((int)getPush().x() == 0 || Math.abs(getPush().x()) < PUSH_RESIST)
+		if ((int) getPush().x() == 0 || Math.abs(getPush().x()) < PUSH_RESIST)
 			getPush().setX(0);
 		else if (getPush().x() > 0)
 			getPush().setX(getPush().x() - PUSH_RESIST);
 		else
 			getPush().setX(getPush().x() + PUSH_RESIST);
 	}
+
 	/**
-	 * Mueve el jugador seg�n marca la velocidad y actualiza el disparo del arma .
+	 * Mueve el jugador seg�n marca la velocidad y actualiza el disparo del
+	 * arma .
 	 */
 	@Override
 	public boolean updatePos(Physical_passive map) {
@@ -266,37 +308,46 @@ public class Player extends Actor implements Physical_active {
 			ResolveUnreleasedMovements();
 			getWeapon().update();
 			updatePush();
-			if (!isBlock_down()) {													// Por lo visto esto controla el salto
+			if (!isBlock_down()) { // Por lo visto esto controla el salto
 				if (getJumpTTL() != 0) {
 					moveJump();
-				} else																// Y este 3 es la gravedad., lo paso a un metodo de actor para decirle q empiece a caer
+				} else
+					// Y este 3 es la gravedad., lo paso a un metodo de actor
+					// para decirle q empiece a caer
 					fall();
 			}
-									// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
-			getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
-			setPosition(getPosition().add(getSpeed().add(getPush())));				// CAmbiado;
+			// Aqui es donde realmente cambiamos la posicion una vez calculado
+			// donde va a ir.
+			getGraphicShapes().get(BODY)
+					.setLocation(
+							new Point((int) getPosition().x(),
+									(int) getPosition().y()));
+			setPosition(getPosition().add(getSpeed().add(getPush()))); // CAmbiado;
 		}
 		return true;
 	}
 
 	/**
-	 * Ejecuta la accion de saltar poniendo libre la direccion hacia abajo
-	 * y dando valor al jumpTTL
+	 * Ejecuta la accion de saltar poniendo libre la direccion hacia abajo y
+	 * dando valor al jumpTTL
 	 */
 	public void jump() {
-		if(isBlock_down()){
+		if (isBlock_down()) {
 			setJumpTTL(getMaxJumpTTL());
 			setBlock_down(false);
-		}	
+		}
 	}
+
 	/**
-	 * Mueve el personaje hacia arriba reduciendo el tiempo que le queda por saltar.
+	 * Mueve el personaje hacia arriba reduciendo el tiempo que le queda por
+	 * saltar.
 	 */
 	public void moveJump() {
 		getSpeed().setY(-getClimbPertTick());
 		setJumpTTL(getJumpTTL() - 1);
-		
+
 	}
+
 	/**
 	 * Hace caer al personaje segun marca la gravedad.
 	 */
@@ -304,41 +355,44 @@ public class Player extends Actor implements Physical_active {
 		getSpeed().setY(-GRAVITY);
 		setBlock_up(false);
 	}
-	
+
 	@Override
 	public PhysicalRectangle getPhysicalRectangle() {
 		return getPhysicalShape();
-		
+
 	}
 
 	@Override
 	public Rectangle getCollisionedRectangle(Physical_passive actor) {
-		return getPhysicalRectangle().getCollisionedRectangle(actor.getPhysicalRectangle());
+		return getPhysicalRectangle().getCollisionedRectangle(
+				actor.getPhysicalRectangle());
 	}
 
 	@Override
 	public ArrayList<Segment> getSegmentList() {
 		return getPhysicalShape().getSegmentList();
 	}
+
 	public void setLeft(boolean b) {
-		setMove_left(b);	
-		//ResolveUnreleasedMovements();
+		setMove_left(b);
+		// ResolveUnreleasedMovements();
 	}
 
 	public void setRight(boolean b) {
 		setMove_right(b);
-	//	ResolveUnreleasedMovements();
+		// ResolveUnreleasedMovements();
 	}
 
 	public void setUP(boolean b) {
 		setMove_up(b);
-		//ResolveUnreleasedMovements();
+		// ResolveUnreleasedMovements();
 	}
 
 	public void setDown(boolean b) {
 		setMove_down(b);
-		//ResolveUnreleasedMovements();
+		// ResolveUnreleasedMovements();
 	}
+
 	public Point2D getSpeed() {
 		return speed;
 	}
@@ -346,6 +400,7 @@ public class Player extends Actor implements Physical_active {
 	public void setSpeed(Point2D speed) {
 		this.speed = speed;
 	}
+
 	public int getJumpTTL() {
 		return jumpTTL;
 	}
@@ -447,7 +502,15 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public void setLookingAt(Side lookingAt) {
-		this.lookingAt = lookingAt;
+		if (lookingAt != getLookingAt()) {
+			this.lookingAt = lookingAt;
+			switchFlip();
+		}
+	}
+
+	private void switchFlip() {
+		for (GraphicRectangle rect : getGraphicShapes())
+			rect.setFlipImage(!rect.isFlipImage());
 	}
 
 	public Weapon getWeapon() {
@@ -489,5 +552,5 @@ public class Player extends Actor implements Physical_active {
 	public void setPush(Point2D push) {
 		this.push = push;
 	}
-	
+
 }

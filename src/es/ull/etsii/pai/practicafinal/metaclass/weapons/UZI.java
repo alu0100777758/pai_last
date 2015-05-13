@@ -23,7 +23,7 @@ public class UZI extends Weapon{
 
 	protected void shootMain() {
 		int side = getOwner().getLookingAt() == Side.LEFT? -SPEED : SPEED;
-		int addy = getOwner().isCrounched()? ADD_TO_Y /2 : ADD_TO_Y;
+		int addy = getOwner().isCrounched()? getY_offset() /2 : getY_offset();
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);

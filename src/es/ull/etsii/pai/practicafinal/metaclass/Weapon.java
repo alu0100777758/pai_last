@@ -27,15 +27,50 @@ public abstract class Weapon implements Serializable{
 	private boolean pulsedMainTrigger = false;
 	private boolean pulsedSecondaryTrigger = false;
 	private GraphicRectangle graphicShape;
-	public static final int WIDTH = 25;
-	public static final int HEIGHT = 10;
-	public static final int ADD_TO_Y = 10;
+	private int width = 25; 
+	private int height = 10;
+	private int y_offset = 10;
+	private int x_offset = 0;
 	
+	public int getX_offset() {
+		return x_offset;
+	}
+
+	public void setX_offset(int x_offset) {
+		this.x_offset = x_offset;
+	}
+
 	public Weapon(Player owner) {
 		setOwner(owner);
-		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x(), (int)getOwner().getPosition().y() + ADD_TO_Y, WIDTH, HEIGHT));
+		setGraphicShape();
 	}
-	
+	public void setGraphicShape(){
+		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
+	}
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getY_offset() {
+		return y_offset;
+	}
+
+	public void setY_offset(int y_offset) {
+		this.y_offset = y_offset;
+	}
+
 	public Player getOwner() {
 		return owner;
 	}
@@ -178,7 +213,7 @@ public abstract class Weapon implements Serializable{
 		setSecondaryCooldown(getSecondaryCooldown() - 1);
 	}
 	public void update(){
-		 int addy = ADD_TO_Y;
+		 int addy = getY_offset();
 		if(isPulsedMainTrigger() && canShootPrimary()){
 			shootMain();
 		}else if(isPulsedSecondaryTrigger() && canShootSecondary())
@@ -187,11 +222,11 @@ public abstract class Weapon implements Serializable{
 			decreaseCooldowns();
 		
 		if (getOwner().isCrounched())
-			addy = ADD_TO_Y /2 ;
+			addy = getY_offset() /2 ;
 		if (getOwner().getLookingAt() == Side.LEFT)
-			getGraphicShape().setLocation((int)getOwner().getPosition().x() - WIDTH, (int)getOwner().getPosition().y() + addy);
+			getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth()-getX_offset(), (int)getOwner().getPosition().y() + addy);
 		else 
-			getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH, (int)getOwner().getPosition().y() + addy);
+			getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + addy);
 	}
 	
 	protected abstract void shootSecondary();
