@@ -39,6 +39,7 @@ public class Bullet extends Actor implements Physical_active{
 		this(pos);
 		setSpeed(speed);
 		setOwner(owner);
+		getGraphicShape().setFlipImage(getOwner().getGraphicShapes().get(0).isFlipImage());
 	}
 	public Bullet(Point2D pos, Point2D speed, int damage, int Push,Player owner) {
 		this(pos, speed, owner);

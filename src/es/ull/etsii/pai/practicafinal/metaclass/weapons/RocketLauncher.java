@@ -6,6 +6,7 @@ import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.Side;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets.rocket_bullet;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class RocketLauncher extends Weapon{
@@ -36,6 +37,6 @@ public class RocketLauncher extends Weapon{
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
-		getOwner().getMap().getActors().add(new Bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE));
+		getOwner().getMap().getActors().add(new rocket_bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE));
 	}
 }
