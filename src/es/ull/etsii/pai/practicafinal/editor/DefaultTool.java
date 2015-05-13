@@ -14,6 +14,9 @@ import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.Entity;
 
 public class DefaultTool extends EditorTool {
+	public static final int PLANE_ACTORS = 0;
+	public static final int PLANE_MAP = 1;
+	public static final int PLANE_BACKGROUND = 2;
 	Entity selectedEntity = null;
 	int xOffset = 0;
 	int yOffset = 0;
@@ -90,19 +93,19 @@ public class DefaultTool extends EditorTool {
 		}
 	}
 
-	private Entity getFirstFor(Point p) {
+	protected Entity getFirstFor(Point p) {
 		for (Actor actor : getMap().getActors()) {
-			setFoundInplane(0);
+			setFoundInplane(PLANE_ACTORS);
 			if (actor.getPhysicalShape().contains(p))
 				return actor;
 		}
 		for (Entity actor : getMap().getStaticMap()) {
-			setFoundInplane(1);
+			setFoundInplane(PLANE_MAP);
 			if (actor.getShape().contains(p))
 				return actor;
 		}
 		for (Entity actor : getMap().getBackground()) {
-			setFoundInplane(2);
+			setFoundInplane(PLANE_BACKGROUND);
 			if (actor.getShape().contains(p))
 				return actor;
 		}
@@ -176,7 +179,7 @@ public class DefaultTool extends EditorTool {
 
 	private void deleteSelected() {
 		switch (getFoundInplane()) {
-		case 0:
+		case PLANE_ACTORS:
 			getMap().getActors().remove(getSelectedActor());
 			if (getSelectedActor().equals((Actor) getMap().getPlayer_one())) {
 				getMap().setPlayer_one(null);
@@ -185,10 +188,10 @@ public class DefaultTool extends EditorTool {
 				getMap().setPlayer_two(null);
 			}
 			break;
-		case 1:
+		case PLANE_MAP:
 			getMap().getStaticMap().remove(getSelectedActor());
 			break;
-		case 2:
+		case PLANE_BACKGROUND:
 			getMap().getBackground().remove(getSelectedActor());
 			break;
 		default:

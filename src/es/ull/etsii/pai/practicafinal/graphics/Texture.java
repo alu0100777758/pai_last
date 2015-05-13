@@ -2,7 +2,6 @@ package es.ull.etsii.pai.practicafinal.graphics;
 
 import java.awt.TexturePaint;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -29,12 +28,4 @@ public class Texture extends TexturePaint implements Serializable {
 		super(ImageIO.read(Texture.class.getClassLoader().getResource(txtr)), anchor);
 		setName(txtr);
 	}
-//	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-//		out.writeChars(getName());
-//	}
-//
-//	private void readObject(java.io.ObjectInputStream in) throws IOException {
-//		super(Texture.class.getClassLoader().getResource(getName()),anchor);
-//	}
-
 }
