@@ -12,7 +12,7 @@ public class UZI extends Weapon{
 	public static final int CLIP_SIZE = 80;
 	public static final int DAMAGE = 1;
 	public static final int SPEED = 20;
-	
+	public static final int PUSH = 6;
 	public UZI(Player owner) {
 		super(owner);
 		setFireRate(FIRE_RATE);
@@ -27,6 +27,6 @@ public class UZI extends Weapon{
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
-		getOwner().getMap().getActors().add(new Bullet(position, speed, DAMAGE, getOwner()));
+		getOwner().getMap().getActors().add(new Bullet(position, speed, DAMAGE, PUSH,getOwner()));
 	}
 }

@@ -1,9 +1,6 @@
 
 	/**
 	 * 	- Delegar el control de las colisiones del escenario a una clase encargada del motor fisico.
-	 *  - Mejorar el disparo de proyectiles, haciendo que se puedan mantener la tecla pulsada.
-	 *  - Implementar colisiones con proyectiles y jugadores.
-	 *  - Idear forma de reconocer "propietario" de proyectil. 
 	 *  - Afinar el sistema de agacharse, verificar si se puede levantar antes de hacerlo. (No realmente necesario todavia).
 	 *  - Como siempre, mejorar clase Player.
 	 *  - Empezar con animaciones y graficos.

@@ -23,6 +23,8 @@ public class Player extends Actor implements Physical_active {
 	private static final long serialVersionUID = -3033119409170313204L;
 
 	private Point2D speed; 		// Vector velocidad.
+	private Point2D push;
+	
 	private int hp;
 	private int maxJumpTTL = 20;
 	private double climbPertTick = 1;
@@ -49,6 +51,7 @@ public class Player extends Actor implements Physical_active {
 	public static final int BODY = 0;
 	public static final int WEAPON = 1;
 	public static final int DEFAULT_MAX_HP = 20;
+	public static final int PUSH_RESIST = 2;
 	private	 Color color = Color.BLUE; // error, usar rectangulo gráfico
 	
 
@@ -59,6 +62,7 @@ public class Player extends Actor implements Physical_active {
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int)getPosition().x(), (int)getPosition().y(), WIDTH, HEIGHT));
 		setLookingAt(Side.RIGHT);
+		setPush(new Point2D(0, 0));
 		setJump(100, 0.33);
 		getGraphicShapes().add(new GraphicRectangle((int)getPosition().x(), (int)getPosition().y(), 
 								WIDTH, HEIGHT));
@@ -98,20 +102,20 @@ public class Player extends Actor implements Physical_active {
 
 	}
 
-	public boolean moveLeft() {
+	private boolean moveLeft() {
 		getSpeed().setX(-SPEED);
 		setBlock_right(false);
 		return true;
 	}
 
-	public boolean moveRight() {
+	private boolean moveRight() {
 		getSpeed().setX(SPEED);
 		setBlock_left(false);
 		//setLookingAt(Side.RIGHT);
 		return true;
 	}
 
-	public boolean moveUP() {
+	private boolean moveUP() {
 		HEIGHT = 40;
 		getPosition().setY(getPosition().y() - HEIGHT / 2);
 		
@@ -123,7 +127,7 @@ public class Player extends Actor implements Physical_active {
 		return true;
 	}
 
-	public boolean moveDown() {
+	private boolean moveDown() {
 		getPosition().setY(getPosition().y() + HEIGHT / 2);
 		HEIGHT = 20;
 		getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
@@ -207,6 +211,10 @@ public class Player extends Actor implements Physical_active {
 	public void gotHit(Bullet bullet) {
 		if (bullet.getOwner() != this) {
 			setHp(getHp() - bullet.getDamage());
+			if (bullet.getSpeed().x() > 0)
+				getPush().setX(getPush().x() + bullet.getPush());
+			else
+				getPush().setX(getPush().x() -bullet.getPush());
 			if (getHp() <= 0 && !isDead())
 				die();
 		}
@@ -235,6 +243,14 @@ public class Player extends Actor implements Physical_active {
 		if (!isMove_left() && !isMove_right())
 			getSpeed().setX(0);
 	}
+	private void updatePush() {
+		if ((int)getPush().x() == 0 || Math.abs(getPush().x()) < PUSH_RESIST)
+			getPush().setX(0);
+		else if (getPush().x() > 0)
+			getPush().setX(getPush().x() - PUSH_RESIST);
+		else
+			getPush().setX(getPush().x() + PUSH_RESIST);
+	}
 	/**
 	 * Mueve el jugador seg�n marca la velocidad y actualiza el disparo del arma .
 	 */
@@ -243,6 +259,7 @@ public class Player extends Actor implements Physical_active {
 		if (!isDead()) {
 			ResolveUnreleasedMovements();
 			getWeapon().update();
+			updatePush();
 			if (!isBlock_down()) {													// Por lo visto esto controla el salto
 				if (getJumpTTL() != 0) {
 					moveJump();
@@ -251,25 +268,32 @@ public class Player extends Actor implements Physical_active {
 			}
 									// Aqui es donde realmente cambiamos la posicion una vez calculado donde va a ir.
 			getGraphicShapes().get(BODY).setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
-			setPosition(getPosition().add(getSpeed()));	
+			setPosition(getPosition().add(getSpeed().add(getPush())));				// CAmbiado;
 		}
 		return true;
 	}
 
-
+	/**
+	 * Ejecuta la accion de saltar poniendo libre la direccion hacia abajo
+	 * y dando valor al jumpTTL
+	 */
 	public void jump() {
 		if(isBlock_down()){
 			setJumpTTL(getMaxJumpTTL());
 			setBlock_down(false);
 		}	
 	}
-
+	/**
+	 * Mueve el personaje hacia arriba reduciendo el tiempo que le queda por saltar.
+	 */
 	public void moveJump() {
 		getSpeed().setY(-getClimbPertTick());
 		setJumpTTL(getJumpTTL() - 1);
 		
 	}
-
+	/**
+	 * Hace caer al personaje segun marca la gravedad.
+	 */
 	public void fall() {
 		getSpeed().setY(-GRAVITY);
 		setBlock_up(false);
@@ -292,22 +316,22 @@ public class Player extends Actor implements Physical_active {
 	}
 	public void setLeft(boolean b) {
 		setMove_left(b);	
-		ResolveUnreleasedMovements();
+		//ResolveUnreleasedMovements();
 	}
 
 	public void setRight(boolean b) {
 		setMove_right(b);
-		ResolveUnreleasedMovements();
+	//	ResolveUnreleasedMovements();
 	}
 
 	public void setUP(boolean b) {
 		setMove_up(b);
-		ResolveUnreleasedMovements();
+		//ResolveUnreleasedMovements();
 	}
 
 	public void setDown(boolean b) {
 		setMove_down(b);
-		ResolveUnreleasedMovements();
+		//ResolveUnreleasedMovements();
 	}
 	public Point2D getSpeed() {
 		return speed;
@@ -450,6 +474,14 @@ public class Player extends Actor implements Physical_active {
 
 	public void setDead(boolean dead) {
 		this.dead = dead;
+	}
+
+	public Point2D getPush() {
+		return push;
+	}
+
+	public void setPush(Point2D push) {
+		this.push = push;
 	}
 	
 }
