@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 
 import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
@@ -81,24 +81,29 @@ public class TextureTool extends DefaultTool {
 		}
 		setModified(true);
 	}
-	public void moveFile(String sourcePath, String destPath){
-		File source = new File(sourcePath);
-		File dest = new File(destPath);
-		try {
-			FileUtils.copyDirectory(source, dest);
-		} catch (IOException e) {
-		    e.printStackTrace();
-		}
-	}
+
+//	public void moveFile(String sourcePath, String destPath) {
+//		File source = new File(sourcePath);
+//		File dest = new File(destPath);
+//		try {
+//			FileUtils.copyDirectory(source, dest);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+
 	private void SetTexture() {
-		JFileChooser c = new JFileChooser(System
-				.getProperty("user.dir"));
+		JFileChooser c = new JFileChooser(System.getProperty("user.dir")
+				+ System.getProperty("file.separator") + "src"
+				+ System.getProperty("file.separator") + "textures");
 		int rVal = c.showOpenDialog(getFrame());
 		if (rVal == JFileChooser.APPROVE_OPTION) {
-				moveFile(c.getCurrentDirectory().toString()
-						+ System.getProperty("file.separator")
-						+ c.getSelectedFile().getName(), "textures/" + c.getSelectedFile());
-			setName(c.getSelectedFile().toString());
+			// moveFile(c.getCurrentDirectory().toString()
+			// + System.getProperty("file.separator")
+			// + c.getSelectedFile().getName(), "textures/" +
+			// c.getSelectedFile());
+			setName(c.getSelectedFile().getName());
+			System.out.println("name: " + getName());
 		}
 		if (rVal == JFileChooser.CANCEL_OPTION) {
 		}
@@ -106,16 +111,18 @@ public class TextureTool extends DefaultTool {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (getSelectedActor() == null
-				&& arg0.getButton() == MouseEvent.BUTTON1)
-			setSelectedActor(getFirstFor(arg0.getPoint()));
-		else {
-			if (!isDrawing()) {
-				setDrawing(true);
-				setBegin(arg0.getPoint());
-				setLastVisited(getBegin());
-			} else {
-				setDrawing(false);
+		if (arg0.getButton() == MouseEvent.BUTTON1) {
+			if (getSelectedActor() == null
+					&& arg0.getButton() == MouseEvent.BUTTON1)
+				setSelectedActor(getFirstFor(arg0.getPoint()));
+			else {
+				if (!isDrawing()) {
+					setDrawing(true);
+					setBegin(arg0.getPoint());
+					setLastVisited(getBegin());
+				} else {
+					setDrawing(false);
+				}
 			}
 		}
 		setModified(true);
@@ -139,6 +146,7 @@ public class TextureTool extends DefaultTool {
 
 		}
 	}
+
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		if (isDrawing()) {
@@ -161,15 +169,18 @@ public class TextureTool extends DefaultTool {
 		case DefaultTool.PLANE_ACTORS:
 			break;
 		case DefaultTool.PLANE_MAP:
-			StaticPlatform platform = (StaticPlatform)getSelectedActor();
-			platform.getGraphicRectangle().setTexturePath("textures/" + getName());
-			platform.getGraphicRectangle().setTextureAnchor(getAnchorRectangle());
+			StaticPlatform platform = (StaticPlatform) getSelectedActor();
+			platform.getGraphicRectangle().setTexturePath(
+					"textures/" + getName());
+			platform.getGraphicRectangle().setTextureAnchor(
+					getAnchorRectangle());
 			platform.getGraphicRectangle().setTexturized(true);
 			break;
 		default:
 			break;
 		}
 	}
+
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		switch (arg0.getKeyCode()) {
@@ -182,6 +193,7 @@ public class TextureTool extends DefaultTool {
 		setModified(true);
 
 	}
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		setLastVisited(e.getPoint());

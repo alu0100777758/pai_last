@@ -168,7 +168,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 
 		System.out.println("updating");
 		// TODO Auto-generated method stub
-
+		repaint();
 	}
 
 	public void saveMap(String string) {
@@ -250,6 +250,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 		} else if (e.getID() == KeyEvent.KEY_TYPED) {
 			toolbar.getSelectedTool().keyTyped(e);
 		}
+		repaint();
 		return false;
 	}
 }

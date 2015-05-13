@@ -144,6 +144,7 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void paint(Graphics g) {
+		
 		Graphics2D g2d = (Graphics2D) g;
 		if (getSelectedActor() != null) {
 			g2d.setColor(Color.YELLOW);
