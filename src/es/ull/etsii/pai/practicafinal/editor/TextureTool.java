@@ -22,16 +22,14 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class TextureTool extends DefaultTool {
-	public static final int UP = 0;
-	public static final int DOWN = 1;
-	public static final int LEFT = 2;
-	public static final int RIGHT = 3;
+	public static final int Y_AXIS = 0;
+	public static final int X_AXIS = 3;
 	private boolean drawing = false;
 	private Point begin;
 	private Point lastVisited;
 	private String Name = "firstGrasssTextureTestDontJudgeMe.png";
 	private Rectangle anchorRectangle;
-	private boolean stetchingMode = true;
+	private boolean stetchingMode;
 	
 	public boolean isStetchingMode() {
 		return stetchingMode;
@@ -199,21 +197,12 @@ public class TextureTool extends DefaultTool {
 		int width = (int)getAnchorRectangle().getWidth();
 		int height = (int)getAnchorRectangle().getHeight();
 		switch (direction) {
-		case UP:
-			y -= size;
+		case Y_AXIS:
 			height += size;
 			break;
-		case DOWN:
-			y += size;
-			height += size;
-			break;
-		case LEFT:
-			x -= size;
-			width += size;
-			break;
-		case RIGHT:
+		case X_AXIS:
 			x += size;
-			height += size;
+			width += size;
 			break;
 		default:
 			break;
@@ -236,42 +225,39 @@ public class TextureTool extends DefaultTool {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(isStetchingMode()){
-			switch (arg0.getKeyCode()) {
-			case KeyEvent.VK_DOWN:
-				enlarge(-1,DOWN);
-				break;
-			case KeyEvent.VK_UP:
-				enlarge(1,UP);
-				break;
-			case KeyEvent.VK_LEFT:
-				enlarge(-1,LEFT);
-				break;
-			case KeyEvent.VK_RIGHT:
-				enlarge(1,RIGHT);
-				break;
-			}
-		}
-		else{
 		switch (arg0.getKeyCode()) {
 		case KeyEvent.VK_DOWN:
+			if(isStetchingMode())
+				enlarge(-1,Y_AXIS);
+			else
 			moveAdd(new Point(0, 1));
 			break;
 		case KeyEvent.VK_UP:
+			if(isStetchingMode())
+				enlarge(1,Y_AXIS);
+			else
 			moveAdd(new Point(0, -1));
 			break;
 		case KeyEvent.VK_LEFT:
+			if(isStetchingMode())
+				enlarge(-1,X_AXIS);
+			else
 			moveAdd(new Point(-1, 0));
 			break;
 		case KeyEvent.VK_RIGHT:
+			if(isStetchingMode())
+				enlarge(1,X_AXIS);
+			else
 			moveAdd(new Point(1, 0));
 			break;
 		case KeyEvent.VK_ESCAPE:
 			setSelectedActor(null);
 			break;
+		case KeyEvent.VK_M:
+			setStetchingMode(!isStetchingMode());
+			break;
 		default:
 			break;
-		}
 		}
 		setModified(true);
 

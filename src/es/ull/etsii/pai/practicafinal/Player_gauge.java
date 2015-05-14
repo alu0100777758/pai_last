@@ -3,12 +3,14 @@ package es.ull.etsii.pai.practicafinal;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class Player_gauge extends Entity implements Drawable {
+	public static final int LIFE_FEEDBACK_PORTION = 5;
 	public static final int TOP_RIGHT = 1;
 	private int x_pos = 0;
 	private int y_pos = 0;
@@ -24,12 +26,20 @@ public class Player_gauge extends Entity implements Drawable {
 		}
 		setBackgroundGauge();
 		setCurrentPlayer(player);
-		setCurrentStatus(new GraphicRectangle(x_pos, y_pos, WIDTH, HEIGHT));
-		getCurrentStatus().setPaint(Color.RED);
-		getGraphicShapes().add(getCurrentStatus());
+		setCurrent();
 		setFront();
+		setBorder();
 	}
-
+	
+	public void setCurrent(){
+		GraphicRectangle current = new GraphicRectangle(x_pos, y_pos, WIDTH,
+				HEIGHT);
+		current.setTexturePath("textures/" + "mid_gauge.png");
+		current.setTextureAnchor(new Rectangle(x_pos,y_pos,WIDTH,HEIGHT));
+		current.setTexturized(true);
+		setCurrentStatus(current);
+		getGraphicShapes().add(getCurrentStatus());
+	}
 	public int getX_pos() {
 		return x_pos;
 	}
@@ -72,14 +82,14 @@ public class Player_gauge extends Entity implements Drawable {
 
 	@Override
 	public void reproduce() {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void setBackgroundGauge() {
 		GraphicRectangle background = new GraphicRectangle(x_pos, y_pos, WIDTH,
 				HEIGHT);
-		background.setPaint(Color.BLACK);
+		background.setTexturePath("textures/" + "background_gauge.png");
+		background.setTextureAnchor(new Rectangle(x_pos,y_pos,WIDTH,HEIGHT));
+		background.setTexturized(true);
 		getGraphicShapes().add(background);
 	}
 
@@ -87,21 +97,25 @@ public class Player_gauge extends Entity implements Drawable {
 		GraphicRectangle grct = new GraphicRectangle(x_pos, y_pos, WIDTH,
 				HEIGHT);
 		grct.setTexturePath("textures/" + "front_gauge.png");
-		grct.setTextureAnchor(grct);
+		grct.setTextureAnchor(new Rectangle(x_pos,y_pos,(int)(WIDTH*((double)LIFE_FEEDBACK_PORTION/getCurrentPlayer().getMaxHp())),HEIGHT));
+		grct.setTexturized(true);
+		getGraphicShapes().add(grct);
+	}
+	private void setBorder() {
+		GraphicRectangle grct = new GraphicRectangle(x_pos, y_pos, WIDTH, HEIGHT);
+		grct.setTexturePath("textures/" + "border_gauge.png");
+		grct.setTextureAnchor(new Rectangle(x_pos,y_pos,WIDTH,HEIGHT));
 		grct.setTexturized(true);
 		getGraphicShapes().add(grct);
 	}
 
 	@Override
 	public RectangularShape getShape() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void setLocation(int x, int y) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
