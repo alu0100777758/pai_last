@@ -22,22 +22,11 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class TextureTool extends DefaultTool {
-	public static final int Y_AXIS = 0;
-	public static final int X_AXIS = 3;
 	private boolean drawing = false;
 	private Point begin;
 	private Point lastVisited;
 	private String Name = "firstGrasssTextureTestDontJudgeMe.png";
 	private Rectangle anchorRectangle;
-	private boolean stetchingMode;
-	
-	public boolean isStetchingMode() {
-		return stetchingMode;
-	}
-
-	public void setStetchingMode(boolean stetchingMode) {
-		this.stetchingMode = stetchingMode;
-	}
 
 	public String getName() {
 		return Name;
@@ -93,15 +82,6 @@ public class TextureTool extends DefaultTool {
 		setModified(true);
 	}
 
-	// public void moveFile(String sourcePath, String destPath) {
-	// File source = new File(sourcePath);
-	// File dest = new File(destPath);
-	// try {
-	// FileUtils.copyDirectory(source, dest);
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
 
 	private void SetTexture() {
 		JFileChooser c = new JFileChooser(System.getProperty("user.dir")
@@ -201,7 +181,6 @@ public class TextureTool extends DefaultTool {
 			height += size;
 			break;
 		case X_AXIS:
-			x += size;
 			width += size;
 			break;
 		default:
@@ -225,42 +204,7 @@ public class TextureTool extends DefaultTool {
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		switch (arg0.getKeyCode()) {
-		case KeyEvent.VK_DOWN:
-			if(isStetchingMode())
-				enlarge(-1,Y_AXIS);
-			else
-			moveAdd(new Point(0, 1));
-			break;
-		case KeyEvent.VK_UP:
-			if(isStetchingMode())
-				enlarge(1,Y_AXIS);
-			else
-			moveAdd(new Point(0, -1));
-			break;
-		case KeyEvent.VK_LEFT:
-			if(isStetchingMode())
-				enlarge(-1,X_AXIS);
-			else
-			moveAdd(new Point(-1, 0));
-			break;
-		case KeyEvent.VK_RIGHT:
-			if(isStetchingMode())
-				enlarge(1,X_AXIS);
-			else
-			moveAdd(new Point(1, 0));
-			break;
-		case KeyEvent.VK_ESCAPE:
-			setSelectedActor(null);
-			break;
-		case KeyEvent.VK_M:
-			setStetchingMode(!isStetchingMode());
-			break;
-		default:
-			break;
-		}
-		setModified(true);
-
+		super.keyPressed(arg0);
 	}
 
 	@Override

@@ -1,4 +1,5 @@
 package es.ull.etsii.pai.practicafinal.editor;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,6 +15,8 @@ import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.Entity;
 
 public class DefaultTool extends EditorTool {
+	public static final int Y_AXIS = 0;
+	public static final int X_AXIS = 3;
 	public static final int PLANE_ACTORS = 0;
 	public static final int PLANE_MAP = 1;
 	public static final int PLANE_BACKGROUND = 2;
@@ -21,6 +24,15 @@ public class DefaultTool extends EditorTool {
 	private int xOffset = 0;
 	private int yOffset = 0;
 	private static int foundInplane = 0;
+	private boolean stretchingMode;
+
+	public boolean isStetchingMode() {
+		return stretchingMode;
+	}
+
+	public void setStetchingMode(boolean stetchingMode) {
+		this.stretchingMode = stetchingMode;
+	}
 
 	public int getFoundInplane() {
 		return foundInplane;
@@ -55,7 +67,8 @@ public class DefaultTool extends EditorTool {
 	}
 
 	public DefaultTool() {
-		setButton(new JButton(new ImageIcon(getClass().getResource("/icons/DefaultTool.png"))));
+		setButton(new JButton(new ImageIcon(getClass().getResource(
+				"/icons/DefaultTool.png"))));
 	}
 
 	@Override
@@ -70,7 +83,6 @@ public class DefaultTool extends EditorTool {
 		// TODO Auto-generated method stub
 
 	}
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -129,9 +141,12 @@ public class DefaultTool extends EditorTool {
 		// TODO Auto-generated method stub
 
 	}
-	public void moveAdd(Point point){
+
+	public void moveAdd(Point point) {
 		if (getSelectedActor() != null) {
-			selectedEntity.setLocation((int)(selectedEntity.getX()+point.getX()),(int)( selectedEntity.gety()+point.getY()));
+			selectedEntity.setLocation(
+					(int) (selectedEntity.getX() + point.getX()),
+					(int) (selectedEntity.gety() + point.getY()));
 			setModified(true);
 		}
 	}
@@ -144,11 +159,33 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void paint(Graphics g) {
-		
+
 		Graphics2D g2d = (Graphics2D) g;
 		if (getSelectedActor() != null) {
 			g2d.setColor(Color.YELLOW);
 			g2d.draw(getSelectedActor().getShape());
+		}
+	}
+
+	public void enlarge(int size, int direction) {
+		if (getFoundInplane() == PLANE_MAP) {
+			int x = (int) getSelectedActor().getShape().getX();
+			int y = (int) getSelectedActor().getShape().getY();
+			int width = (int) getSelectedActor().getShape().getWidth();
+			int height = (int) getSelectedActor().getShape().getHeight();
+			switch (direction) {
+			case Y_AXIS:
+				height += size;
+				break;
+			case X_AXIS:
+				width += size;
+				break;
+			default:
+				break;
+			}
+			getSelectedActor().setLocation(x, y);
+			getSelectedActor().setSize(width, height);
+			setModified(true);
 		}
 	}
 
@@ -160,16 +197,31 @@ public class DefaultTool extends EditorTool {
 			deleteSelected();
 			break;
 		case KeyEvent.VK_DOWN:
-			moveAdd(new Point(0,1));
+			if (isStetchingMode())
+				enlarge(1, Y_AXIS);
+			else
+				moveAdd(new Point(0, 1));
 			break;
 		case KeyEvent.VK_UP:
-			moveAdd(new Point(0,-1));
+			if (isStetchingMode())
+				enlarge(-1, Y_AXIS);
+			else
+				moveAdd(new Point(0, -1));
 			break;
 		case KeyEvent.VK_LEFT:
-			moveAdd(new Point(-1,0));
+			if (isStetchingMode())
+				enlarge(-1, X_AXIS);
+			else
+				moveAdd(new Point(-1, 0));
 			break;
 		case KeyEvent.VK_RIGHT:
-			moveAdd(new Point(1,0));
+			if (isStetchingMode())
+				enlarge(1, X_AXIS);
+			else
+				moveAdd(new Point(1, 0));
+			break;
+		case KeyEvent.VK_M:
+			setStetchingMode(!isStetchingMode());
 			break;
 		default:
 			break;
@@ -184,8 +236,8 @@ public class DefaultTool extends EditorTool {
 			getMap().getActors().remove(getSelectedActor());
 			if (getSelectedActor().equals((Actor) getMap().getPlayer_one())) {
 				getMap().setPlayer_one(null);
-			}
-			else if (getSelectedActor().equals((Actor) getMap().getPlayer_two())) {
+			} else if (getSelectedActor().equals(
+					(Actor) getMap().getPlayer_two())) {
 				getMap().setPlayer_two(null);
 			}
 			break;

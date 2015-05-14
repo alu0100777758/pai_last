@@ -1,8 +1,12 @@
 package es.ull.etsii.pai.practicafinal;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
+
+import javax.swing.JEditorPane;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
@@ -84,6 +88,12 @@ public class Actor extends Entity {
 	}
 	public void setGraphicShapes(ArrayList<GraphicRectangle> graphicShapes) {
 		this.graphicShapes = graphicShapes;
+	}
+
+	public void setSize(int width, int height) {
+		for(Rectangle rect : getGraphicShapes())
+			rect.setSize(new Dimension(width,height));
+		getPhysicalShape().setSize(new Dimension(width,height));
 	}
 	
 }

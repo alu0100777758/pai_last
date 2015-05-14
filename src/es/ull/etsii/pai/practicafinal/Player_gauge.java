@@ -149,4 +149,10 @@ public class Player_gauge extends Entity implements Drawable {
 
 	}
 
+	@Override
+	public void setSize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

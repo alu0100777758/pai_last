@@ -58,17 +58,12 @@ public class RectangleTool extends EditorTool {
 	}
 
 	private void addRectangle(int i, int j, int i2, int j2) {
-		System.out.println("añadiendo");
 		int beginX = Math.min(i, i2);
 		int beginY = Math.min(j, j2);
 		int endX = Math.max(i, i2);
 		int endY = Math.max(j, j2);
-		// firstGrasssTextureTestDontJudgeMe.png
 		StaticPlatform rect = new StaticPlatform(beginX, beginY, endX - beginX,
 				endY - beginY);
-		//			rect.setPaint(new Texture("textures/firstGrasssTextureTestDontJudgeMe.png", rect.getPhysicalRectangle()));
-//		rect.getGraphicRectangle().setTexturePath("textures/firstGrasssTextureTestDontJudgeMe.png");
-//		rect.getGraphicRectangle().setTexturized(true);
 		getMap().addStaticMap(rect);
 	}
 

@@ -1,6 +1,7 @@
 package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Paint;
 import java.awt.Rectangle;
@@ -114,6 +115,10 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	@Override
 	public int gety() {
 		return (int)getPhysicalRectangle().getLocation().getY();
+	}
+	public void setSize(int width, int height) {
+		getGraphicRectangle().setSize(new Dimension(width,height));
+		getPhysicalRectangle().setSize(new Dimension(width,height));
 	}
 
 }
