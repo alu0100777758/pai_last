@@ -5,11 +5,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
-public class Player_gauge extends Entity implements Drawable {
+public class Player_gauge extends Entity implements Drawable, Serializable {
 	public static final int LIFE_FEEDBACK_PORTION = 5;
 	public static final int TOP_RIGHT = 1;
 	private int x_pos = 0;

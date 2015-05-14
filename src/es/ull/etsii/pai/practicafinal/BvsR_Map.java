@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.management.monitor.GaugeMonitor;
+
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class BvsR_Map implements Serializable {
@@ -133,8 +135,17 @@ public class BvsR_Map implements Serializable {
 
 		}
 		for (int i = 0; i < getActors().size(); i++) {
-			Actor actor = (getActors().get(i));
 			for (GraphicRectangle rect : getActors().get(i).getGraphicShapes()) {
+				if (rect.getTexturePath() != null) {
+					rect.setTexturized(true);
+					rect.setPaint(Color.BLUE);
+				}
+
+			}
+		}
+		for (int i = 0; i < getActors().size(); i++) {
+			Player_gauge actor =  (Player_gauge)getGUI().get(i);
+			for (GraphicRectangle rect : actor.getGraphicShapes()) {
 				if (rect.getTexturePath() != null) {
 					rect.setTexturized(true);
 					rect.setPaint(Color.BLUE);
