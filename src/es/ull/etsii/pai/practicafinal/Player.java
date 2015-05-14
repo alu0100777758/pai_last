@@ -26,6 +26,7 @@ public class Player extends Actor implements Physical_active {
 	private Point2D push;
 
 	private int hp;
+	private int maxHp;
 	private int maxJumpTTL = 20;
 	private double climbPertTick = 1;
 	private Side lookingAt;
@@ -57,6 +58,7 @@ public class Player extends Actor implements Physical_active {
 	public Player(Point2D position, BvsR_Map map) {
 		super(position);
 		setHp(DEFAULT_MAX_HP);
+		setMaxHp(DEFAULT_MAX_HP);
 		setMap(map);
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int) getPosition().x(),
@@ -73,6 +75,14 @@ public class Player extends Actor implements Physical_active {
 
 		getGraphicShapes().add(getWeapon().getGraphicShape());
 		getGraphicShapes().get(WEAPON).setPaint(Color.BLACK);
+	}
+
+	public int getMaxHp() {
+		return maxHp;
+	}
+
+	public void setMaxHp(int maxHp) {
+		this.maxHp = maxHp;
 	}
 
 	public void setJump(int height, double timeSeconds) {

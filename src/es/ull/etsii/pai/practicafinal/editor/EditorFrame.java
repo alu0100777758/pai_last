@@ -26,6 +26,7 @@ import javax.swing.JMenuItem;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
+import es.ull.etsii.pai.practicafinal.Player_gauge;
 
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
@@ -142,6 +143,10 @@ public class EditorFrame extends JFrame implements ActionListener,
 		lanzarGameScenario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("ill try to launch");
+				if(getMap().getGUI().isEmpty()){
+					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_one()));
+					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_two()));
+				}
 				saveMap(TEMP_FILE_MAP);
 				GameFrame frame = new GameFrame(TEMP_FILE_MAP);
 				frame.setTitle("Red VS Blue");

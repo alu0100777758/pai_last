@@ -135,6 +135,10 @@ public class Scenario {
 		for (int i = 0; i < getActors().size(); i++) {
 			getActors().get(i).paint(g.create());
 		}
+		for (int i = 0; i < getMapData().getGUI().size(); i++) {
+			Drawable gui = (Drawable)(getMapData().getGUI().get(i));
+			gui.paint(g.create());
+		}
 	/*	Physical_passive map = (Physical_passive) (getStaticMap().get(0));
 		g2.setColor(Color.GREEN);
 		if (getPlayer_one().collides(map))

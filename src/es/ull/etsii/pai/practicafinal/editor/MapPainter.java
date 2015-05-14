@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.Drawable;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class MapPainter extends JPanel {
@@ -28,6 +29,10 @@ public class MapPainter extends JPanel {
 		}
 		for (int i = 0; i < map.getActors().size(); i++) {
 			map.getActors().get(i).paint(g.create());
+		}
+		for (int i = 0; i < map.getGUI().size(); i++) {
+			Drawable gui = (Drawable)(map.getGUI().get(i));
+			gui.paint(g.create());
 		}
 		
 	}

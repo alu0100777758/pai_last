@@ -45,7 +45,7 @@ public abstract class Weapon implements Serializable{
 		setGraphicShape();
 	}
 	public void setGraphicShape(){
-		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
+		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
 	}
 	public int getWidth() {
 		return width;
