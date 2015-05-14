@@ -144,8 +144,8 @@ public class EditorFrame extends JFrame implements ActionListener,
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("ill try to launch");
 				if(getMap().getGUI().isEmpty()){
-					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_one()));
-					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_two()));
+					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_one(),0));
+					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_two(),Player_gauge.TOP_RIGHT));
 				}
 				saveMap(TEMP_FILE_MAP);
 				GameFrame frame = new GameFrame(TEMP_FILE_MAP);

@@ -211,13 +211,21 @@ public abstract class Weapon implements Serializable{
 	public void decreaseCooldowns() {
 		setMainCooldown(getMainCooldown() - 1);
 		setSecondaryCooldown(getSecondaryCooldown() - 1);
+		setEffectDuration(-1);
 	}
+	private void setEffectDuration(int i) {
+		
+	}
+
 	public void update(){
 		 int addy = getY_offset();
 		if(isPulsedMainTrigger() && canShootPrimary()){
 			shootMain();
-		}else if(isPulsedSecondaryTrigger() && canShootSecondary())
+			shootMainEffect();
+		}else if(isPulsedSecondaryTrigger() && canShootSecondary()){
 			shootSecondary();
+			shootSecondaryEffect();
+		}
 		else
 			decreaseCooldowns();
 		
@@ -229,6 +237,16 @@ public abstract class Weapon implements Serializable{
 			getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + addy);
 	}
 	
+	private void shootSecondaryEffect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void shootMainEffect() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	protected abstract void shootSecondary();
 
 	protected abstract void shootMain();

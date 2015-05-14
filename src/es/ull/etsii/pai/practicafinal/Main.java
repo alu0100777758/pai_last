@@ -11,8 +11,8 @@ public class Main {
 		
 		GameFrame frame = new GameFrame(mapPath);
 		frame.setTitle("Red VS Blue");
-		frame.setSize(1200, 800);
-	//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setSize(ResourceManager.getInstance().getWindWidth(), ResourceManager.getInstance().getWindHeight());
+	//	frame.setExtendState(JFrame.MAXIMIZED_BOTH);
 	 	frame.setLocationRelativeTo(null); // Center the frame
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

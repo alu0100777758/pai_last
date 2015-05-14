@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import es.ull.etsii.pai.practicafinal.graphics.Texture;
 
 public class ResourceManager {
+	private int windWidth = 1200;
+	private int windHeight = 800;
 	private static ResourceManager instance = null;
 	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); 
 	
@@ -35,4 +37,17 @@ public class ResourceManager {
 			}
 		return found;
 	}
+	public int getWindWidth() {
+		return windWidth;
+	}
+	public void setWindWidth(int windWidth) {
+		this.windWidth = windWidth;
+	}
+	public int getWindHeight() {
+		return windHeight;
+	}
+	public void setWindHeight(int windHeight) {
+		this.windHeight = windHeight;
+	}
+	
 }

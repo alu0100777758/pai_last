@@ -9,34 +9,59 @@ import java.util.ArrayList;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class Player_gauge extends Entity implements Drawable {
-	public static final int X_POS = 0;
-	public static final int Y_POS = 0;
+	public static final int TOP_RIGHT = 1;
+	private int x_pos = 0;
+	private int y_pos = 0;
 	public static final int WIDTH = 300;
 	public static final int HEIGHT = 50;
 	private ArrayList<GraphicRectangle> graphicShapes = new ArrayList<GraphicRectangle>();
 	private Player currentPlayer;
-	private GraphicRectangle currentStatus ;
-	
-	public GraphicRectangle getCurrentStatus() {
-		return currentStatus;
-	}
-	public void setCurrentStatus(GraphicRectangle currentStatus) {
-		this.currentStatus = currentStatus;
-	}
-	public Player getCurrentPlayer() {
-		return currentPlayer;
-	}
-	public void setCurrentPlayer(Player currentPlayer) {
-		this.currentPlayer = currentPlayer;
-	}
-	public Player_gauge(Player player){
+	private GraphicRectangle currentStatus;
+
+	public Player_gauge(Player player, int pos) {
+		if(pos == TOP_RIGHT){
+			setX_pos(ResourceManager.getInstance().getWindWidth() - WIDTH);
+		}
 		setBackgroundGauge();
 		setCurrentPlayer(player);
-		setCurrentStatus(new GraphicRectangle(X_POS, Y_POS, WIDTH, HEIGHT));
+		setCurrentStatus(new GraphicRectangle(x_pos, y_pos, WIDTH, HEIGHT));
 		getCurrentStatus().setPaint(Color.RED);
 		getGraphicShapes().add(getCurrentStatus());
 		setFront();
 	}
+
+	public int getX_pos() {
+		return x_pos;
+	}
+
+	public void setX_pos(int x_pos) {
+		this.x_pos = x_pos;
+	}
+
+	public int getY_pos() {
+		return y_pos;
+	}
+
+	public void setY_pos(int y_pos) {
+		this.y_pos = y_pos;
+	}
+
+	public GraphicRectangle getCurrentStatus() {
+		return currentStatus;
+	}
+
+	public void setCurrentStatus(GraphicRectangle currentStatus) {
+		this.currentStatus = currentStatus;
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
 	public ArrayList<GraphicRectangle> getGraphicShapes() {
 		return graphicShapes;
 	}
@@ -50,15 +75,18 @@ public class Player_gauge extends Entity implements Drawable {
 		// TODO Auto-generated method stub
 
 	}
-	private void setBackgroundGauge(){
-		GraphicRectangle background = new GraphicRectangle(X_POS, Y_POS, WIDTH, HEIGHT);
+
+	private void setBackgroundGauge() {
+		GraphicRectangle background = new GraphicRectangle(x_pos, y_pos, WIDTH,
+				HEIGHT);
 		background.setPaint(Color.BLACK);
 		getGraphicShapes().add(background);
 	}
-	private void setFront(){
-		GraphicRectangle grct = new GraphicRectangle(X_POS, Y_POS, WIDTH, HEIGHT);
-		grct.setTexturePath(
-				"textures/" + "front_gauge.png");
+
+	private void setFront() {
+		GraphicRectangle grct = new GraphicRectangle(x_pos, y_pos, WIDTH,
+				HEIGHT);
+		grct.setTexturePath("textures/" + "front_gauge.png");
 		grct.setTextureAnchor(grct);
 		grct.setTexturized(true);
 		getGraphicShapes().add(grct);
@@ -91,13 +119,20 @@ public class Player_gauge extends Entity implements Drawable {
 	@Override
 	public void paint(Graphics g) {
 		updateCurrent();
-		for(GraphicRectangle rect : getGraphicShapes())
-			rect.paint(g);	
+		for (GraphicRectangle rect : getGraphicShapes())
+			rect.paint(g);
 	}
+
 	private void updateCurrent() {
-		System.out.println("max : " + getCurrentPlayer().getMaxHp() + " actual: " + getCurrentPlayer().getHp());
-		getCurrentStatus().setFrame(X_POS, Y_POS,(int)( WIDTH*((double)getCurrentPlayer().getHp()/getCurrentPlayer().getMaxHp())), HEIGHT);
-		
+//		System.out.println("max : " + getCurrentPlayer().getMaxHp()
+//				+ " actual: " + getCurrentPlayer().getHp());
+		getCurrentStatus()
+				.setFrame(
+						x_pos,
+						y_pos,
+						(int) (WIDTH * ((double) getCurrentPlayer().getHp() / getCurrentPlayer()
+								.getMaxHp())), HEIGHT);
+
 	}
 
 }

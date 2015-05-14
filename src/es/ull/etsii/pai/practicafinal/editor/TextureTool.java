@@ -22,11 +22,24 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class TextureTool extends DefaultTool {
+	public static final int UP = 0;
+	public static final int DOWN = 1;
+	public static final int LEFT = 2;
+	public static final int RIGHT = 3;
 	private boolean drawing = false;
 	private Point begin;
 	private Point lastVisited;
 	private String Name = "firstGrasssTextureTestDontJudgeMe.png";
 	private Rectangle anchorRectangle;
+	private boolean stetchingMode = true;
+	
+	public boolean isStetchingMode() {
+		return stetchingMode;
+	}
+
+	public void setStetchingMode(boolean stetchingMode) {
+		this.stetchingMode = stetchingMode;
+	}
 
 	public String getName() {
 		return Name;
@@ -82,15 +95,15 @@ public class TextureTool extends DefaultTool {
 		setModified(true);
 	}
 
-//	public void moveFile(String sourcePath, String destPath) {
-//		File source = new File(sourcePath);
-//		File dest = new File(destPath);
-//		try {
-//			FileUtils.copyDirectory(source, dest);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	// public void moveFile(String sourcePath, String destPath) {
+	// File source = new File(sourcePath);
+	// File dest = new File(destPath);
+	// try {
+	// FileUtils.copyDirectory(source, dest);
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// }
 
 	private void SetTexture() {
 		JFileChooser c = new JFileChooser(System.getProperty("user.dir")
@@ -180,15 +193,85 @@ public class TextureTool extends DefaultTool {
 			break;
 		}
 	}
+	public void enlarge(int size, int direction){
+		int x = (int)getAnchorRectangle().getX();
+		int y = (int)getAnchorRectangle().getY();
+		int width = (int)getAnchorRectangle().getWidth();
+		int height = (int)getAnchorRectangle().getHeight();
+		switch (direction) {
+		case UP:
+			y -= size;
+			height += size;
+			break;
+		case DOWN:
+			y += size;
+			height += size;
+			break;
+		case LEFT:
+			x -= size;
+			width += size;
+			break;
+		case RIGHT:
+			x += size;
+			height += size;
+			break;
+		default:
+			break;
+		}
+		getAnchorRectangle().setLocation(x,y);
+		getAnchorRectangle().setSize(width, height);
+		setTexture();
+		setModified(true);
+	}
+	@Override
+	public void moveAdd(Point point) {
+		if (getSelectedActor() != null) {
+			getAnchorRectangle().setLocation(
+					(int) (getAnchorRectangle().getX() + point.getX()),
+					(int) (getAnchorRectangle().getY() + point.getY()));
+			setTexture();
+			setModified(true);
+		}
+	}
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
+		if(isStetchingMode()){
+			switch (arg0.getKeyCode()) {
+			case KeyEvent.VK_DOWN:
+				enlarge(-1,DOWN);
+				break;
+			case KeyEvent.VK_UP:
+				enlarge(1,UP);
+				break;
+			case KeyEvent.VK_LEFT:
+				enlarge(-1,LEFT);
+				break;
+			case KeyEvent.VK_RIGHT:
+				enlarge(1,RIGHT);
+				break;
+			}
+		}
+		else{
 		switch (arg0.getKeyCode()) {
+		case KeyEvent.VK_DOWN:
+			moveAdd(new Point(0, 1));
+			break;
+		case KeyEvent.VK_UP:
+			moveAdd(new Point(0, -1));
+			break;
+		case KeyEvent.VK_LEFT:
+			moveAdd(new Point(-1, 0));
+			break;
+		case KeyEvent.VK_RIGHT:
+			moveAdd(new Point(1, 0));
+			break;
 		case KeyEvent.VK_ESCAPE:
 			setSelectedActor(null);
 			break;
 		default:
 			break;
+		}
 		}
 		setModified(true);
 
