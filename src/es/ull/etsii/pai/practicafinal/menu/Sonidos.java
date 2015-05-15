@@ -39,7 +39,7 @@ public class Sonidos extends Thread{
         File fichero = new File("datos.txt"); 
         System.out.println(fichero.getAbsolutePath());
         try {
-			apl = new Player(new FileInputStream("/Backgrounds/sonido.mp3"));
+			apl = new Player(new FileInputStream("Resources/Backgrounds/sonido.mp3"));
 		} catch (FileNotFoundException | JavaLayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
