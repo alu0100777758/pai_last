@@ -124,11 +124,7 @@ public class TextureTool extends DefaultTool {
 
 	@Override
 	public void paint(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
-		if (getSelectedActor() != null) {
-			g2d.setColor(getSelectionColor());
-			g2d.draw(getShape(getSelectedActor()));
-		}
+		super.paint(g);
 		if (isDrawing()) {
 			g.drawRect(
 					(int) Math.min(begin.getX(), getLastVisited().getX()),
