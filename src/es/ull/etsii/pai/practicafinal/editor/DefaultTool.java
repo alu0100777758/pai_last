@@ -25,8 +25,6 @@ public class DefaultTool extends EditorTool {
 	public static final int PLANE_MAP = 1;
 	public static final int PLANE_BACKGROUND = 2;
 	private static ArrayList<Entity> selectedEntity = new ArrayList<Entity>();
-	private static ArrayList<Integer> xOffset = new ArrayList<Integer>();
-	private static ArrayList<Integer> yOffset = new ArrayList<Integer>();
 	private static ArrayList<Integer> foundInplane = new ArrayList<Integer>();
 	private boolean stretchingMode;
 	private boolean addingMode = false;
@@ -35,6 +33,16 @@ public class DefaultTool extends EditorTool {
 	public static final Color STRETCH_COLOR = Color.RED;
 	public static final Color TRANSLATE_COLOR = Color.YELLOW;
 	private Color selectionColor = TRANSLATE_COLOR;
+	private Point lastPoint = null;
+	
+
+	public Point getLastPoint() {
+		return lastPoint;
+	}
+
+	public void setLastPoint(Point lastPoint) {
+		this.lastPoint = lastPoint;
+	}
 
 	public boolean isRemoveMode() {
 		return removeMode;
@@ -76,21 +84,6 @@ public class DefaultTool extends EditorTool {
 		this.stretchingMode = stetchingMode;
 	}
 
-	public ArrayList<Integer> getxOffset() {
-		return xOffset;
-	}
-
-	public void setxOffset(ArrayList<Integer> xOffset) {
-		this.xOffset = xOffset;
-	}
-
-	public ArrayList<Integer> getyOffset() {
-		return yOffset;
-	}
-
-	public void setyOffset(ArrayList<Integer> yOffset) {
-		this.yOffset = yOffset;
-	}
 
 	public ArrayList<Integer> getFoundInplane() {
 		return foundInplane;
@@ -140,32 +133,21 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		setLastPoint(e.getPoint());
 		if(!isAddingMode() && !isRemoveMode() && (getSelectedActor().size() <2 || !getShape().contains(e.getPoint())))
 			clearAll();
 		Entity entity = getFirstFor(e.getPoint());
-//		if (!getShape().contains(e.getPoint()))
-//			clearAll();
 		if (isRemoveMode()) {
 			getSelectedActor().remove(entity);
-		} else if(entity != null){
+		} else if(entity != null && !getSelectedActor().contains(entity)){
 			getSelectedActor().add(entity);
 			Rectangle shape = getShape(getSelectedActor());
-			for (int i = 0; i < getxOffset().size(); i++) {
-				getxOffset()
-						.set(i, e.getX() - getSelectedActor().get(i).getX());
-				getxOffset()
-						.set(i, e.getX() - getSelectedActor().get(i).getX());
-			}
-			getxOffset().add(((int) (e.getX() - shape.getX())));
-			getyOffset().add(((int) (e.getY() - shape.getY()))); 
 			setShape(shape);
 		}
 	}
 
 	private void clearAll() {
 		getSelectedActor().clear();
-		getxOffset().clear();
-		getyOffset().clear();
 		getFoundInplane().clear();
 	}
 
@@ -198,12 +180,9 @@ public class DefaultTool extends EditorTool {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (!getSelectedActor().isEmpty()) {
-			int i = 0;
-			for (Entity selectEntity : getSelectedActor()) {
-				selectEntity.setLocation(e.getX() - getxOffset().get(i),
-						e.getY() - getyOffset().get(i));
-				i++;
-			}
+			Point point = new Point(e.getX()-(int)getLastPoint().getX(),e.getY()-(int)getLastPoint().getY());
+				moveAdd(point);
+			setLastPoint(e.getPoint());
 			setModified(true);
 		}
 
