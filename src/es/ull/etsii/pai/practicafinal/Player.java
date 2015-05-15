@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.RocketLauncher;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -51,7 +52,7 @@ public class Player extends Actor implements Physical_active {
 	public static double GRAVITY = -5.0;
 	public static final int BODY = 0;
 	public static final int WEAPON = 1;
-	public static final int DEFAULT_MAX_HP = 20;
+	public static final int DEFAULT_MAX_HP = 200;
 	public static final int PUSH_RESIST = 2;
 	private Color color = Color.BLUE; // error, usar rectangulo gráfico
 
@@ -72,6 +73,7 @@ public class Player extends Actor implements Physical_active {
 		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
 
 		setWeapon(new RocketLauncher(this));
+//		setWeapon(new UZI(this));
 
 		getGraphicShapes().add(getWeapon().getGraphicShape());
 		getGraphicShapes().get(WEAPON).setPaint(Color.BLACK);

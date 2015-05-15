@@ -104,11 +104,12 @@ public class TextureTool extends DefaultTool {
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		if (arg0.getButton() == MouseEvent.BUTTON1) {
-			if (getSelectedActor() == null
-					&& arg0.getButton() == MouseEvent.BUTTON1)
-				getSelectedActor().add(getFirstFor(arg0.getPoint()));
-			else {
+		super.mousePressed(arg0);
+//		if (arg0.getButton() == MouseEvent.BUTTON1) {
+//			if (getSelectedActor() == null
+//					&& arg0.getButton() == MouseEvent.BUTTON1)
+//				getSelectedActor().add(getFirstFor(arg0.getPoint()));
+//			else {
 				if (!isDrawing()) {
 					setDrawing(true);
 					setBegin(arg0.getPoint());
@@ -116,8 +117,8 @@ public class TextureTool extends DefaultTool {
 				} else {
 					setDrawing(false);
 				}
-			}
-		}
+//			}
+//		}
 		setModified(true);
 	}
 

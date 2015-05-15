@@ -143,7 +143,7 @@ public class DefaultTool extends EditorTool {
 		if (!isAddingMode())
 			clearAll();
 		Entity entity = getFirstFor(e.getPoint());
-		if (entity == null && !getShape().contains(e.getPoint()))
+		if (entity == null && (getShape() == null || !getShape().contains(e.getPoint())))
 			clearAll();
 		else if (isRemoveMode()) {
 			getSelectedActor().remove(entity);
@@ -157,7 +157,8 @@ public class DefaultTool extends EditorTool {
 						.set(i, e.getX() - getSelectedActor().get(i).getX());
 			}
 			getxOffset().add(((int) (e.getX() - shape.getX())));
-			getyOffset().add(((int) (e.getY() - shape.getY())));
+			getyOffset().add(((int) (e.getY() - shape.getY()))); 
+			setShape(shape);
 		}
 	}
 
@@ -237,6 +238,8 @@ public class DefaultTool extends EditorTool {
 	}
 
 	protected Rectangle getShape(ArrayList<Entity> selectedActor) {
+		if(selectedActor.isEmpty())
+			return null;
 		int minx = Integer.MAX_VALUE;
 		int miny = Integer.MAX_VALUE;
 		int mostRight = Integer.MIN_VALUE;
