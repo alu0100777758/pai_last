@@ -140,14 +140,14 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (!isAddingMode())
+		if(!isAddingMode() && !isRemoveMode() && (getSelectedActor().size() <2 || !getShape().contains(e.getPoint())))
 			clearAll();
 		Entity entity = getFirstFor(e.getPoint());
-		if (entity == null && (getShape() == null || !getShape().contains(e.getPoint())))
-			clearAll();
-		else if (isRemoveMode()) {
+//		if (!getShape().contains(e.getPoint()))
+//			clearAll();
+		if (isRemoveMode()) {
 			getSelectedActor().remove(entity);
-		} else {
+		} else if(entity != null){
 			getSelectedActor().add(entity);
 			Rectangle shape = getShape(getSelectedActor());
 			for (int i = 0; i < getxOffset().size(); i++) {
