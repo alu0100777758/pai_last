@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,11 +24,49 @@ public class DefaultTool extends EditorTool {
 	public static final int PLANE_ACTORS = 0;
 	public static final int PLANE_MAP = 1;
 	public static final int PLANE_BACKGROUND = 2;
-	private static Entity selectedEntity = null;
-	private int xOffset = 0;
-	private int yOffset = 0;
-	private static int foundInplane = 0;
+	private static ArrayList<Entity> selectedEntity = new ArrayList<Entity>();
+	private static ArrayList<Integer> xOffset = new ArrayList<Integer>();
+	private static ArrayList<Integer> yOffset = new ArrayList<Integer>();
+	private static ArrayList<Integer> foundInplane = new ArrayList<Integer>();
 	private boolean stretchingMode;
+	private boolean addingMode = false;
+	private boolean removeMode = false;
+	private Rectangle shape = null;
+	public static final Color STRETCH_COLOR = Color.RED;
+	public static final Color TRANSLATE_COLOR = Color.YELLOW;
+	private Color selectionColor = TRANSLATE_COLOR;
+
+	public boolean isRemoveMode() {
+		return removeMode;
+	}
+
+	public void setRemoveMode(boolean removeMode) {
+		this.removeMode = removeMode;
+	}
+
+	public Color getSelectionColor() {
+		return selectionColor;
+	}
+
+	public void setSelectionColor(Color selectionColor) {
+		this.selectionColor = selectionColor;
+	}
+
+	public Rectangle getShape() {
+		return shape;
+	}
+
+	public void setShape(Rectangle shape) {
+		this.shape = shape;
+	}
+
+	public boolean isAddingMode() {
+		return addingMode;
+	}
+
+	public void setAddingMode(boolean isCtrlPulsed) {
+		this.addingMode = isCtrlPulsed;
+	}
 
 	public boolean isStetchingMode() {
 		return stretchingMode;
@@ -34,35 +76,35 @@ public class DefaultTool extends EditorTool {
 		this.stretchingMode = stetchingMode;
 	}
 
-	public int getFoundInplane() {
-		return foundInplane;
-	}
-
-	public void setFoundInplane(int foundInplane) {
-		DefaultTool.foundInplane = foundInplane;
-	}
-
-	public int getxOffset() {
+	public ArrayList<Integer> getxOffset() {
 		return xOffset;
 	}
 
-	public void setxOffset(int xOffset) {
+	public void setxOffset(ArrayList<Integer> xOffset) {
 		this.xOffset = xOffset;
 	}
 
-	public int getyOffset() {
+	public ArrayList<Integer> getyOffset() {
 		return yOffset;
 	}
 
-	public void setyOffset(int yOffset) {
+	public void setyOffset(ArrayList<Integer> yOffset) {
 		this.yOffset = yOffset;
 	}
 
-	public Entity getSelectedActor() {
+	public ArrayList<Integer> getFoundInplane() {
+		return foundInplane;
+	}
+
+	public void setFoundInplane(ArrayList<Integer> foundInplane) {
+		this.foundInplane = foundInplane;
+	}
+
+	public ArrayList<Entity> getSelectedActor() {
 		return selectedEntity;
 	}
 
-	public void setSelectedActor(Entity selectedActor) {
+	public void setSelectedActor(ArrayList<Entity> selectedActor) {
 		DefaultTool.selectedEntity = selectedActor;
 	}
 
@@ -98,30 +140,51 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		setSelectedActor(getFirstFor(e.getPoint()));
-		if (getSelectedActor() != null) {
-			setxOffset(e.getX() - getSelectedActor().getX());
-			setyOffset(e.getY() - getSelectedActor().gety());
+		if (!isAddingMode())
+			clearAll();
+		Entity entity = getFirstFor(e.getPoint());
+		if (entity == null && !getShape().contains(e.getPoint()))
+			clearAll();
+		else if (isRemoveMode()) {
+			getSelectedActor().remove(entity);
+		} else {
+			getSelectedActor().add(entity);
+			Rectangle shape = getShape(getSelectedActor());
+			for (int i = 0; i < getxOffset().size(); i++) {
+				getxOffset()
+						.set(i, e.getX() - getSelectedActor().get(i).getX());
+				getxOffset()
+						.set(i, e.getX() - getSelectedActor().get(i).getX());
+			}
+			getxOffset().add(((int) (e.getX() - shape.getX())));
+			getyOffset().add(((int) (e.getY() - shape.getY())));
 		}
+	}
+
+	private void clearAll() {
+		getSelectedActor().clear();
+		getxOffset().clear();
+		getyOffset().clear();
+		getFoundInplane().clear();
 	}
 
 	protected Entity getFirstFor(Point p) {
 		for (Actor actor : getMap().getActors()) {
-			setFoundInplane(PLANE_ACTORS);
+			getFoundInplane().add(PLANE_ACTORS);
 			if (actor.getPhysicalShape().contains(p))
 				return actor;
 		}
 		for (Entity actor : getMap().getStaticMap()) {
-			setFoundInplane(PLANE_MAP);
+			getFoundInplane().add(PLANE_MAP);
 			if (actor.getShape().contains(p))
 				return actor;
 		}
 		for (Entity actor : getMap().getBackground()) {
-			setFoundInplane(PLANE_BACKGROUND);
+			getFoundInplane().add(PLANE_BACKGROUND);
 			if (actor.getShape().contains(p))
 				return actor;
 		}
-		setFoundInplane(-1);
+		getFoundInplane().add(-1);
 		return null;
 	}
 
@@ -133,20 +196,25 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		if (getSelectedActor() != null) {
-			selectedEntity.setLocation(e.getX() - getxOffset(), e.getY()
-					- getyOffset());
+		if (!getSelectedActor().isEmpty()) {
+			int i = 0;
+			for (Entity selectEntity : getSelectedActor()) {
+				selectEntity.setLocation(e.getX() - getxOffset().get(i),
+						e.getY() - getyOffset().get(i));
+				i++;
+			}
 			setModified(true);
 		}
-		// TODO Auto-generated method stub
 
 	}
 
 	public void moveAdd(Point point) {
-		if (getSelectedActor() != null) {
-			selectedEntity.setLocation(
-					(int) (selectedEntity.getX() + point.getX()),
-					(int) (selectedEntity.gety() + point.getY()));
+		if (!getSelectedActor().isEmpty()) {
+			for (Entity selectEntity : getSelectedActor()) {
+				selectEntity.setLocation(
+						(int) (selectEntity.getX() + point.getX()),
+						(int) (selectEntity.gety() + point.getY()));
+			}
 			setModified(true);
 		}
 	}
@@ -161,32 +229,56 @@ public class DefaultTool extends EditorTool {
 	public void paint(Graphics g) {
 
 		Graphics2D g2d = (Graphics2D) g;
-		if (getSelectedActor() != null) {
-			g2d.setColor(Color.YELLOW);
-			g2d.draw(getSelectedActor().getShape());
+		if (!getSelectedActor().isEmpty()) {
+			g2d.setColor(getSelectionColor());
+			setShape(getShape(getSelectedActor()));
+			g2d.draw(getShape());
 		}
 	}
 
-	public void enlarge(int size, int direction) {
-		if (getFoundInplane() == PLANE_MAP) {
-			int x = (int) getSelectedActor().getShape().getX();
-			int y = (int) getSelectedActor().getShape().getY();
-			int width = (int) getSelectedActor().getShape().getWidth();
-			int height = (int) getSelectedActor().getShape().getHeight();
-			switch (direction) {
-			case Y_AXIS:
-				height += size;
-				break;
-			case X_AXIS:
-				width += size;
-				break;
-			default:
-				break;
-			}
-			getSelectedActor().setLocation(x, y);
-			getSelectedActor().setSize(width, height);
-			setModified(true);
+	protected Rectangle getShape(ArrayList<Entity> selectedActor) {
+		int minx = Integer.MAX_VALUE;
+		int miny = Integer.MAX_VALUE;
+		int mostRight = Integer.MIN_VALUE;
+		int mostDown = Integer.MIN_VALUE;
+		for (Entity entity : getSelectedActor()) {
+			minx = (int) Math.min(entity.getX(), minx);
+			miny = (int) Math.min(entity.gety(), miny);
+			mostRight = (int) (Math.max(entity.getX()
+					+ entity.getShape().getWidth(), mostRight));
+			mostDown = (int) (Math.max(entity.gety()
+					+ entity.getShape().getHeight(), mostDown));
 		}
+
+		// System.out.println("minx:" + minx + " min y: "+ miny +" maxx "+maxx+
+		// " maxy "+maxy);
+		return new Rectangle(minx, miny, mostRight - minx, mostDown - miny);
+	}
+
+	public void enlarge(int size, int direction) {
+		int i = 0;
+		for (Entity entity : getSelectedActor()) {
+			if (getFoundInplane().get(i) == PLANE_MAP) {
+				int x = (int) entity.getX();
+				int y = (int) entity.gety();
+				int width = (int) entity.getShape().getWidth();
+				int height = (int) entity.getShape().getHeight();
+				switch (direction) {
+				case Y_AXIS:
+					height += size;
+					break;
+				case X_AXIS:
+					width += size;
+					break;
+				default:
+					break;
+				}
+				entity.setLocation(x, y);
+				entity.setSize(width, height);
+			}
+			i++;
+		}
+		setModified(true);
 	}
 
 	@Override
@@ -222,40 +314,62 @@ public class DefaultTool extends EditorTool {
 			break;
 		case KeyEvent.VK_M:
 			setStetchingMode(!isStetchingMode());
+			if (isStetchingMode())
+				setSelectionColor(STRETCH_COLOR);
+			else
+				setSelectionColor(TRANSLATE_COLOR);
+			setModified(true);
+			break;
+		case KeyEvent.VK_CONTROL:
+			setRemoveMode(true);
+			break;
+		case KeyEvent.VK_SHIFT:
+			setAddingMode(true);
 			break;
 		default:
 			break;
 		}
-		setModified(true);
 
 	}
 
 	private void deleteSelected() {
-		switch (getFoundInplane()) {
-		case PLANE_ACTORS:
-			getMap().getActors().remove(getSelectedActor());
-			if (getSelectedActor().equals((Actor) getMap().getPlayer_one())) {
-				getMap().setPlayer_one(null);
-			} else if (getSelectedActor().equals(
-					(Actor) getMap().getPlayer_two())) {
-				getMap().setPlayer_two(null);
+		for (int i = 0; i < getSelectedActor().size(); i++) {
+			switch (getFoundInplane().get(i)) {
+			case PLANE_ACTORS:
+				getMap().getActors().remove(getSelectedActor());
+				if (getSelectedActor().equals((Actor) getMap().getPlayer_one())) {
+					getMap().setPlayer_one(null);
+				} else if (getSelectedActor().equals(
+						(Actor) getMap().getPlayer_two())) {
+					getMap().setPlayer_two(null);
+				}
+				break;
+			case PLANE_MAP:
+				getMap().getStaticMap().remove(getSelectedActor());
+				break;
+			case PLANE_BACKGROUND:
+				getMap().getBackground().remove(getSelectedActor());
+				break;
+			default:
+				break;
 			}
-			break;
-		case PLANE_MAP:
-			getMap().getStaticMap().remove(getSelectedActor());
-			break;
-		case PLANE_BACKGROUND:
-			getMap().getBackground().remove(getSelectedActor());
-			break;
-		default:
-			break;
 		}
 		setSelectedActor(null);
+		setModified(true);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+		switch (arg0.getKeyCode()) {
+		case KeyEvent.VK_CONTROL:
+			setRemoveMode(false);
+			break;
+		case KeyEvent.VK_SHIFT:
+			setAddingMode(false);
+			break;
+		default:
+			break;
+		}
 
 	}
 

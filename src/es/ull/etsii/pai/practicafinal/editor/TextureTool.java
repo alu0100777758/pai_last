@@ -17,8 +17,10 @@ import javax.swing.JFileChooser;
 
 //import org.apache.commons.io.FileUtils;
 
+
 import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.Entity;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class TextureTool extends DefaultTool {
@@ -105,7 +107,7 @@ public class TextureTool extends DefaultTool {
 		if (arg0.getButton() == MouseEvent.BUTTON1) {
 			if (getSelectedActor() == null
 					&& arg0.getButton() == MouseEvent.BUTTON1)
-				setSelectedActor(getFirstFor(arg0.getPoint()));
+				getSelectedActor().add(getFirstFor(arg0.getPoint()));
 			else {
 				if (!isDrawing()) {
 					setDrawing(true);
@@ -123,8 +125,8 @@ public class TextureTool extends DefaultTool {
 	public void paint(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		if (getSelectedActor() != null) {
-			g2d.setColor(Color.YELLOW);
-			g2d.draw(getSelectedActor().getShape());
+			g2d.setColor(getSelectionColor());
+			g2d.draw(getShape(getSelectedActor()));
 		}
 		if (isDrawing()) {
 			g.drawRect(
@@ -156,11 +158,13 @@ public class TextureTool extends DefaultTool {
 	}
 
 	private void setTexture() {
-		switch (getFoundInplane()) {
+		int i = 0;
+		for(Entity entity : getSelectedActor()){
+		switch (getFoundInplane().get(i)) {
 		case DefaultTool.PLANE_ACTORS:
 			break;
 		case DefaultTool.PLANE_MAP:
-			StaticPlatform platform = (StaticPlatform) getSelectedActor();
+			StaticPlatform platform = (StaticPlatform) entity;
 			platform.getGraphicRectangle().setTexturePath(
 					"textures/" + getName());
 			platform.getGraphicRectangle().setTextureAnchor(
@@ -169,6 +173,8 @@ public class TextureTool extends DefaultTool {
 			break;
 		default:
 			break;
+		}
+		i++;
 		}
 	}
 	public void enlarge(int size, int direction){
@@ -193,7 +199,7 @@ public class TextureTool extends DefaultTool {
 	}
 	@Override
 	public void moveAdd(Point point) {
-		if (getSelectedActor() != null) {
+		if (!getSelectedActor().isEmpty()) {
 			getAnchorRectangle().setLocation(
 					(int) (getAnchorRectangle().getX() + point.getX()),
 					(int) (getAnchorRectangle().getY() + point.getY()));
