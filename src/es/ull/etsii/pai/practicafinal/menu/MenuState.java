@@ -2,11 +2,15 @@ package es.ull.etsii.pai.practicafinal.menu;
 
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
+import es.ull.etsii.pai.practicafinal.ResourceManager;
+import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class MenuState extends GameState {
 
@@ -26,7 +30,7 @@ public class MenuState extends GameState {
 
 		try {
 
-			bg = new Background("/Backgrounds/menubg.gif", 1);
+			bg = new Background("Resources/Backgrounds/grassbg1.gif", 1);
 			bg.setVector(-0.1, 0);
 
 			titleColor = new Color(128, 0, 0);
@@ -51,7 +55,8 @@ public class MenuState extends GameState {
 
 		// draw bg
 		bg.draw(g);
-
+		
+		
 		// draw title
 		g.setColor(titleColor);
 		g.setFont(titleFont);
@@ -76,13 +81,22 @@ public class MenuState extends GameState {
 			GameFrame frame = new GameFrame("test1.rvsbm");
 			frame.setTitle("Red VS Blue");
 			frame.setSize(1200, 800);
-		 	frame.setLocationRelativeTo(null); // Center the frame
-		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setLocationRelativeTo(null); // Center the frame
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			GameLoop.init(frame);
+
 		}
 		if (currentChoice == 1) {
 			// Editar
+			EditorFrame frame = new EditorFrame();
+			frame.setTitle("Red VS Blue Editor");
+			frame.setSize(1200, 800);
+		//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		 	frame.setLocationRelativeTo(null); // Center the frame
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setVisible(true);
+			frame.setFocusable(true);
 		}
 		if (currentChoice == 2) {
 			// Opciones
