@@ -23,6 +23,9 @@ public class Actor extends Entity {
 		setGraphicShapes(new ArrayList<GraphicRectangle>());
 	}
 	
+	public void die(){
+		
+	}
 	@Override
 	public void reproduce() {
 		// TODO Auto-generated method stub

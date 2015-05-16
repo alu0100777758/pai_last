@@ -23,6 +23,7 @@ public class RocketLauncher extends Weapon{
 		super(owner);
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);
+		setSpeed(SPEED);
 		setWidth(40);
 		setHeight(15);
 		setX_offset(-30);
@@ -35,7 +36,8 @@ public class RocketLauncher extends Weapon{
 	protected void shootSecondary() {}
 
 	protected void shootMain() {
-		int side = getOwner().getLookingAt() == Side.LEFT? -SPEED : SPEED;
+		int side = getOwner().getLookingAt() == Side.LEFT? -getSpeed() : getSpeed();
+		System.out.println(side);
 		int addy = getOwner().isCrounched()? getY_offset() /2 : getY_offset();
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();

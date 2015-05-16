@@ -27,6 +27,7 @@ public abstract class Weapon implements Serializable{
 	private boolean pulsedMainTrigger = false;
 	private boolean pulsedSecondaryTrigger = false;
 	private GraphicRectangle graphicShape;
+	private int speed;
 	private int width = 25; 
 	private int height = 10;
 	private int y_offset = 10;
@@ -218,7 +219,7 @@ public abstract class Weapon implements Serializable{
 	}
 
 	public void update(){
-		 int addy = getY_offset();
+		int addy = getY_offset();
 		if(isPulsedMainTrigger() && canShootPrimary()){
 			shootMain();
 			shootMainEffect();
@@ -246,8 +247,20 @@ public abstract class Weapon implements Serializable{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	protected int getSpeed() {
+		if (getOwner().getLookingAt() == Side.LEFT)
+			return speed - (int)getOwner().getSpeed().x();
+		return speed + (int)getOwner().getSpeed().x();
+	}
+
+	protected void setSpeed(int speed) {
+		this.speed = speed;
+	}
 
 	protected abstract void shootSecondary();
 
+	
 	protected abstract void shootMain();
 }

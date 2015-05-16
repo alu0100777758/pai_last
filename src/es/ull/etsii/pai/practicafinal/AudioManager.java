@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class AudioManager {
 	private URL res = getClass().getResource("rocketShot.wav");
-	private ArrayList<AudioClip> clips = new ArrayList<AudioClip>();
+	private ArrayList<AudioClip> clips = new ArrayList<AudioClip>();	//Truco sucio para engañar al planificador
 	
 	public void startAudio() {
 		AudioClip audio = Applet.newAudioClip(res);

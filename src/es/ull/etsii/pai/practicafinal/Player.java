@@ -277,6 +277,7 @@ public class Player extends Actor implements Physical_active {
 	 */
 	public void die() {
 		setDead(true);
+		setHp(0);
 		getGraphicShapes().get(BODY).setLocation((int) getPosition().x(),
 				(int) getPosition().y() + HEIGHT - WIDTH);
 		getGraphicShapes().get(BODY).setSize(HEIGHT, WIDTH);
@@ -316,6 +317,8 @@ public class Player extends Actor implements Physical_active {
 	 */
 	@Override
 	public boolean updatePos(Physical_passive map) {
+		if (!map.getPhysicalRectangle().contains(getPhysicalShape()))
+				return false;
 		if (!isDead()) {
 			ResolveUnreleasedMovements();
 			getWeapon().update();

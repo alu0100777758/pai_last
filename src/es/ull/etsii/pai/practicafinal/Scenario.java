@@ -16,7 +16,7 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 public class Scenario {
 	BvsR_Map mapData = new BvsR_Map();
 	RvsBKeyController keyController = new RvsBKeyController();
-	
+	public static final int WINDOW_TOLERANCE = 100;
 	public Player getPlayer_two() {
 		return mapData.getPlayer_two();
 	}
@@ -87,7 +87,8 @@ public class Scenario {
 		Physical_passive map;
 
 		for (int i = 0; i < getActors().size(); i++) {
-			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(0, 0, 1200, 800))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
+			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(0, 0, ResourceManager.getInstance().getWindWidth() + WINDOW_TOLERANCE, ResourceManager.getInstance().getWindHeight() + WINDOW_TOLERANCE))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
+				getActors().get(i).die();
 				getActors().remove(i);	
 			}
 			

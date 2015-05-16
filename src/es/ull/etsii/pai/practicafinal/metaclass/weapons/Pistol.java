@@ -18,14 +18,15 @@ public class Pistol extends Weapon{
 		super(owner);
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);
+		setSpeed(SPEED);
 		
 	}	
 
 	protected void shootSecondary() {}
 
 	protected void shootMain() {
-		int side = getOwner().getLookingAt() == Side.LEFT? -SPEED : SPEED;
-		int addy = getOwner().isCrounched()? getY_offset() /2 : getY_offset();
+		int side = getOwner().getLookingAt() == Side.LEFT? -getSpeed()  : getSpeed();
+		int addy = getOwner().isCrounched()? getY_offset() / 2 : getY_offset();
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
