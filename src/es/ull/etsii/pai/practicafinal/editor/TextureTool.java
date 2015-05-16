@@ -8,14 +8,23 @@ import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.nio.channels.SelectionKey;
+import java.nio.file.Files;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 //import org.apache.commons.io.FileUtils;
+
+
+
+
+
 
 
 
@@ -88,30 +97,55 @@ public class TextureTool extends DefaultTool {
 
 
 	private void SetTexture() {
-		JFileChooser c = new JFileChooser(System.getProperty("user.dir")
-				+ System.getProperty("file.separator") + "src"
-				+ System.getProperty("file.separator") + "textures");
+		JFileChooser c = new JFileChooser(System.getProperty("user.dir"));
 		int rVal = c.showOpenDialog(getFrame());
 		if (rVal == JFileChooser.APPROVE_OPTION) {
-			// moveFile(c.getCurrentDirectory().toString()
-			// + System.getProperty("file.separator")
-			// + c.getSelectedFile().getName(), "textures/" +
-			// c.getSelectedFile());
 			setName(c.getSelectedFile().getName());
+			if(getClass().getResource(System.getProperty("user.dir")+System.getProperty("file.separator")+"textures"+getName()) == null)
+				try {
+					copyFile(c.getCurrentDirectory().toString()
+					 + System.getProperty("file.separator")
+					 + c.getSelectedFile().getName(),System.getProperty("user.dir")+System.getProperty("file.separator")+"textures"+System.getProperty("file.separator")+getName());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			System.out.println("name: " + getName());
 		}
 		if (rVal == JFileChooser.CANCEL_OPTION) {
 		}
 	}
 
+
+	public static void copyFile(String sourcepath, String destpath) throws IOException {
+		System.out.println("from sourcepath: " + sourcepath + " to : " + destpath);
+		File sourceFile = new File(sourcepath);
+		File destFile = new File(destpath);
+	    if(!destFile.exists()) {
+	        destFile.createNewFile();
+	    }
+
+	    FileChannel source = null;
+	    FileChannel destination = null;
+
+	    try {
+	        source = new FileInputStream(sourceFile).getChannel();
+	        destination = new FileOutputStream(destFile).getChannel();
+	        destination.transferFrom(source, 0, source.size());
+	    }
+	    finally {
+	        if(source != null) {
+	            source.close();
+	        }
+	        if(destination != null) {
+	            destination.close();
+	        }
+	    }
+	}
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		super.mousePressed(arg0);
-//		if (arg0.getButton() == MouseEvent.BUTTON1) {
-//			if (getSelectedActor() == null
-//					&& arg0.getButton() == MouseEvent.BUTTON1)
-//				getSelectedActor().add(getFirstFor(arg0.getPoint()));
-//			else {
+		if(arg0.getButton() == MouseEvent.BUTTON1){
 				if (!isDrawing()) {
 					setDrawing(true);
 					setBegin(arg0.getPoint());
@@ -119,7 +153,7 @@ public class TextureTool extends DefaultTool {
 				} else {
 					setDrawing(false);
 				}
-//			}
+			}
 //		}
 		setModified(true);
 	}
