@@ -37,7 +37,7 @@ public class GameFrame extends JFrame implements ActionListener{
 
 		@Override
 		public void keyReleased(KeyEvent arg0) {
-			System.out.println(arg0.getKeyCode());
+		//	System.out.println(arg0.getKeyCode());
 			
 			getScenarioPanel().getScenario().getKeyController().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
 		}

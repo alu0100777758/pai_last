@@ -1,5 +1,6 @@
 package es.ull.etsii.pai.practicafinal.metaclass.weapons;
 
+import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.Bullet;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
@@ -16,6 +17,8 @@ public class RocketLauncher extends Weapon{
 	public static final int SPEED = 20;
 	public static final int PUSH = 30;
 	public static final int BULLET_SIZE = 15;
+	public static final AudioManager audioManager = new AudioManager();
+	
 	public RocketLauncher(Player owner) {
 		super(owner);
 		setFireRate(FIRE_RATE);
@@ -38,5 +41,6 @@ public class RocketLauncher extends Weapon{
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
 		getOwner().getMap().getActors().add(new rocket_bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE));
+		audioManager.startAudio();
 	}
 }
