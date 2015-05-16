@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;

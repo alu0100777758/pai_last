@@ -56,9 +56,9 @@ public class EditorFrame extends JFrame implements ActionListener,
 		toppanel.add(toolbar);
 		this.add(toppanel, BorderLayout.NORTH);
 		bottomPanel = new MapPainter(map);
+		bottomPanel.setGuiActive(false);
 		bottomPanel.addMouseListener(this);
 		bottomPanel.addMouseMotionListener(this);
-		// bottomPanel.addKeyListener(this);
 		this.add(bottomPanel, BorderLayout.CENTER);
 		createMenuBar();
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();

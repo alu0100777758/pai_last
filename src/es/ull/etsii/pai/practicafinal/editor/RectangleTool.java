@@ -57,7 +57,7 @@ public class RectangleTool extends EditorTool {
 	public void mouseClicked(MouseEvent arg0) {
 	}
 
-	private void addRectangle(int i, int j, int i2, int j2) {
+	protected void addRectangle(int i, int j, int i2, int j2) {
 		int beginX = Math.min(i, i2);
 		int beginY = Math.min(j, j2);
 		int endX = Math.max(i, i2);

@@ -11,7 +11,7 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 
 public class EditorToolbar extends JToolBar implements ActionListener {
 	private static final long serialVersionUID = 6391135058169913712L;
-	EditorTool [] tools = {new DefaultTool(), new RectangleTool(), new PlayerInitTool(), new TextureTool()};
+	EditorTool [] tools = {new DefaultTool(), new RectangleTool(), new PlayerInitTool(), new TextureTool(), new BackgroundTool()};
 	int selectedToolIndex = 0;
 	BvsR_Map workingOn = null;
 	public int getSelectedToolIndex() {
@@ -44,7 +44,6 @@ public class EditorToolbar extends JToolBar implements ActionListener {
 		boton.setEnabled(false);
 		tools[selectedToolIndex].getButton().setEnabled(true);
 		setSelectedToolIndex(Integer.parseInt(boton.getName()));
-		
 	}
 	public void setMap(BvsR_Map map) {
 		this.workingOn = map;

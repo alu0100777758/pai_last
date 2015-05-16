@@ -36,12 +36,16 @@ public class BvsR_Map implements Serializable {
 				setPlayer_two(player);
 				player.getGraphicShapes().get(Player.BODY).setTexturePath("textures/red01.png");
 				player.getGraphicShapes().get(Player.BODY).setTextureAnchor(player.getPhysicalRectangle());
-				player.getGraphicShapes().get(Player.BODY).setImage(true);;
+				player.getGraphicShapes().get(Player.BODY).setImage(true);
 				addActor(getPlayer_two());
 			}
 		}
 	}
-
+	
+	public void addBackground(GraphicRectangle rect){
+		getBackground().add(new GraphicEntity(rect));
+	}
+	
 	public Player getPlayer_two() {
 		return player_two;
 	}
@@ -55,7 +59,6 @@ public class BvsR_Map implements Serializable {
 	}
 
 	public BvsR_Map() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ArrayList<Entity> getBackground() {

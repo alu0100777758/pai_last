@@ -17,6 +17,8 @@ import javax.swing.JButton;
 
 import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.Entity;
+import es.ull.etsii.pai.practicafinal.GraphicEntity;
+import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class DefaultTool extends EditorTool {
 	public static final int Y_AXIS = 0;
