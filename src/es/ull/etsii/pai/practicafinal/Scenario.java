@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.editor.MapPainter;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
@@ -129,18 +130,19 @@ public class Scenario {
 	}
 
 	public void paint(Graphics g) {
-		g.fillRect(0, 0, getWidth(), getHeight());
-		Graphics2D g2 = (Graphics2D) g.create();
-		for (int i = 0; i < getStaticMap().size(); i++) {
-			((StaticPlatform) getStaticMap().get(i)).paint(g.create());
-		}
-		for (int i = 0; i < getActors().size(); i++) {
-			getActors().get(i).paint(g.create());
-		}
-		for (int i = 0; i < getMapData().getGUI().size(); i++) {
-			Drawable gui = (Drawable)(getMapData().getGUI().get(i));
-			gui.paint(g.create());
-		}
+		MapPainter.paint(g, getMapData());
+//		g.fillRect(0, 0, getWidth(), getHeight());
+//		Graphics2D g2 = (Graphics2D) g.create();
+//		for (int i = 0; i < getStaticMap().size(); i++) {
+//			((StaticPlatform) getStaticMap().get(i)).paint(g.create());
+//		}
+//		for (int i = 0; i < getActors().size(); i++) {
+//			getActors().get(i).paint(g.create());
+//		}
+//		for (int i = 0; i < getMapData().getGUI().size(); i++) {
+//			Drawable gui = (Drawable)(getMapData().getGUI().get(i));
+//			gui.paint(g.create());
+//		}
 	/*	Physical_passive map = (Physical_passive) (getStaticMap().get(0));
 		g2.setColor(Color.GREEN);
 		if (getPlayer_one().collides(map))

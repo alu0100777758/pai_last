@@ -18,9 +18,11 @@ import javax.swing.JFileChooser;
 //import org.apache.commons.io.FileUtils;
 
 
+
 import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Entity;
+import es.ull.etsii.pai.practicafinal.GraphicEntity;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class TextureTool extends DefaultTool {
@@ -168,6 +170,14 @@ public class TextureTool extends DefaultTool {
 					getAnchorRectangle());
 			platform.getGraphicRectangle().setTexturized(true);
 			break;
+		case DefaultTool.PLANE_BACKGROUND:
+			GraphicEntity genti = (GraphicEntity) entity;
+			genti.getGraphic().setTexturePath(
+					"textures/" + getName());
+			genti.getGraphic().setTextureAnchor(
+					getAnchorRectangle());
+			genti.getGraphic().setTexturized(true);
+			break;
 		default:
 			break;
 		}
@@ -214,8 +224,6 @@ public class TextureTool extends DefaultTool {
 	public void mouseDragged(MouseEvent e) {
 		setLastVisited(e.getPoint());
 		setModified(true);
-		// TODO Auto-generated method stub
-
 	}
 
 }

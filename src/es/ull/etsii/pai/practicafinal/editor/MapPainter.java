@@ -16,7 +16,9 @@ public class MapPainter extends JPanel {
 	private static final long serialVersionUID = -4939012327823614215L;
 	BvsR_Map map = null;
 	boolean guiActive = true;
-
+	public MapPainter(BvsR_Map map) {
+		setMap(map);
+	}
 	public boolean isGuiActive() {
 		return guiActive;
 	}
@@ -33,41 +35,45 @@ public class MapPainter extends JPanel {
 		this.map = map;
 	}
 
-	public MapPainter(BvsR_Map map) {
-		setMap(map);
-	}
-	public void paintBackground(Graphics g){
+	
+	public static void paintBackground(Graphics g, BvsR_Map map){
 		g.fillRect(0, 0, ResourceManager.getInstance().getWindWidth(), ResourceManager.getInstance().getWindHeight());
-		for(Entity ent: getMap().getBackground()){
+		for(Entity ent: map.getBackground()){
 			GraphicEntity entg = (GraphicEntity) ent;
 			entg.getGraphic().paint(g);
 		}
 	}
-	public void paintStaticMap(Graphics g){
+	public static void paintStaticMap(Graphics g, BvsR_Map map){
 		for (int i = 0; i < map.getStaticMap().size(); i++) {
 			((StaticPlatform) map.getStaticMap().get(i)).paint(g.create());
 		}
 	}
-	public void paintActors(Graphics g ){
+	public static void paintActors(Graphics g, BvsR_Map map ){
 		for (int i = 0; i < map.getActors().size(); i++) {
 			map.getActors().get(i).paint(g.create());
 		}
 	}
-	public void paintGUI(Graphics g){
+	public static void paintGUI(Graphics g, BvsR_Map map){
 		for (int i = 0; i < map.getGUI().size(); i++) {
 			Drawable gui = (Drawable) (map.getGUI().get(i));
 			gui.paint(g.create());
 		}
 	}
+	
 	public void paint(Graphics g) {
 		super.paint(g);
-		paintBackground(g);
-		paintStaticMap(g);
-		paintActors(g);
+		paintBackground(g,getMap());
+		paintStaticMap(g,getMap());
+		paintActors(g,getMap());
 		if (isGuiActive()) {
-			paintGUI(g);
+			paintGUI(g,getMap());
 		}
-
+	}
+	public static void paint(Graphics g,BvsR_Map map){
+		paintBackground(g,map);
+		paintStaticMap(g,map);
+		paintActors(g,map);
+			paintGUI(g,map);
 	}
 
 }

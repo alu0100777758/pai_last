@@ -1,5 +1,6 @@
 package es.ull.etsii.pai.practicafinal;
 
+import java.awt.Dimension;
 import java.awt.geom.RectangularShape;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
@@ -31,6 +32,7 @@ public class GraphicEntity extends Entity {
 
 	@Override
 	public void setLocation(int x, int y) {
+		getGraphic().setLocation(x, y);
 	}
 
 	@Override
@@ -45,5 +47,6 @@ public class GraphicEntity extends Entity {
 
 	@Override
 	public void setSize(int width, int height) {
+		getGraphic().setSize(new Dimension(width,height));
 	}
 }
