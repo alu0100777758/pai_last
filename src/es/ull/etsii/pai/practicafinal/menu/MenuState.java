@@ -19,9 +19,10 @@ public class MenuState extends GameState {
 	private int currentChoice = 0;
 	private int currentChoice2 = 0;
 	private String[] options = { "Iniciar Partida", "Editar Escenario", "Opciones", "Salir" };
-	private String[] optiones = { "Sonido", "volver" };
+	private String[] optiones = { "Sonido ON", "volver" };
 
 	private boolean jbOpciones = false;
+	private boolean OpcionesSonido = true;
 
 	private Color titleColor;
 	private Font titleFont;
@@ -129,6 +130,13 @@ public class MenuState extends GameState {
 	private void selectOpciones() {
 		if (currentChoice2 == 0) {
 			// Sonido
+			if (OpcionesSonido) {
+			optiones[0] = "Sonido OFF";
+			OpcionesSonido = false;
+			} else {
+				optiones[0] = "Sonido ON";
+				OpcionesSonido = true;
+			}
 			System.out.println("currentChoice2 == 0");
 		}
 		if (currentChoice2 == 1) {
@@ -141,7 +149,9 @@ public class MenuState extends GameState {
 
 	public void keyPressed(int k) {
 		if (k == KeyEvent.VK_ENTER) {
-			Sounds.playSound("Resources/Backgrounds/pacman_chomp.wav");
+			if (OpcionesSonido) {
+				Sounds.playSound("Resources/Backgrounds/pacman_chomp.wav");
+			}
 			if (!jbOpciones) {
 				System.out.println("select();");
 				select();
@@ -152,7 +162,9 @@ public class MenuState extends GameState {
 			}
 		}
 		if (k == KeyEvent.VK_UP) {
+			if (OpcionesSonido) {
 			Sounds.playSound("Resources/Backgrounds/button-10.wav");
+			}
 			
 			
 			if (!jbOpciones) {
@@ -168,7 +180,9 @@ public class MenuState extends GameState {
 			}
 		}
 		if (k == KeyEvent.VK_DOWN) {
+			if (OpcionesSonido) {
 			Sounds.playSound("Resources/Backgrounds/button-10.wav");
+			}
 			
 			if (!jbOpciones) {
 				currentChoice++;
