@@ -3,9 +3,17 @@ package es.ull.etsii.pai.practicafinal.editor;
 import java.awt.Color;
 
 
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class BackgroundTool extends RectangleTool{
+	public BackgroundTool(){
+		setButton(new JButton(new ImageIcon(getClass().getResource(
+				"/icons/BackgroundTool.png"))));
+	}
 	protected void addRectangle(int i, int j, int i2, int j2) {
 		int beginX = Math.min(i, i2);
 		int beginY = Math.min(j, j2);

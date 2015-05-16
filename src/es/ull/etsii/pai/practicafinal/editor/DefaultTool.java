@@ -63,7 +63,10 @@ public class DefaultTool extends EditorTool {
 	}
 
 	public Rectangle getShape() {
-		return shape;
+		if(shape != null)
+			return shape;
+		else 
+			return new Rectangle();
 	}
 
 	public void setShape(Rectangle shape) {
@@ -92,7 +95,7 @@ public class DefaultTool extends EditorTool {
 	}
 
 	public void setFoundInplane(ArrayList<Integer> foundInplane) {
-		this.foundInplane = foundInplane;
+		DefaultTool.foundInplane = foundInplane;
 	}
 
 	public ArrayList<Entity> getSelectedActor() {
@@ -155,28 +158,31 @@ public class DefaultTool extends EditorTool {
 
 	protected Entity getFirstFor(Point p) {
 		for (Actor actor : getMap().getActors()) {
-			getFoundInplane().add(PLANE_ACTORS);
-			if (actor.getPhysicalShape().contains(p))
+			if (actor.getPhysicalShape().contains(p)){
+				getFoundInplane().add(PLANE_ACTORS);
 				return actor;
+			}
 		}
 		for (Entity actor : getMap().getStaticMap()) {
-			getFoundInplane().add(PLANE_MAP);
-			if (actor.getShape().contains(p))
+			if (actor.getShape().contains(p)){
+				getFoundInplane().add(PLANE_MAP);
 				return actor;
+			}
 		}
 		for (Entity actor : getMap().getBackground()) {
-			getFoundInplane().add(PLANE_BACKGROUND);
-			if (actor.getShape().contains(p))
+			if (actor.getShape().contains(p)){
+				getFoundInplane().add(PLANE_BACKGROUND);
 				return actor;
+			}
 		}
 		getFoundInplane().add(-1);
+		
 		return null;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -242,7 +248,7 @@ public class DefaultTool extends EditorTool {
 	public void enlarge(int size, int direction) {
 		int i = 0;
 		for (Entity entity : getSelectedActor()) {
-			if (getFoundInplane().get(i) == PLANE_MAP) {
+			if (getFoundInplane().get(i) != PLANE_ACTORS) {
 				int x = (int) entity.getX();
 				int y = (int) entity.gety();
 				int width = (int) entity.getShape().getWidth();
@@ -262,6 +268,7 @@ public class DefaultTool extends EditorTool {
 			}
 			i++;
 		}
+		
 		setModified(true);
 	}
 
@@ -320,25 +327,26 @@ public class DefaultTool extends EditorTool {
 		for (int i = 0; i < getSelectedActor().size(); i++) {
 			switch (getFoundInplane().get(i)) {
 			case PLANE_ACTORS:
-				getMap().getActors().remove(getSelectedActor());
-				if (getSelectedActor().equals((Actor) getMap().getPlayer_one())) {
+				if (getSelectedActor().get(i).equals((Actor) getMap().getPlayer_one())) {
 					getMap().setPlayer_one(null);
-				} else if (getSelectedActor().equals(
+				} else if (getSelectedActor().get(i).equals(
 						(Actor) getMap().getPlayer_two())) {
 					getMap().setPlayer_two(null);
 				}
+				getMap().getActors().remove(getSelectedActor().get(i));
 				break;
 			case PLANE_MAP:
-				getMap().getStaticMap().remove(getSelectedActor());
+				getMap().getStaticMap().remove(getSelectedActor().get(i));
 				break;
 			case PLANE_BACKGROUND:
-				getMap().getBackground().remove(getSelectedActor());
+				getMap().getBackground().remove(getSelectedActor().get(i));
 				break;
 			default:
 				break;
 			}
 		}
-		setSelectedActor(null);
+		getSelectedActor().clear();
+		getShape();
 		setModified(true);
 	}
 

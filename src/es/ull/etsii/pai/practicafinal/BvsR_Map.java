@@ -27,25 +27,29 @@ public class BvsR_Map implements Serializable {
 		if (player != null) {
 			if (getPlayer_one() == null) {
 				setPlayer_one(player);
-				player.getGraphicShapes().get(Player.BODY).setTexturePath("textures/blue01.png");
-				player.getGraphicShapes().get(Player.BODY).setTextureAnchor(player.getPhysicalRectangle());
+				player.getGraphicShapes().get(Player.BODY)
+						.setTexturePath("textures/blue01.png");
+				player.getGraphicShapes().get(Player.BODY)
+						.setTextureAnchor(player.getPhysicalRectangle());
 				player.getGraphicShapes().get(Player.BODY).setImage(true);
 				addActor(getPlayer_one());
 			} else if (getPlayer_two() == null) {
 				player.setColor(Color.RED);
 				setPlayer_two(player);
-				player.getGraphicShapes().get(Player.BODY).setTexturePath("textures/red01.png");
-				player.getGraphicShapes().get(Player.BODY).setTextureAnchor(player.getPhysicalRectangle());
+				player.getGraphicShapes().get(Player.BODY)
+						.setTexturePath("textures/red01.png");
+				player.getGraphicShapes().get(Player.BODY)
+						.setTextureAnchor(player.getPhysicalRectangle());
 				player.getGraphicShapes().get(Player.BODY).setImage(true);
 				addActor(getPlayer_two());
 			}
 		}
 	}
-	
-	public void addBackground(GraphicRectangle rect){
+
+	public void addBackground(GraphicRectangle rect) {
 		getBackground().add(new GraphicEntity(rect));
 	}
-	
+
 	public Player getPlayer_two() {
 		return player_two;
 	}
@@ -147,14 +151,23 @@ public class BvsR_Map implements Serializable {
 			}
 		}
 		for (int i = 0; i < getActors().size(); i++) {
-			Player_gauge actor =  (Player_gauge)getGUI().get(i);
+			Player_gauge actor = (Player_gauge) getGUI().get(i);
 			for (GraphicRectangle rect : actor.getGraphicShapes()) {
 				if (rect.getTexturePath() != null) {
 					rect.setTexturized(true);
-					rect.setPaint(Color.BLUE);
+					rect.setPaint(Color.YELLOW);
 				}
 
 			}
+		}
+		for (int i = 0; i < getBackground().size(); i++) {
+			GraphicEntity actor = (GraphicEntity) getBackground().get(i);
+			GraphicRectangle rect = actor.getGraphic();
+			if (rect.getTexturePath() != null) {
+				rect.setTexturized(true);
+				rect.setPaint(Color.YELLOW);
+			}
+
 		}
 	}
 

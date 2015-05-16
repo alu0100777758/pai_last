@@ -11,7 +11,7 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 
 public class EditorToolbar extends JToolBar implements ActionListener {
 	private static final long serialVersionUID = 6391135058169913712L;
-	EditorTool [] tools = {new DefaultTool(), new RectangleTool(), new PlayerInitTool(), new TextureTool(), new BackgroundTool()};
+	EditorTool [] tools = {new DefaultTool(), new RectangleTool(), new BackgroundTool(), new PlayerInitTool(), new TextureTool()};
 	int selectedToolIndex = 0;
 	BvsR_Map workingOn = null;
 	public int getSelectedToolIndex() {
