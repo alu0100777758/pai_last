@@ -1,7 +1,12 @@
 package es.ull.etsii.pai.practicafinal.menu;
 
+import es.ull.etsii.pai.practicafinal.GameFrame;
+import es.ull.etsii.pai.practicafinal.GameLoop;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+
+import javax.swing.JFrame;
 
 public class MenuState extends GameState {
 
@@ -68,6 +73,13 @@ public class MenuState extends GameState {
 	private void select() {
 		if (currentChoice == 0) {
 			// Iniciar partida
+			GameFrame frame = new GameFrame("test1.rvsbm");
+			frame.setTitle("Red VS Blue");
+			frame.setSize(1200, 800);
+		 	frame.setLocationRelativeTo(null); // Center the frame
+		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setVisible(true);
+			GameLoop.init(frame);
 		}
 		if (currentChoice == 1) {
 			// Editar
@@ -82,19 +94,18 @@ public class MenuState extends GameState {
 
 	public void keyPressed(int k) {
 		if (k == KeyEvent.VK_ENTER) {
+			Sounds.playSound("Resources/Backgrounds/pacman_chomp.wav");
 			select();
 		}
 		if (k == KeyEvent.VK_UP) {
-			Sounds reproducir = new Sounds();
-			reproducir.playSound();
+			Sounds.playSound("Resources/Backgrounds/button-10.wav");
 			currentChoice--;
 			if (currentChoice == -1) {
 				currentChoice = options.length - 1;
 			}
 		}
 		if (k == KeyEvent.VK_DOWN) {
-//			Sounds reproducir = new Sounds();
-//			reproducir.start();
+			Sounds.playSound("Resources/Backgrounds/button-10.wav");
 			currentChoice++;
 			if (currentChoice == options.length) {
 				currentChoice = 0;

@@ -6,13 +6,13 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.Line;
 
 public class Sounds extends Thread {
-	public static synchronized void playSound() {
+	public static synchronized void playSound(String music) {
 		  new Thread(new Runnable() {
 
 			// The wrapper thread is unnecessary, unless it blocks on the
 		  // Clip finishing; see comments.
 		    public void run() {
-		    	File file = new File("pacman_chomp.wav"); 
+		    	File file = new File(music); 
 		      try {
 		    	    
 		        Clip sound = (Clip) AudioSystem.getLine(new Line.Info(Clip.class));
