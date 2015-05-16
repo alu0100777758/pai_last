@@ -17,7 +17,11 @@ public class MenuState extends GameState {
 	private Background bg;
 
 	private int currentChoice = 0;
+	private int currentChoice2 = 0;
 	private String[] options = { "Iniciar Partida", "Editar Escenario", "Opciones", "Salir" };
+	private String[] optiones = { "Sonido", "volver" };
+
+	private boolean jbOpciones = false;
 
 	private Color titleColor;
 	private Font titleFont;
@@ -55,8 +59,7 @@ public class MenuState extends GameState {
 
 		// draw bg
 		bg.draw(g);
-		
-		
+
 		// draw title
 		g.setColor(titleColor);
 		g.setFont(titleFont);
@@ -64,13 +67,25 @@ public class MenuState extends GameState {
 
 		// draw menu options
 		g.setFont(font);
-		for (int i = 0; i < options.length; i++) {
-			if (i == currentChoice) {
-				g.setColor(Color.BLACK);
-			} else {
-				g.setColor(Color.RED);
+		if (!jbOpciones) {
+			for (int i = 0; i < options.length; i++) {
+				if (i == currentChoice) {
+					g.setColor(Color.BLACK);
+				} else {
+					g.setColor(Color.RED);
+				}
+				g.drawString(options[i], 110, 100 + i * 15);
 			}
-			g.drawString(options[i], 120, 140 + i * 15);
+
+		} else {
+			for (int i = 0; i < optiones.length; i++) {
+				if (i == currentChoice2) {
+					g.setColor(Color.BLACK);
+				} else {
+					g.setColor(Color.RED);
+				}
+				g.drawString(optiones[i], 110, 100 + i * 15);
+			}
 		}
 
 	}
@@ -80,7 +95,9 @@ public class MenuState extends GameState {
 			// Iniciar partida
 			GameFrame frame = new GameFrame("test1.rvsbm");
 			frame.setTitle("Red VS Blue");
-			frame.setSize(1200, 800);
+			// frame.setSize(1200, 800);
+			// Maximizar frame
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.setLocationRelativeTo(null); // Center the frame
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
@@ -92,37 +109,77 @@ public class MenuState extends GameState {
 			EditorFrame frame = new EditorFrame();
 			frame.setTitle("Red VS Blue Editor");
 			frame.setSize(1200, 800);
-		//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		 	frame.setLocationRelativeTo(null); // Center the frame
-		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			// Maximizar frame
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setLocationRelativeTo(null); // Center the frame
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 			frame.setVisible(true);
 			frame.setFocusable(true);
 		}
 		if (currentChoice == 2) {
 			// Opciones
+			jbOpciones = true;
 		}
 		if (currentChoice == 3) {
 			System.exit(0);
 		}
 	}
 
+	private void selectOpciones() {
+		if (currentChoice2 == 0) {
+			// Sonido
+			System.out.println("currentChoice2 == 0");
+		}
+		if (currentChoice2 == 1) {
+			// Volver
+			jbOpciones = false;
+			System.out.println("currentChoice2 == 1");
+		}
+
+	}
+
 	public void keyPressed(int k) {
 		if (k == KeyEvent.VK_ENTER) {
 			Sounds.playSound("Resources/Backgrounds/pacman_chomp.wav");
-			select();
+			if (!jbOpciones) {
+				System.out.println("select();");
+				select();
+				
+			} else {
+				System.out.println("selectOpciones();");
+				selectOpciones();
+			}
 		}
 		if (k == KeyEvent.VK_UP) {
 			Sounds.playSound("Resources/Backgrounds/button-10.wav");
-			currentChoice--;
-			if (currentChoice == -1) {
-				currentChoice = options.length - 1;
+			
+			
+			if (!jbOpciones) {
+				currentChoice--;
+				if (currentChoice == -1) {
+					currentChoice = options.length - 1;
+				}
+			} else {
+				currentChoice2--;
+				if (currentChoice2 == -1) {
+					currentChoice2 = optiones.length - 1;
+				}
 			}
 		}
 		if (k == KeyEvent.VK_DOWN) {
 			Sounds.playSound("Resources/Backgrounds/button-10.wav");
-			currentChoice++;
-			if (currentChoice == options.length) {
-				currentChoice = 0;
+			
+			if (!jbOpciones) {
+				currentChoice++;
+				if (currentChoice == options.length) {
+					currentChoice = 0;
+				}
+			} else {
+				currentChoice2++;
+				if (currentChoice2 == optiones.length) {
+					currentChoice2 = 0;
+				}
 			}
 		}
 	}
