@@ -19,10 +19,11 @@ public class MenuState extends GameState {
 	private int currentChoice = 0;
 	private int currentChoice2 = 0;
 	private String[] options = { "Iniciar Partida", "Editar Escenario", "Opciones", "Salir" };
-	private String[] optiones = { "Sonido ON", "volver" };
+	private String[] optiones = { "Sonido ON", "Resolución Escritorio", "volver" };
 
 	private boolean jbOpciones = false;
 	private boolean OpcionesSonido = true;
+	private int OpcionesResolucion = 1;
 
 	private Color titleColor;
 	private Font titleFont;
@@ -131,8 +132,8 @@ public class MenuState extends GameState {
 		if (currentChoice2 == 0) {
 			// Sonido
 			if (OpcionesSonido) {
-			optiones[0] = "Sonido OFF";
-			OpcionesSonido = false;
+				optiones[0] = "Sonido OFF";
+				OpcionesSonido = false;
 			} else {
 				optiones[0] = "Sonido ON";
 				OpcionesSonido = true;
@@ -140,6 +141,34 @@ public class MenuState extends GameState {
 			System.out.println("currentChoice2 == 0");
 		}
 		if (currentChoice2 == 1) {
+			// Resolución
+			System.out.println("currentChoice2 == 0");
+			System.out.println("OpcionesResolucion: " + OpcionesResolucion);
+			if (OpcionesResolucion == 0) {
+				System.out.println("Dentro");
+				optiones[1] = "Resolución Tablet";
+			}
+			if (OpcionesResolucion == 1) {
+				optiones[1] = "Resolución Móvil";
+			}
+			if (OpcionesResolucion == 2) {
+				optiones[1] = "Resolución Escritorio";
+			}
+			if (OpcionesResolucion == 0) {
+				OpcionesResolucion = 1;
+			} else {
+				if (OpcionesResolucion == 1) {
+					OpcionesResolucion = 2;
+				} else {
+					if (OpcionesResolucion == 2) {
+						OpcionesResolucion = 0;
+				}
+			}
+			
+			}
+			
+		}
+		if (currentChoice2 == 2) {
 			// Volver
 			jbOpciones = false;
 			System.out.println("currentChoice2 == 1");
@@ -155,7 +184,7 @@ public class MenuState extends GameState {
 			if (!jbOpciones) {
 				System.out.println("select();");
 				select();
-				
+
 			} else {
 				System.out.println("selectOpciones();");
 				selectOpciones();
@@ -163,10 +192,9 @@ public class MenuState extends GameState {
 		}
 		if (k == KeyEvent.VK_UP) {
 			if (OpcionesSonido) {
-			Sounds.playSound("Resources/Backgrounds/button-10.wav");
+				Sounds.playSound("Resources/Backgrounds/button-10.wav");
 			}
-			
-			
+
 			if (!jbOpciones) {
 				currentChoice--;
 				if (currentChoice == -1) {
@@ -181,9 +209,9 @@ public class MenuState extends GameState {
 		}
 		if (k == KeyEvent.VK_DOWN) {
 			if (OpcionesSonido) {
-			Sounds.playSound("Resources/Backgrounds/button-10.wav");
+				Sounds.playSound("Resources/Backgrounds/button-10.wav");
 			}
-			
+
 			if (!jbOpciones) {
 				currentChoice++;
 				if (currentChoice == options.length) {
