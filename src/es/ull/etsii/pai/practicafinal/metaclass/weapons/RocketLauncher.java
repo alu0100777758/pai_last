@@ -15,7 +15,6 @@ public class RocketLauncher extends Weapon{
 	public static final int SPEED = 20;
 	public static final int PUSH = 30;
 	public static final int BULLET_SIZE = 15;
-	public static final AudioManager audioManager = new AudioManager();
 	
 	public RocketLauncher(Player owner) {
 		super(owner);
@@ -50,6 +49,6 @@ public class RocketLauncher extends Weapon{
 		Bullet breechBullet = new rocket_bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE);
 		breechBullet.setSoundName("rocketBang.wav");
 		getOwner().getMap().getActors().add(breechBullet);
-		audioManager.startAudio("rocketShot.wav");
+		AudioManager.startAudio("rocketShot.wav");
 	}
 }

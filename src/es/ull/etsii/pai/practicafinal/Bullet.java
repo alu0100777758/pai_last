@@ -26,7 +26,7 @@ public class Bullet extends Actor implements Physical_active{
 	private MovementEquation motion = new RectilinearLocomotion();
 	private Player owner;
 	private int bulletSize = 7;
-	private String soundName = "rocketBang.wav";
+	private String soundName = "";
 	
 	public Bullet (Point2D pos) {
 		super(pos);
