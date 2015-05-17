@@ -20,7 +20,7 @@ import es.ull.etsii.pai.prct9.geometry.Segment;
 public class PowerUpWeapon extends StaticPlatform{
 	private static final long serialVersionUID = 674995040178479648L;
 	private Weapon weapon;
-	private boolean alive;
+	private boolean alive = true;
 	
 	public PowerUpWeapon(GraphicRectangle graphic, PhysicalRectangle physic, Weapon weapon) {
 		super(graphic, physic);

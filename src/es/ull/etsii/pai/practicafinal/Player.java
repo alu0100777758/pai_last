@@ -73,12 +73,12 @@ public class Player extends Actor implements Physical_active {
 				new GraphicRectangle((int) getPosition().x(),
 						(int) getPosition().y(), WIDTH, HEIGHT));
 		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
-
+		getGraphicShapes().add(null);
+		
 		setWeapon(new RocketLauncher(this));
 //		setWeapon(new UZI(this));
 
-		getGraphicShapes().add(getWeapon().getGraphicShape());
-		getGraphicShapes().get(WEAPON).setPaint(Color.BLACK);
+		//getGraphicShapes().add(getWeapon().getGraphicShape());
 	}
 
 	public int getMaxHp() {
@@ -550,6 +550,7 @@ public class Player extends Actor implements Physical_active {
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
+		getGraphicShapes().set(WEAPON, weapon.getGraphicShape());
 	}
 
 	public BvsR_Map getMap() {
