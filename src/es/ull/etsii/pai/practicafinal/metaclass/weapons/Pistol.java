@@ -20,7 +20,7 @@ public class Pistol extends Weapon{
 		setMainClipSize(CLIP_SIZE);
 		setSpeed(SPEED);
 		
-	}	
+	}
 
 	protected void shootSecondary() {}
 

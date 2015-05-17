@@ -85,7 +85,7 @@ public class PowerUPTool extends PlayerInitTool {
 	}
 	@Override
 	protected void add(MouseEvent e) {
-		getMap().addStaticMap(new PowerUpWeapon(new UZI(getMap().getPlayer_one())));
+		getMap().addStaticMap(new PowerUpWeapon(new UZI((int)e.getX(),(int)e.getY())));
 		setModified(true);
 	}
 }
