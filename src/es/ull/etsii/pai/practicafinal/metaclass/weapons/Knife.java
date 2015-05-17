@@ -37,7 +37,8 @@ public class Knife extends Weapon {
 		setMainAmmo(CLIP_SIZE);
 		setSpeed(SPEED);
 		setHeight(15);
-		setX_offset(-10);
+		setX_offset(-15);
+		setY_offset(10);
 		setMainReloadingTime(RELOADING_TIME);
 		getGraphicShape().setTexturePath("textures/Knife.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
