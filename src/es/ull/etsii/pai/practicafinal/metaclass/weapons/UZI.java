@@ -27,6 +27,10 @@ public class UZI extends Weapon{
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);
 		setSpeed(SPEED);
+		setHeight(15);
+		getGraphicShape().setTexturePath("textures/uzi.png");
+		getGraphicShape().setTextureAnchor(getGraphicShape());
+		getGraphicShape().setImage(true);
 	}
 	
 	protected void shootSecondary() {}
