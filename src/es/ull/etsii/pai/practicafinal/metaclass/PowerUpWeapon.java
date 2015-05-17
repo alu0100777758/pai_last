@@ -41,8 +41,10 @@ public class PowerUpWeapon extends StaticPlatform{
 			if (actor instanceof Player) {
 				getWeapon().setOwner((Player)actor);
 				((Player)actor).setWeapon(getWeapon());
+				
 				setPhysicalRectangle(new PhysicalRectangle(0, 0, 0, 0));
 				setGraphicRectangle(new GraphicRectangle(0, 0, 0, 0));
+				
 				setAlive(false);
 				return true;
 			}

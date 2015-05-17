@@ -10,9 +10,6 @@ import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public abstract class Weapon implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2320121838158394980L;
 	private Player owner;						// dueño del arma
 	private int fireRate; 						// cadencia de disparo en forma de periodo en "ticks" suponiendo 60 fps
@@ -33,6 +30,16 @@ public abstract class Weapon implements Serializable{
 	private int y_offset = 10;
 	private int x_offset = 0;
 	
+
+	public Weapon(Player owner) {
+		setOwner(owner);
+		//setGraphicShape();
+	}
+	
+	public void setGraphicShape(){
+		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
+	}
+	
 	public int getX_offset() {
 		return x_offset;
 	}
@@ -41,14 +48,6 @@ public abstract class Weapon implements Serializable{
 		this.x_offset = x_offset;
 	}
 
-	public Weapon(Player owner) {
-		setOwner(owner);
-		//setGraphicShape();
-	}
-
-	public void setGraphicShape(){
-		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
-	}
 	public int getWidth() {
 		return width;
 	}
@@ -79,7 +78,6 @@ public abstract class Weapon implements Serializable{
 
 	public void setOwner(Player owner) {
 		this.owner = owner;
-		setGraphicShape();
 	}
 
 	protected int getFireRate() {
@@ -222,22 +220,24 @@ public abstract class Weapon implements Serializable{
 
 	public void update(){
 		int addy = getY_offset();
-		if(isPulsedMainTrigger() && canShootPrimary()){
-			shootMain();
-			shootMainEffect();
-		}else if(isPulsedSecondaryTrigger() && canShootSecondary()){
-			shootSecondary();
-			shootSecondaryEffect();
+		if (getOwner() != null) {
+			if(isPulsedMainTrigger() && canShootPrimary()){
+				shootMain();
+				shootMainEffect();
+			}else if(isPulsedSecondaryTrigger() && canShootSecondary()){
+				shootSecondary();
+				shootSecondaryEffect();
+			}
+			else
+				decreaseCooldowns();
+			
+			if (getOwner().isCrounched())
+				addy = getY_offset() /2 ;
+			if (getOwner().getLookingAt() == Side.LEFT)
+				getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth() - getX_offset(), (int)getOwner().getPosition().y() + addy);
+			else 
+				getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH + getX_offset(), (int)getOwner().getPosition().y() + addy);
 		}
-		else
-			decreaseCooldowns();
-		
-		if (getOwner().isCrounched())
-			addy = getY_offset() /2 ;
-		if (getOwner().getLookingAt() == Side.LEFT)
-			getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth() - getX_offset(), (int)getOwner().getPosition().y() + addy);
-		else 
-			getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH + getX_offset(), (int)getOwner().getPosition().y() + addy);
 	}
 	
 	private void shootSecondaryEffect() {

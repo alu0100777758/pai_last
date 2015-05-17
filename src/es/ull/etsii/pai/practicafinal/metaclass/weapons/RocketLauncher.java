@@ -32,7 +32,7 @@ public class RocketLauncher extends Weapon{
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
 	}	
-
+	
 	protected void shootSecondary() {}
 
 	protected void shootMain() {
