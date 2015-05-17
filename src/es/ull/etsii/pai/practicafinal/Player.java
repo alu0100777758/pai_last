@@ -207,6 +207,8 @@ public class Player extends Actor implements Physical_active {
 		Rectangle intersection = actor.getCollisionedRectangle(this
 				.getPhysicalRectangle());
 		boolean repaired = false;
+		if (intersection.isEmpty())
+			return true;
 		// Resolvemos colisiones primero en Y mejor.
 
 		// Miramos si colisiona con la cabeza o los pies:

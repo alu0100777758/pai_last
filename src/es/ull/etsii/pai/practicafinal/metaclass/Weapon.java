@@ -79,6 +79,7 @@ public abstract class Weapon implements Serializable{
 
 	public void setOwner(Player owner) {
 		this.owner = owner;
+		setGraphicShape();
 	}
 
 	protected int getFireRate() {

@@ -66,6 +66,8 @@ public class Scenario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		getStaticMap().add(new PowerUpWeapon(100, 100, 200, 200, new UZI(new Player(new Point2D(100, 100), getMapData()))));
 	}
 /**
  * TODO: 
@@ -139,23 +141,6 @@ public class Scenario {
 
 	public void paint(Graphics g) {
 		MapPainter.paint(g, getMapData());
-//		g.fillRect(0, 0, getWidth(), getHeight());
-//		Graphics2D g2 = (Graphics2D) g.create();
-//		for (int i = 0; i < getStaticMap().size(); i++) {
-//			((StaticPlatform) getStaticMap().get(i)).paint(g.create());
-//		}
-//		for (int i = 0; i < getActors().size(); i++) {
-//			getActors().get(i).paint(g.create());
-//		}
-//		for (int i = 0; i < getMapData().getGUI().size(); i++) {
-//			Drawable gui = (Drawable)(getMapData().getGUI().get(i));
-//			gui.paint(g.create());
-//		}
-	/*	Physical_passive map = (Physical_passive) (getStaticMap().get(0));
-		g2.setColor(Color.GREEN);
-		if (getPlayer_one().collides(map))
-			g2.draw(getPlayer_one().getCollisionedRectangle(map));
-	*/
 	}
 
 	/**

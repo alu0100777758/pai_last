@@ -1,6 +1,7 @@
 package es.ull.etsii.pai.practicafinal.metaclass;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
@@ -21,7 +22,6 @@ public class PowerUpWeapon extends StaticPlatform{
 	private Weapon weapon;
 	private boolean alive;
 	
-	
 	public PowerUpWeapon(GraphicRectangle graphic, PhysicalRectangle physic, Weapon weapon) {
 		super(graphic, physic);
 		setWeapon(weapon);
@@ -34,6 +34,7 @@ public class PowerUpWeapon extends StaticPlatform{
 	public boolean collides(Physical_passive actor) {
 		if (actor.getPhysicalRectangle().intersects(getPhysicalRectangle())) {
 			if (actor instanceof Player) {
+				getWeapon().setOwner((Player)actor);
 				((Player)actor).setWeapon(getWeapon());
 				setPhysicalRectangle(new PhysicalRectangle(0, 0, 0, 0));
 				setGraphicRectangle(new GraphicRectangle(0, 0, 0, 0));
@@ -51,6 +52,9 @@ public class PowerUpWeapon extends StaticPlatform{
 	@Override
 	public boolean hasToDie() {
 		return !isAlive();
+	}
+	public void paint(Graphics g) {
+		getGraphicRectangle().paint(g);
 	}
 	/**
 	 * Getters y Setters.
