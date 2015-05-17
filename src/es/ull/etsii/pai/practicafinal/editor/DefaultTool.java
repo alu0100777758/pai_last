@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import es.ull.etsii.pai.practicafinal.Actor;
+import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Entity;
 import es.ull.etsii.pai.practicafinal.GraphicEntity;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
@@ -23,11 +24,10 @@ import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 public class DefaultTool extends EditorTool {
 	public static final int Y_AXIS = 0;
 	public static final int X_AXIS = 3;
-	public static final int PLANE_ACTORS = 0;
-	public static final int PLANE_MAP = 1;
-	public static final int PLANE_BACKGROUND = 2;
 	private static ArrayList<Entity> selectedEntity = new ArrayList<Entity>();
 	private static ArrayList<Integer> foundInplane = new ArrayList<Integer>();
+	private static ArrayList<Entity> clipBoardSelectedEntity = new ArrayList<Entity>();
+	private static ArrayList<Integer> clipBoardfoundInplane = new ArrayList<Integer>();
 	private boolean stretchingMode;
 	private boolean addingMode = false;
 	private boolean removeMode = false;
@@ -135,6 +135,24 @@ public class DefaultTool extends EditorTool {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public static ArrayList<Entity> getClipBoardSelectedEntity() {
+		return clipBoardSelectedEntity;
+	}
+
+	public static void setClipBoardSelectedEntity(
+			ArrayList<Entity> clipBoardSelectedEntity) {
+		DefaultTool.clipBoardSelectedEntity = clipBoardSelectedEntity;
+	}
+
+	public static ArrayList<Integer> getClipBoardfoundInplane() {
+		return clipBoardfoundInplane;
+	}
+
+	public static void setClipBoardfoundInplane(
+			ArrayList<Integer> clipBoardfoundInplane) {
+		DefaultTool.clipBoardfoundInplane = clipBoardfoundInplane;
+	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -157,23 +175,32 @@ public class DefaultTool extends EditorTool {
 	}
 
 	protected Entity getFirstFor(Point p) {
-		for (Actor actor : getMap().getActors()) {
+		if(getMap().getActors().size() != 0){
+		for (int i = getMap().getActors().size()-1; i>=0; i--) {
+			Actor actor = getMap().getActors().get(i);
 			if (actor.getPhysicalShape().contains(p)){
-				getFoundInplane().add(PLANE_ACTORS);
+				getFoundInplane().add(BvsR_Map.PLANE_ACTORS);
 				return actor;
 			}
 		}
-		for (Entity actor : getMap().getStaticMap()) {
+		}
+		if(getMap().getStaticMap().size() != 0){
+		for (int i = getMap().getStaticMap().size()-1; i>=0; i--) {
+			Entity actor = getMap().getStaticMap().get(i);
 			if (actor.getShape().contains(p)){
-				getFoundInplane().add(PLANE_MAP);
+				getFoundInplane().add(BvsR_Map.PLANE_MAP);
 				return actor;
 			}
 		}
-		for (Entity actor : getMap().getBackground()) {
+		}
+		if(getMap().getBackground().size() != 0){
+		for(int i = getMap().getBackground().size()-1; i>=0; i--) {
+			Entity actor = getMap().getBackground().get(i);
 			if (actor.getShape().contains(p)){
-				getFoundInplane().add(PLANE_BACKGROUND);
+				getFoundInplane().add(BvsR_Map.PLANE_BACKGROUND);
 				return actor;
 			}
+		}
 		}
 		getFoundInplane().add(-1);
 		
@@ -248,7 +275,7 @@ public class DefaultTool extends EditorTool {
 	public void enlarge(int size, int direction) {
 		int i = 0;
 		for (Entity entity : getSelectedActor()) {
-			if (getFoundInplane().get(i) != PLANE_ACTORS) {
+			if (getFoundInplane().get(i) != BvsR_Map.PLANE_ACTORS) {
 				int x = (int) entity.getX();
 				int y = (int) entity.gety();
 				int width = (int) entity.getShape().getWidth();
@@ -311,6 +338,14 @@ public class DefaultTool extends EditorTool {
 				setSelectionColor(TRANSLATE_COLOR);
 			setModified(true);
 			break;
+		case KeyEvent.VK_C:
+			if(isRemoveMode())
+				copy();
+			break;
+		case KeyEvent.VK_V:
+			if(isRemoveMode())
+				paste();
+			break;
 		case KeyEvent.VK_CONTROL:
 			setRemoveMode(true);
 			break;
@@ -323,10 +358,23 @@ public class DefaultTool extends EditorTool {
 
 	}
 
+	private void paste() {
+		for(int i = 0; i < getClipBoardSelectedEntity().size(); i++){
+			if(getClipBoardSelectedEntity().get(i).clone()!=getMap().getPlayer_one() && getClipBoardSelectedEntity().get(i).clone() != getMap().getPlayer_two())
+			getMap().addEntity((Entity)getClipBoardSelectedEntity().get(i).clone(), getFoundInplane().get(i));
+		}
+		setModified(true);
+	}
+
+	private void copy() {
+		setClipBoardSelectedEntity(new ArrayList<Entity>(getSelectedActor()));
+		setClipBoardfoundInplane(new ArrayList<Integer>(getFoundInplane()));
+	}
+
 	private void deleteSelected() {
 		for (int i = 0; i < getSelectedActor().size(); i++) {
 			switch (getFoundInplane().get(i)) {
-			case PLANE_ACTORS:
+			case BvsR_Map.PLANE_ACTORS:
 				if (getSelectedActor().get(i).equals((Actor) getMap().getPlayer_one())) {
 					getMap().setPlayer_one(null);
 				} else if (getSelectedActor().get(i).equals(
@@ -335,10 +383,10 @@ public class DefaultTool extends EditorTool {
 				}
 				getMap().getActors().remove(getSelectedActor().get(i));
 				break;
-			case PLANE_MAP:
+			case BvsR_Map.PLANE_MAP:
 				getMap().getStaticMap().remove(getSelectedActor().get(i));
 				break;
-			case PLANE_BACKGROUND:
+			case BvsR_Map.PLANE_BACKGROUND:
 				getMap().getBackground().remove(getSelectedActor().get(i));
 				break;
 			default:
@@ -367,8 +415,6 @@ public class DefaultTool extends EditorTool {
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

@@ -8,11 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.management.monitor.GaugeMonitor;
+
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
-
 public class BvsR_Map implements Serializable {
+	public static final int PLANE_ACTORS = 0;
+	public static final int PLANE_MAP = 1;
+	public static final int PLANE_BACKGROUND = 2;
 	private static final long serialVersionUID = 8439640060806465321L;
 	private ArrayList<Entity> background = new ArrayList<Entity>();
 	private ArrayList<Entity> staticMap = new ArrayList<Entity>();
@@ -45,7 +47,22 @@ public class BvsR_Map implements Serializable {
 			}
 		}
 	}
-
+	public void addEntity(Entity ent, int plane){
+		switch (plane) {
+		case PLANE_ACTORS:
+			getActors().add((Actor)ent);
+			break;
+	
+		case PLANE_BACKGROUND:
+			getBackground().add(ent);
+			break;
+		case PLANE_MAP:
+			getStaticMap().add(ent);
+			break;
+		default:
+			break;
+		}
+	}
 	public void addBackground(GraphicRectangle rect) {
 		getBackground().add(new GraphicEntity(rect));
 	}

@@ -145,15 +145,13 @@ public class TextureTool extends DefaultTool {
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		super.mousePressed(arg0);
-		if(arg0.getButton() == MouseEvent.BUTTON1){
-				if (!isDrawing()) {
+		if(arg0.getButton() == MouseEvent.BUTTON1 && !(isRemoveMode() || isAddingMode()) && !isDrawing()) {
 					setDrawing(true);
 					setBegin(arg0.getPoint());
 					setLastVisited(getBegin());
 				} else {
 					setDrawing(false);
 				}
-			}
 //		}
 		setModified(true);
 	}
@@ -194,9 +192,9 @@ public class TextureTool extends DefaultTool {
 		int i = 0;
 		for(Entity entity : getSelectedActor()){
 		switch (getFoundInplane().get(i)) {
-		case DefaultTool.PLANE_ACTORS:
+		case BvsR_Map.PLANE_ACTORS:
 			break;
-		case DefaultTool.PLANE_MAP:
+		case BvsR_Map.PLANE_MAP:
 			StaticPlatform platform = (StaticPlatform) entity;
 			platform.getGraphicRectangle().setTexturePath(
 					"textures/" + getName());
@@ -204,7 +202,7 @@ public class TextureTool extends DefaultTool {
 					getAnchorRectangle());
 			platform.getGraphicRectangle().setTexturized(true);
 			break;
-		case DefaultTool.PLANE_BACKGROUND:
+		case BvsR_Map.PLANE_BACKGROUND:
 			GraphicEntity genti = (GraphicEntity) entity;
 			genti.getGraphic().setTexturePath(
 					"textures/" + getName());

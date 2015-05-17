@@ -49,4 +49,10 @@ public class GraphicEntity extends Entity {
 	public void setSize(int width, int height) {
 		getGraphic().setSize(new Dimension(width,height));
 	}
+	@Override
+	public Object clone(){
+		Object newobject = new GraphicEntity((GraphicRectangle)getGraphic().clone());
+		return newobject; 
+	}
+	
 }

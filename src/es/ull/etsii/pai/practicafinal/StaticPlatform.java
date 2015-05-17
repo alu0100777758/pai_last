@@ -24,6 +24,10 @@ public class StaticPlatform extends Entity implements Physical_passive {
 		getGraphicRectangle().setPaint(Color.GREEN);
 		setPhysicalRectangle(new PhysicalRectangle(x1, y1, width, height));
 	}
+	public StaticPlatform(GraphicRectangle graphic, PhysicalRectangle physic) {
+		setPhysicalRectangle((PhysicalRectangle) physic.clone());
+		setGraphicRectangle((GraphicRectangle)graphic.clone());
+	}
 	public void setPaint(Paint paint){
 		getGraphicRectangle().setPaint(paint);
 	}
@@ -119,6 +123,12 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	public void setSize(int width, int height) {
 		getGraphicRectangle().setSize(new Dimension(width,height));
 		getPhysicalRectangle().setSize(new Dimension(width,height));
+	}
+	@Override
+	public Object clone(){
+		Object newobject = new StaticPlatform(getGraphicRectangle(),getPhysicalRectangle());
+		
+		return newobject; 
 	}
 
 }
