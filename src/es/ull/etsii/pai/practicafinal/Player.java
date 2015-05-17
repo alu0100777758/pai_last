@@ -120,6 +120,11 @@ public class Player extends Actor implements Physical_active {
 
 	}
 
+	@Override
+	public boolean hasToDie() {
+		return false;
+	}
+	
 	private boolean moveLeft() {
 		getSpeed().setX(-SPEED);
 		setBlock_right(false);
@@ -576,5 +581,7 @@ public class Player extends Actor implements Physical_active {
 	public void setPush(Point2D push) {
 		this.push = push;
 	}
+
+
 
 }

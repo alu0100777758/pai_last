@@ -1,15 +1,13 @@
 package es.ull.etsii.pai.practicafinal;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.editor.MapPainter;
-import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
+import es.ull.etsii.pai.practicafinal.metaclass.PowerUpWeapon;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -19,6 +17,7 @@ public class Scenario {
 	BvsR_Map mapData = new BvsR_Map();
 	RvsBKeyController keyController = new RvsBKeyController();
 	public static final int WINDOW_TOLERANCE = 100;
+	
 	public Player getPlayer_two() {
 		return mapData.getPlayer_two();
 	}
@@ -102,9 +101,9 @@ public class Scenario {
 		 */
 		for (int i = 0; i < getStaticMap().size(); i++) {
 			map = (Physical_passive) (getStaticMap().get(i));
-			if (getPlayer_one().collides(map))
+			if (map.collides(getPlayer_one())/*)getPlayer_one().collides(map)*/)
 				getPlayer_one().repair_collision(map);
-			if (getPlayer_two().collides(map))
+			if (map.collides(getPlayer_two())/*)getPlayer_one().collides(map)*/)
 				getPlayer_two().repair_collision(map);
 			for (int j = 0; j < getActors().size(); j++) {
 				if (getActors().get(j) instanceof Bullet) {
@@ -128,7 +127,14 @@ public class Scenario {
 					getActors().remove(getActors().get(i));
 				}
 			}
-		}		
+		}
+		
+		/**
+		 * Verifica si alguien tiene que morir.
+		 */
+		for (int i = 0; i < getStaticMap().size(); i++)
+			if (((Physical_passive)getStaticMap().get(i)).hasToDie())
+				getStaticMap().remove(i);
 	}
 
 	public void paint(Graphics g) {

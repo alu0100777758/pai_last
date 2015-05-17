@@ -13,6 +13,7 @@ public class UZI extends Weapon{
 	public static final int DAMAGE = 1;
 	public static final int SPEED = 20;
 	public static final int PUSH = 6;
+	
 	public UZI(Player owner) {
 		super(owner);
 		setFireRate(FIRE_RATE);

@@ -11,7 +11,11 @@ import javax.swing.JEditorPane;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
-
+/**
+ * 
+ * @author Sabato Ceruso, Javier Martin Hernandez.
+ *
+ */
 public class Actor extends Entity {
 	private Point2D position;
 	private PhysicalRectangle physicalShape ;

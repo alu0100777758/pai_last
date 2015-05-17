@@ -34,6 +34,10 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	public void paint(Graphics g) {
 		getGraphicRectangle().paint(g);
 	}
+	@Override
+	public boolean hasToDie() {
+		return false;
+	}
 	/**
 	 *  TODO
 	 */
@@ -46,17 +50,6 @@ public class StaticPlatform extends Entity implements Physical_passive {
 		return false;
 	}
 	
-	/**
-	 * Distancia de colicion con los pies del jugador
-	 * @param actor
-	 * @return
-	 */
-	public double collisionDistance(Actor actor) {
-//		PhysicalRectangle actorShape = actor.getPhysicalShape(); 
-//		
-//		return getPhysicalRectangle().interceptionDistance(actorShape.getBottom_segment());
-		return 0;
-	}
 	@Override
 	public void reproduce() {
 		// TODO Auto-generated method stub
@@ -75,7 +68,6 @@ public class StaticPlatform extends Entity implements Physical_passive {
 		this.physicalRectangle = pyhsicalRectangle;
 	}
 
-	
 	@Override
 	public boolean collides(Physical_passive actor) {
 		

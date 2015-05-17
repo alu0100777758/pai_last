@@ -34,6 +34,11 @@ public class PhysicalRectangle extends Rectangle implements Physical_passive {
 	public Rectangle getCollisionedRectangle(Physical_passive actor) {
 		return intersection(actor.getPhysicalRectangle());
 	}
+	@Override
+	public boolean hasToDie() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 
 }

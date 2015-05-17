@@ -52,6 +52,11 @@ public class Bullet extends Actor implements Physical_active{
 		setBULLET_SIZE(size);
 	}
 	
+	@Override
+	public boolean hasToDie() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	public void paint(Graphics g) {
 		getGraphicShape().paint(g.create());
@@ -169,10 +174,6 @@ public class Bullet extends Actor implements Physical_active{
 		getGraphicShape().setSize(getBULLET_SIZE(), getBULLET_SIZE());
 		getPhysicalShape().setSize(getBULLET_SIZE(), getBULLET_SIZE());
 	
-	}
-	
-	
-	
-	
+	}	
 	
 }

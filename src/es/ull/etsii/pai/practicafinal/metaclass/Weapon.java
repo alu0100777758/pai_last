@@ -45,6 +45,7 @@ public abstract class Weapon implements Serializable{
 		setOwner(owner);
 		setGraphicShape();
 	}
+
 	public void setGraphicShape(){
 		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
 	}
@@ -233,9 +234,9 @@ public abstract class Weapon implements Serializable{
 		if (getOwner().isCrounched())
 			addy = getY_offset() /2 ;
 		if (getOwner().getLookingAt() == Side.LEFT)
-			getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth()-getX_offset(), (int)getOwner().getPosition().y() + addy);
+			getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth() - getX_offset(), (int)getOwner().getPosition().y() + addy);
 		else 
-			getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + addy);
+			getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH + getX_offset(), (int)getOwner().getPosition().y() + addy);
 	}
 	
 	private void shootSecondaryEffect() {
