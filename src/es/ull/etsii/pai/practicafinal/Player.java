@@ -285,7 +285,7 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	private String getSoundName() {
-		return hitSounds[new Random().nextInt(hitSounds.length)];
+		return hitSounds[ResourceManager.getInstance().getRandGen().nextInt(hitSounds.length)];
 	}
 
 	/**

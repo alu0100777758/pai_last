@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
@@ -16,6 +17,7 @@ public class ResourceManager {
 	private int windHeight = 800;
 	private static ResourceManager instance = null;
 	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); 
+	private Random randGen = new Random();
 	
 	public HashMap<String, BufferedImage> getBufferedImages() {
 		return bufferedImages;
@@ -25,6 +27,13 @@ public class ResourceManager {
 		if(instance == null)
 			instance = new ResourceManager();
 		return instance;
+	}
+	
+	public Random getRandGen() {
+		return randGen;
+	}
+	public void setRandGen(Random randGen) {
+		this.randGen = randGen;
 	}
 	public BufferedImage getBufferedImage(String path){
 		BufferedImage found = getBufferedImages().get(path);
