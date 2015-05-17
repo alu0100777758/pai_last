@@ -1,20 +1,4 @@
-<<<<<<< HEAD
-/Backgrounds/
-/DefaultTool.png
-/HUD/
-/down.png
-/icons/
-/left.png
-/right.png
-/sonido.mp3
-/textures/
-/up.png
-=======
-/HUD/
-/Maps/
-/Sprites/
-/Tilesets/
 
->>>>>>> cdb162b373235857f0c38d5f3f5af7af5706cc3e
+
 /sounds/
-/rocketShot.wav
+/textures/
