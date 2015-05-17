@@ -1,12 +1,22 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 public class KeyController {
-	private Map<KeyActions, Integer> keyMap ;
+	private Map<KeyActions, Integer> keyMap ;			// Mapa de movimientos-teclas.
 	
+	/**
+	 * Crea un controlador con un keyMap por defecto. 
+	 */
 	public KeyController() {
 		setKeyMap(new HashMap<KeyActions, Integer> ());
 		
@@ -24,10 +34,18 @@ public class KeyController {
 		getKeyMap().put(KeyActions.P2SHOOTLEFT, KeyEvent.VK_NUMPAD2);
 		getKeyMap().put(KeyActions.P2SHOOTRIGHT, KeyEvent.VK_NUMPAD3);
 	}
-	
+	/**
+	 * Modifica la tecla con la que se realiza alguna accion
+	 * @param action
+	 * @param keyCode
+	 */
 	public void addKeyValue(KeyActions action, int keyCode) {
 		getKeyMap().put(action, keyCode);
 	}
+	/**
+	 * Getters y Setters.
+	 * @return
+	 */
 	public Map<KeyActions, Integer> getKeyMap() {
 		return keyMap;
 	}
