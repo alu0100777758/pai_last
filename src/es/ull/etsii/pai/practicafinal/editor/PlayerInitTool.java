@@ -1,5 +1,6 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -45,8 +46,30 @@ public class PlayerInitTool extends EditorTool {
 	}
 
 	protected void add(MouseEvent e) {
-		getMap().addPlayer(new Player(new Point2D(e.getX(), e.getY()), getMap()));
+		addPlayer(new Player(new Point2D(e.getX(), e.getY()), getMap()));
 		setModified(true);
+	}
+	public void addPlayer(Player player) {
+		if (player != null) {
+			if (getMap().getPlayer_one() == null) {
+				getMap().setPlayer_one(player);
+				player.getGraphicShapes().get(Player.BODY)
+						.setTexturePath("textures/blue.png");
+				player.getGraphicShapes().get(Player.BODY)
+						.setTextureAnchor(player.getPhysicalRectangle());
+				player.getGraphicShapes().get(Player.BODY).setImage(true);
+				getMap().addActor(getMap().getPlayer_one());
+			} else if (getMap().getPlayer_two() == null) {
+				player.setColor(Color.RED);
+				getMap().setPlayer_two(player);
+				player.getGraphicShapes().get(Player.BODY)
+						.setTexturePath("textures/red.png");
+				player.getGraphicShapes().get(Player.BODY)
+						.setTextureAnchor(player.getPhysicalRectangle());
+				player.getGraphicShapes().get(Player.BODY).setImage(true);
+				getMap().addActor(getMap().getPlayer_two());
+			}
+		}
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
