@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -11,30 +18,26 @@ import javax.swing.JEditorPane;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
-/**
- * 
- * @author Sabato Ceruso, Javier Martin Hernandez.
- *
- */
+
 public class Actor extends Entity {
-	private Point2D position;
-	private PhysicalRectangle physicalShape ;
-	private ArrayList<GraphicRectangle> graphicShapes;
+	private Point2D position;							// Posicion del actor.
+	private PhysicalRectangle physicalShape ;			// Forma fisica.
+	private ArrayList<GraphicRectangle> graphicShapes;	// Lista de formas graficas que representan al actor.
 	
+	/**
+	 * Crea un actor en la posicion determinada.
+	 * @param position
+	 */
 	public Actor(Point2D position) {
 		physicalShape = new PhysicalRectangle((int)position.x(), (int)position.y(), 10, 20); // cambiar!
 		setPosition(position);
 		setGraphicShapes(new ArrayList<GraphicRectangle>());
 	}
-	
-	public void die(){
-		
-	}
-	@Override
-	public void reproduce() {
-		// TODO Auto-generated method stub
-
-	}
+	/**
+	 * Funcion de morir. 
+	 * Se invoca cada vez que un actor o derivados debe ejecutar una serie de acciones antes de ser eliminado.
+	 */
+	public void die(){}
 	/**
 	 * Pinta el actor en las coordenadas en las que est�.
 	 * @param g
@@ -42,6 +45,34 @@ public class Actor extends Entity {
 	public void paint(Graphics g) {
 		
 	}
+	/**
+	 * Mueve la posicion del actor en el eje X tanto como indica el parametro.
+	 * @param xposition
+	 */
+	public void addXPosition(double xposition) {
+		this.position.setX(this.position.x() + xposition);
+		this.physicalShape.setLocation((int)position.x(), (int)position.y());
+	}
+	/**
+	 * Mueve la posicion del actor en el eje Y tanto como indica el parametro.
+	 * @param xposition
+	 */
+	public void addYPosition(double yposition) {
+		this.position.setY(this.position.y() + yposition);
+		this.physicalShape.setLocation((int)position.x(), (int)position.y());
+	}
+	/**
+	 * Mueve la posicion del actor en ambos ejes tanto como indica el parametro.
+	 * @param xposition
+	 */
+	public void addPosition(Point2D point){
+		setPosition(getPosition().add(point));
+	}
+	
+	/**
+	 * Getters y Setters.
+	 * @return
+	 */
 	public Point2D getPosition() {
 		return position;
 	}
@@ -57,22 +88,11 @@ public class Actor extends Entity {
 		this.position.setY(yposition);
 		this.physicalShape.setLocation((int)position.x(), (int)position.y());
 	}
-	public void addXPosition(double xposition) {
-		this.position.setX(this.position.x() + xposition);
-		this.physicalShape.setLocation((int)position.x(), (int)position.y());
-	}
-	public void addYPosition(double yposition) {
-		this.position.setY(this.position.y() + yposition);
-		this.physicalShape.setLocation((int)position.x(), (int)position.y());
-	}
 	public PhysicalRectangle getPhysicalShape() {
 		return physicalShape;
 	}
 	public void setPhysicalShape(PhysicalRectangle physicalShape) {
 		this.physicalShape = physicalShape;
-	}
-	public void addPosition(Point2D point){
-		setPosition(getPosition().add(point));
 	}
 	@Override
 	public RectangularShape getShape() {

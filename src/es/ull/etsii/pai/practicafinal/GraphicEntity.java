@@ -19,11 +19,6 @@ public class GraphicEntity extends Entity {
 		super();
 		setGraphic(rect);
 	}
-	@Override
-	public void reproduce() {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public RectangularShape getShape() {

@@ -81,10 +81,6 @@ public class Player_gauge extends Entity implements Drawable, Serializable {
 		this.graphicShapes = graphicShapes;
 	}
 
-	@Override
-	public void reproduce() {
-	}
-
 	private void setBackgroundGauge() {
 		GraphicRectangle background = new GraphicRectangle(x_pos, y_pos, WIDTH,
 				HEIGHT);

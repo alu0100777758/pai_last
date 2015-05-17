@@ -50,10 +50,6 @@ public class StaticPlatform extends Entity implements Physical_passive {
 		return false;
 	}
 	
-	@Override
-	public void reproduce() {
-		// TODO Auto-generated method stub
-	}
 	public GraphicRectangle getGraphicRectangle() {
 		return graphicRectangle;
 	}

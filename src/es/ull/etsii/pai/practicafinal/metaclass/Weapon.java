@@ -59,6 +59,7 @@ public abstract class Weapon implements Serializable{
 
 	public void setWidth(int width) {
 		this.width = width;
+		getGraphicShape().setSize(width, (int)getGraphicShape().getHeight());
 	}
 
 	public int getHeight() {
@@ -67,6 +68,7 @@ public abstract class Weapon implements Serializable{
 
 	public void setHeight(int height) {
 		this.height = height;
+		getGraphicShape().setSize((int)getGraphicShape().getWidth(), height);
 	}
 
 	public int getY_offset() {
@@ -220,7 +222,7 @@ public abstract class Weapon implements Serializable{
 		setEffectDuration(-1);
 	}
 	private void setEffectDuration(int i) {
-		
+		//TODO
 	}
 
 	public void update(){
