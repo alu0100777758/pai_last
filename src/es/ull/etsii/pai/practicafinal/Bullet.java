@@ -13,11 +13,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
-
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.MovementEquation;
-import es.ull.etsii.pai.practicafinal.physics.ParabolicLocomotion;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -30,7 +27,7 @@ public class Bullet extends Actor implements Physical_active{
 	private Point2D speed;											// Vector de velocidad.
 	private int damage = 0;											// Daño de la bala.
 	private int push = 0; 											// Empuje.
-	private int maxDistance = 1000; 								// TODO, distancia maxima que puede recorrer la bala.
+	private int maxDistance = 100; 								// TODO, distancia maxima que puede recorrer la bala.
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
 	private MovementEquation motion = new RectilinearLocomotion();	// Funcion de movimiento de la bala.
 	private Player owner;											// Jugador que dispara la bala.
@@ -110,7 +107,7 @@ public class Bullet extends Actor implements Physical_active{
 	public boolean updatePos(Physical_passive map) {
 		int init = (int)getPosition().x();
 		setPosition(motion.getNewpos(getSpeed(), getPosition())); // cambiar a getnewSpeed si se prefiere , tal como estÃ¡ permite aceleracion dentro del motion al modificar y vel
-		maxDistance-=(Math.max(init, getPosition().x())-Math.min(init, getPosition().x()));
+		setMaxDistance((int)(getMaxDistance()-(Math.max(init, getPosition().x())-Math.min(init, getPosition().x()))));
 		if(maxDistance <= 0)
 			setDead(true);
 		getGraphicShape().setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
@@ -219,7 +216,13 @@ public class Bullet extends Actor implements Physical_active{
 	public int getBULLET_SIZE() {
 		return bulletSize;
 	}
-
+	
+	public int getMaxDistance() {
+		return maxDistance;
+	}
+	public void setMaxDistance(int maxDistance) {
+		this.maxDistance = maxDistance;
+	}
 	public void setBULLET_SIZE(int bULLET_SIZE) {
 		bulletSize = bULLET_SIZE;
 		getGraphicShape().setSize(getBULLET_SIZE(), getBULLET_SIZE());
