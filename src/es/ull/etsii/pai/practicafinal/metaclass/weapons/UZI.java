@@ -9,7 +9,7 @@ import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class UZI extends Weapon{
-	public static final double FIRE_RATE = 10.0;
+	public static final double FIRE_RATE = 5.0;
 	public static final int CLIP_SIZE = 20;
 	public static final int RELOADING_TIME = 90;
 	public static final int DAMAGE = 1;

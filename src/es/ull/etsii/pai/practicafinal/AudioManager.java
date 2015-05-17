@@ -26,8 +26,10 @@ public class AudioManager {
 		getClips().add(audio);
 		audio.play();
 		if(getClips().size() >= 2*MAX_CONCURRENT_SOUNDS){
-			for(int i = 0 ; i<MAX_CONCURRENT_SOUNDS; i++)
+			for(int i = 0 ; i<MAX_CONCURRENT_SOUNDS; i++) {
+				getClips().get(0).stop();
 				getClips().remove(0);
+			}
 		}
 	}
 	/**
@@ -43,10 +45,9 @@ public class AudioManager {
 	 */
 	public static void reproduceAudio(String name) {
 		if(name.length()>0){
-		AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
-		audio.loop();
-		getLoops().add(audio);
-
+			AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
+			audio.loop();
+			getLoops().add(audio);
 		}
 
 	}
