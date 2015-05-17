@@ -1,16 +1,21 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Random;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.RocketLauncher;
-import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -18,46 +23,47 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class Player extends Actor implements Physical_active {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3033119409170313204L;
 
-	private Point2D speed; // Vector velocidad.
-	private Point2D push;
+	private Point2D speed; 									// Vector velocidad.
+	private Point2D push;									// Vector de empuje.
 
-	private int hp;
-	private int maxHp;
-	private int maxJumpTTL = 20;
-	private double climbPertTick = 1;
-	private Side lookingAt;
-	private Weapon weapon;
-	private BvsR_Map map;
-	private boolean dead = false;
-	private boolean block_up = false;
-	private boolean block_down = false;
-	private boolean block_left = false;
-	private boolean block_right = false;
-	private int jumpTTL = 0;
-	private boolean move_up = false;
-	private boolean move_down = false;
-	private boolean move_left = false;
-	private boolean move_right = false;
-	private boolean crounched = false;
-	private boolean shooting = false;
-	public static final int WIDTH = 20;
-	public int HEIGHT = 40;
-	public static final int SPEED = 5;
-	public static final double TIME = 1.0;
-	public static double GRAVITY = -5.0;
-	public static final int BODY = 0;
-	public static final int WEAPON = 1;
-	public static final int DEFAULT_MAX_HP = 200;
-	public static final int PUSH_RESIST = 2;
+	private int hp;											// Cantidad de vida actual.
+	private int maxHp;										// Cantidad de vida maxima.	
+	private int maxJumpTTL = 20;							// Numero maximo de frames de duracion de un salto.
+	private double climbPertTick = 1;						// Cantidad de desplazamiento en el eje y por frame durante el salto.
+	private Side lookingAt;									// Lado al que se esta mirando.
+	private Weapon weapon;									// Arma actual.
+	private BvsR_Map map;									// Mapa en que se encuentra el jugador.
+	private boolean dead = false;							// True si esta muerto.
+	private boolean block_up = false;						// True si no se puede mover hacia arriba.
+	private boolean block_down = false;						// True si no se puede mover hacia abajo.
+	private boolean block_left = false;						// True si no se puede mover a la izquierda.
+	private boolean block_right = false;					// True si no se puede mover a la derecha.
+	private int jumpTTL = 0;								// Numero de frames que puede seguir saltando.
+	private boolean move_up = false;						// True si esta saltando.
+	private boolean move_down = false;						// True si se esta agachando.
+	private boolean move_left = false;						// True si se esta moviendo a la izquierda. 
+	private boolean move_right = false;						// True si se esta moviendo a la derecha.
+	private boolean crounched = false;						// True si esta agachado.
+	private boolean shooting = false;						// True si esta disparando.
+	public static final int WIDTH = 20;						// Ancho del personaje.
+	public int HEIGHT = 40;									// Alto del personaje.
+	public static final int SPEED = 5;						// Velocidad de movimiento por frame.
+	public static final double TIME = 1.0;					// 
+	public static double GRAVITY = -5.0;					// Gravedad que se le aplica al jugador.
+	public static final int BODY = 0;						// Indice donde se guarda el grafico del cuerpo.
+	public static final int WEAPON = 1;						// Indice donde se guarda el grafico del arma.
+	public static final int DEFAULT_MAX_HP = 200;			// Vida maxima por defecto.
+	public static final int PUSH_RESIST = 2;				// Resistencia al empuje por frame.
 	private Color color = Color.BLUE; // error, usar rectangulo gráfico
-	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",}; 
+	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",}; // Sonidos que emite al ser golpeado. 
 
+	/**
+	 * Crea un jugador en la posicion dada en el mapa dado.
+	 * @param position
+	 * @param map
+	 */
 	public Player(Point2D position, BvsR_Map map) {
 		super(position);
 		setHp(DEFAULT_MAX_HP);
@@ -76,48 +82,12 @@ public class Player extends Actor implements Physical_active {
 		getGraphicShapes().add(null);
 		
 		setWeapon(new RocketLauncher(this));
-//		setWeapon(new UZI(this));
-
-		//getGraphicShapes().add(getWeapon().getGraphicShape());
-	}
-
-	public int getMaxHp() {
-		return maxHp;
-	}
-
-	public void setMaxHp(int maxHp) {
-		this.maxHp = maxHp;
-	}
-
-	public void setJump(int height, double timeSeconds) {
-		setMaxJumpTTL((int) (60 * timeSeconds));
-		setClimbPertTick((double) height / getMaxJumpTTL());
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public double getClimbPertTick() {
-		return climbPertTick;
-	}
-
-	public void setClimbPertTick(double climbPertTick) {
-		this.climbPertTick = climbPertTick;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		// g.setColor(getColor());
-		// g.fillRect((int) getPosition().x(), (int) getPosition().y(),
-		// (int) WIDTH, (int) HEIGHT);
 		for (int i = 0; i < getGraphicShapes().size(); i++)
 			getGraphicShapes().get(i).paint(g.create());
-
 	}
 
 	@Override
@@ -125,19 +95,30 @@ public class Player extends Actor implements Physical_active {
 		return false;
 	}
 	
+	/**
+	 * Mueve el jugador a la izquierda.
+	 * @return
+	 */
 	private boolean moveLeft() {
 		getSpeed().setX(-SPEED);
 		setBlock_right(false);
 		return true;
 	}
-
+	
+	/**
+	 * Mueve el jugador a la derecha.
+	 * @return
+	 */
 	private boolean moveRight() {
 		getSpeed().setX(SPEED);
 		setBlock_left(false);
-		// setLookingAt(Side.RIGHT);
 		return true;
 	}
-
+	
+	/**
+	 * Levanta al jugador.
+	 * @return
+	 */
 	private boolean moveUP() {
 		HEIGHT = 40;
 		getPosition().setY(getPosition().y() - HEIGHT / 2);
@@ -151,7 +132,11 @@ public class Player extends Actor implements Physical_active {
 		setCrounched(false);
 		return true;
 	}
-
+	
+	/**
+	 * Hace que el jugador se agache.
+	 * @return
+	 */
 	private boolean moveDown() {
 		getPosition().setY(getPosition().y() + HEIGHT / 2);
 		HEIGHT = 20;
@@ -163,12 +148,18 @@ public class Player extends Actor implements Physical_active {
 		setCrounched(true);
 		return true;
 	}
-
+	
+	/**
+	 * Hace que el jugador dispare.
+	 */
 	public void shoot() {
 		getWeapon().triggerMain();
 		setShooting(true);
 	}
-
+	
+	/**
+	 * Hace que deje de disparar.
+	 */
 	public void stopShooting() {
 		getWeapon().releaseMain();
 		setShooting(false);
@@ -176,7 +167,6 @@ public class Player extends Actor implements Physical_active {
 
 	@Override
 	public boolean repair_collisionY(Point2D point) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -269,6 +259,10 @@ public class Player extends Actor implements Physical_active {
 		return false;
 	}
 
+	/**
+	 * Realiza las operaciones necesarias cuando es golpeado por una bala.
+	 * @param bullet
+	 */
 	public void gotHit(Bullet bullet) {
 		if (bullet.getOwner() != this) {
 			AudioManager.startAudio(bullet.getSoundName());
@@ -284,12 +278,10 @@ public class Player extends Actor implements Physical_active {
 		}
 	}
 
-	private String getSoundName() {
-		return hitSounds[ResourceManager.getInstance().getRandGen().nextInt(hitSounds.length)];
-	}
+
 
 	/**
-	 * TODO Hacer el metodo para morir.
+	 * Realiza las operaciones necesarias para que el jugador muera.
 	 */
 	public void die() {
 		setDead(true);
@@ -304,6 +296,9 @@ public class Player extends Actor implements Physical_active {
 		System.out.println("Muerto");
 	}
 
+	/**
+	 * Resuelve los movimientos que ha de realizar el jugador en el proximo frame.
+	 */
 	void ResolveUnreleasedMovements() {
 		if (isMove_down() && !isCrounched())
 			moveDown();
@@ -318,6 +313,9 @@ public class Player extends Actor implements Physical_active {
 			getSpeed().setX(0);
 	}
 
+	/**
+	 * Actualiza el empuje.
+	 */
 	private void updatePush() {
 		if ((int) getPush().x() == 0 || Math.abs(getPush().x()) < PUSH_RESIST)
 			getPush().setX(0);
@@ -328,7 +326,7 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	/**
-	 * Mueve el jugador seg�n marca la velocidad y actualiza el disparo del
+	 * Mueve el jugador segun marca la velocidad y actualiza el disparo del
 	 * arma .
 	 */
 	@Override
@@ -404,24 +402,24 @@ public class Player extends Actor implements Physical_active {
 		return getPhysicalShape().getSegmentList();
 	}
 
+	/**
+	 * Getters y Setters.
+	 * 
+	 */
 	public void setLeft(boolean b) {
 		setMove_left(b);
-		// ResolveUnreleasedMovements();
 	}
 
 	public void setRight(boolean b) {
 		setMove_right(b);
-		// ResolveUnreleasedMovements();
 	}
 
 	public void setUP(boolean b) {
 		setMove_up(b);
-		// ResolveUnreleasedMovements();
 	}
 
 	public void setDown(boolean b) {
 		setMove_down(b);
-		// ResolveUnreleasedMovements();
 	}
 
 	public Point2D getSpeed() {
@@ -585,6 +583,35 @@ public class Player extends Actor implements Physical_active {
 		this.push = push;
 	}
 
+	public int getMaxHp() {
+		return maxHp;
+	}
 
+	public void setMaxHp(int maxHp) {
+		this.maxHp = maxHp;
+	}
 
+	public void setJump(int height, double timeSeconds) {
+		setMaxJumpTTL((int) (60 * timeSeconds));
+		setClimbPertTick((double) height / getMaxJumpTTL());
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public double getClimbPertTick() {
+		return climbPertTick;
+	}
+
+	public void setClimbPertTick(double climbPertTick) {
+		this.climbPertTick = climbPertTick;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	private String getSoundName() {
+		return hitSounds[ResourceManager.getInstance().getRandGen().nextInt(hitSounds.length)];
+	}
 }

@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -19,19 +26,21 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class Bullet extends Actor implements Physical_active{
-	private GraphicRectangle graphicShape;
-	private Point2D speed;
-	private int damage = 0;
-	private int push = 0; 	// empuje, por ahora no usar.
-	private int maxDistance = 1000; // TODO
+	private GraphicRectangle graphicShape;							// Forma grafica de la bala.
+	private Point2D speed;											// Vector de velocidad.
+	private int damage = 0;											// Daño de la bala.
+	private int push = 0; 											// Empuje.
+	private int maxDistance = 1000; 								// TODO, distancia maxima que puede recorrer la bala.
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
-	private MovementEquation motion = new RectilinearLocomotion();
-	private Player owner;
-	private int bulletSize = 7;
-	private String soundName = "";
+	private MovementEquation motion = new RectilinearLocomotion();	// Funcion de movimiento de la bala.
+	private Player owner;											// Jugador que dispara la bala.
+	private int bulletSize = 7;										// Tamaño de la bala.
+	private String soundName = "rocketBang.wav";					// Sonido por defecto de la bala.
 	private boolean dead = false;
-	
-	
+	/**
+	 * Crea una bala en la posicion indicada.
+	 * @param pos
+	 */
 	public Bullet (Point2D pos) {
 		super(pos);
 		setPhysicalShape(new PhysicalRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
@@ -39,18 +48,41 @@ public class Bullet extends Actor implements Physical_active{
 		setSpeed(new Point2D (0, 0));
 		getGraphicShape().setPaint(Color.BLACK); 
 	}
-	
+	/**
+	 * Crea una bala con la posicion y velocidad indicada por el propietario indicado.
+	 * @param pos
+	 * @param speed
+	 * @param owner
+	 */
 	public Bullet(Point2D pos, Point2D speed, Player owner) {
 		this(pos);
 		setSpeed(speed);
 		setOwner(owner);
 		getGraphicShape().setFlipImage(getOwner().getGraphicShapes().get(0).isFlipImage());
 	}
+	/**
+	 * Crea una bala con la posicion, velocidad, daño y empuje indicados por el propietario indicado.
+	 * @param pos
+	 * @param speed
+	 * @param damage
+	 * @param Push
+	 * @param owner
+	 */
 	public Bullet(Point2D pos, Point2D speed, int damage, int Push,Player owner) {
 		this(pos, speed, owner);
 		setDamage(damage);
 		setPush(Push);
 	}
+	/**
+	 * Crea una bala con la posicion, velocidad, daño, tamaño yempuje indicados por el propietario indicado.
+	 * @param pos
+	 * @param speed
+	 * @param damage
+	 * @param Push
+	 * @param owner
+	 * @param size
+	 */
+
 	public Bullet(Point2D pos, Point2D speed, int damage, int Push,Player owner, int size) {
 		this(pos, speed, damage, Push, owner);
 		setBULLET_SIZE(size);
@@ -60,7 +92,6 @@ public class Bullet extends Actor implements Physical_active{
 	public boolean hasToDie() {
 		return isDead();
 	}
-	
 	public boolean isDead() {
 		return dead;
 	}
@@ -68,7 +99,10 @@ public class Bullet extends Actor implements Physical_active{
 	public void setDead(boolean dead) {
 		this.dead = dead;
 	}
-
+	/**
+	 * Pinta la bala.
+	 * 
+	 */
 	public void paint(Graphics g) {
 		getGraphicShape().paint(g.create());
 	}
@@ -84,7 +118,30 @@ public class Bullet extends Actor implements Physical_active{
 			return false;
 		return true;
 	}
+
+
+	@Override
+	public boolean repair_collisionY(Point2D point) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean repair_collisionX(Point2D point) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean repair_collision(Physical_passive actor) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
+	/**
+	 * Getters y Setters.
+	 * @return
+	 */
 	public int getDamage() {
 		return damage;
 	}
@@ -101,13 +158,13 @@ public class Bullet extends Actor implements Physical_active{
 		this.speed = speed;
 	}
 
-
 	public GraphicRectangle getGraphicShape() {
 		return graphicShape;
 	}
 	public void setGraphicShape(GraphicRectangle graphicShape) {
 		this.graphicShape = graphicShape;
 	}
+
 
 	@Override
 	public boolean collides(Physical_passive actor) {
@@ -117,8 +174,6 @@ public class Bullet extends Actor implements Physical_active{
 		}
 		return false;
 	}
-
-	
 	public String getSoundName() {
 		return soundName;
 	}
@@ -143,24 +198,6 @@ public class Bullet extends Actor implements Physical_active{
 	public Rectangle getCollisionedRectangle(Physical_passive actor) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public boolean repair_collisionY(Point2D point) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean repair_collisionX(Point2D point) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean repair_collision(Physical_passive actor) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	public Player getOwner() {

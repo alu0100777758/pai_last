@@ -1,13 +1,19 @@
 package es.ull.etsii.pai.practicafinal;
-
-import java.awt.Color;
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.graphics.Drawable;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class Player_gauge extends Entity implements Drawable, Serializable {

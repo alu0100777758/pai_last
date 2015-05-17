@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import javax.swing.JFrame;
 
 public class Main {

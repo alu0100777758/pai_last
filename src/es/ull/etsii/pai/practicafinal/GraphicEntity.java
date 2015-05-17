@@ -1,13 +1,32 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Dimension;
 import java.awt.geom.RectangularShape;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class GraphicEntity extends Entity {
-	GraphicRectangle graphic = null;
+	GraphicRectangle graphic = null;		// Rectangulo grafico que representa a la entidad.
 	
+	/**
+	 * Crea una entidad grafica a partir de un rectangulo grafico.
+	 * @param rect
+	 */
+	public GraphicEntity(GraphicRectangle rect) {
+		super();
+		setGraphic(rect);
+	}
+	/**
+	 * Getters y Setters.
+	 * @return
+	 */
 	public GraphicRectangle getGraphic() {
 		return graphic;
 	}
@@ -15,10 +34,7 @@ public class GraphicEntity extends Entity {
 	public void setGraphic(GraphicRectangle graphic) {
 		this.graphic = graphic;
 	}
-	public GraphicEntity(GraphicRectangle rect) {
-		super();
-		setGraphic(rect);
-	}
+
 
 	@Override
 	public RectangularShape getShape() {

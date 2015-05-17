@@ -10,7 +10,8 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class RocketLauncher extends Weapon{
 	public static final double FIRE_RATE = 1.0;
-	public static final int CLIP_SIZE = 1;
+	public static final int CLIP_SIZE = 3;
+	public static final int RELOADING_TIME = 90;
 	public static final int DAMAGE = 15;
 	public static final int SPEED = 20;
 	public static final int PUSH = 30;
@@ -29,7 +30,9 @@ public class RocketLauncher extends Weapon{
 	private void initializeWeapon() {
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);
+		setMainAmmo(CLIP_SIZE);
 		setSpeed(SPEED);
+		setMainReloadingTime(RELOADING_TIME);
 		setWidth(40);
 		setHeight(15);
 		setX_offset(-30);

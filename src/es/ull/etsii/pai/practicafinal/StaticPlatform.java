@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -16,21 +23,32 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class StaticPlatform extends Entity implements Physical_passive {
-	private GraphicRectangle graphicRectangle;
-	private PhysicalRectangle physicalRectangle;
+	private GraphicRectangle graphicRectangle;						// Forma grafica de la plataforma.
+	private PhysicalRectangle physicalRectangle;					// Forma fisica de la plataforma.
 	
+	/**
+	 * Crea una plataforma en las coordenadadas indicadas con el alto y ancho indicados.
+	 * @param x1
+	 * @param y1
+	 * @param width
+	 * @param height
+	 */
 	public StaticPlatform(int x1, int y1, int width, int height) {
 		setGraphicRectangle(new GraphicRectangle(x1, y1, width, height));
 		getGraphicRectangle().setPaint(Color.GREEN);
 		setPhysicalRectangle(new PhysicalRectangle(x1, y1, width, height));
 	}
+	/**
+	 * Crea una plataforma a partir de los rectangulos grafico y fisico indicados.
+	 * @param graphic
+	 * @param physic
+	 */
 	public StaticPlatform(GraphicRectangle graphic, PhysicalRectangle physic) {
 		setPhysicalRectangle((PhysicalRectangle) physic.clone());
 		setGraphicRectangle((GraphicRectangle)graphic.clone());
 	}
-	public void setPaint(Paint paint){
-		getGraphicRectangle().setPaint(paint);
-	}
+	
+	
 	public void paint(Graphics g) {
 		getGraphicRectangle().paint(g);
 	}
@@ -38,18 +56,17 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	public boolean hasToDie() {
 		return false;
 	}
-	/**
-	 *  TODO
-	 */
-	public boolean collides(Actor actor) {
-//		PhysicalRectangle actorShape = actor.getPhysicalShape(); 
-//		
-//		
-//		System.out.println(getPhysicalRectangle().intercepts(actorShape.getBottom_segment()));
-//		return getPhysicalRectangle().intercepts(actorShape.getBo);
-		return false;
+
+	@Override
+	public boolean collides(Physical_passive actor) {
+		
+		return getPhysicalRectangle().collides(actor);
 	}
-	
+
+	/**
+	 * Getters y Setters.
+	 * @return
+	 */
 	public GraphicRectangle getGraphicRectangle() {
 		return graphicRectangle;
 	}
@@ -62,12 +79,6 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	}
 	public void setPhysicalRectangle(PhysicalRectangle pyhsicalRectangle) {
 		this.physicalRectangle = pyhsicalRectangle;
-	}
-
-	@Override
-	public boolean collides(Physical_passive actor) {
-		
-		return getPhysicalRectangle().collides(actor);
 	}
 
 	@Override
@@ -111,6 +122,9 @@ public class StaticPlatform extends Entity implements Physical_passive {
 	public void setSize(int width, int height) {
 		getGraphicRectangle().setSize(new Dimension(width,height));
 		getPhysicalRectangle().setSize(new Dimension(width,height));
+	}
+	public void setPaint(Paint paint){
+		getGraphicRectangle().setPaint(paint);
 	}
 	@Override
 	public Object clone(){

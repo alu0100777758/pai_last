@@ -24,6 +24,9 @@ public abstract class Weapon implements Serializable{
 	private boolean pulsedMainTrigger = false;
 	private boolean pulsedSecondaryTrigger = false;
 	private GraphicRectangle graphicShape;
+	private boolean reloading;
+	private int mainReloadingTime;
+	private int reloadingCooldown;
 	private int speed;
 	private int width = 25; 
 	private int height = 10;
@@ -40,6 +43,116 @@ public abstract class Weapon implements Serializable{
 		setOwner(owner);
 		setGraphicShape();
 	}
+
+	public void triggerMain(){
+		setPulsedMainTrigger(true);
+	}
+	public void triggerSecondary(){
+		setPulsedSecondaryTrigger(true);
+	}
+	public void releaseMain(){
+		setPulsedMainTrigger(false);
+		//setMainCooldown(0);
+	}
+	public void releaseSecondary(){
+		setPulsedSecondaryTrigger(false);
+		//setSecondaryCooldown(0);
+	}
+	private boolean canShootPrimary() {
+		if (getMainAmmo() <= 0) {
+			setReloading(true);
+			setReloadingCooldown(getMainReloadingTime());
+		}
+		else if (getMainCooldown() <= 0) {
+			setMainCooldown(getFireRate());
+			setMainAmmo(getMainAmmo() - 1);
+			return true;
+		}
+		else 
+			decreaseCooldowns();
+		
+		return false;
+	}
+	private boolean canShootSecondary() {
+		if (getSecondaryAmmo() <= 0) {
+			setReloading(true);
+			setReloadingCooldown(getMainReloadingTime());
+		}
+		else if (getSecondaryCooldown() <= 0) {
+			setSecondaryCooldown(getFireRate());
+			setSecondaryAmmo(getSecondaryAmmo() - 1);
+			return true;
+		}
+		else 
+			decreaseCooldowns();
+		
+		return false;
+	}
+	public void decreaseCooldowns() {
+		setMainCooldown(getMainCooldown() - 1);
+		setSecondaryCooldown(getSecondaryCooldown() - 1);
+		setEffectDuration(-1);
+	}
+	private void setEffectDuration(int i) {
+		//TODO
+	}
+
+	public void update(){
+		int addy = getY_offset();
+		if (getOwner() != null) {
+			if (isReloading()) {
+				setReloadingCooldown(getReloadingCooldown() - 1);
+				if (getReloadingCooldown() <= 0) {
+					setReloading(false);
+					setMainAmmo(getMainClipSize());
+					decreaseCooldowns();
+				//	setSecondaryAmmo(getSecondaryClipSize());
+				}
+			}
+			else if(isPulsedMainTrigger() && canShootPrimary()){
+				shootMain();
+				shootMainEffect();
+			}else if(isPulsedSecondaryTrigger() && canShootSecondary()){
+				shootSecondary();
+				shootSecondaryEffect();
+			}
+			else
+				decreaseCooldowns();
+			
+			if (getOwner().isCrounched())
+				addy = getY_offset() /2 ;
+			if (getOwner().getLookingAt() == Side.LEFT)
+				getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth() - getX_offset(), (int)getOwner().getPosition().y() + addy);
+			else 
+				getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH + getX_offset(), (int)getOwner().getPosition().y() + addy);
+		}
+	}
+	
+	private void shootSecondaryEffect() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void shootMainEffect() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	protected int getSpeed() {
+		if (getOwner().getLookingAt() == Side.LEFT)
+			return speed - (int)getOwner().getSpeed().x();
+		return speed + (int)getOwner().getSpeed().x();
+	}
+
+	protected void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	protected abstract void shootSecondary();
+
+	
+	protected abstract void shootMain();
 	
 	public void setGraphicShape(){
 		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
@@ -182,94 +295,28 @@ public abstract class Weapon implements Serializable{
 		this.graphicShape = graphicShape;
 	}
 
-	public void triggerMain(){
-		setPulsedMainTrigger(true);
-	}
-	public void triggerSecondary(){
-		setPulsedSecondaryTrigger(true);
-	}
-	public void releaseMain(){
-		setPulsedMainTrigger(false);
-		//setMainCooldown(0);
-	}
-	public void releaseSecondary(){
-		setPulsedSecondaryTrigger(false);
-		//setSecondaryCooldown(0);
-	}
-	private boolean canShootPrimary() {
-		if (getMainCooldown() <= 0) {
-			setMainCooldown(getFireRate());
-			return true;
-		}
-		else 
-			decreaseCooldowns();
-		
-		return false;
-	}
-	private boolean canShootSecondary() {
-		if (getSecondaryCooldown() <= 0) {
-			setSecondaryCooldown(getFireRate());
-			return true;
-		}
-		else 
-			decreaseCooldowns();
-		
-		return false;
-	}
-	public void decreaseCooldowns() {
-		setMainCooldown(getMainCooldown() - 1);
-		setSecondaryCooldown(getSecondaryCooldown() - 1);
-		setEffectDuration(-1);
-	}
-	private void setEffectDuration(int i) {
-		//TODO
+	public boolean isReloading() {
+		return reloading;
 	}
 
-	public void update(){
-		int addy = getY_offset();
-		if (getOwner() != null) {
-			if(isPulsedMainTrigger() && canShootPrimary()){
-				shootMain();
-				shootMainEffect();
-			}else if(isPulsedSecondaryTrigger() && canShootSecondary()){
-				shootSecondary();
-				shootSecondaryEffect();
-			}
-			else
-				decreaseCooldowns();
-			
-			if (getOwner().isCrounched())
-				addy = getY_offset() /2 ;
-			if (getOwner().getLookingAt() == Side.LEFT)
-				getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth() - getX_offset(), (int)getOwner().getPosition().y() + addy);
-			else 
-				getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH + getX_offset(), (int)getOwner().getPosition().y() + addy);
-		}
+	public void setReloading(boolean reloading) {
+		this.reloading = reloading;
+	}
+
+	public int getMainReloadingTime() {
+		return mainReloadingTime;
+	}
+
+	public void setMainReloadingTime(int mainReloadingTime) {
+		this.mainReloadingTime = mainReloadingTime;
+	}
+
+	public int getReloadingCooldown() {
+		return reloadingCooldown;
+	}
+
+	public void setReloadingCooldown(int reloadingCooldown) {
+		this.reloadingCooldown = reloadingCooldown;
 	}
 	
-	private void shootSecondaryEffect() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private void shootMainEffect() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	protected int getSpeed() {
-		if (getOwner().getLookingAt() == Side.LEFT)
-			return speed - (int)getOwner().getSpeed().x();
-		return speed + (int)getOwner().getSpeed().x();
-	}
-
-	protected void setSpeed(int speed) {
-		this.speed = speed;
-	}
-
-	protected abstract void shootSecondary();
-
-	
-	protected abstract void shootMain();
 }

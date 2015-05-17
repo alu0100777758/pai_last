@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,34 +21,16 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
-	BvsR_Map mapData = new BvsR_Map();
-	RvsBKeyController keyController = new RvsBKeyController();
-	public static final int WINDOW_TOLERANCE = 100;
+	BvsR_Map mapData = new BvsR_Map();								// Mapa donde se realizara la partida.
+	RvsBKeyController keyController = new RvsBKeyController();		// Controlador de teclas.
+	public static final int WINDOW_TOLERANCE = 100;					// Numero de pixeles que se pueden salir los jugadores de la pantalla antes de morir.
 	
-	public Player getPlayer_two() {
-		return mapData.getPlayer_two();
-	}
-
-	public void setPlayer_two(Player player_two) {
-		this.mapData.setPlayer_one(player_two);
-	}
-	
-	public Player getPlayer_one() {
-		return mapData.getPlayer_one();
-	}
-
-	public void setPlayer_one(Player player_one) {
-		this.mapData.setPlayer_one(player_one);
-	}
-	
-	public BvsR_Map getMapData() {
-		return mapData;
-	}
-
-	public void setMapData(BvsR_Map mapData) {
-		this.mapData = mapData;
-	}
-
+	/**
+	 * Crea un escenario de alto y ancho definidos con un mapa determinado.
+	 * @param width
+	 * @param height
+	 * @param mapName
+	 */
 	public Scenario(Integer width, Integer height, String mapName) {
 		setWidth(width);
 		setHeight(height);
@@ -51,9 +40,6 @@ public class Scenario {
 		setActors(new ArrayList<Actor>());
 		setGUI(new ArrayList<Entity>());
 		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
-//		AudioManager.startAudio("Fall_Walk_Run_-_Do_or_Die.wav");
-		// /////******************** Para probar poner un unico actor y un
-		// suelo.
 		try {
 			setMapData(BvsR_Map.load(mapName));
 
@@ -67,24 +53,9 @@ public class Scenario {
 			e.printStackTrace();
 		}
 	}
-/**
- * TODO: 
- * 		- Mejorar el disparo, hacer q se pueda hacer correctamente manteniendo presionado.
- * 		- Delegar el control de estas cosas a otra clase que no sea escenario.
- * 		
- * @param keyCode
- * @param keyChar
- */
+
 	/**
-	 * De forma provisional se miran las colisiones aqui, se deber� crear un
-	 * gestor de colisiones mas adelante.
-	 * 
-	 * @param g
-	 */
-	/**
-	 * TODO implementarlo como objeto contenido en escenario.
-	 * 		Uso de lista de objetos pasivos y activos.
-	 * 		desplazar la responsabilidad de la actualizaci�n a cada objeto.
+	 * Actualiza el estado del escenario.
 	 */
 	public void update() {
 		Physical_passive map;
@@ -136,7 +107,10 @@ public class Scenario {
 			if (((Physical_passive)getStaticMap().get(i)).hasToDie())
 				getStaticMap().remove(i);
 	}
-
+	/**
+	 * Pinta el escenario.
+	 * @param g
+	 */
 	public void paint(Graphics g) {
 		MapPainter.paint(g, getMapData());
 	}
@@ -199,9 +173,43 @@ public class Scenario {
 	public void setKeyController(RvsBKeyController keyController) {
 		this.keyController = keyController;
 	}
+	public Player getPlayer_two() {
+		return mapData.getPlayer_two();
+	}
 
+	public void setPlayer_two(Player player_two) {
+		this.mapData.setPlayer_one(player_two);
+	}
+	
+	public Player getPlayer_one() {
+		return mapData.getPlayer_one();
+	}
+
+	public void setPlayer_one(Player player_one) {
+		this.mapData.setPlayer_one(player_one);
+	}
+	
+	public BvsR_Map getMapData() {
+		return mapData;
+	}
+
+	public void setMapData(BvsR_Map mapData) {
+		this.mapData = mapData;
+	}
+
+	/**
+	 * 
+	 * @author Sabato Ceruso.
+	 * @author Javier Martin Hernandez.
+	 *
+	 */
 	class RvsBKeyController extends KeyController{
 
+		/**
+		 * Acciones a tomar cuando se pulsa una tecla.
+		 * @param keyCode
+		 * @param keyChar
+		 */
 		public void pulsedKey(int keyCode, char keyChar) {
 			
 			if (keyCode == getKeyMap().get(KeyActions.P2LEFT))
@@ -243,6 +251,11 @@ public class Scenario {
 			}
 		}
 
+		/**
+		 * Acciones a tomar cuando se deja de pulsar una tecla.
+		 * @param keyCode
+		 * @param keyChar
+		 */
 		public void releasedKey(int keyCode, char keyChar) {
 			if (keyCode == getKeyMap().get(KeyActions.P2LEFT))
 				getPlayer_two().setLeft(false);
