@@ -1,17 +1,22 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.Drawable;
 import es.ull.etsii.pai.practicafinal.Entity;
 import es.ull.etsii.pai.practicafinal.GraphicEntity;
 import es.ull.etsii.pai.practicafinal.ResourceManager;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
-
+import es.ull.etsii.pai.practicafinal.graphics.Drawable;
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 public class MapPainter extends JPanel {
 	private static final long serialVersionUID = -4939012327823614215L;
 	BvsR_Map map = null;

@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal.graphics;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,17 +15,10 @@ import java.awt.Rectangle;
 import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import es.ull.etsii.pai.practicafinal.Drawable;
 import es.ull.etsii.pai.practicafinal.ResourceManager;
-import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class GraphicRectangle extends Rectangle implements Drawable {
-	// private Color color = Color.RED;
 	private Paint paint = Color.RED;
 	private boolean texturized = false;
 	private String texturePath = null;
