@@ -84,7 +84,7 @@ public class PowerUPTool extends PlayerInitTool {
 	}
 	@Override
 	protected void add(MouseEvent e) {
-		getMap().addStaticMap(new PowerUpWeapon(new GraphicRectangle(e.getX(), e.getY(), 20, 20), new PhysicalRectangle(e.getX(), e.getY(), 20, 20), new RocketLauncher(getMap().getPlayer_one())));
+		getMap().addStaticMap(new PowerUpWeapon(new RocketLauncher(getMap().getPlayer_one())));
 		setModified(true);
 	}
 }
