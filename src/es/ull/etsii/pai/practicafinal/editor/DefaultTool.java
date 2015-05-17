@@ -36,7 +36,6 @@ public class DefaultTool extends EditorTool {
 	public static final Color TRANSLATE_COLOR = Color.YELLOW;
 	private Color selectionColor = TRANSLATE_COLOR;
 	private Point lastPoint = null;
-	
 
 	public Point getLastPoint() {
 		return lastPoint;
@@ -63,9 +62,9 @@ public class DefaultTool extends EditorTool {
 	}
 
 	public Rectangle getShape() {
-		if(shape != null)
+		if (shape != null)
 			return shape;
-		else 
+		else
 			return new Rectangle();
 	}
 
@@ -88,7 +87,6 @@ public class DefaultTool extends EditorTool {
 	public void setStetchingMode(boolean stetchingMode) {
 		this.stretchingMode = stetchingMode;
 	}
-
 
 	public ArrayList<Integer> getFoundInplane() {
 		return foundInplane;
@@ -135,7 +133,7 @@ public class DefaultTool extends EditorTool {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public static ArrayList<Entity> getClipBoardSelectedEntity() {
 		return clipBoardSelectedEntity;
 	}
@@ -157,12 +155,15 @@ public class DefaultTool extends EditorTool {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		setLastPoint(e.getPoint());
-		if(!isAddingMode() && !isRemoveMode() && (getSelectedActor().size() <2 || !getShape().contains(e.getPoint())))
+		if (!isAddingMode()
+				&& !isRemoveMode()
+				&& (getSelectedActor().size() < 2 || !getShape().contains(
+						e.getPoint())))
 			clearAll();
 		Entity entity = getFirstFor(e.getPoint());
 		if (isRemoveMode()) {
 			getSelectedActor().remove(entity);
-		} else if(entity != null && !getSelectedActor().contains(entity)){
+		} else if (entity != null && !getSelectedActor().contains(entity)) {
 			getSelectedActor().add(entity);
 			Rectangle shape = getShape(getSelectedActor());
 			setShape(shape);
@@ -175,48 +176,49 @@ public class DefaultTool extends EditorTool {
 	}
 
 	protected Entity getFirstFor(Point p) {
-		if(getMap().getActors().size() != 0){
-		for (int i = getMap().getActors().size()-1; i>=0; i--) {
-			Actor actor = getMap().getActors().get(i);
-			if (actor.getPhysicalShape().contains(p)){
-				getFoundInplane().add(BvsR_Map.PLANE_ACTORS);
-				return actor;
+		if (getMap().getActors().size() != 0) {
+			for (int i = getMap().getActors().size() - 1; i >= 0; i--) {
+				Actor actor = getMap().getActors().get(i);
+				if (actor.getPhysicalShape().contains(p)) {
+					getFoundInplane().add(BvsR_Map.PLANE_ACTORS);
+					return actor;
+				}
 			}
 		}
-		}
-		if(getMap().getStaticMap().size() != 0){
-		for (int i = getMap().getStaticMap().size()-1; i>=0; i--) {
-			Entity actor = getMap().getStaticMap().get(i);
-			if (actor.getShape().contains(p)){
-				getFoundInplane().add(BvsR_Map.PLANE_MAP);
-				return actor;
+		if (getMap().getStaticMap().size() != 0) {
+			for (int i = getMap().getStaticMap().size() - 1; i >= 0; i--) {
+				Entity actor = getMap().getStaticMap().get(i);
+				if (actor.getShape().contains(p)) {
+					getFoundInplane().add(BvsR_Map.PLANE_MAP);
+					return actor;
+				}
 			}
 		}
-		}
-		if(getMap().getBackground().size() != 0){
-		for(int i = getMap().getBackground().size()-1; i>=0; i--) {
-			Entity actor = getMap().getBackground().get(i);
-			if (actor.getShape().contains(p)){
-				getFoundInplane().add(BvsR_Map.PLANE_BACKGROUND);
-				return actor;
+		if (getMap().getBackground().size() != 0) {
+			for (int i = getMap().getBackground().size() - 1; i >= 0; i--) {
+				Entity actor = getMap().getBackground().get(i);
+				if (actor.getShape().contains(p)) {
+					getFoundInplane().add(BvsR_Map.PLANE_BACKGROUND);
+					return actor;
+				}
 			}
-		}
 		}
 		getFoundInplane().add(-1);
-		
+
 		return null;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if (!getSelectedActor().isEmpty()) {
-			Point point = new Point(e.getX()-(int)getLastPoint().getX(),e.getY()-(int)getLastPoint().getY());
-				moveAdd(point);
+			Point point = new Point(e.getX() - (int) getLastPoint().getX(),
+					e.getY() - (int) getLastPoint().getY());
+			moveAdd(point);
 			setLastPoint(e.getPoint());
 			setModified(true);
 		}
@@ -252,7 +254,7 @@ public class DefaultTool extends EditorTool {
 	}
 
 	protected Rectangle getShape(ArrayList<Entity> selectedActor) {
-		if(selectedActor.isEmpty())
+		if (selectedActor.isEmpty())
 			return null;
 		int minx = Integer.MAX_VALUE;
 		int miny = Integer.MAX_VALUE;
@@ -295,7 +297,7 @@ public class DefaultTool extends EditorTool {
 			}
 			i++;
 		}
-		
+
 		setModified(true);
 	}
 
@@ -339,11 +341,11 @@ public class DefaultTool extends EditorTool {
 			setModified(true);
 			break;
 		case KeyEvent.VK_C:
-			if(isRemoveMode())
+			if (isRemoveMode())
 				copy();
 			break;
 		case KeyEvent.VK_V:
-			if(isRemoveMode())
+			if (isRemoveMode())
 				paste();
 			break;
 		case KeyEvent.VK_CONTROL:
@@ -359,9 +361,14 @@ public class DefaultTool extends EditorTool {
 	}
 
 	private void paste() {
-		for(int i = 0; i < getClipBoardSelectedEntity().size(); i++){
-			if(getClipBoardSelectedEntity().get(i).clone()!=getMap().getPlayer_one() && getClipBoardSelectedEntity().get(i).clone() != getMap().getPlayer_two())
-			getMap().addEntity((Entity)getClipBoardSelectedEntity().get(i).clone(), getFoundInplane().get(i));
+		for (int i = 0; i < getClipBoardSelectedEntity().size(); i++) {
+			if (getClipBoardSelectedEntity().get(i).clone() != getMap()
+					.getPlayer_one()
+					&& getClipBoardSelectedEntity().get(i).clone() != getMap()
+							.getPlayer_two())
+				getMap().addEntity(
+						(Entity) getClipBoardSelectedEntity().get(i).clone(),
+						getFoundInplane().get(i));
 		}
 		setModified(true);
 	}
@@ -375,7 +382,8 @@ public class DefaultTool extends EditorTool {
 		for (int i = 0; i < getSelectedActor().size(); i++) {
 			switch (getFoundInplane().get(i)) {
 			case BvsR_Map.PLANE_ACTORS:
-				if (getSelectedActor().get(i).equals((Actor) getMap().getPlayer_one())) {
+				if (getSelectedActor().get(i).equals(
+						(Actor) getMap().getPlayer_one())) {
 					getMap().setPlayer_one(null);
 				} else if (getSelectedActor().get(i).equals(
 						(Actor) getMap().getPlayer_two())) {

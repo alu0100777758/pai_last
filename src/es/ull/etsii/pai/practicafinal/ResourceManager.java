@@ -33,7 +33,6 @@ public class ResourceManager {
 				found = ImageIO.read(Texture.class.getClassLoader().getResource(path));
 				getBufferedImages().put(path, found);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		return found;
