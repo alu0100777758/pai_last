@@ -66,8 +66,6 @@ public class Scenario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		getStaticMap().add(new PowerUpWeapon(100, 100, 200, 200, new UZI(new Player(new Point2D(100, 100), getMapData()))));
 	}
 /**
  * TODO: 
