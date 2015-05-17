@@ -26,6 +26,7 @@ public class Bullet extends Actor implements Physical_active{
 	private MovementEquation motion = new RectilinearLocomotion();
 	private Player owner;
 	private int bulletSize = 7;
+	private String soundName ;
 	
 	public Bullet (Point2D pos) {
 		super(pos);
@@ -91,7 +92,20 @@ public class Bullet extends Actor implements Physical_active{
 	@Override
 	public boolean collides(Physical_passive actor) {
 		
-		return actor.getPhysicalRectangle().collides(getPhysicalRectangle());
+		if(actor.getPhysicalRectangle().collides(getPhysicalRectangle())){
+			AudioManager.startAudio(getSoundName());
+			return true;
+		}
+		return false;
+	}
+
+	
+	public String getSoundName() {
+		return soundName;
+	}
+
+	public void setSoundName(String soundName) {
+		this.soundName = soundName;
 	}
 
 	@Override

@@ -42,7 +42,9 @@ public class RocketLauncher extends Weapon{
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
-		getOwner().getMap().getActors().add(new rocket_bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE));
-		audioManager.startAudio();
+		Bullet breechBullet = new rocket_bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE);
+		breechBullet.setSoundName("rocketBang.wav");
+		getOwner().getMap().getActors().add(breechBullet);
+		audioManager.startAudio("rocketShot.wav");
 	}
 }

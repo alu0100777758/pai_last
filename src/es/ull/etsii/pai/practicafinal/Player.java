@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Random;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
@@ -55,6 +56,7 @@ public class Player extends Actor implements Physical_active {
 	public static final int DEFAULT_MAX_HP = 200;
 	public static final int PUSH_RESIST = 2;
 	private Color color = Color.BLUE; // error, usar rectangulo gráfico
+	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",}; 
 
 	public Player(Point2D position, BvsR_Map map) {
 		super(position);
@@ -262,6 +264,9 @@ public class Player extends Actor implements Physical_active {
 
 	public void gotHit(Bullet bullet) {
 		if (bullet.getOwner() != this) {
+			AudioManager.startAudio(bullet.getSoundName());
+			if(!isDead())
+				AudioManager.startAudio(getSoundName());
 			setHp(getHp() - bullet.getDamage());
 			if (bullet.getSpeed().x() > 0)
 				getPush().setX(getPush().x() + bullet.getPush());
@@ -270,6 +275,10 @@ public class Player extends Actor implements Physical_active {
 			if (getHp() <= 0 && !isDead())
 				die();
 		}
+	}
+
+	private String getSoundName() {
+		return hitSounds[new Random().nextInt(hitSounds.length)];
 	}
 
 	/**
