@@ -165,7 +165,8 @@ public class EditorFrame extends JFrame implements ActionListener,
 		            @Override
 		            public void windowClosing(WindowEvent e)
 		            {
-		                AudioManager.stopAudio("Fall_Walk_Run_-_Do_or_Die.wav");
+//		                AudioManager.stopAudio("Fall_Walk_Run_-_Do_or_Die.wav");
+		                AudioManager.stopAll();
 		                GameLoop.stepTimer.stop();
 		                e.getWindow().dispose();
 		            }
