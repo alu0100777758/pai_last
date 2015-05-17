@@ -12,6 +12,7 @@ import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.PowerUpWeapon;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.RocketLauncher;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
@@ -84,7 +85,7 @@ public class PowerUPTool extends PlayerInitTool {
 	}
 	@Override
 	protected void add(MouseEvent e) {
-		getMap().addStaticMap(new PowerUpWeapon(new RocketLauncher(getMap().getPlayer_one())));
+		getMap().addStaticMap(new PowerUpWeapon(new UZI(getMap().getPlayer_one())));
 		setModified(true);
 	}
 }

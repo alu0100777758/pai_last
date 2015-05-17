@@ -16,12 +16,18 @@ public class Pistol extends Weapon{
 	
 	public Pistol(Player owner) {
 		super(owner);
+		initializeWeapon();
+		
+	}	
+	public Pistol(int x, int y) {
+		super(x, y);
+		initializeWeapon();
+	}
+	private void initializeWeapon() {
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);
 		setSpeed(SPEED);
-		
-	}	
-
+	}
 	protected void shootSecondary() {}
 
 	protected void shootMain() {

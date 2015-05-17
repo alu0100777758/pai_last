@@ -31,9 +31,14 @@ public abstract class Weapon implements Serializable{
 	private int x_offset = 0;
 	
 
+	public Weapon(int x, int y ){
+		setOwner(null);
+		setGraphicShape(new GraphicRectangle(x+getX_offset(),y+ getY_offset(),getWidth(), getHeight()));
+	}
+
 	public Weapon(Player owner) {
 		setOwner(owner);
-		//setGraphicShape();
+		setGraphicShape();
 	}
 	
 	public void setGraphicShape(){
