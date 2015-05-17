@@ -40,7 +40,8 @@ public class PlayerInitTool extends EditorTool {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		add(e);
+		if(e.getButton()== MouseEvent.BUTTON1)
+			add(e);
 	}
 
 	protected void add(MouseEvent e) {

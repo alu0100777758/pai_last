@@ -12,12 +12,10 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Random;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.RocketLauncher;
-import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
@@ -59,7 +57,7 @@ public class Player extends Actor implements Physical_active {
 	public static final int DEFAULT_MAX_HP = 200;			// Vida maxima por defecto.
 	public static final int PUSH_RESIST = 2;				// Resistencia al empuje por frame.
 	private Color color = Color.BLUE; // error, usar rectangulo gráfico
-	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",};	// Sonidos que emite al ser golpeado. 
+	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",}; // Sonidos que emite al ser golpeado. 
 
 	/**
 	 * Crea un jugador en la posicion dada en el mapa dado.
@@ -96,6 +94,7 @@ public class Player extends Actor implements Physical_active {
 	public boolean hasToDie() {
 		return false;
 	}
+	
 	/**
 	 * Mueve el jugador a la izquierda.
 	 * @return
@@ -105,6 +104,7 @@ public class Player extends Actor implements Physical_active {
 		setBlock_right(false);
 		return true;
 	}
+	
 	/**
 	 * Mueve el jugador a la derecha.
 	 * @return
@@ -114,6 +114,7 @@ public class Player extends Actor implements Physical_active {
 		setBlock_left(false);
 		return true;
 	}
+	
 	/**
 	 * Levanta al jugador.
 	 * @return
@@ -131,6 +132,7 @@ public class Player extends Actor implements Physical_active {
 		setCrounched(false);
 		return true;
 	}
+	
 	/**
 	 * Hace que el jugador se agache.
 	 * @return
@@ -146,6 +148,7 @@ public class Player extends Actor implements Physical_active {
 		setCrounched(true);
 		return true;
 	}
+	
 	/**
 	 * Hace que el jugador dispare.
 	 */
@@ -153,6 +156,7 @@ public class Player extends Actor implements Physical_active {
 		getWeapon().triggerMain();
 		setShooting(true);
 	}
+	
 	/**
 	 * Hace que deje de disparar.
 	 */
@@ -163,7 +167,6 @@ public class Player extends Actor implements Physical_active {
 
 	@Override
 	public boolean repair_collisionY(Point2D point) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -274,6 +277,7 @@ public class Player extends Actor implements Physical_active {
 				die();
 		}
 	}
+
 
 
 	/**
@@ -607,9 +611,7 @@ public class Player extends Actor implements Physical_active {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-
 	private String getSoundName() {
-		return hitSounds[new Random().nextInt(hitSounds.length)];
+		return hitSounds[ResourceManager.getInstance().getRandGen().nextInt(hitSounds.length)];
 	}
-
 }

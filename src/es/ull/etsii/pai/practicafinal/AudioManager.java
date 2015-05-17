@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class AudioManager {
+	public static final String SOUNDS_FOLDER = "/sounds/";
 	public static final int MAX_CONCURRENT_SOUNDS = 15;							// Numero maximo de sonidos reproduciendo a la vez.
 	private static ArrayList<AudioClip> clips = new ArrayList<AudioClip>();		// Truco sucio para engañar al planificador
 	private static ArrayList<AudioClip> loops = new ArrayList<AudioClip>();		// Lista de clips ejecutandose indefinidamente.
@@ -22,14 +23,37 @@ public class AudioManager {
 	 * @param name
 	 */
 	public static void startAudio(String name) {
-		AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
-		getClips().add(audio);
-		audio.play();
-		if(getClips().size() >= 2*MAX_CONCURRENT_SOUNDS){
-			for(int i = 0 ; i<MAX_CONCURRENT_SOUNDS; i++) {
-				getClips().get(0).stop();
-				getClips().remove(0);
+		if (name.length() > 0) {
+			AudioClip audio = Applet.newAudioClip(AudioManager.class
+					.getResource("/sounds/" + name));
+			getClips().add(audio);
+			audio.play();
+			if (getClips().size() >= 2 * MAX_CONCURRENT_SOUNDS) {
+				for (int i = 0; i < MAX_CONCURRENT_SOUNDS; i++)
+					getClips().get(0).stop();
+					getClips().remove(0);
 			}
+		}
+	}
+
+	public static ArrayList<AudioClip> getLoops() {
+		return loops;
+	}
+
+	public static void setLoops(ArrayList<AudioClip> loops) {
+		AudioManager.loops = loops;
+	}
+	/**
+	 * Reproduce de forma ciclica el clip con nombre indicado.
+	 * @param name
+	 */
+	public static void reproduceAudio(String name) {
+		if (name.length() > 0) {
+			AudioClip audio = Applet.newAudioClip(AudioManager.class
+					.getResource(SOUNDS_FOLDER + name));
+			audio.loop();
+			getLoops().add(audio);
+
 		}
 	}
 	/**
@@ -39,24 +63,15 @@ public class AudioManager {
 		for(AudioClip audio : getLoops())
 			audio.stop();
 	}
-	/**
-	 * Reproduce de forma ciclica el clip con nombre indicado.
-	 * @param name
-	 */
-	public static void reproduceAudio(String name) {
-		if(name.length()>0){
-			AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
-			audio.loop();
-			getLoops().add(audio);
-		}
 
-	}
+
 	/**
 	 * Para un determinado clip.
 	 * @param name
 	 */
 	public static void stopAudio(String name) {
-		AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
+		AudioClip audio = Applet.newAudioClip(AudioManager.class
+				.getResource(SOUNDS_FOLDER + name));
 		audio.stop();
 		getLoops().remove(audio);
 	}
@@ -71,13 +86,6 @@ public class AudioManager {
 	public void setClips(ArrayList<AudioClip> clips) {
 		this.clips = clips;
 	}
-	public static ArrayList<AudioClip> getLoops() {
-		return loops;
-	}
 
-	public static void setLoops(ArrayList<AudioClip> loops) {
-		AudioManager.loops = loops;
-	}
-	
-	
+
 }

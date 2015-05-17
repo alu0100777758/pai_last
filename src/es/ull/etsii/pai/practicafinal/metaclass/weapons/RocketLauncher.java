@@ -44,7 +44,7 @@ public class RocketLauncher extends Weapon{
 
 	protected void shootMain() {
 		int side = getOwner().getLookingAt() == Side.LEFT? -getSpeed() : getSpeed();
-		//System.out.println(side);
+
 		int addy = getOwner().isCrounched()? getY_offset() /2 : getY_offset();
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();

@@ -9,16 +9,15 @@ package es.ull.etsii.pai.practicafinal;
  */
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import es.ull.etsii.pai.practicafinal.graphics.Texture;
 
 public class ResourceManager {
+	private Random randGen = new Random();
 	private int windWidth = 1200;						// Ancho de la ventana.
 	private int windHeight = 800;						// Alto de la ventana.
 	private static ResourceManager instance = null;		// Unica instancia de esta clase.
@@ -29,11 +28,25 @@ public class ResourceManager {
 	 */
 	private ResourceManager(){}
 	
+	public static  ResourceManager getInstance(){
+		if(instance == null)
+			instance = new ResourceManager();
+		return instance;
+	}
+	
+	public Random getRandGen() {
+		return randGen;
+	}
+	public void setRandGen(Random randGen) {
+		this.randGen = randGen;
+	}
+
 	/**
 	 * Obtiene una imagen a partir de un path.
 	 * @param path
 	 * @return
 	 */
+
 	public BufferedImage getBufferedImage(String path){
 		BufferedImage found = getBufferedImages().get(path);
 		if(found == null)
@@ -44,19 +57,13 @@ public class ResourceManager {
 				e.printStackTrace();
 			}
 		return found;
-	}
+	}	
 	/**
 	 * Getters y setters.
 	 * @return
 	 */
 	public HashMap<String, BufferedImage> getBufferedImages() {
 		return bufferedImages;
-	}
-	
-	public static  ResourceManager getInstance(){
-		if(instance == null)
-			instance = new ResourceManager();
-		return instance;
 	}
 	public int getWindWidth() {
 		return windWidth;

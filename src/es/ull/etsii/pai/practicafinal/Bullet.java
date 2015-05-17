@@ -13,6 +13,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MaximizeAction;
+
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.MovementEquation;
 import es.ull.etsii.pai.practicafinal.physics.ParabolicLocomotion;
@@ -30,13 +32,11 @@ public class Bullet extends Actor implements Physical_active{
 	private int push = 0; 											// Empuje.
 	private int maxDistance = 1000; 								// TODO, distancia maxima que puede recorrer la bala.
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
-
 	private MovementEquation motion = new RectilinearLocomotion();	// Funcion de movimiento de la bala.
 	private Player owner;											// Jugador que dispara la bala.
 	private int bulletSize = 7;										// Tamaño de la bala.
 	private String soundName = "rocketBang.wav";					// Sonido por defecto de la bala.
-
-	
+	private boolean dead = false;
 	/**
 	 * Crea una bala en la posicion indicada.
 	 * @param pos
@@ -90,8 +90,14 @@ public class Bullet extends Actor implements Physical_active{
 	
 	@Override
 	public boolean hasToDie() {
-		// TODO Auto-generated method stub
-		return false;
+		return isDead();
+	}
+	public boolean isDead() {
+		return dead;
+	}
+
+	public void setDead(boolean dead) {
+		this.dead = dead;
 	}
 	/**
 	 * Pinta la bala.
@@ -102,22 +108,17 @@ public class Bullet extends Actor implements Physical_active{
 	}
 	@Override
 	public boolean updatePos(Physical_passive map) {
+		int init = (int)getPosition().x();
 		setPosition(motion.getNewpos(getSpeed(), getPosition())); // cambiar a getnewSpeed si se prefiere , tal como estÃ¡ permite aceleracion dentro del motion al modificar y vel
+		maxDistance-=(Math.max(init, getPosition().x())-Math.min(init, getPosition().x()));
+		if(maxDistance <= 0)
+			setDead(true);
 		getGraphicShape().setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
 		if (!map.getPhysicalRectangle().contains(getPhysicalRectangle()))
 			return false;
 		return true;
 	}
 
-	@Override
-	public boolean collides(Physical_passive actor) {
-		
-		if(actor.getPhysicalRectangle().collides(getPhysicalRectangle())){
-			AudioManager.startAudio(getSoundName());
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	public boolean repair_collisionY(Point2D point) {
@@ -164,6 +165,15 @@ public class Bullet extends Actor implements Physical_active{
 		this.graphicShape = graphicShape;
 	}
 
+
+	@Override
+	public boolean collides(Physical_passive actor) {
+		
+		if(actor.getPhysicalRectangle().collides(getPhysicalRectangle()) || isDead()){
+			return true;
+		}
+		return false;
+	}
 	public String getSoundName() {
 		return soundName;
 	}
