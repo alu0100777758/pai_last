@@ -32,7 +32,8 @@ public class UZI extends Weapon{
 		setMainAmmo(CLIP_SIZE);
 		setSpeed(SPEED);
 		setHeight(15);
-		setX_offset(-10);
+		setX_offset(-15);
+		setY_offset(5);
 		setMainReloadingTime(RELOADING_TIME);
 		getGraphicShape().setTexturePath("textures/uzi.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
