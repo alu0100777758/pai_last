@@ -39,7 +39,7 @@ public class Scenario {
 		setStaticMap(new ArrayList<Entity>());
 		setActors(new ArrayList<Actor>());
 		setGUI(new ArrayList<Entity>());
-		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
+//		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		try {
 			setMapData(BvsR_Map.load(mapName));
 
