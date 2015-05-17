@@ -51,6 +51,8 @@ public class Scenario {
 		setStaticMap(new ArrayList<Entity>());
 		setActors(new ArrayList<Actor>());
 		setGUI(new ArrayList<Entity>());
+		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
+//		AudioManager.startAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		// /////******************** Para probar poner un unico actor y un
 		// suelo.
 		try {

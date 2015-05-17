@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
@@ -157,6 +160,16 @@ public class EditorFrame extends JFrame implements ActionListener,
 				frame.setVisible(true);
 				GameLoop.init(frame);
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frame.addWindowListener(new WindowAdapter()
+		        {
+		            @Override
+		            public void windowClosing(WindowEvent e)
+		            {
+		                AudioManager.stopAudio("Fall_Walk_Run_-_Do_or_Die.wav");
+		                GameLoop.stepTimer.stop();
+		                e.getWindow().dispose();
+		            }
+		        });
 			}});
 		JMenu launch = new JMenu("Lanzar");
 		launch.setMnemonic(KeyEvent.VK_L);

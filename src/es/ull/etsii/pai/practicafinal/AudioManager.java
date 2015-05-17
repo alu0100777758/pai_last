@@ -18,7 +18,19 @@ public class AudioManager {
 			for(int i = 0 ; i<MAX_CONCURRENT_SOUNDS; i++)
 				getClips().remove(0);
 		}
-		
+	}
+	public static void reproduceAudio(String name) {
+		AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
+//		getClips().add(audio);
+		audio.loop();
+//		if(getClips().size() >= 2*MAX_CONCURRENT_SOUNDS){
+//			for(int i = 0 ; i<MAX_CONCURRENT_SOUNDS; i++)
+//				getClips().remove(0);
+//		}
+	}
+	public static void stopAudio(String name) {
+		AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
+		audio.stop();
 	}
 
 	public URL getRes() {

@@ -24,7 +24,7 @@ public class GameFrame extends JFrame implements ActionListener{
 	public void setScenarioPanel(ScenarioPanel scenarioPanel) {
 		this.scenarioPanel = scenarioPanel;
 	}
-
+	
 	class KeyHandler implements KeyListener {
 
 		@Override
