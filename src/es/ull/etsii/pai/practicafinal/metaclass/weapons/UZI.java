@@ -1,5 +1,6 @@
 package es.ull.etsii.pai.practicafinal.metaclass.weapons;
 
+import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.Bullet;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
@@ -28,6 +29,7 @@ public class UZI extends Weapon{
 		setMainClipSize(CLIP_SIZE);
 		setSpeed(SPEED);
 		setHeight(15);
+		setX_offset(-10);
 		getGraphicShape().setTexturePath("textures/uzi.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
@@ -42,5 +44,6 @@ public class UZI extends Weapon{
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
 		getOwner().getMap().getActors().add(new Bullet(position, speed, DAMAGE, PUSH,getOwner()));
+		AudioManager.startAudio("uziShot.wav");
 	}
 }

@@ -30,10 +30,12 @@ public class Bullet extends Actor implements Physical_active{
 	private int push = 0; 											// Empuje.
 	private int maxDistance = 1000; 								// TODO, distancia maxima que puede recorrer la bala.
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
+
 	private MovementEquation motion = new RectilinearLocomotion();	// Funcion de movimiento de la bala.
 	private Player owner;											// Jugador que dispara la bala.
 	private int bulletSize = 7;										// Tamaño de la bala.
 	private String soundName = "rocketBang.wav";					// Sonido por defecto de la bala.
+
 	
 	/**
 	 * Crea una bala en la posicion indicada.

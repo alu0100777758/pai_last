@@ -42,9 +42,12 @@ public class AudioManager {
 	 * @param name
 	 */
 	public static void reproduceAudio(String name) {
+		if(name.length()>0){
 		AudioClip audio = Applet.newAudioClip( AudioManager.class.getResource("/sounds/"+name));
 		audio.loop();
 		getLoops().add(audio);
+
+		}
 
 	}
 	/**
