@@ -40,12 +40,13 @@ public class PlayerInitTool extends EditorTool {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		getMap().addPlayer(new Player(new Point2D(e.getX(), e.getY()), getMap()));
-		setModified(true);
-		// TODO Auto-generated method stub
-
+		add(e);
 	}
 
+	protected void add(MouseEvent e) {
+		getMap().addPlayer(new Player(new Point2D(e.getX(), e.getY()), getMap()));
+		setModified(true);
+	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
