@@ -26,6 +26,11 @@ public class PowerUpWeapon extends StaticPlatform{
 		super(graphic, physic);
 		setWeapon(weapon);
 	}
+	public PowerUpWeapon(Weapon weapon) {
+		super(weapon.getGraphicShape(), new PhysicalRectangle((int)weapon.getGraphicShape().getLocation().getX(), (int)weapon.getGraphicShape().getLocation().getY(),
+				(int)weapon.getGraphicShape().getWidth(), (int)weapon.getGraphicShape().getHeight()));
+		setWeapon(weapon);
+	}
 	public PowerUpWeapon(int x1, int y1, int width, int height, Weapon weapon) {
 		super(x1, y1, width, height);
 		setWeapon(weapon);
