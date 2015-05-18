@@ -36,6 +36,7 @@ public class RocketLauncher extends Weapon{
 		setWidth(40);
 		setHeight(15);
 		setX_offset(-30);
+		setY_offset(5);
 		getGraphicShape().setTexturePath("textures/rocketlauncher.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
