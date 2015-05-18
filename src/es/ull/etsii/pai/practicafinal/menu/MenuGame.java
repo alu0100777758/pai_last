@@ -1,18 +1,20 @@
 package es.ull.etsii.pai.practicafinal.menu;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
-import es.ull.etsii.pai.practicafinal.ResourceManager;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-public class MenuState extends GameState {
+@SuppressWarnings("serial")
+public class MenuGame extends JPanel  implements KeyListener {
 
 	private Background bg;
 
@@ -31,10 +33,12 @@ public class MenuState extends GameState {
 
 	private Font font;
 
-	public MenuState(GameStateManager gsm) {
-
-		this.gsm = gsm;
-
+	public MenuGame()  {
+			addKeyListener(this);
+//			jbtIniciar.addActionListener(this);
+//		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		setFocusable(true);
+		requestFocus();
 		try {
 
 			bg = new Background("Resources/Backgrounds/grassbg1.gif", 1);
@@ -58,10 +62,11 @@ public class MenuState extends GameState {
 		bg.update();
 	}
 
-	public void draw(Graphics2D g) {
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
 
 		// draw bg
-		bg.draw(g);
+//		bg.draw(g);
 
 		// draw title
 		g.setColor(titleColor);
@@ -94,12 +99,9 @@ public class MenuState extends GameState {
 	}
 
 	private void select() {
-		if (currentChoice == 0) {
-			// Iniciar partida
+		if (currentChoice == 0) {				// INICIAR JUEGO
 			GameFrame frame = new GameFrame("test1.rvsbm");
 			frame.setTitle("Red VS Blue");
-			// frame.setSize(1200, 800);
-			// Maximizar frame
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.setLocationRelativeTo(null); // Center the frame
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -107,7 +109,7 @@ public class MenuState extends GameState {
 			GameLoop.init(frame);
 
 		}
-		if (currentChoice == 1) {
+		if (currentChoice == 1) {				// INICIAR EDITOR
 			// Editar
 			EditorFrame frame = new EditorFrame();
 			frame.setTitle("Red VS Blue Editor");
@@ -189,7 +191,16 @@ public class MenuState extends GameState {
 	}
 
 	public void keyPressed(int k) {
-		if (k == KeyEvent.VK_ENTER) {
+	
+	}
+
+	public void keyReleased(int k) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		System.out.println("entrando");
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (OpcionesSonido) {
 				Sounds.playSound("Resources/Backgrounds/pacman_chomp.wav");
 			}
@@ -201,8 +212,9 @@ public class MenuState extends GameState {
 				System.out.println("selectOpciones();");
 				selectOpciones();
 			}
+			this.repaint();
 		}
-		if (k == KeyEvent.VK_UP) {
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			if (OpcionesSonido) {
 				Sounds.playSound("Resources/Backgrounds/button-10.wav");
 			}
@@ -218,8 +230,9 @@ public class MenuState extends GameState {
 					currentChoice2 = optiones.length - 1;
 				}
 			}
+			this.repaint();
 		}
-		if (k == KeyEvent.VK_DOWN) {
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			if (OpcionesSonido) {
 				Sounds.playSound("Resources/Backgrounds/button-10.wav");
 			}
@@ -235,10 +248,20 @@ public class MenuState extends GameState {
 					currentChoice2 = 0;
 				}
 			}
+			System.out.println("abajo");
+			this.repaint();
 		}
+		
 	}
 
-	public void keyReleased(int k) {
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 	}
 
 }
