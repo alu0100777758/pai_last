@@ -28,8 +28,7 @@ public class Ganador extends JPanel {
 		g.fillRect(0, 0, this.width, this.height);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font("Cantarell", 1, 50));
-		g.drawString("RED vs BLUE", this.width/2, 50);
-		g.drawString(nombreGanador + " Wins!", this.width/2 , 200);
+		g.drawString(nombreGanador + " Wins!", this.width/2- this.width/3 , 180);
 	}
 
 }
