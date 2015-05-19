@@ -57,7 +57,7 @@ public class Player extends Actor implements Physical_active {
 	public static final int WEAPON = 1;						// Indice donde se guarda el grafico del arma.
 	public static final int DEFAULT_MAX_HP = 200;			// Vida maxima por defecto.
 	public static final int PUSH_RESIST = 2;				// Resistencia al empuje por frame.
-	private Color color = Color.BLUE; // error, usar rectangulo gráfico
+	private Color color = Color.BLUE; 
 	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",}; // Sonidos que emite al ser golpeado. 
 
 	/**
