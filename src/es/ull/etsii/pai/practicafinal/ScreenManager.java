@@ -5,8 +5,8 @@ public class ScreenManager {
 	private int windHeight = 800;
 	private static ScreenManager instance = null;
 	private ScreenManager(){}
-	private double rate_x = 1.5;
-	private double rate_y = 1.5;
+	private double rate_x = 0.5;
+	private double rate_y = 0.5;
 	
 	public static  ScreenManager getInstance(){
 		if(instance == null)
