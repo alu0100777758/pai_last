@@ -9,13 +9,11 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class MainGame extends JFrame {
 
-	
 	private MenuGame mGame;
 
 	public MainGame() {
 		mGame = new MenuGame();
 		add(mGame, BorderLayout.CENTER);
-
 	}
 	
 	public static void main(String[] args) {

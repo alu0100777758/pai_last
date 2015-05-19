@@ -235,7 +235,7 @@ public class MenuGame extends JPanel implements KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			secretGame =secretGame + 1;
-			if (secretGame.equals("10111")) {
+			if (secretGame.equals("101111")) {
 				PongJFrame frame = new PongJFrame();
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
