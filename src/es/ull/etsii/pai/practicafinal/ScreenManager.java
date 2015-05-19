@@ -5,6 +5,8 @@ public class ScreenManager {
 	private int windHeight = 800;
 	private static ScreenManager instance = null;
 	private ScreenManager(){}
+	private double rate_x = 1.5;
+	private double rate_y = 1.5;
 	
 	public static  ScreenManager getInstance(){
 		if(instance == null)
@@ -23,5 +25,17 @@ public class ScreenManager {
 	public void setWindHeight(int windHeight) {
 		this.windHeight = windHeight;
 	}
+	public double getRate_x() {
+		return rate_x;
+	}
+	public void setRate_x(double rate_x) {
+		this.rate_x = rate_x;
+	}
+	public double getRate_y() {
+		return rate_y;
+	}
+	public void setRate_y(double rate_y) {
+		this.rate_y = rate_y;
+	} 
 	
 }
