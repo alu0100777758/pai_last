@@ -23,7 +23,7 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 public class Scenario {
 	BvsR_Map mapData = new BvsR_Map();								// Mapa donde se realizara la partida.
 	RvsBKeyController keyController = new RvsBKeyController();		// Controlador de teclas.
-	public static final int WINDOW_TOLERANCE = 100;					// Numero de pixeles que se pueden salir los jugadores de la pantalla antes de morir.
+	public static final int WINDOW_TOLERANCE = 200;					// Numero de pixeles que se pueden salir los jugadores de la pantalla antes de morir.
 	
 	/**
 	 * Crea un escenario de alto y ancho definidos con un mapa determinado.
@@ -61,7 +61,7 @@ public class Scenario {
 		Physical_passive map;
 
 		for (int i = 0; i < getActors().size(); i++) {
-			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(0, 0, ScreenManager.getInstance().getWindWidth() + WINDOW_TOLERANCE, ScreenManager.getInstance().getWindHeight() + WINDOW_TOLERANCE))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
+			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(- WINDOW_TOLERANCE / 2, - WINDOW_TOLERANCE / 2, ScreenManager.getInstance().getWindWidth() + WINDOW_TOLERANCE, ScreenManager.getInstance().getWindHeight() + WINDOW_TOLERANCE))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
 				getActors().get(i).die();
 				getActors().remove(i);	
 			}
