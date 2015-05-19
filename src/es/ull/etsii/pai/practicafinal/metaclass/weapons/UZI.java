@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal.metaclass.weapons;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.Bullet;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;

@@ -32,39 +32,63 @@ public abstract class Weapon implements Serializable{
 	private boolean pulsedSecondaryTrigger = false;	// True si esta presionado el gatillo del arma secundaria.
 	private GraphicRectangle graphicShape;		// Forma grafica del arma.
 	private boolean reloading;					// True si esta recargando.
-	private int mainReloadingTime;
-	private int reloadingCooldown;
-	private int speed;
-	private int width = 25; 
-	private int height = 10;
-	private int y_offset = 10;
-	private int x_offset = 0;
+	private int mainReloadingTime;				// Tiempo de recarga para el disparo principal.
+	private int reloadingCooldown;				// Tiempo restante de recarga.
+	private int speed;							// Velocidad de la bala.
+	private int width = 25; 					// Ancho del arma.
+	private int height = 10;					// Alto del arma.
+	private int y_offset = 10;					// Offset de la y.
+	private int x_offset = 0;					// Offset de la x.
 	
 
+	/**
+	 * Crea un arma en la posicion indicada.
+	 * @param x
+	 * @param y
+	 */
 	public Weapon(int x, int y ){
 		setOwner(null);
 		setGraphicShape(new GraphicRectangle(x+getX_offset(),y+ getY_offset(),getWidth(), getHeight()));
 	}
-
+	/**
+	 * Crea un arma con un propietario.
+	 * @param owner
+	 */
 	public Weapon(Player owner) {
 		setOwner(owner);
 		setGraphicShape();
 	}
-
+	
+	/**
+	 * Pulsa el gatillo principal.
+	 */
 	public void triggerMain(){
 		setPulsedMainTrigger(true);
 	}
+	/**
+	 * Pulsa el gatillo secundario.
+	 */
 	public void triggerSecondary(){
 		setPulsedSecondaryTrigger(true);
 	}
+	/**
+	 * Suelta el gatillo principal.
+	 */
 	public void releaseMain(){
 		setPulsedMainTrigger(false);
 		//setMainCooldown(0);
 	}
+	/**
+	 * Suelta el gatillo secundario.
+	 */
 	public void releaseSecondary(){
 		setPulsedSecondaryTrigger(false);
 		//setSecondaryCooldown(0);
 	}
+	/**
+	 * True si puede disparar el primario.
+	 * @return
+	 */
 	private boolean canShootPrimary() {
 		if (getMainAmmo() <= 0) {
 			setReloading(true);
@@ -80,6 +104,10 @@ public abstract class Weapon implements Serializable{
 		
 		return false;
 	}
+	/**
+	 * True si puede disparar el secundario.
+	 * @return
+	 */
 	private boolean canShootSecondary() {
 		if (getSecondaryAmmo() <= 0) {
 			setReloading(true);
@@ -95,6 +123,9 @@ public abstract class Weapon implements Serializable{
 		
 		return false;
 	}
+	/**
+	 * Decrementa los enfriamientos del arma.
+	 */
 	public void decreaseCooldowns() {
 		setMainCooldown(getMainCooldown() - 1);
 		setSecondaryCooldown(getSecondaryCooldown() - 1);
@@ -103,7 +134,9 @@ public abstract class Weapon implements Serializable{
 	private void setEffectDuration(int i) {
 		//TODO
 	}
-
+	/**
+	 * Actualiza el arma, su posicion y si debe disparar o recargar.
+	 */
 	public void update(){
 		int addy = getY_offset();
 		if (getOwner() != null) {
@@ -144,8 +177,14 @@ public abstract class Weapon implements Serializable{
 		// TODO Auto-generated method stub
 		
 	}
+	protected abstract void shootSecondary();
+
 	
-	
+	protected abstract void shootMain();
+	/**
+	 * Getters y Setters.
+	 * @return
+	 */
 	protected int getSpeed() {
 		if (getOwner().getLookingAt() == Side.LEFT)
 			return speed - (int)getOwner().getSpeed().x();
@@ -155,11 +194,6 @@ public abstract class Weapon implements Serializable{
 	protected void setSpeed(int speed) {
 		this.speed = speed;
 	}
-
-	protected abstract void shootSecondary();
-
-	
-	protected abstract void shootMain();
 	
 	public void setGraphicShape(){
 		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
