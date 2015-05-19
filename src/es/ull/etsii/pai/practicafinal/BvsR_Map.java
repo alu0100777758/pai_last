@@ -167,7 +167,7 @@ public class BvsR_Map implements Serializable {
 
 			}
 		}
-		for (int i = 0; i < getActors().size(); i++) {
+		for (int i = 0; i < getGUI().size(); i++) {
 			Player_gauge actor = (Player_gauge) getGUI().get(i);
 			for (GraphicRectangle rect : actor.getGraphicShapes()) {
 				if (rect.getTexturePath() != null) {

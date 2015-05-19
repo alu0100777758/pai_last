@@ -121,6 +121,7 @@ public class MenuGame extends JPanel implements KeyListener {
 			frame.setLocationRelativeTo(null); 	
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			GameLoop.init(frame);
 
 		}
@@ -133,6 +134,7 @@ public class MenuGame extends JPanel implements KeyListener {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			frame.setFocusable(true);
+			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
 		}
 		if (currentChoice == 2) {	//INICIAR OPCIONES

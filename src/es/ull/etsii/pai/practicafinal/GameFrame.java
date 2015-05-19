@@ -38,6 +38,7 @@ public class GameFrame extends JFrame implements ActionListener{
 		addComponentListener(new MyAdapter());
 		GameLoop.setDisplayer((ScenarioPanel)scenarioPanel);
 		GameLoop.setUpdater(((ScenarioPanel)scenarioPanel).getScenario());
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		setTimer(new Timer(1000, new ActionListener() {			
 			@Override
