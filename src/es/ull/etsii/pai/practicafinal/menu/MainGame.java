@@ -7,7 +7,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-public class MainGame extends JFrame implements KeyListener{
+public class MainGame extends JFrame {
 
 	private MenuGame mGame;
 
@@ -24,23 +24,5 @@ public class MainGame extends JFrame implements KeyListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

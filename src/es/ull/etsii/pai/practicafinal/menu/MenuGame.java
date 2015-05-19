@@ -17,68 +17,38 @@ import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 @SuppressWarnings("serial")
 public class MenuGame extends JPanel implements KeyListener {
 
-	private Background bg;
-
 	private int currentChoice = 0;
 	private int currentChoice2 = 0;
 	private String[] options = { "Iniciar Partida", "Editar Escenario", "Opciones", "Salir" };
 	private String[] optiones = { "Sonido ON", "Efectos sonido ON", "Resolución Escritorio", "volver" };
-
 	private boolean jbOpciones = false;
 	private boolean OpcionesSonido = true;
 	private boolean OpcionesEfectoSonido = true;
 	private int OpcionesResolucion = 1;
-
-	private Color titleColor;
 	private Font titleFont;
 
 	private Font font;
 
 	public MenuGame() {
 		addKeyListener(this);
-		
 		setFocusable(true);
-		requestFocus();
-		try {
-
-//			bg = new Background("Resources/Backgrounds/grassbg1.gif", 1);
-//			bg.paint(g);
-//			bg.setVector(-0.1, 0);
-
-			titleColor = new Color(128, 0, 0);
-			titleFont = new Font("Century Gothic", Font.PLAIN, 28);
-
-			font = new Font("Arial", Font.PLAIN, 12);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void init() {
-	}
-
-	public void update() {
-//		bg.paint(g);
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		
+		// Dibujar Fondo
 		Background bg = new Background("");
 		bg.paint(g);
-		// draw title
-		Ganador ganador = new Ganador("paco", getWidth(), getHeight());
-		ganador.paint(g);
+		
+		// Dibujar Titulo
 		g.setColor(Color.RED);
 		g.setFont(titleFont);
 		g.setFont(new Font("Cantarell", 1, 70));
 		g.drawString("Red Vs Blue", 0, 70);
 
-		// draw menu options
+		// Dibujar Menú
 		g.setFont(font);
 		if (!jbOpciones) {
 			for (int i = 0; i < options.length; i++) {
