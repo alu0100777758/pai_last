@@ -94,7 +94,7 @@ public class Player extends Actor implements Physical_active {
 
 	@Override
 	public boolean hasToDie() {
-		return false;
+		return isDead();
 	}
 	
 	/**

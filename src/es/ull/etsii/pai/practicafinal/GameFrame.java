@@ -14,10 +14,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+
+import es.ull.etsii.pai.practicafinal.menu.Ganador;
 
 public class GameFrame extends JFrame implements ActionListener{
-	private ScenarioPanel scenarioPanel;				// Panel con el escenario.
-	
+	private JPanel scenarioPanel;				// Panel con el escenario.
+	private JPanel end;
+	private Timer timer; 
 	/**
 	 * Inicia una ventana con un mapa cargado identificado con el parametro.
 	 * @param mapName
@@ -26,21 +31,53 @@ public class GameFrame extends JFrame implements ActionListener{
 		setScenarioPanel(new ScenarioPanel(mapName));
 		this.add(getScenarioPanel());
 		this.addKeyListener(new KeyHandler());
-		GameLoop.setDisplayer(scenarioPanel);
-		GameLoop.setUpdater(scenarioPanel.getScenario());
+		GameLoop.setDisplayer((ScenarioPanel)scenarioPanel);
+		GameLoop.setUpdater(((ScenarioPanel)scenarioPanel).getScenario());
+
+		setTimer(new Timer(1000, new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (((ScenarioPanel)getScenarioPanel()).getScenario().isEnded()) {
+					if (((ScenarioPanel)getScenarioPanel()).getScenario().isBlueWins())
+						setEnd(new Ganador("Blue", 1200, 800));		
+					else
+						setEnd(new Ganador("Blue", 1200, 800));	
+					remove(getScenarioPanel());
+					getContentPane().add(getEnd());
+					validate();
+					repaint();
+				}				
+			}
+		}));
+		
+		getTimer().start();
 	}
 	/**
 	 * Getters y Setters.
 	 * @return
 	 */
-	public ScenarioPanel getScenarioPanel() {
+	
+	public JPanel getScenarioPanel() {
 		return scenarioPanel;
 	}
 
-	public void setScenarioPanel(ScenarioPanel scenarioPanel) {
+	public JPanel getEnd() {
+		return end;
+	}
+	public void setEnd(JPanel end) {
+		this.end = end;
+	}
+	public void setScenarioPanel(JPanel scenarioPanel) {
 		this.scenarioPanel = scenarioPanel;
 	}
 	
+	public Timer getTimer() {
+		return timer;
+	}
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+
 	/**
 	 * Manejador de teclas.
 	 * @author Sabato Ceruso.
@@ -51,12 +88,12 @@ public class GameFrame extends JFrame implements ActionListener{
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			getScenarioPanel().getScenario().getKeyController().pulsedKey(e.getKeyCode(), e.getKeyChar());	
+			((ScenarioPanel)getScenarioPanel()).getScenario().getKeyController().pulsedKey(e.getKeyCode(), e.getKeyChar());	
 		}
 
 		@Override
 		public void keyReleased(KeyEvent arg0) {;		
-			getScenarioPanel().getScenario().getKeyController().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
+			((ScenarioPanel)getScenarioPanel()).getScenario().getKeyController().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
 		}
 
 		@Override
@@ -65,7 +102,7 @@ public class GameFrame extends JFrame implements ActionListener{
 		
 	}
 	public void actionPerformed(ActionEvent e) {
-		 getScenarioPanel().getScenario().update();
+			((ScenarioPanel)getScenarioPanel()).getScenario().update();
 	        getScenarioPanel().repaint();
 	        Toolkit.getDefaultToolkit().sync();
 	}
