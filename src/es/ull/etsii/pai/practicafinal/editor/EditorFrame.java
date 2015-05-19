@@ -67,6 +67,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 		createMenuBar();
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(this);
+        ScreenManager.getInstance().reset();
 	}
 
 	private void createMenuBar() {
@@ -154,7 +155,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 				saveMap(TEMP_FILE_MAP);
 				GameFrame frame = new GameFrame(TEMP_FILE_MAP);
 				frame.setTitle("Red VS Blue");
-				frame.setSize(1200, 800);
+				frame.setSize(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight());
 			//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			 	frame.setLocationRelativeTo(null); // Center the frame
 			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

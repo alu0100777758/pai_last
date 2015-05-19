@@ -36,6 +36,10 @@ public class ScreenManager {
 	}
 	public void setRate_y(double rate_y) {
 		this.rate_y = rate_y;
+	}
+	public void reset() {
+		setRate_x(1);
+		setRate_y(1);
 	} 
 	
 }

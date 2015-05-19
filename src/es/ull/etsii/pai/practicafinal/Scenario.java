@@ -53,6 +53,10 @@ public class Scenario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(getMapData().getGUI().isEmpty()){
+			getMapData().getGUI().add(new Player_gauge(getMapData().getPlayer_one(),0));
+			getMapData().getGUI().add(new Player_gauge(getMapData().getPlayer_two(),Player_gauge.TOP_RIGHT));
+		}
 	}
 
 	/**
