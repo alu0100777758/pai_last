@@ -131,9 +131,7 @@ public class PongJPanel extends JPanel {
 		if (gameStatus == 3) { // JUEGO TERMINADO
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Cantarell", 1, 50));
-
-			g.drawString("PONG", this.getWidth() / 2 - 75, 50);
-			g.drawString("Player " + playerWon + " Wins!", this.getWidth() / 2 - 165, 200);
+			g.drawString("Player " + playerWon + " Wins!", this.getWidth() / 2 - 165, 300);
 
 		}
 	}
