@@ -17,6 +17,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import es.ull.etsii.pai.practicafinal.ResourceManager;
+import es.ull.etsii.pai.practicafinal.ScreenManager;
 
 public class GraphicRectangle extends Rectangle implements Drawable {
 	private Paint paint = Color.RED;
@@ -82,9 +83,9 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 			if(isFlipImage())
 				bimage = createFlipped(bimage);
 			g2.drawImage(
-					bimage, (int) getLocation().getX(),
-					(int) getLocation().getY(), (int) getWidth(),
-					(int) getHeight(), null);
+					bimage, (int)( getLocation().getX()*ScreenManager.getInstance().getRate_x()),
+					(int)(getLocation().getY()*ScreenManager.getInstance().getRate_y()), (int) (getWidth()*ScreenManager.getInstance().getRate_x()),
+					(int) (getHeight()*ScreenManager.getInstance().getRate_x()), null);
 		} else {
 			g2.setPaint(getPaint());
 			g2.fill(this);
