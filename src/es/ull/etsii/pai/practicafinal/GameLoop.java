@@ -36,38 +36,7 @@ public class GameLoop{
 		GameLoop.displayer = displayer;
 	}
 	public static void init(ActionListener toUdateobject){
-	long next_game_tick = System.nanoTime();
-	    // GetTickCount() returns the current number of milliseconds
-	    // that have elapsed since the system was started
-
-	    long sleep_time = 0;
-
-	    boolean game_is_running = true;
-
-//	    while( game_is_running ) {
-	        update_game();
-	        display_game();
-	        next_game_tick += SKIP_TICKS *1000;
-	        sleep_time = next_game_tick - System.nanoTime();
-	        //incluir evento para calcular y otro para dibujar
 	        stepTimer = new Timer((int) (1000/FRAMES_PER_SECOND), toUdateobject);
 	        stepTimer.start();
-	}
-	// tendr�n que ser eventos para que no molesten con los threads
-	private static void display_game() {
-		updater.update();
-		
-	}
-
-	private static void update_game() {
-		displayer.repaint();
-		
-	}
-	class gameLoopEvent extends ActionEvent {
-
-		public gameLoopEvent(Object source, int id, String command) {
-			super(GameLoop.getInstance(), 0, "update");
-		}
-		
 	}
 }

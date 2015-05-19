@@ -23,7 +23,7 @@ public class Scenario {
 	private boolean ended;
 	private boolean redWins;
 	private boolean blueWins;
-	
+	public static final String [] dieSounds = { "Idie01.wav","Idie02.wav","Idie03.wav" };
 	public static final int WINDOW_TOLERANCE = 200;					// Numero de pixeles que se pueden salir los jugadores de la pantalla antes de morir.
 	
 	/**
@@ -40,7 +40,7 @@ public class Scenario {
 		setStaticMap(new ArrayList<Entity>());
 		setActors(new ArrayList<Actor>());
 		setGUI(new ArrayList<Entity>());
-//		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
+		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		try {
 			setMapData(BvsR_Map.load(mapName));
 
@@ -113,12 +113,17 @@ public class Scenario {
 				getStaticMap().remove(i);
 		if (getPlayer_one().hasToDie()) {
 			setEnded(true);
-			setRedWins(true);;
+			setRedWins(true);
 		}
 		if (getPlayer_two().hasToDie()) {
 			setEnded(true);
-			setBlueWins(true);;
+			setBlueWins(true);
 		}
+		if(isEnded()){
+			AudioManager.startAudio(dieSounds[ResourceManager.getInstance().getRandGen().nextInt(dieSounds.length)]);
+			GameLoop.stepTimer.stop();
+		}
+		
 			
 	}
 	/**

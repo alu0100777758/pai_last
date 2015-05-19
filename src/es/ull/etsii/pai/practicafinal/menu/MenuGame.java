@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +14,7 @@ import javax.swing.JPanel;
 import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
+import es.ull.etsii.pai.practicafinal.ScreenManager;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 
 @SuppressWarnings("serial")
@@ -92,6 +95,17 @@ public class MenuGame extends JPanel implements KeyListener {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			frame.addWindowListener(new WindowAdapter()
+	        {
+	            @Override
+	            public void windowClosing(WindowEvent e)
+	            {
+	                AudioManager.stopAll();
+	                GameLoop.stepTimer.stop();
+	                ScreenManager.getInstance().setRate_x(1);
+	                ScreenManager.getInstance().setRate_y(1);
+	            }
+	        });
 			GameLoop.init(frame);
 
 		}
