@@ -30,6 +30,7 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
 import es.ull.etsii.pai.practicafinal.Player_gauge;
+import es.ull.etsii.pai.practicafinal.ScreenManager;
 
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
@@ -165,10 +166,11 @@ public class EditorFrame extends JFrame implements ActionListener,
 		            @Override
 		            public void windowClosing(WindowEvent e)
 		            {
-//		                AudioManager.stopAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		                AudioManager.stopAll();
 		                GameLoop.stepTimer.stop();
 		                e.getWindow().dispose();
+		                ScreenManager.getInstance().setRate_x(1);
+		                ScreenManager.getInstance().setRate_y(1);
 		            }
 		        });
 			}});
