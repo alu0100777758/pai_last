@@ -1,5 +1,12 @@
 package es.ull.etsii.pai.practicafinal.metaclass;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.io.Serializable;
 
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
@@ -11,20 +18,20 @@ import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 public abstract class Weapon implements Serializable{
 	
 	private static final long serialVersionUID = -2320121838158394980L;
-	private Player owner;						// dueño del arma
-	private int fireRate; 						// cadencia de disparo en forma de periodo en "ticks" suponiendo 60 fps
-	private int mainClipSize;					// número máximo de balas.
-	private int mainAmmo; 						// cantidad de balas actualmente en el cargador
-	private int mainBulletCounter = -1;  		// munición disponible, infinito si < 0;
-	private int secondaryClipSize;				// número máximo de balas.
-	private int secondaryAmmo;					 // cantidad de balas actualmente en el cargador
-	private int SecondaryBulletCounter = -1;  	// munición disponible, infinito si < 0;
-	private int mainCooldown = 0;
-	private int secondaryCooldown = 0;
-	private boolean pulsedMainTrigger = false;
-	private boolean pulsedSecondaryTrigger = false;
-	private GraphicRectangle graphicShape;
-	private boolean reloading;
+	private Player owner;						// Due�o del arma
+	private int fireRate; 						// Cadencia de disparo en forma de periodo en "ticks" suponiendo 60 fps
+	private int mainClipSize;					// Numero maximo de balas.
+	private int mainAmmo; 						// Cantidad de balas actualmente en el cargador
+	private int mainBulletCounter = -1;  		// Municion disponible, infinito si < 0;
+	private int secondaryClipSize;				// Numero maximo de balas.
+	private int secondaryAmmo;					// Cantidad de balas actualmente en el cargador
+	private int SecondaryBulletCounter = -1;  	// Municion disponible, infinito si < 0;
+	private int mainCooldown = 0;				// Tiempo de espera para volver a disparar el arma principal.
+	private int secondaryCooldown = 0;			// Tiempo de espera para volver a disparar el arma secundaria.
+	private boolean pulsedMainTrigger = false;	// True si esta presionado el gatillo del disparo principal.
+	private boolean pulsedSecondaryTrigger = false;	// True si esta presionado el gatillo del arma secundaria.
+	private GraphicRectangle graphicShape;		// Forma grafica del arma.
+	private boolean reloading;					// True si esta recargando.
 	private int mainReloadingTime;
 	private int reloadingCooldown;
 	private int speed;

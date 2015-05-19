@@ -1,8 +1,13 @@
 package es.ull.etsii.pai.practicafinal.metaclass;
-
-import java.awt.Color;
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.Player;
@@ -12,25 +17,39 @@ import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
-/**
- * 
- * @author Sabato Ceruso, Javier Martin Hernandez.
- *
- */
 public class PowerUpWeapon extends StaticPlatform{
 	private static final long serialVersionUID = 674995040178479648L;
-	private Weapon weapon;
-	private boolean alive = true;
+	private Weapon weapon;						// Arma que contiene el power-up.
+	private boolean alive = true;				// True si sigue vivo.
 	
+	/**
+	 * Crea un power up con una determinada arma, graficos y fisica.
+	 * 
+	 * @param graphic
+	 * @param physic
+	 * @param weapon
+	 */
 	public PowerUpWeapon(GraphicRectangle graphic, PhysicalRectangle physic, Weapon weapon) {
 		super(graphic, physic);
 		setWeapon(weapon);
 	}
+	/**
+	 * Crea un power up con una determinada arma.
+	 * @param weapon
+	 */
 	public PowerUpWeapon(Weapon weapon) {
 		super(weapon.getGraphicShape(), new PhysicalRectangle((int)weapon.getGraphicShape().getLocation().getX(), (int)weapon.getGraphicShape().getLocation().getY(),
 				(int)weapon.getGraphicShape().getWidth(), (int)weapon.getGraphicShape().getHeight()));
 		setWeapon(weapon);
 	}
+	/**
+	 * Crea un power up en unas coordenadas con un tamaño determinado con un arma determinada.
+	 * @param x1
+	 * @param y1
+	 * @param width
+	 * @param height
+	 * @param weapon
+	 */
 	public PowerUpWeapon(int x1, int y1, int width, int height, Weapon weapon) {
 		super(x1, y1, width, height);
 		setWeapon(weapon);

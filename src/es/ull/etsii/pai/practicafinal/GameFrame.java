@@ -46,7 +46,7 @@ public class GameFrame extends JFrame implements ActionListener{
 					if (((ScenarioPanel)getScenarioPanel()).getScenario().isBlueWins())
 						setEnd(new Ganador("Blue", 1200, 800));		
 					else
-						setEnd(new Ganador("Blue", 1200, 800));	
+						setEnd(new Ganador("Red", 1200, 800));	
 					remove(getScenarioPanel());
 					getContentPane().add(getEnd());
 					validate();
