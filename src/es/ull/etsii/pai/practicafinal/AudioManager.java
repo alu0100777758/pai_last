@@ -17,13 +17,16 @@ public class AudioManager {
 	public static final int MAX_CONCURRENT_SOUNDS = 15;							// Numero maximo de sonidos reproduciendo a la vez.
 	private static ArrayList<AudioClip> clips = new ArrayList<AudioClip>();		// Truco sucio para engañar al planificador
 	private static ArrayList<AudioClip> loops = new ArrayList<AudioClip>();		// Lista de clips ejecutandose indefinidamente.
-	private boolean sfx = true;
-	private boolean music = true;
+	private static boolean sfx = true;
+	private static boolean music = true;
 	/**
 	 * Comienza la reproduccion del audio indicado por parametro.
 	 * @param name
 	 */
 	public static void startAudio(String name) {
+		if (!isSfx())
+			return;
+		
 		if (name.length() > 0) {
 			AudioClip audio = Applet.newAudioClip(AudioManager.class
 					.getResource("/sounds/" + name));
@@ -37,18 +40,14 @@ public class AudioManager {
 		}
 	}
 
-	public static ArrayList<AudioClip> getLoops() {
-		return loops;
-	}
-
-	public static void setLoops(ArrayList<AudioClip> loops) {
-		AudioManager.loops = loops;
-	}
 	/**
 	 * Reproduce de forma ciclica el clip con nombre indicado.
 	 * @param name
 	 */
 	public static void reproduceAudio(String name) {
+		if (!isMusic()) 
+			return;
+			
 		if (name.length() > 0) {
 			AudioClip audio = Applet.newAudioClip(AudioManager.class
 					.getResource(SOUNDS_FOLDER + name));
@@ -88,21 +87,32 @@ public class AudioManager {
 		this.clips = clips;
 	}
 
-	public boolean isSfx() {
+	public static ArrayList<AudioClip> getLoops() {
+		return loops;
+	}
+
+	public static void setLoops(ArrayList<AudioClip> loops) {
+		AudioManager.loops = loops;
+	}
+	
+	public static boolean isSfx() {
 		return sfx;
 	}
 
-	public void setSfx(boolean sfx) {
-		this.sfx = sfx;
+	public static void setSfx(boolean sfx) {
+		AudioManager.sfx = sfx;
 	}
 
-	public boolean isMusic() {
+	public static boolean isMusic() {
 		return music;
 	}
 
-	public void setMusic(boolean music) {
-		this.music = music;
+	public static void setMusic(boolean music) {
+		AudioManager.music = music;
+		if (!music)
+			stopAll();
 	}
+
 	
 
 }

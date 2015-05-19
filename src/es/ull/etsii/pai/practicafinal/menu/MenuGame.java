@@ -148,8 +148,10 @@ public class MenuGame extends JPanel implements KeyListener {
 			if (OpcionesSonido) {
 				optiones[0] = "Sonido OFF";
 				OpcionesSonido = false;
+				AudioManager.setMusic(false);
 			} else {
 				optiones[0] = "Sonido ON";
+				AudioManager.setMusic(true);
 				OpcionesSonido = true;
 			}
 			System.out.println("currentChoice2 == 0");
@@ -157,9 +159,11 @@ public class MenuGame extends JPanel implements KeyListener {
 		if (currentChoice2 == 1) {	// OPCIONES/EFECTOS DE SONIDO
 			if (OpcionesEfectoSonido) {
 				optiones[1] = "Efectos sonido OFF";
+				AudioManager.setSfx(false);
 				OpcionesEfectoSonido = false;
 			} else {
 				optiones[1] = "Efectos sonido ON";
+				AudioManager.setSfx(true);
 				OpcionesEfectoSonido = true;
 			}
 			System.out.println("currentChoice2 == 0");
