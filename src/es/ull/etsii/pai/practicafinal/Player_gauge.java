@@ -18,8 +18,9 @@ import es.ull.etsii.pai.practicafinal.graphics.Drawable;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class Player_gauge extends Entity implements Drawable, Serializable {
-	public static final int LIFE_FEEDBACK_PORTION = 5;
+	public static final int LIFE_FEEDBACK_PORTION = 5; // intervalo de vida por el que se repetirá la textura de referencia
 	public static final int TOP_RIGHT = 1;
+	public static final int TOP_LEFT = 0;
 	private int x_pos = 0;
 	private int y_pos = 0;
 	public static final int WIDTH = 300;
@@ -140,7 +141,7 @@ public class Player_gauge extends Entity implements Drawable, Serializable {
 		for (GraphicRectangle rect : getGraphicShapes())
 			rect.paint(g);
 		g.setColor(Color.YELLOW);
-//		g.drawString(Integer.toString(getCurrentPlayer().getWeapon().getMainAmmo()),getGraphicShapes(), (int)(ScreenManager.getInstance().getRate_y()*50));
+		g.drawString(Integer.toString(getCurrentPlayer().getWeapon().getMainAmmo()),(int)((getX_pos()+20)*ScreenManager.getInstance().getRate_x()), (int)(ScreenManager.getInstance().getRate_y()*20));
 	}
 
 	private void updateCurrent() {

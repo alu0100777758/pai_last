@@ -28,10 +28,12 @@ import javax.swing.JFileChooser;
 
 
 
+
 import es.ull.etsii.pai.practicafinal.Actor;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Entity;
 import es.ull.etsii.pai.practicafinal.GraphicEntity;
+import es.ull.etsii.pai.practicafinal.ResourceManager;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 
 public class TextureTool extends DefaultTool {
@@ -101,7 +103,11 @@ public class TextureTool extends DefaultTool {
 		int rVal = c.showOpenDialog(getFrame());
 		if (rVal == JFileChooser.APPROVE_OPTION) {
 			setName(c.getSelectedFile().getName());
-			if(getClass().getResource(System.getProperty("user.dir")+System.getProperty("file.separator")+"textures"+getName()) == null)
+			String filePathString = c.getCurrentDirectory().toString()
+					 + System.getProperty("file.separator")
+					 + c.getSelectedFile().getName();
+			File f = new File(filePathString);
+			if( !f.exists())
 				try {
 					copyFile(c.getCurrentDirectory().toString()
 					 + System.getProperty("file.separator")

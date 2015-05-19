@@ -7,11 +7,13 @@ package es.ull.etsii.pai.practicafinal.metaclass.weapons;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
+import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.Bullet;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.Side;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets.UZI_bullet;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Pistol extends Weapon{
@@ -33,17 +35,23 @@ public class Pistol extends Weapon{
 		setFireRate(FIRE_RATE);
 		setMainClipSize(CLIP_SIZE);
 		setSpeed(SPEED);
+		setX_offset(-15);
+		setY_offset(5);
+		getGraphicShape().setTexturePath("textures/pistol.png");
+		getGraphicShape().setTextureAnchor(getGraphicShape());
+		getGraphicShape().setImage(true);
 		
 	}
 
 	protected void shootSecondary() {}
 
 	protected void shootMain() {
-		int side = getOwner().getLookingAt() == Side.LEFT? -getSpeed()  : getSpeed();
-		int addy = getOwner().isCrounched()? getY_offset() / 2 : getY_offset();
+		int side = getOwner().getLookingAt() == Side.LEFT? -getSpeed() : getSpeed();
+		int addy = getOwner().isCrounched()? getY_offset() /2 : getY_offset();
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
-		getOwner().getMap().getActors().add(new Bullet(position, speed, DAMAGE, PUSH,getOwner()));
+		getOwner().getMap().getActors().add(new UZI_bullet(position, speed, DAMAGE, PUSH,getOwner(), 10));
+		AudioManager.startAudio("uziShot.wav");
 	}
 }

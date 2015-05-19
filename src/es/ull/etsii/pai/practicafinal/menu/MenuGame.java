@@ -114,12 +114,13 @@ public class MenuGame extends JPanel implements KeyListener {
 		if (currentChoice == 1) { 	// INICIAR EDITOR
 			EditorFrame frame = new EditorFrame();
 			frame.setTitle("Red VS Blue Editor");
-			frame.setSize(1200, 800);
+			frame.setSize(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight());
 			//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.setLocationRelativeTo(null); // Center the frame
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			frame.setFocusable(true);
+			frame.setResizable(false);
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
 		}
