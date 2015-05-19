@@ -16,10 +16,12 @@ import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
 import es.ull.etsii.pai.practicafinal.ScreenManager;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
+import es.ull.etsii.pai.practicafinal.secretgame.PongJFrame;
 
 @SuppressWarnings("serial")
 public class MenuGame extends JPanel implements KeyListener {
 
+	private String secretGame = "";
 	private int currentChoice = 0;
 	private int currentChoice2 = 0;
 	private String[] options = { "Iniciar Partida", "Editar Escenario", "Opciones", "Salir" };
@@ -213,6 +215,7 @@ public class MenuGame extends JPanel implements KeyListener {
 			this.repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			secretGame = secretGame + "0";
 			if (OpcionesSonido) {
 				AudioManager.startAudio("button-10.wav");
 			}
@@ -231,6 +234,14 @@ public class MenuGame extends JPanel implements KeyListener {
 			this.repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			secretGame =secretGame + 1;
+			if (secretGame.equals("10111")) {
+				PongJFrame frame = new PongJFrame();
+				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setVisible(true);
+				
+			}
 			if (OpcionesSonido) {
 				AudioManager.startAudio("button-10.wav");
 			}
