@@ -17,7 +17,8 @@ public class AudioManager {
 	public static final int MAX_CONCURRENT_SOUNDS = 15;							// Numero maximo de sonidos reproduciendo a la vez.
 	private static ArrayList<AudioClip> clips = new ArrayList<AudioClip>();		// Truco sucio para engañar al planificador
 	private static ArrayList<AudioClip> loops = new ArrayList<AudioClip>();		// Lista de clips ejecutandose indefinidamente.
-	
+	private boolean sfx = true;
+	private boolean music = true;
 	/**
 	 * Comienza la reproduccion del audio indicado por parametro.
 	 * @param name
@@ -87,5 +88,21 @@ public class AudioManager {
 		this.clips = clips;
 	}
 
+	public boolean isSfx() {
+		return sfx;
+	}
+
+	public void setSfx(boolean sfx) {
+		this.sfx = sfx;
+	}
+
+	public boolean isMusic() {
+		return music;
+	}
+
+	public void setMusic(boolean music) {
+		this.music = music;
+	}
+	
 
 }

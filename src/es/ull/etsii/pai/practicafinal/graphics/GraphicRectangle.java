@@ -88,15 +88,20 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 					(int) (getHeight()*ScreenManager.getInstance().getRate_x()), null);
 		} else {
 			g2.setPaint(getPaint());
-			g2.fill(this);
+			g2.fill(new Rectangle((int)( getLocation().getX()*ScreenManager.getInstance().getRate_x()),
+					(int)(getLocation().getY()*ScreenManager.getInstance().getRate_y()), (int) (getWidth()*ScreenManager.getInstance().getRate_x()),
+					(int) (getHeight()*ScreenManager.getInstance().getRate_x())));
 		}
 
 		g2.dispose();
 	}
 
 	private void texturize(String texturePath2) {
+		Rectangle a = getTextureAnchor();
 		setPaint(new TexturePaint(ResourceManager.getInstance()
-				.getBufferedImage(getTexturePath()), getTextureAnchor()));
+				.getBufferedImage(getTexturePath()), new Rectangle((int)( a.getLocation().getX()*ScreenManager.getInstance().getRate_x()),
+						(int)(a.getLocation().getY()*ScreenManager.getInstance().getRate_y()), (int) (a.getWidth()*ScreenManager.getInstance().getRate_x()),
+						(int) (a.getHeight()*ScreenManager.getInstance().getRate_x()))));
 		setTexturized(false);
 	}
 

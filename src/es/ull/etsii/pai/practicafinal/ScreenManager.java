@@ -7,6 +7,7 @@ public class ScreenManager {
 	private ScreenManager(){}
 	private double rate_x = 1;
 	private double rate_y = 1;
+
 	
 	public static  ScreenManager getInstance(){
 		if(instance == null)
