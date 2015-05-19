@@ -8,6 +8,7 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Entity;
 import es.ull.etsii.pai.practicafinal.GraphicEntity;
 import es.ull.etsii.pai.practicafinal.ResourceManager;
+import es.ull.etsii.pai.practicafinal.ScreenManager;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 import es.ull.etsii.pai.practicafinal.graphics.Drawable;
 /**
@@ -42,7 +43,7 @@ public class MapPainter extends JPanel {
 
 	
 	public static void paintBackground(Graphics g, BvsR_Map map){
-		g.fillRect(0, 0, ResourceManager.getInstance().getWindWidth(), ResourceManager.getInstance().getWindHeight());
+		g.fillRect(0, 0, ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight());
 		for(Entity ent: map.getBackground()){
 			GraphicEntity entg = (GraphicEntity) ent;
 			entg.getGraphic().paint(g);

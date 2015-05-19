@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
@@ -202,7 +203,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 		System.out.println("entrando");
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (OpcionesSonido) {
-				Sounds.playSound("Resources/Backgrounds/pacman_chomp.wav");
+				AudioManager.startAudio("pacman_chomp.wav");
 			}
 			if (!jbOpciones) {
 				System.out.println("select();");
@@ -216,7 +217,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			if (OpcionesSonido) {
-				Sounds.playSound("Resources/Backgrounds/button-10.wav");
+				AudioManager.startAudio("button-10.wav");
 			}
 
 			if (!jbOpciones) {
@@ -234,7 +235,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			if (OpcionesSonido) {
-				Sounds.playSound("Resources/Backgrounds/button-10.wav");
+				AudioManager.startAudio("button-10.wav");
 			}
 
 			if (!jbOpciones) {

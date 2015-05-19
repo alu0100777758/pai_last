@@ -14,6 +14,7 @@ public class UZI_bullet extends Bullet {
 			Player owner, int bulletSize) {
 		super(pos, speed, damage, push, owner, bulletSize);
 		setTextureImage();
+		setMaxDistance(500);
 	}
 	protected void setTextureImage(){
 		getGraphicShape().setTexturePath("textures/uziBullet.png");

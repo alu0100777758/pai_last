@@ -61,7 +61,7 @@ public class Scenario {
 		Physical_passive map;
 
 		for (int i = 0; i < getActors().size(); i++) {
-			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(0, 0, ResourceManager.getInstance().getWindWidth() + WINDOW_TOLERANCE, ResourceManager.getInstance().getWindHeight() + WINDOW_TOLERANCE))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
+			if (!((Physical_active) getActors().get(i)).updatePos(new PhysicalRectangle(0, 0, ScreenManager.getInstance().getWindWidth() + WINDOW_TOLERANCE, ScreenManager.getInstance().getWindHeight() + WINDOW_TOLERANCE))) {				// !!!! NO SE ESTAN GUARDANDO BIEN EL ANCHO Y ALTO DEL MAPA.
 				getActors().get(i).die();
 				getActors().remove(i);	
 			}

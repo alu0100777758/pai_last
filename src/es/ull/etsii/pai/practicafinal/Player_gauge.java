@@ -29,7 +29,7 @@ public class Player_gauge extends Entity implements Drawable, Serializable {
 
 	public Player_gauge(Player player, int pos) {
 		if(pos == TOP_RIGHT){
-			setX_pos(ResourceManager.getInstance().getWindWidth() - WIDTH);
+			setX_pos(ScreenManager.getInstance().getWindWidth() - WIDTH);
 		}
 		setBackgroundGauge();
 		setCurrentPlayer(player);

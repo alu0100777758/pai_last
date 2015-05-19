@@ -18,8 +18,6 @@ import es.ull.etsii.pai.practicafinal.graphics.Texture;
 
 public class ResourceManager {
 	private Random randGen = new Random();
-	private int windWidth = 1200;						// Ancho de la ventana.
-	private int windHeight = 800;						// Alto de la ventana.
 	private static ResourceManager instance = null;		// Unica instancia de esta clase.
 	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); // Mapa de imagenes con su nombre asociado.
 	
@@ -64,18 +62,6 @@ public class ResourceManager {
 	 */
 	public HashMap<String, BufferedImage> getBufferedImages() {
 		return bufferedImages;
-	}
-	public int getWindWidth() {
-		return windWidth;
-	}
-	public void setWindWidth(int windWidth) {
-		this.windWidth = windWidth;
-	}
-	public int getWindHeight() {
-		return windHeight;
-	}
-	public void setWindHeight(int windHeight) {
-		this.windHeight = windHeight;
 	}
 	
 }
