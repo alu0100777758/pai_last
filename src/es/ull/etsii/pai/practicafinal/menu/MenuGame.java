@@ -14,7 +14,7 @@ import es.ull.etsii.pai.practicafinal.GameLoop;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 
 @SuppressWarnings("serial")
-public class MenuGame extends JPanel  implements KeyListener {
+public class MenuGame extends JPanel implements KeyListener {
 
 	private Background bg;
 
@@ -33,16 +33,16 @@ public class MenuGame extends JPanel  implements KeyListener {
 
 	private Font font;
 
-	public MenuGame()  {
-			addKeyListener(this);
-//			jbtIniciar.addActionListener(this);
-//		setPreferredSize(new Dimension(WIDTH, HEIGHT));
+	public MenuGame() {
+		addKeyListener(this);
+		
 		setFocusable(true);
 		requestFocus();
 		try {
 
-			bg = new Background("Resources/Backgrounds/grassbg1.gif", 1);
-			bg.setVector(-0.1, 0);
+//			bg = new Background("Resources/Backgrounds/grassbg1.gif", 1);
+//			bg.paint(g);
+//			bg.setVector(-0.1, 0);
 
 			titleColor = new Color(128, 0, 0);
 			titleFont = new Font("Century Gothic", Font.PLAIN, 28);
@@ -59,19 +59,23 @@ public class MenuGame extends JPanel  implements KeyListener {
 	}
 
 	public void update() {
-		bg.update();
+//		bg.paint(g);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
-		// draw bg
-//		bg.draw(g);
-
+		
+		
+		Background bg = new Background("");
+		bg.paint(g);
 		// draw title
-		g.setColor(titleColor);
+		Ganador ganador = new Ganador("paco", getWidth(), getHeight());
+		ganador.paint(g);
+		g.setColor(Color.RED);
 		g.setFont(titleFont);
-		g.drawString("Red Vs Blue", 80, 70);
+		g.setFont(new Font("Cantarell", 1, 70));
+		g.drawString("Red Vs Blue", 0, 70);
 
 		// draw menu options
 		g.setFont(font);
@@ -79,61 +83,67 @@ public class MenuGame extends JPanel  implements KeyListener {
 			for (int i = 0; i < options.length; i++) {
 				if (i == currentChoice) {
 					g.setColor(Color.BLACK);
+					options[i] = "   " + options[i];
 				} else {
-					g.setColor(Color.RED);
+					g.setColor(Color.BLUE);
 				}
-				g.drawString(options[i], 110, 100 + i * 15);
+				g.setFont(new Font("Cantarell", 1, 30));
+				g.drawString(options[i], 110, 150 + i * 30);
+				if (i == currentChoice) {
+					options[i] = options[i].replace("   ", "");
+				}
 			}
 
 		} else {
 			for (int i = 0; i < optiones.length; i++) {
 				if (i == currentChoice2) {
 					g.setColor(Color.BLACK);
+					optiones[i] = "   " + optiones[i];
 				} else {
 					g.setColor(Color.RED);
 				}
-				g.drawString(optiones[i], 110, 100 + i * 15);
+				g.setFont(new Font("Cantarell", 1, 30));
+				g.drawString(optiones[i], 110, 150 + i * 30);
+				if (i == currentChoice2) {
+					optiones[i] = optiones[i].replace("   ", "");
+				}
 			}
 		}
 
 	}
 
 	private void select() {
-		if (currentChoice == 0) {				// INICIAR JUEGO
+		if (currentChoice == 0) { 	// INICIAR JUEGO
 			GameFrame frame = new GameFrame("test1.rvsbm");
 			frame.setTitle("Red VS Blue");
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			frame.setLocationRelativeTo(null); // Center the frame
+			frame.setLocationRelativeTo(null); 	
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			GameLoop.init(frame);
 
 		}
-		if (currentChoice == 1) {				// INICIAR EDITOR
-			// Editar
-			EditorFrame frame = new EditorFrame();
-			frame.setTitle("Red VS Blue Editor");
-			frame.setSize(1200, 800);
-			// Maximizar frame
-			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			frame.setLocationRelativeTo(null); // Center the frame
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-			frame.setVisible(true);
-			frame.setFocusable(true);
+		if (currentChoice == 1) { 	// INICIAR EDITOR
+//			EditorFrame frame = new EditorFrame();
+//			frame.setTitle("Red VS Blue Editor");
+//			frame.setSize(1200, 800);
+//			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//			frame.setLocationRelativeTo(null); // Center the frame
+//			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//			frame.setVisible(true);
+//			frame.setFocusable(true);
+			
 		}
-		if (currentChoice == 2) {
-			// Opciones
+		if (currentChoice == 2) {	//INICIAR OPCIONES
 			jbOpciones = true;
 		}
-		if (currentChoice == 3) {
+		if (currentChoice == 3) {	// SALIR DEL MENÚ
 			System.exit(0);
 		}
 	}
 
 	private void selectOpciones() {
-		if (currentChoice2 == 0) {
-			// Sonido
+		if (currentChoice2 == 0) {	// OPCIONES/SONIDO
 			if (OpcionesSonido) {
 				optiones[0] = "Sonido OFF";
 				OpcionesSonido = false;
@@ -143,8 +153,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 			}
 			System.out.println("currentChoice2 == 0");
 		}
-		if (currentChoice2 == 1) {
-			// Sonido
+		if (currentChoice2 == 1) {	// OPCIONES/EFECTOS DE SONIDO
 			if (OpcionesEfectoSonido) {
 				optiones[1] = "Efectos sonido OFF";
 				OpcionesEfectoSonido = false;
@@ -154,8 +163,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 			}
 			System.out.println("currentChoice2 == 0");
 		}
-		if (currentChoice2 == 2) {
-			// Resolución
+		if (currentChoice2 == 2) {	// OPCIONES/RESOLUCIÓN
 			System.out.println("currentChoice2 == 0");
 			System.out.println("OpcionesResolucion: " + OpcionesResolucion);
 			if (OpcionesResolucion == 0) {
@@ -176,14 +184,13 @@ public class MenuGame extends JPanel  implements KeyListener {
 				} else {
 					if (OpcionesResolucion == 2) {
 						OpcionesResolucion = 0;
+					}
 				}
+
 			}
-			
-			}
-			
+
 		}
-		if (currentChoice2 == 3) {
-			// Volver
+		if (currentChoice2 == 3) {	// OPCIONES/VOLVER
 			jbOpciones = false;
 			System.out.println("currentChoice2 == 1");
 		}
@@ -191,7 +198,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 	}
 
 	public void keyPressed(int k) {
-	
+
 	}
 
 	public void keyReleased(int k) {
@@ -202,7 +209,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 		System.out.println("entrando");
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (OpcionesSonido) {
-				Sounds.playSound("Resources/Backgrounds/pacman_chomp.wav");
+				Sounds.playSound("Recursos/Backgrounds/pacman_chomp.wav");
 			}
 			if (!jbOpciones) {
 				System.out.println("select();");
@@ -216,7 +223,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			if (OpcionesSonido) {
-				Sounds.playSound("Resources/Backgrounds/button-10.wav");
+				Sounds.playSound("Recursos/Backgrounds/button-10.wav");
 			}
 
 			if (!jbOpciones) {
@@ -234,7 +241,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			if (OpcionesSonido) {
-				Sounds.playSound("Resources/Backgrounds/button-10.wav");
+				Sounds.playSound("Recursos/Backgrounds/button-10.wav");
 			}
 
 			if (!jbOpciones) {
@@ -251,7 +258,7 @@ public class MenuGame extends JPanel  implements KeyListener {
 			System.out.println("abajo");
 			this.repaint();
 		}
-		
+
 	}
 
 	@Override

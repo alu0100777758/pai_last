@@ -1,69 +1,35 @@
 package es.ull.etsii.pai.practicafinal.menu;
 
-import java.awt.*;
-import java.awt.image.*;
-import java.io.File;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Background extends JPanel {
+@SuppressWarnings("serial")
+public class Background extends JPanel{
 
-	private Image image;
+	private BufferedImage img;
 
-	private double x;
-	private double y;
-	private double dx;
-	private double dy;
+    public Background(String s){
+        try{
+        	img = ImageIO.read(this.getClass().getResource(s));
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
 
-	private double moveScale;
-
-	public Background(String s, double ms) {
-		try {
-			ImageIcon icon = new ImageIcon(ImageIO.read(new File(s)));
-			image = icon.getImage();
-			moveScale = ms;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void setPosition(double x, double y) {
-		this.x = (x * moveScale) % GUIGame.WIDTH;
-		this.y = (y * moveScale) % GUIGame.HEIGHT;
-	}
-
-	public void setVector(double dx, double dy) {
-		this.dx = dx;
-		this.dy = dy;
-	}
-
-	public void update() {
-		x += dx;
-		y += dy;
-		// repaint();
-	}
-
-	public void draw(Graphics2D g) {
-//		super.paint(g);
-
-//		g.drawImage(image, 0, 0, (ImageObserver) this);
-		// JLabel imageLabel = new JLabel();
-		// imageLabel.setIcon(icon);
-		// add(p1Image);
-		// setOpaque(false);
-
-		 g.drawImage(image, (int)x, (int)y, null);
-		//
-		if (x < 0) {
-			g.drawImage(image, (int) x + GUIGame.WIDTH, (int) y, null);
-		}
-		if (x > 0) {
-			g.drawImage(image, (int) x - GUIGame.WIDTH, (int) y, null);
-		}
-	}
+    public void paint(Graphics g){
+        ImageIcon imagenFondo = new ImageIcon(getClass().getResource("Consola-Arcade.gif"));
+        super.paintComponent(g);
+//        g.drawImage(fondo.getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.drawImage(imagenFondo.getImage(),0,0, 500, 500, null);       
+        setOpaque(false);
+//        super.paintComponent(g);
+}
 
 }
