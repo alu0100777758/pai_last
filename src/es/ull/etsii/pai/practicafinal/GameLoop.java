@@ -52,18 +52,6 @@ public class GameLoop{
 	        //incluir evento para calcular y otro para dibujar
 	        stepTimer = new Timer((int) (1000/FRAMES_PER_SECOND), toUdateobject);
 	        stepTimer.start();
-//	        if( sleep_time >= 0 ) {
-//	            try {
-//					Thread.sleep( sleep_time/1000 );
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//	        }
-//	        else {
-//	            // Shit, we are running behind!
-//	        }
-//	    }
 	}
 	// tendr�n que ser eventos para que no molesten con los threads
 	private static void display_game() {
