@@ -3,7 +3,12 @@ package es.ull.etsii.pai.practicafinal.menu;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JPanel;
+
+import es.ull.etsii.pai.practicafinal.GameFrame;
 
 @SuppressWarnings("serial")
 public class Ganador extends JPanel {
@@ -11,11 +16,14 @@ public class Ganador extends JPanel {
 	private String nombreGanador;
 	private int width;
 	private int height;
-
-	public Ganador(String nombreGanador, int width, int height) {
+	private GameFrame frame;
+	
+	public Ganador(String nombreGanador, int width, int height, GameFrame frame) {
 		this.nombreGanador = nombreGanador;
 		this.width = width;
 		this.height = height;
+		setFrame(frame);
+
 	}
 
 	@Override
@@ -28,7 +36,15 @@ public class Ganador extends JPanel {
 		g.setFont(new Font("Cantarell", 1, 50));
 		g.drawString(nombreGanador + " Wins!", this.width / 2 - this.width / 3, 180);
 		g.setFont(new Font("Cantarell", 1, 20));
-		g.drawString("Press enter for return", this.width / 2 - this.width / 4, 300);
+		g.drawString("Press any key to close", this.width / 2 - this.width / 4, 300);
+	}
+
+	public GameFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(GameFrame frame) {
+		this.frame = frame;
 	}
 
 }

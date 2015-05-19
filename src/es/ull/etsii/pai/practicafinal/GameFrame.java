@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -45,9 +46,10 @@ public class GameFrame extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				if (((ScenarioPanel)getScenarioPanel()).getScenario().isEnded()) {
 					if (((ScenarioPanel)getScenarioPanel()).getScenario().isBlueWins())
-						setEnd(new Ganador("Blue", 1200, 800));		
+						setEnd(new Ganador("Blue", 1200, 800, getThis()));		
 					else
-						setEnd(new Ganador("Red", 1200, 800));	
+						setEnd(new Ganador("Red", 1200, 800, getThis()));	
+					getThis().addKeyListener(new WinnerKeyHandler());
 					remove(getScenarioPanel());
 					getContentPane().add(getEnd());
 					validate();
@@ -84,7 +86,9 @@ public class GameFrame extends JFrame implements ActionListener{
 	public void setTimer(Timer timer) {
 		this.timer = timer;
 	}
-
+	public GameFrame getThis() { 
+		return this;
+		}
 	/**
 	 * Manejador de teclas.
 	 * 
@@ -111,6 +115,13 @@ public class GameFrame extends JFrame implements ActionListener{
 
 	}
 
+	class WinnerKeyHandler extends KeyAdapter {
+		
+		public void keyTyped(KeyEvent e) {
+				getThis().dispose();
+			
+		}
+	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().getClass().equals(Timer.class)) {
 			((ScenarioPanel) getScenarioPanel()).getScenario().update();
