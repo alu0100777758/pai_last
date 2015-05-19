@@ -43,7 +43,8 @@ public class MapPainter extends JPanel {
 
 	
 	public static void paintBackground(Graphics g, BvsR_Map map){
-		g.fillRect(0, 0, ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight());
+		ScreenManager screen = ScreenManager.getInstance();
+		g.fillRect(0, 0, (int)(screen.getWindWidth()*screen.getRate_x()),(int)(screen.getWindHeight()*screen.getRate_y()));
 		for(Entity ent: map.getBackground()){
 			GraphicEntity entg = (GraphicEntity) ent;
 			entg.getGraphic().paint(g);

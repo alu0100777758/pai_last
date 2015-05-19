@@ -1,4 +1,5 @@
 package es.ull.etsii.pai.practicafinal.graphics;
+
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.
@@ -26,8 +27,7 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	private Rectangle textureAnchor = null;
 	private boolean image = false;
 	private boolean flipImage = false;
-	
-	
+
 	public boolean isFlipImage() {
 		return flipImage;
 	}
@@ -74,34 +74,39 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 
 	@Override
 	public void paint(Graphics g) {
+		double xrate = ScreenManager.getInstance().getRate_x();
+		double yrate = ScreenManager.getInstance().getRate_y();
 		if (isTexturized() && !isImage())
 			texturize(getTexturePath());
 		Graphics2D g2 = (Graphics2D) g.create();
 		if (isImage()) {
-			BufferedImage bimage = ResourceManager.getInstance().getBufferedImage(
-					getTexturePath());
-			if(isFlipImage())
+			BufferedImage bimage = ResourceManager.getInstance()
+					.getBufferedImage(getTexturePath());
+			if (isFlipImage())
 				bimage = createFlipped(bimage);
-			g2.drawImage(
-					bimage, (int)( getLocation().getX()*ScreenManager.getInstance().getRate_x()),
-					(int)(getLocation().getY()*ScreenManager.getInstance().getRate_y()), (int) (getWidth()*ScreenManager.getInstance().getRate_x()),
-					(int) (getHeight()*ScreenManager.getInstance().getRate_x()), null);
+			g2.drawImage(bimage, (int) (getLocation().getX() * xrate),
+					(int) (getLocation().getY() * yrate),
+					(int) (getWidth() * xrate), (int) (getHeight() * yrate),
+					null);
 		} else {
 			g2.setPaint(getPaint());
-			g2.fill(new Rectangle((int)( getLocation().getX()*ScreenManager.getInstance().getRate_x()),
-					(int)(getLocation().getY()*ScreenManager.getInstance().getRate_y()), (int) (getWidth()*ScreenManager.getInstance().getRate_x()),
-					(int) (getHeight()*ScreenManager.getInstance().getRate_x())));
+			g2.fill(new Rectangle((int) (getLocation().getX() * xrate),
+					(int) (getLocation().getY() * yrate),
+					(int) (getWidth() * xrate), (int) (getHeight() * yrate)));
 		}
 
 		g2.dispose();
 	}
 
 	private void texturize(String texturePath2) {
+		double xrate = ScreenManager.getInstance().getRate_x();
+		double yrate = ScreenManager.getInstance().getRate_y();
 		Rectangle a = getTextureAnchor();
 		setPaint(new TexturePaint(ResourceManager.getInstance()
-				.getBufferedImage(getTexturePath()), new Rectangle((int)( a.getLocation().getX()*ScreenManager.getInstance().getRate_x()),
-						(int)(a.getLocation().getY()*ScreenManager.getInstance().getRate_y()), (int) (a.getWidth()*ScreenManager.getInstance().getRate_x()),
-						(int) (a.getHeight()*ScreenManager.getInstance().getRate_x()))));
+				.getBufferedImage(getTexturePath()), new Rectangle((int) (a
+				.getLocation().getX() * xrate),
+				(int) (a.getLocation().getY() * yrate),
+				(int) (a.getWidth() * xrate), (int) (a.getHeight() * yrate))));
 		setTexturized(false);
 	}
 
@@ -112,24 +117,24 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	public void setPaint(Paint color) {
 		this.paint = color;
 	}
-	private static BufferedImage createFlipped(BufferedImage image)
-    {
-        AffineTransform at = new AffineTransform();
-        at.concatenate(AffineTransform.getScaleInstance(-1, 1));
-        at.concatenate(AffineTransform.getTranslateInstance( -image.getWidth(),0));
-        return createTransformed(image, at);
-    }
-	  private static BufferedImage createTransformed(
-		        BufferedImage image, AffineTransform at)
-		    {
-		        BufferedImage newImage = new BufferedImage(
-		            image.getWidth(), image.getHeight(),
-		            BufferedImage.TYPE_INT_ARGB);
-		        Graphics2D g = newImage.createGraphics();
-		        g.transform(at);
-		        g.drawImage(image, 0, 0, null);
-		        g.dispose();
-		        return newImage;
-		    }
+
+	private static BufferedImage createFlipped(BufferedImage image) {
+		AffineTransform at = new AffineTransform();
+		at.concatenate(AffineTransform.getScaleInstance(-1, 1));
+		at.concatenate(AffineTransform.getTranslateInstance(-image.getWidth(),
+				0));
+		return createTransformed(image, at);
+	}
+
+	private static BufferedImage createTransformed(BufferedImage image,
+			AffineTransform at) {
+		BufferedImage newImage = new BufferedImage(image.getWidth(),
+				image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = newImage.createGraphics();
+		g.transform(at);
+		g.drawImage(image, 0, 0, null);
+		g.dispose();
+		return newImage;
+	}
 
 }

@@ -297,7 +297,7 @@ public abstract class Weapon implements Serializable{
 		return secondaryClipSize;
 	}
 
-	protected int getMainAmmo() {
+	public int getMainAmmo() {
 		return mainAmmo;
 	}
 

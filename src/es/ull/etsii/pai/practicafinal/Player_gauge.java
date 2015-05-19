@@ -7,6 +7,7 @@ package es.ull.etsii.pai.practicafinal;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
@@ -138,11 +139,11 @@ public class Player_gauge extends Entity implements Drawable, Serializable {
 		updateCurrent();
 		for (GraphicRectangle rect : getGraphicShapes())
 			rect.paint(g);
+		g.setColor(Color.YELLOW);
+//		g.drawString(Integer.toString(getCurrentPlayer().getWeapon().getMainAmmo()),getGraphicShapes(), (int)(ScreenManager.getInstance().getRate_y()*50));
 	}
 
 	private void updateCurrent() {
-//		System.out.println("max : " + getCurrentPlayer().getMaxHp()
-//				+ " actual: " + getCurrentPlayer().getHp());
 		getCurrentStatus()
 				.setFrame(
 						x_pos,
