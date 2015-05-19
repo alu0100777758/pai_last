@@ -24,7 +24,7 @@ public class ScenarioPanel extends JPanel{
 	 * @param mapName
 	 */
 	public ScenarioPanel(String mapName) {
-		setScenario(new Scenario(getWidth(), getHeight(),mapName));
+		setScenario(new Scenario(getWidth(), getHeight(), mapName));
 		this.requestFocus();
 	} 
 	public void paintComponent(Graphics g){

@@ -17,11 +17,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GameFrame extends JFrame implements ActionListener {
-	private ScenarioPanel scenarioPanel; // Panel con el escenario.
+import es.ull.etsii.pai.practicafinal.menu.Ganador;
 
+public class GameFrame extends JFrame implements ActionListener{
+	private JPanel scenarioPanel;				// Panel con el escenario.
+	private JPanel end;
+	private Timer timer; 
 	/**
 	 * Inicia una ventana con un mapa cargado identificado con el parametro.
 	 * 
@@ -32,8 +36,26 @@ public class GameFrame extends JFrame implements ActionListener {
 		this.add(getScenarioPanel());
 		this.addKeyListener(new KeyHandler());
 		addComponentListener(new MyAdapter());
-		GameLoop.setDisplayer(scenarioPanel);
-		GameLoop.setUpdater(scenarioPanel.getScenario());
+		GameLoop.setDisplayer((ScenarioPanel)scenarioPanel);
+		GameLoop.setUpdater(((ScenarioPanel)scenarioPanel).getScenario());
+
+		setTimer(new Timer(1000, new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (((ScenarioPanel)getScenarioPanel()).getScenario().isEnded()) {
+					if (((ScenarioPanel)getScenarioPanel()).getScenario().isBlueWins())
+						setEnd(new Ganador("Blue", 1200, 800));		
+					else
+						setEnd(new Ganador("Blue", 1200, 800));	
+					remove(getScenarioPanel());
+					getContentPane().add(getEnd());
+					validate();
+					repaint();
+				}				
+			}
+		}));
+		
+		getTimer().start();
 	}
 
 	/**
@@ -41,12 +63,25 @@ public class GameFrame extends JFrame implements ActionListener {
 	 * 
 	 * @return
 	 */
-	public ScenarioPanel getScenarioPanel() {
+	
+	public JPanel getScenarioPanel() {
 		return scenarioPanel;
 	}
 
-	public void setScenarioPanel(ScenarioPanel scenarioPanel) {
+	public JPanel getEnd() {
+		return end;
+	}
+	public void setEnd(JPanel end) {
+		this.end = end;
+	}
+	public void setScenarioPanel(JPanel scenarioPanel) {
 		this.scenarioPanel = scenarioPanel;
+	}
+	public Timer getTimer() {
+		return timer;
+	}
+	public void setTimer(Timer timer) {
+		this.timer = timer;
 	}
 
 	/**
@@ -60,15 +95,13 @@ public class GameFrame extends JFrame implements ActionListener {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			getScenarioPanel().getScenario().getKeyController()
+			((ScenarioPanel) getScenarioPanel()).getScenario().getKeyController()
 					.pulsedKey(e.getKeyCode(), e.getKeyChar());
 		}
 
 		@Override
-		public void keyReleased(KeyEvent arg0) {
-			;
-			getScenarioPanel().getScenario().getKeyController()
-					.releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
+		public void keyReleased(KeyEvent arg0) {;		
+			((ScenarioPanel)getScenarioPanel()).getScenario().getKeyController().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
 		}
 
 		@Override
@@ -79,7 +112,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().getClass().equals(Timer.class)) {
-			getScenarioPanel().getScenario().update();
+			((ScenarioPanel) getScenarioPanel()).getScenario().update();
 			getScenarioPanel().repaint();
 			Toolkit.getDefaultToolkit().sync();
 		}
@@ -91,7 +124,7 @@ public class GameFrame extends JFrame implements ActionListener {
 			ScreenManager screen = ScreenManager.getInstance();
 			screen.setRate_x((double)getWidth()/screen.getWindWidth());
 			screen.setRate_y((double)getHeight()/screen.getWindHeight());
-			getScenarioPanel().getScenario().getMapData().markForTexture();
+			((ScenarioPanel) getScenarioPanel()).getScenario().getMapData().markForTexture();
 			System.out.println("xrate:  "+screen.getRate_x()+" yrate: "+screen.getRate_y());
 		}
 	}

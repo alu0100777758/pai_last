@@ -13,16 +13,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.editor.MapPainter;
-import es.ull.etsii.pai.practicafinal.metaclass.PowerUpWeapon;
-import es.ull.etsii.pai.practicafinal.metaclass.weapons.UZI;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
-import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class Scenario {
 	BvsR_Map mapData = new BvsR_Map();								// Mapa donde se realizara la partida.
 	RvsBKeyController keyController = new RvsBKeyController();		// Controlador de teclas.
+	private boolean ended;
+	private boolean redWins;
+	private boolean blueWins;
+	
 	public static final int WINDOW_TOLERANCE = 200;					// Numero de pixeles que se pueden salir los jugadores de la pantalla antes de morir.
 	
 	/**
@@ -106,6 +107,15 @@ public class Scenario {
 		for (int i = 0; i < getStaticMap().size(); i++)
 			if (((Physical_passive)getStaticMap().get(i)).hasToDie())
 				getStaticMap().remove(i);
+		if (getPlayer_one().hasToDie()) {
+			setEnded(true);
+			setRedWins(true);;
+		}
+		if (getPlayer_two().hasToDie()) {
+			setEnded(true);
+			setBlueWins(true);;
+		}
+			
 	}
 	/**
 	 * Pinta el escenario.
@@ -196,6 +206,33 @@ public class Scenario {
 	public void setMapData(BvsR_Map mapData) {
 		this.mapData = mapData;
 	}
+
+	
+	public boolean isEnded() {
+		return ended;
+	}
+
+	public void setEnded(boolean ended) {
+		this.ended = ended;
+	}
+	
+
+	public boolean isRedWins() {
+		return redWins;
+	}
+
+	public void setRedWins(boolean redWins) {
+		this.redWins = redWins;
+	}
+
+	public boolean isBlueWins() {
+		return blueWins;
+	}
+
+	public void setBlueWins(boolean blueWins) {
+		this.blueWins = blueWins;
+	}
+
 
 	/**
 	 * 
