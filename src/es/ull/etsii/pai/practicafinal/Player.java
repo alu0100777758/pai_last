@@ -295,7 +295,6 @@ public class Player extends Actor implements Physical_active {
 				(int) getPosition().y() + HEIGHT - WIDTH);
 		getPhysicalRectangle().setSize(HEIGHT, WIDTH);
 		getGraphicShapes().remove(WEAPON);
-		System.out.println("Muerto");
 	}
 
 	/**

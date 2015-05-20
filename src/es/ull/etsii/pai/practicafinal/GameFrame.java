@@ -139,7 +139,6 @@ public class GameFrame extends JFrame implements ActionListener{
 			screen.setRate_x((double)getWidth()/screen.getWindWidth());
 			screen.setRate_y((double)getHeight()/screen.getWindHeight());
 			((ScenarioPanel) getScenarioPanel()).getScenario().getMapData().markForTexture();
-			System.out.println("xrate:  "+screen.getRate_x()+" yrate: "+screen.getRate_y());
 		}
 	}
 }
