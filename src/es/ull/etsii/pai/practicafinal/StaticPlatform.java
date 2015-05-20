@@ -17,12 +17,13 @@ import java.util.ArrayList;
 
 import javax.swing.plaf.basic.BasicInternalFrameTitlePane.MoveAction;
 
+import es.ull.etsii.pai.practicafinal.graphics.Drawable;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
-public class StaticPlatform extends Entity implements Physical_passive {
+public class StaticPlatform extends Entity implements Physical_passive, Drawable {
 	private GraphicRectangle graphicRectangle;						// Forma grafica de la plataforma.
 	private PhysicalRectangle physicalRectangle;					// Forma fisica de la plataforma.
 	

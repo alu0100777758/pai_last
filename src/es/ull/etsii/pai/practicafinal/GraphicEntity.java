@@ -8,11 +8,13 @@ package es.ull.etsii.pai.practicafinal;
  *
  */
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.geom.RectangularShape;
 
+import es.ull.etsii.pai.practicafinal.graphics.Drawable;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
-public class GraphicEntity extends Entity {
+public class GraphicEntity extends Entity implements Drawable{
 	GraphicRectangle graphic = null;		// Rectangulo grafico que representa a la entidad.
 	
 	/**
@@ -22,6 +24,10 @@ public class GraphicEntity extends Entity {
 	public GraphicEntity(GraphicRectangle rect) {
 		super();
 		setGraphic(rect);
+	}
+	@Override
+	public void paint(Graphics g) {
+		getGraphic().paint(g);
 	}
 	/**
 	 * Getters y Setters.

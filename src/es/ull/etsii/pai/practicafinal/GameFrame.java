@@ -21,8 +21,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import es.ull.etsii.pai.practicafinal.menu.Ganador;
-
 public class GameFrame extends JFrame implements ActionListener{
 	private JPanel scenarioPanel;				// Panel con el escenario.
 	private JPanel end;

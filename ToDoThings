@@ -1,9 +1,0 @@
-
-	/**
-	 * 	- Delegar el control de las colisiones del escenario a una clase encargada del motor fisico.
-	 *  - Afinar el sistema de agacharse, verificar si se puede levantar antes de hacerlo. (No realmente necesario todavia).
-	 *  - Como siempre, mejorar clase Player.
-	 *  - Empezar con animaciones y graficos.
-	 *  - Terminar de rellenar los metodos vacios creados por las interfaces.
-	 * 	
-	 */

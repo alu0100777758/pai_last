@@ -9,16 +9,16 @@ package es.ull.etsii.pai.practicafinal;
  */
 import java.applet.Applet;
 import java.applet.AudioClip;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class AudioManager {
 	public static final String SOUNDS_FOLDER = "/sounds/";
 	public static final int MAX_CONCURRENT_SOUNDS = 15;							// Numero maximo de sonidos reproduciendo a la vez.
-	private static ArrayList<AudioClip> clips = new ArrayList<AudioClip>();		// Truco sucio para engañar al planificador
+	private static ArrayList<AudioClip> clips = new ArrayList<AudioClip>();		// Truco sucio para engañar al planificador.
 	private static ArrayList<AudioClip> loops = new ArrayList<AudioClip>();		// Lista de clips ejecutandose indefinidamente.
-	private static boolean sfx = true;
-	private static boolean music = true;
+	private static boolean sfx = true;											// Determina si estan activados los efectos de sonido.
+	private static boolean music = false;										// Determina si esta activada la musica TODO cambiar el comportamiento por defecto 
+																				//	(por defecto desactivada por comodidad durante desarrollo)
 	/**
 	 * Comienza la reproduccion del audio indicado por parametro.
 	 * @param name

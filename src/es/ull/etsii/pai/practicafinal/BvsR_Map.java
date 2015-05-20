@@ -147,7 +147,6 @@ public class BvsR_Map implements Serializable {
 	}
 
 	public void markForTexture() {
-		System.out.println("size " + getStaticMap().size());
 		for (int i = 0; i < getStaticMap().size(); i++) {
 			StaticPlatform actor = (StaticPlatform) (getStaticMap().get(i));
 			GraphicRectangle rect = actor.getGraphicRectangle();

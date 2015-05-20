@@ -120,6 +120,7 @@ public class Scenario {
 			setBlueWins(true);
 		}
 		if(isEnded()){
+			AudioManager.stopAll();
 			AudioManager.startAudio(dieSounds[ResourceManager.getInstance().getRandGen().nextInt(dieSounds.length)]);
 			GameLoop.stepTimer.stop();
 		}

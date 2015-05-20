@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal.menu;
+package es.ull.etsii.pai.practicafinal;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,8 +7,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
-
-import es.ull.etsii.pai.practicafinal.GameFrame;
 
 @SuppressWarnings("serial")
 public class Ganador extends JPanel {

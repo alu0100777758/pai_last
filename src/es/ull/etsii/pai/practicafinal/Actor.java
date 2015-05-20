@@ -13,8 +13,6 @@ import java.awt.Rectangle;
 import java.awt.geom.RectangularShape;
 import java.util.ArrayList;
 
-import javax.swing.JEditorPane;
-
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.prct9.geometry.Point2D;

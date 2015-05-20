@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
@@ -39,7 +40,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 	protected static final String TEMP_FILE_MAP = "map.temp";
 	BvsR_Map map;
 	EditorToolbar toolbar;
-	TopPanel toppanel = new TopPanel();
+	JPanel toppanel = new JPanel();
 	MapPainter bottomPanel;
 
 	public BvsR_Map getMap() {
@@ -67,6 +68,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 		createMenuBar();
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(this);
+        setResizable(false);
         ScreenManager.getInstance().reset();
 	}
 
@@ -147,7 +149,6 @@ public class EditorFrame extends JFrame implements ActionListener,
 		lanzarGameScenario.setToolTipText("Lanzar partida");
 		lanzarGameScenario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ill try to launch");
 				if(getMap().getGUI().isEmpty()){
 					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_one(),0));
 					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_two(),Player_gauge.TOP_RIGHT));
@@ -156,12 +157,10 @@ public class EditorFrame extends JFrame implements ActionListener,
 				GameFrame frame = new GameFrame(TEMP_FILE_MAP);
 				frame.setTitle("Red VS Blue");
 				frame.setSize(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight());
-			//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			 	frame.setLocationRelativeTo(null); // Center the frame
-			    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
+			 	frame.setLocationRelativeTo(null); 
+			 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			 	frame.setVisible(true);
 				GameLoop.init(frame);
-				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				frame.addWindowListener(new WindowAdapter()
 		        {
 		            @Override
@@ -187,9 +186,6 @@ public class EditorFrame extends JFrame implements ActionListener,
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
-		System.out.println("updating");
-		// TODO Auto-generated method stub
 		repaint();
 	}
 

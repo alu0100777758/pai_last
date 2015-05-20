@@ -8,11 +8,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ */
+/**
+ * Herramienta analoga a RectangleTool , con la diferencia de esta forma parte del fondo del mapa (carecen de fisicas, y se dibujan en primer lugar)
+ *
+ */
 public class BackgroundTool extends RectangleTool{
+	public static final String T_BACKGROUND_ICON = "/icons/BackgroundTool.png";		//	ruta del icono
 	public BackgroundTool(){
 		setButton(new JButton(new ImageIcon(getClass().getResource(
-				"/icons/BackgroundTool.png"))));
+				T_BACKGROUND_ICON))));
 	}
 	protected void addRectangle(int i, int j, int i2, int j2) {
 		int beginX = Math.min(i, i2);
