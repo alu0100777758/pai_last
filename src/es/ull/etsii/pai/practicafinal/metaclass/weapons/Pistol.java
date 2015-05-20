@@ -19,7 +19,7 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 public class Pistol extends Weapon{
 	public static final double FIRE_RATE = 1.0;
 	public static final int CLIP_SIZE = 12;
-	public static final int DAMAGE = 2;
+	public static final int DAMAGE = 5;
 	public static final int SPEED = 20;
 	public static final int PUSH = 8;
 	

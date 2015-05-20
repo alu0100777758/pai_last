@@ -23,7 +23,7 @@ public class Knife extends Weapon {
 	public static final double FIRE_RATE = 1.0;
 	public static final int CLIP_SIZE = 1;
 	public static final int RELOADING_TIME = 0;
-	public static final int DAMAGE = 1;
+	public static final int DAMAGE = 10;
 	public static final int SPEED = 20;
 	public static final int PUSH = 15;
 	public static final int RANGE = 50;
@@ -47,7 +47,7 @@ public class Knife extends Weapon {
 		setX_offset(-15);
 		setY_offset(10);
 		setMainReloadingTime(RELOADING_TIME);
-		getGraphicShape().setTexturePath("textures/Knife.png");
+		getGraphicShape().setTexturePath("textures/knife.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
 	}

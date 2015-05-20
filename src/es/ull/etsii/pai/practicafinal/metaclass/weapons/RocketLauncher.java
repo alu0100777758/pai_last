@@ -19,7 +19,7 @@ public class RocketLauncher extends Weapon{
 	public static final double FIRE_RATE = 1.0;
 	public static final int CLIP_SIZE = 3;
 	public static final int RELOADING_TIME = 90;
-	public static final int DAMAGE = 15;
+	public static final int DAMAGE = 20;
 	public static final int SPEED = 20;
 	public static final int PUSH = 30;
 	public static final int BULLET_SIZE = 15;

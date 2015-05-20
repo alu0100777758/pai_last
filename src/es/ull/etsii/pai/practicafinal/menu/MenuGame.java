@@ -16,7 +16,6 @@ import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
 import es.ull.etsii.pai.practicafinal.ScreenManager;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
-import es.ull.etsii.pai.practicafinal.secretgame.PongJFrame;
 
 @SuppressWarnings("serial")
 public class MenuGame extends JPanel implements KeyListener {
@@ -25,7 +24,7 @@ public class MenuGame extends JPanel implements KeyListener {
 	private int currentChoice = 0;
 	private int currentChoice2 = 0;
 	private String[] options = { "Iniciar Partida", "Editar Escenario", "Opciones", "Salir" };
-	private String[] optiones = { "Sonido ON", "Efectos sonido ON", "Resolución Escritorio", "volver" };
+	private String[] optiones = { "Sonido ON", "Efectos sonido ON", "Resoluciï¿½n Escritorio", "volver" };
 	private boolean jbOpciones = false;
 	private boolean OpcionesSonido = true;
 	private boolean OpcionesEfectoSonido = true;
@@ -53,7 +52,7 @@ public class MenuGame extends JPanel implements KeyListener {
 		g.setFont(new Font("Cantarell", 1, 70));
 		g.drawString("Red Vs Blue", 0, 70);
 
-		// Dibujar Menú
+		// Dibujar Menï¿½
 		g.setFont(font);
 		if (!jbOpciones) {
 			for (int i = 0; i < options.length; i++) {
@@ -127,7 +126,7 @@ public class MenuGame extends JPanel implements KeyListener {
 		if (currentChoice == 2) {	//INICIAR OPCIONES
 			jbOpciones = true;
 		}
-		if (currentChoice == 3) {	// SALIR DEL MENÚ
+		if (currentChoice == 3) {	// SALIR DEL MENï¿½
 			System.exit(0);
 		}
 	}
@@ -157,18 +156,18 @@ public class MenuGame extends JPanel implements KeyListener {
 			}
 			System.out.println("currentChoice2 == 0");
 		}
-		if (currentChoice2 == 2) {	// OPCIONES/RESOLUCIÓN
+		if (currentChoice2 == 2) {	// OPCIONES/RESOLUCIï¿½N
 			System.out.println("currentChoice2 == 0");
 			System.out.println("OpcionesResolucion: " + OpcionesResolucion);
 			if (OpcionesResolucion == 0) {
 				System.out.println("Dentro");
-				optiones[2] = "Resolución Tablet";
+				optiones[2] = "Resoluciï¿½n Tablet";
 			}
 			if (OpcionesResolucion == 1) {
-				optiones[2] = "Resolución Móvil";
+				optiones[2] = "Resoluciï¿½n Mï¿½vil";
 			}
 			if (OpcionesResolucion == 2) {
-				optiones[2] = "Resolución Escritorio";
+				optiones[2] = "Resoluciï¿½n Escritorio";
 			}
 			if (OpcionesResolucion == 0) {
 				OpcionesResolucion = 1;
@@ -237,10 +236,10 @@ public class MenuGame extends JPanel implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			secretGame =secretGame + 1;
 			if (secretGame.equals("101111")) {
-				PongJFrame frame = new PongJFrame();
+			/*	PongJFrame frame = new PongJFrame();
 				frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setVisible(true);
+				frame.setVisible(true);*/
 				
 			}
 			if (OpcionesSonido) {

@@ -8,8 +8,6 @@ package es.ull.etsii.pai.practicafinal.metaclass.weapons;
  *
  */
 import es.ull.etsii.pai.practicafinal.AudioManager;
-import es.ull.etsii.pai.practicafinal.Bullet;
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.practicafinal.Side;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
@@ -20,7 +18,7 @@ public class UZI extends Weapon{
 	public static final double FIRE_RATE = 5.0;
 	public static final int CLIP_SIZE = 20;
 	public static final int RELOADING_TIME = 90;
-	public static final int DAMAGE = 1;
+	public static final int DAMAGE = 2;
 	public static final int SPEED = 20;
 	public static final int PUSH = 6;
 	
