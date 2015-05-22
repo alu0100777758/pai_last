@@ -8,8 +8,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+import es.ull.etsii.pai.redvsblue.Player;
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.

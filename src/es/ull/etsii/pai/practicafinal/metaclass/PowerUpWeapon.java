@@ -10,12 +10,12 @@ package es.ull.etsii.pai.practicafinal.metaclass;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-import es.ull.etsii.pai.practicafinal.Player;
-import es.ull.etsii.pai.practicafinal.StaticPlatform;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.prct9.geometry.Segment;
+import es.ull.etsii.pai.redvsblue.Player;
+import es.ull.etsii.pai.redvsblue.StaticPlatform;
 
 public class PowerUpWeapon extends StaticPlatform{
 	private static final long serialVersionUID = 674995040178479648L;
@@ -43,7 +43,7 @@ public class PowerUpWeapon extends StaticPlatform{
 		setWeapon(weapon);
 	}
 	/**
-	 * Crea un power up en unas coordenadas con un tamaño determinado con un arma determinada.
+	 * Crea un power up en unas coordenadas con un tamaï¿½o determinado con un arma determinada.
 	 * @param x1
 	 * @param y1
 	 * @param width

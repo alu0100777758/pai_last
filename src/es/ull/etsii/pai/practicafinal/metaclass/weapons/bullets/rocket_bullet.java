@@ -1,8 +1,8 @@
 package es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets;
 
-import es.ull.etsii.pai.practicafinal.Bullet;
-import es.ull.etsii.pai.practicafinal.Player;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+import es.ull.etsii.pai.redvsblue.Bullet;
+import es.ull.etsii.pai.redvsblue.Player;
 
 public class rocket_bullet extends Bullet {
 	private static final long serialVersionUID = 7377268883952126650L;

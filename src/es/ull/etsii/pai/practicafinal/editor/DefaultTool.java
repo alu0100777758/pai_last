@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import es.ull.etsii.pai.practicafinal.Actor;
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.Entity;
+import es.ull.etsii.pai.redvsblue.Actor;
+import es.ull.etsii.pai.redvsblue.BvsR_Map;
+import es.ull.etsii.pai.redvsblue.Entity;
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.
@@ -31,10 +31,10 @@ public class DefaultTool extends EditorTool {
 	public static final String T_DEFAULT_ICON = "/icons/DefaultTool.png";					//	ruta del icono
 	public static final int Y_AXIS = 0;														//	constante que define el eje Y
 	public static final int X_AXIS = 3;														//	constante que define el eje X
-	private static ArrayList<Entity> selectedEntity = new ArrayList<Entity>();				//	ArrayList que contendrá los elementos seleccionados
-	private static ArrayList<Integer> foundInplane = new ArrayList<Integer>();				//	ArrayList que contendrá el plano en el que se ha encontrado cada entidad
-	private static ArrayList<Entity> clipBoardSelectedEntity = new ArrayList<Entity>();		//	ArrayList que contendrá las entidades copiables
-	private static ArrayList<Integer> clipBoardfoundInplane = new ArrayList<Integer>();		//	ArrayList que contendrá el plano en el que se ha encontrado cada entidad copiada
+	private static ArrayList<Entity> selectedEntity = new ArrayList<Entity>();				//	ArrayList que contendrï¿½ los elementos seleccionados
+	private static ArrayList<Integer> foundInplane = new ArrayList<Integer>();				//	ArrayList que contendrï¿½ el plano en el que se ha encontrado cada entidad
+	private static ArrayList<Entity> clipBoardSelectedEntity = new ArrayList<Entity>();		//	ArrayList que contendrï¿½ las entidades copiables
+	private static ArrayList<Integer> clipBoardfoundInplane = new ArrayList<Integer>();		//	ArrayList que contendrï¿½ el plano en el que se ha encontrado cada entidad copiada
 	private boolean stretchingMode;															//	Define si esta activado el modo "alargar"
 	private boolean addingMode = false;														//	Define si esta activado el modo "agregar a la seleccion"
 	private boolean removeMode = false;														//	Define si esta activado el modo "eliminar de la seleccion"
@@ -158,7 +158,7 @@ public class DefaultTool extends EditorTool {
 
 	/**
 	 * @param selectedActor entidades en la seleccion
-	 * @return	rectangulo de tamaño minimo que contiene toda la seleccion
+	 * @return	rectangulo de tamaï¿½o minimo que contiene toda la seleccion
 	 */
 	protected Rectangle getShape(ArrayList<Entity> selectedActor) {
 		if (selectedActor.isEmpty())

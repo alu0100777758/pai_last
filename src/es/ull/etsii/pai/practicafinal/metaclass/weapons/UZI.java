@@ -7,12 +7,12 @@ package es.ull.etsii.pai.practicafinal.metaclass.weapons;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
-import es.ull.etsii.pai.practicafinal.AudioManager;
-import es.ull.etsii.pai.practicafinal.Player;
-import es.ull.etsii.pai.practicafinal.Side;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets.UZI_bullet;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+import es.ull.etsii.pai.redvsblue.AudioManager;
+import es.ull.etsii.pai.redvsblue.Player;
+import es.ull.etsii.pai.redvsblue.Side;
 
 public class UZI extends Weapon{
 	public static final double FIRE_RATE = 5.0;

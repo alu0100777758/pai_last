@@ -26,13 +26,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import es.ull.etsii.pai.practicafinal.AudioManager;
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.GameFrame;
-import es.ull.etsii.pai.practicafinal.GameLoop;
-import es.ull.etsii.pai.practicafinal.Player_gauge;
-import es.ull.etsii.pai.practicafinal.ScreenManager;
+import es.ull.etsii.pai.redvsblue.AudioManager;
+import es.ull.etsii.pai.redvsblue.BvsR_Map;
+import es.ull.etsii.pai.redvsblue.GameFrame;
+import es.ull.etsii.pai.redvsblue.GameLoop;
+import es.ull.etsii.pai.redvsblue.Player_gauge;
+import es.ull.etsii.pai.redvsblue.ScreenManager;
 
+/**
+ * Ventana del editor
+ */
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
 	private static final long serialVersionUID = -5172144293412925652L;

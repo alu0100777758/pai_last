@@ -9,16 +9,16 @@ package es.ull.etsii.pai.practicafinal.metaclass;
  */
 import java.io.Serializable;
 
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.Player;
-import es.ull.etsii.pai.practicafinal.Side;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
+import es.ull.etsii.pai.redvsblue.BvsR_Map;
+import es.ull.etsii.pai.redvsblue.Player;
+import es.ull.etsii.pai.redvsblue.Side;
 
 
 public abstract class Weapon implements Serializable{
 	
 	private static final long serialVersionUID = -2320121838158394980L;
-	private Player owner;						// Dueño del arma
+	private Player owner;						// Dueï¿½o del arma
 	private int fireRate; 						// Cadencia de disparo en forma de periodo en "ticks" suponiendo 60 fps
 	private int mainClipSize;					// Numero maximo de balas.
 	private int mainAmmo; 						// Cantidad de balas actualmente en el cargador
