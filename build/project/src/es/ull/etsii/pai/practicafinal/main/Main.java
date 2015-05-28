@@ -9,10 +9,12 @@ package es.ull.etsii.pai.practicafinal.main;
  */
 import javax.swing.JFrame;
 
+import es.ull.etsii.pai.practicafinal.editor.Editor;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 
 public class Main {
 		public static void main(String[] args) {
+			Editor.checkFileSystem();
 			EditorFrame frame = new EditorFrame();
 			frame.setTitle("Red VS Blue Editor");
 		 	frame.setLocationRelativeTo(null); 

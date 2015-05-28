@@ -7,8 +7,7 @@ package es.ull.etsii.pai.practicafinal.redvsblue;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
-import java.applet.Applet;
-import java.applet.AudioClip;
+import javafx.scene.media.AudioClip;
 import java.util.ArrayList;
 
 public class AudioManager {
@@ -17,7 +16,7 @@ public class AudioManager {
 	private static ArrayList<AudioClip> clips = new ArrayList<AudioClip>();		// Truco sucio para engañar al planificador.
 	private static ArrayList<AudioClip> loops = new ArrayList<AudioClip>();		// Lista de clips ejecutandose indefinidamente.
 	private static boolean sfx = true;											// Determina si estan activados los efectos de sonido.
-	private static boolean music = false;										// Determina si esta activada la musica TODO cambiar el comportamiento por defecto 
+	private static boolean music = true;										// Determina si esta activada la musica TODO cambiar el comportamiento por defecto 
 																				//	(por defecto desactivada por comodidad durante desarrollo)
 	/**
 	 * Comienza la reproduccion del audio indicado por parametro.
@@ -28,9 +27,10 @@ public class AudioManager {
 			return;
 		
 		if (name.length() > 0) {
-			AudioClip audio = Applet.newAudioClip(AudioManager.class
-					.getResource("/sounds/" + name));
-			getClips().add(audio);
+//			AudioClip audio = Applet.newAudioClip(AudioManager.class
+//					.getResource("/sounds/" + name));
+			AudioClip audio = new AudioClip(AudioManager.class.getResource("/sounds/" + name).toString());
+//			getClips().add(audio);
 			audio.play();
 			if (getClips().size() >= 2 * MAX_CONCURRENT_SOUNDS) {
 				for (int i = 0; i < MAX_CONCURRENT_SOUNDS; i++)
@@ -49,11 +49,10 @@ public class AudioManager {
 			return;
 			
 		if (name.length() > 0) {
-			AudioClip audio = Applet.newAudioClip(AudioManager.class
-					.getResource(SOUNDS_FOLDER + name));
-			audio.loop();
+			AudioClip audio = new AudioClip(AudioManager.class
+					.getResource(SOUNDS_FOLDER + name).toString());
+			audio.play();
 			getLoops().add(audio);
-
 		}
 	}
 	/**
@@ -70,8 +69,8 @@ public class AudioManager {
 	 * @param name
 	 */
 	public static void stopAudio(String name) {
-		AudioClip audio = Applet.newAudioClip(AudioManager.class
-				.getResource(SOUNDS_FOLDER + name));
+		AudioClip audio = new AudioClip(AudioManager.class
+				.getResource(SOUNDS_FOLDER + name).toString());
 		audio.stop();
 		getLoops().remove(audio);
 	}
