@@ -116,7 +116,7 @@
 			name="RedVSBlue"
 			mainClass="es.ull.etsii.pai.practicafinal.main.Main"
 			toolkit="swing"
-			version="0.2"
+			version="0.21"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />
@@ -141,6 +141,7 @@
 		<mkdir dir="deploy" />
 		<!-- Need to use ${basedir} because somehow the ant task is calculating the directory differently -->
 		<fx:deploy
+			verbose="true"
 			embedJNLP="false"
 			extension="false"
 			includeDT="false"
@@ -154,6 +155,7 @@
 	
 			<fx:application refId="fxApplication"/>
 			<fx:resources refid="appRes"/>
+			
 		</fx:deploy>
 	
 	
