@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal;
+package es.ull.etsii.pai.practicafinal.redvsblue;
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.
@@ -18,7 +18,7 @@ import es.ull.etsii.pai.practicafinal.graphics.Drawable;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 
 public class Player_gauge extends Entity implements Drawable, Serializable {
-	public static final int LIFE_FEEDBACK_PORTION = 5; // intervalo de vida por el que se repetirá la textura de referencia
+	public static final int LIFE_FEEDBACK_PORTION = 5; // intervalo de vida por el que se repetirï¿½ la textura de referencia
 	public static final int TOP_RIGHT = 1;
 	public static final int TOP_LEFT = 0;
 	private int x_pos = 0;

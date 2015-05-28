@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal;
+package es.ull.etsii.pai.practicafinal.redvsblue;
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.
@@ -25,13 +25,13 @@ import es.ull.etsii.pai.prct9.geometry.Segment;
 public class Bullet extends Actor implements Physical_active{
 	private GraphicRectangle graphicShape;							// Forma grafica de la bala.
 	private Point2D speed;											// Vector de velocidad.
-	private int damage = 0;											// Daño de la bala.
+	private int damage = 0;											// Daï¿½o de la bala.
 	private int push = 0; 											// Empuje.
-	private int maxDistance = 1000; 								// TODO, distancia maxima que puede recorrer la bala.
+	private int maxDistance = 1000; 								// distancia maxima que puede recorrer la bala.
 //	private MovementEquation motion = new ParabolicLocomotion(9); // pruebame , si quieres dale un poco de velocidad inicial hacia arriba
 	private MovementEquation motion = new RectilinearLocomotion();	// Funcion de movimiento de la bala.
 	private Player owner;											// Jugador que dispara la bala.
-	private int bulletSize = 7;										// Tamaño de la bala.
+	private int bulletSize = 7;										// Tamaï¿½o de la bala.
 	private String soundName = "rocketBang.wav";					// Sonido por defecto de la bala.
 	private boolean dead = false;
 	/**
@@ -58,7 +58,7 @@ public class Bullet extends Actor implements Physical_active{
 		getGraphicShape().setFlipImage(getOwner().getGraphicShapes().get(0).isFlipImage());
 	}
 	/**
-	 * Crea una bala con la posicion, velocidad, daño y empuje indicados por el propietario indicado.
+	 * Crea una bala con la posicion, velocidad, daï¿½o y empuje indicados por el propietario indicado.
 	 * @param pos
 	 * @param speed
 	 * @param damage
@@ -71,7 +71,7 @@ public class Bullet extends Actor implements Physical_active{
 		setPush(Push);
 	}
 	/**
-	 * Crea una bala con la posicion, velocidad, daño, tamaño yempuje indicados por el propietario indicado.
+	 * Crea una bala con la posicion, velocidad, daï¿½o, tamaï¿½o yempuje indicados por el propietario indicado.
 	 * @param pos
 	 * @param speed
 	 * @param damage

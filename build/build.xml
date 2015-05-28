@@ -150,7 +150,10 @@
 			<fx:platform basedir="${java.home}"/>
 			<fx:info title="redvsblue" vendor="HansanEldon"/>
 	
-			<fx:application refId="fxApplication"/>
+			<fx:application 
+				refId="fxApplication"
+				version="1.01"
+			/>
 			<fx:resources refid="appRes"/>
 		</fx:deploy>
 	

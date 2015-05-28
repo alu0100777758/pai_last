@@ -17,8 +17,10 @@ import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import es.ull.etsii.pai.practicafinal.ResourceManager;
-import es.ull.etsii.pai.practicafinal.ScreenManager;
+import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
+
+
 
 public class GraphicRectangle extends Rectangle implements Drawable {
 	private Paint paint = Color.RED;

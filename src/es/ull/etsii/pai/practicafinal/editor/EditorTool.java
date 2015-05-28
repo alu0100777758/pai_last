@@ -9,7 +9,9 @@ import java.awt.event.MouseMotionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
+
+
 
 /**
  * Progamacion de aplicaciones interactivas.
@@ -24,10 +26,10 @@ import es.ull.etsii.pai.practicafinal.BvsR_Map;
  */
 public abstract class EditorTool implements ActionListener, MouseListener,
 		MouseMotionListener, KeyListener {
-	private JButton button;					//	botón que representará a la herramienta
+	private JButton button;					//	botï¿½n que representarï¿½ a la herramienta
 	private int toolid = 0;					//	identificador de la herramienta para ser identificada por el editor
-	private BvsR_Map map = null;			//	mapa sobre el que trabajará la herramienta
-	private JFrame frame = null;			//	JFrame en el que se estará haciendo uso de la herramienta
+	private BvsR_Map map = null;			//	mapa sobre el que trabajarï¿½ la herramienta
+	private JFrame frame = null;			//	JFrame en el que se estarï¿½ haciendo uso de la herramienta
 	boolean modified = false;				//	True si necesita actualizar la pantalla
 	
 	public EditorTool(){

@@ -4,8 +4,6 @@ import java.io.File;
 
 import javax.swing.JFrame;
 
-import es.ull.etsii.pai.practicafinal.ScreenManager;
-
 public class Editor{
 	public static void main(String[] args) {
 		EditorFrame frame = new EditorFrame();

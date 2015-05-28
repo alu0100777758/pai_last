@@ -7,13 +7,16 @@ package es.ull.etsii.pai.practicafinal.metaclass.weapons;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
-import es.ull.etsii.pai.practicafinal.AudioManager;
-import es.ull.etsii.pai.practicafinal.Bullet;
-import es.ull.etsii.pai.practicafinal.Player;
-import es.ull.etsii.pai.practicafinal.Side;
+
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets.rocket_bullet;
+import es.ull.etsii.pai.practicafinal.redvsblue.AudioManager;
+import es.ull.etsii.pai.practicafinal.redvsblue.Bullet;
+import es.ull.etsii.pai.practicafinal.redvsblue.Player;
+import es.ull.etsii.pai.practicafinal.redvsblue.Side;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+
+
 
 public class RocketLauncher extends Weapon{
 	public static final double FIRE_RATE = 1.0;

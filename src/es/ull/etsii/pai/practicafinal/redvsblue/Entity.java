@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal;
+package es.ull.etsii.pai.practicafinal.redvsblue;
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.
@@ -36,7 +36,7 @@ public abstract class Entity implements Serializable {
 	 */
 	public abstract int gety();
 	/**
-	 * Modifica el tamaño de la entidad.
+	 * Modifica el tamaï¿½o de la entidad.
 	 * @param width
 	 * @param height
 	 */

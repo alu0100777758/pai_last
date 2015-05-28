@@ -15,11 +15,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.Entity;
-import es.ull.etsii.pai.practicafinal.GraphicEntity;
-import es.ull.etsii.pai.practicafinal.ResourceManager;
-import es.ull.etsii.pai.practicafinal.StaticPlatform;
+import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.redvsblue.Entity;
+import es.ull.etsii.pai.practicafinal.redvsblue.GraphicEntity;
+import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
+import es.ull.etsii.pai.practicafinal.redvsblue.StaticPlatform;
+
+
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.

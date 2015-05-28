@@ -1,8 +1,9 @@
 package es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets;
 
-import es.ull.etsii.pai.practicafinal.Bullet;
-import es.ull.etsii.pai.practicafinal.Player;
+import es.ull.etsii.pai.practicafinal.redvsblue.Bullet;
+import es.ull.etsii.pai.practicafinal.redvsblue.Player;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
+
 
 public class Knife_bullet extends Bullet {
 	public Knife_bullet(Point2D pos) {

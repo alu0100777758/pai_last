@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal;
+package es.ull.etsii.pai.practicafinal.redvsblue;
 
 /**
  * Progamacion de aplicaciones interactivas.
@@ -46,9 +46,9 @@ public class GameFrame extends JFrame implements ActionListener{
 					double xrate = ScreenManager.getInstance().getRate_x();
 					double yrate = ScreenManager.getInstance().getRate_y();
 					if (((ScenarioPanel)getScenarioPanel()).getScenario().isBlueWins())
-						setEnd(new Ganador("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));		
+						setEnd(new WinnerPanel("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));		
 					else
-						setEnd(new Ganador("Red",(int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));	
+						setEnd(new WinnerPanel("Red",(int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));	
 					getThis().addKeyListener(new WinnerKeyHandler());
 					remove(getScenarioPanel());
 					getContentPane().add(getEnd());

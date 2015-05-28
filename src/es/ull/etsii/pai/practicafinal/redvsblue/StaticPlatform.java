@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal;
+package es.ull.etsii.pai.practicafinal.redvsblue;
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.

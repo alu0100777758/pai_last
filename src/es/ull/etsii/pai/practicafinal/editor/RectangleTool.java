@@ -9,7 +9,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import es.ull.etsii.pai.practicafinal.StaticPlatform;
+import es.ull.etsii.pai.practicafinal.redvsblue.StaticPlatform;
+
+
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.

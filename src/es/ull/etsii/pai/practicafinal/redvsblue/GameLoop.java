@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal;
+package es.ull.etsii.pai.practicafinal.redvsblue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
