@@ -10,7 +10,6 @@ public class Editor{
 		File texturesDir = new File(System.getProperty("user.dir")+ System.getProperty("file.separator")+ "textures");
 		texturesDir.mkdir();
 		frame.setTitle("Red VS Blue Editor");
-//		frame.setSize(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight());
 	 	frame.setLocationRelativeTo(null); // Center the frame
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

@@ -15,7 +15,6 @@ public class Main {
 		public static void main(String[] args) {
 			EditorFrame frame = new EditorFrame();
 			frame.setTitle("Red VS Blue Editor");
-			frame.setSize(1200, 800);
 		 	frame.setLocationRelativeTo(null); 
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
