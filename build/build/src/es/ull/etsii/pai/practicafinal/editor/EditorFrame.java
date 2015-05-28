@@ -1,7 +1,6 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -26,16 +25,21 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-import es.ull.etsii.pai.practicafinal.AudioManager;
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.GameFrame;
-import es.ull.etsii.pai.practicafinal.GameLoop;
-import es.ull.etsii.pai.practicafinal.Player_gauge;
-import es.ull.etsii.pai.practicafinal.ResourceManager;
-import es.ull.etsii.pai.practicafinal.ScreenManager;
+import es.ull.etsii.pai.practicafinal.redvsblue.AudioManager;
+import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.redvsblue.GameFrame;
+import es.ull.etsii.pai.practicafinal.redvsblue.GameLoop;
+import es.ull.etsii.pai.practicafinal.redvsblue.Player_gauge;
+import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
+
+
+
+/**
+ * Ventana del editor
+ */
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
 	private static final String SAVE_TOOLTIP = "Guardar el nivel";

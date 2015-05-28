@@ -1,16 +1,16 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.Entity;
-import es.ull.etsii.pai.practicafinal.GraphicEntity;
-import es.ull.etsii.pai.practicafinal.ScreenManager;
 import es.ull.etsii.pai.practicafinal.graphics.Drawable;
+import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.redvsblue.Entity;
+import es.ull.etsii.pai.practicafinal.redvsblue.GraphicEntity;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
+
 
 /**
  * Progamacion de aplicaciones interactivas. Universidad de La Laguna.

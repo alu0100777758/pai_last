@@ -34,12 +34,12 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="C:\Users\Eldon\Documents\GitHub\pai_last">
-				<include name="Recursos/**" />
+				<include name="src/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
 			<fileset dir="C:\Users\Eldon\Documents\GitHub\pai_last">
-				<include name="src/**" />
+				<include name="Recursos/**" />
 			</fileset>
 		</copy>
 	
@@ -114,7 +114,9 @@
 	
 		<fx:application id="fxApplication"
 			name="RedVSBlue"
-			mainClass="es.ull.etsii.pai.practicafinal.editor.Editor"
+			mainClass="es.ull.etsii.pai.practicafinal.main.Main"
+			toolkit="swing"
+			version="0.2"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />
@@ -150,10 +152,7 @@
 			<fx:platform basedir="${java.home}"/>
 			<fx:info title="redvsblue" vendor="HansanEldon"/>
 	
-			<fx:application 
-				refId="fxApplication"
-				version="1.01"
-			/>
+			<fx:application refId="fxApplication"/>
 			<fx:resources refid="appRes"/>
 		</fx:deploy>
 	

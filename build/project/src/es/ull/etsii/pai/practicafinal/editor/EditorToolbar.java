@@ -7,7 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
-import es.ull.etsii.pai.practicafinal.BvsR_Map;
+import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
+
+
 
 /**
  * Progamacion de aplicaciones interactivas.
@@ -27,7 +29,7 @@ public class EditorToolbar extends JToolBar implements ActionListener {
 			new RectangleTool(), new BackgroundTool(), new PlayerInitTool(),
 			new PowerUPTool(), new TextureTool() };
 	int selectedToolIndex = 0;													//	indice en el array anterior correspondiente con la herramienta seleccionada
-	BvsR_Map workingOn = null;													//	mapa sobre el que está trabajando el editor actualmente
+	BvsR_Map workingOn = null;													//	mapa sobre el que estï¿½ trabajando el editor actualmente
 	
 	/**
 	 * @param map	mapa a editar
@@ -47,7 +49,7 @@ public class EditorToolbar extends JToolBar implements ActionListener {
 
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 * 	Actualiza la herramienta seleccionada, así como su boton correspondiente
+	 * 	Actualiza la herramienta seleccionada, asï¿½ como su boton correspondiente
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
