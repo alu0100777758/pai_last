@@ -1,6 +1,7 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -25,19 +26,24 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import es.ull.etsii.pai.practicafinal.AudioManager;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.GameFrame;
 import es.ull.etsii.pai.practicafinal.GameLoop;
 import es.ull.etsii.pai.practicafinal.Player_gauge;
+import es.ull.etsii.pai.practicafinal.ResourceManager;
 import es.ull.etsii.pai.practicafinal.ScreenManager;
 
 public class EditorFrame extends JFrame implements ActionListener,
 		MouseListener, MouseMotionListener, KeyEventDispatcher {
+	private static final String SAVE_TOOLTIP = "Guardar el nivel";
+	private static final String MENU_SAVE_STRING = "guardar";
 	private static final long serialVersionUID = -5172144293412925652L;
-	protected static final String SAVEMAP_SUFFIX = ".rvsbm";
-	protected static final String TEMP_FILE_MAP = "map.temp";
+	public static final String SAVEMAP_SUFFIX = ".rvsbm";
+	public static final String TEMP_FILE_MAP = "map.temp";
+	public static final String MENU_FILE_STRING = "Archivo";
 	BvsR_Map map;
 	EditorToolbar toolbar;
 	JPanel toppanel = new JPanel();
@@ -67,7 +73,8 @@ public class EditorFrame extends JFrame implements ActionListener,
 		this.add(bottomPanel, BorderLayout.CENTER);
 		createMenuBar();
 		KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-        manager.addKeyEventDispatcher(this);
+        manager.addKeyEventDispatcher(this);    
+        pack();
         setResizable(false);
         ScreenManager.getInstance().reset();
 	}
@@ -76,16 +83,15 @@ public class EditorFrame extends JFrame implements ActionListener,
 
 		JMenuBar menubar = new JMenuBar();
 
-		JMenu file = new JMenu("Archivo");
+		JMenu file = new JMenu(MENU_FILE_STRING);
 		file.setMnemonic(KeyEvent.VK_A);
 
-		JMenuItem guardar = new JMenuItem("guardar");
-		guardar.setMnemonic(KeyEvent.VK_G);
-		guardar.setToolTipText("Guardar el nivel");
-		guardar.addActionListener(new ActionListener() {
+		JMenuItem save = new JMenuItem(MENU_SAVE_STRING);
+		save.setMnemonic(KeyEvent.VK_G);
+		save.setToolTipText(SAVE_TOOLTIP);
+		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFileChooser c = new JFileChooser(System
-						.getProperty("user.dir"));
+				JFileChooser c = new JFileChooser(ResourceManager.getUserDir());
 				int rVal = c.showOpenDialog(EditorFrame.this);
 				if (rVal == JFileChooser.APPROVE_OPTION) {
 					String path = c.getCurrentDirectory().toString()
@@ -103,10 +109,10 @@ public class EditorFrame extends JFrame implements ActionListener,
 
 		});
 
-		JMenuItem cargar = new JMenuItem("cargar");
-		cargar.setMnemonic(KeyEvent.VK_C);
-		cargar.setToolTipText("Guardar el nivel");
-		cargar.addActionListener(new ActionListener() {
+		JMenuItem load = new JMenuItem("cargar");
+		load.setMnemonic(KeyEvent.VK_C);
+		load.setToolTipText(SAVE_TOOLTIP);
+		load.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser c = new JFileChooser(System
 						.getProperty("user.dir"));
@@ -131,10 +137,10 @@ public class EditorFrame extends JFrame implements ActionListener,
 
 		});
 
-		JMenuItem nuevo = new JMenuItem("nuevo");
-		nuevo.setMnemonic(KeyEvent.VK_N);
-		nuevo.setToolTipText("Eliminar nivel actual y empezar desde cero");
-		nuevo.addActionListener(new ActionListener() {
+		JMenuItem newFile = new JMenuItem("nuevo");
+		newFile.setMnemonic(KeyEvent.VK_N);
+		newFile.setToolTipText("Eliminar nivel actual y empezar desde cero");
+		newFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				resetMap();
 			}
@@ -144,10 +150,10 @@ public class EditorFrame extends JFrame implements ActionListener,
 				repaint();
 			}
 		});
-		JMenuItem lanzarGameScenario= new JMenuItem("Lanzar partida");
-		lanzarGameScenario.setMnemonic(KeyEvent.VK_L);
-		lanzarGameScenario.setToolTipText("Lanzar partida");
-		lanzarGameScenario.addActionListener(new ActionListener() {
+		JMenuItem launchGameScenario= new JMenuItem("Lanzar partida");
+		launchGameScenario.setMnemonic(KeyEvent.VK_L);
+		launchGameScenario.setToolTipText("Lanzar partida");
+		launchGameScenario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(getMap().getGUI().isEmpty()){
 					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_one(),0));
@@ -176,10 +182,10 @@ public class EditorFrame extends JFrame implements ActionListener,
 			}});
 		JMenu launch = new JMenu("Lanzar");
 		launch.setMnemonic(KeyEvent.VK_L);
-		file.add(nuevo);
-		file.add(guardar);
-		file.add(cargar);
-		launch.add(lanzarGameScenario);
+		file.add(newFile);
+		file.add(save);
+		file.add(load);
+		launch.add(launchGameScenario);
 		menubar.add(file);
 		menubar.add(launch);
 		setJMenuBar(menubar);

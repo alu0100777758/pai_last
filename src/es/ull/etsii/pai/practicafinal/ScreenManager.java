@@ -1,5 +1,7 @@
 package es.ull.etsii.pai.practicafinal;
 
+import java.awt.Dimension;
+
 public class ScreenManager {
 	private int windWidth = 1200;						// Ancho de la ventana.
 	private int windHeight = 800;
@@ -40,6 +42,9 @@ public class ScreenManager {
 	public void reset() {
 		setRate_x(1);
 		setRate_y(1);
+	}
+	public Dimension getScreenDimensions() {
+		return new Dimension(getWindWidth(), getWindHeight());
 	} 
 	
 }

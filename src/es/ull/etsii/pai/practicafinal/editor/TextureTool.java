@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import es.ull.etsii.pai.practicafinal.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.Entity;
 import es.ull.etsii.pai.practicafinal.GraphicEntity;
+import es.ull.etsii.pai.practicafinal.ResourceManager;
 import es.ull.etsii.pai.practicafinal.StaticPlatform;
 /**
  * Progamacion de aplicaciones interactivas.
@@ -30,13 +31,13 @@ import es.ull.etsii.pai.practicafinal.StaticPlatform;
  * Herramienta encargada de insertar texturas y modificar su aspecto.
  */
 public class TextureTool extends DefaultTool {
-	public static final String T_TEXTURE_ICON = "/icons/textureTool.png";					//	ruta del icono
-	public static final String DEFAULT_TEXTURE = "firstGrasssTextureTestDontJudgeMe.png";	// textura por defecto
-	private boolean drawing = false;														// verdadero si se esta dibujando el rectangulo de anclaje
-	private Point begin;																	// posicion del rectangulo de anclaje
-	private Point lastVisited;																// ultimo punto detectado durante el arrastre
-	private String Name = DEFAULT_TEXTURE;													// ruta de la textura seleccionada
-	private Rectangle anchorRectangle;														// rectangulo de anclaje actual
+	public static final String T_TEXTURE_ICON = "/icons/textureTool.png";							//	ruta del icono
+	public static final String DEFAULT_TEXTURE = "textures/firstGrasssTextureTestDontJudgeMe.png";	// textura por defecto
+	private boolean drawing = false;																// verdadero si se esta dibujando el rectangulo de anclaje
+	private Point begin;																			// posicion del rectangulo de anclaje
+	private Point lastVisited;																		// ultimo punto detectado durante el arrastre
+	private String Name = DEFAULT_TEXTURE;															// ruta de la textura seleccionada
+	private Rectangle anchorRectangle;																// rectangulo de anclaje actual
 
 	public TextureTool() {
 		setButton(new JButton(new ImageIcon(getClass().getResource(
@@ -53,28 +54,28 @@ public class TextureTool extends DefaultTool {
 	}
 
 	private void SetTexture() {
-		JFileChooser c = new JFileChooser(System.getProperty("user.dir"));
+		
+		JFileChooser c = new JFileChooser(ResourceManager.getUserDir());
 		int rVal = c.showOpenDialog(getFrame());
 		if (rVal == JFileChooser.APPROVE_OPTION) {
-			setName(c.getSelectedFile().getName());
+			String fseparator = System.getProperty("file.separator");
 			String filePathString = c.getCurrentDirectory().toString()
-					+ System.getProperty("file.separator")
+					+ fseparator
 					+ c.getSelectedFile().getName();
-			File f = new File(filePathString);
-			if (!f.exists())
+//			File f = new File(filePathString);
+			System.out.println("setting texture from: "+filePathString);
+			if (ResourceManager.getInstance().getBufferedImage("textures"+System.getProperty("file.separator")+c.getSelectedFile().getName()) == null)
 				try {
-					copyFile(
-							c.getCurrentDirectory().toString()
-									+ System.getProperty("file.separator")
-									+ c.getSelectedFile().getName(),
-							System.getProperty("user.dir")
-									+ System.getProperty("file.separator")
-									+ "textures"
-									+ System.getProperty("file.separator")
-									+ getName());
+					System.out.println("copiando");
+					copyFile(c.getCurrentDirectory().toString() + fseparator
+							+ c.getSelectedFile().getName(),
+							ResourceManager.getUserDir() + fseparator
+									+ "textures" + fseparator + c.getSelectedFile().getName());
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+			if (ResourceManager.getInstance().getBufferedImage("textures"+System.getProperty("file.separator")+c.getSelectedFile().getName()) != null)
+				setName("textures"+System.getProperty("file.separator")+c.getSelectedFile().getName());
 		}
 		if (rVal == JFileChooser.CANCEL_OPTION) {
 		}
@@ -160,15 +161,14 @@ public class TextureTool extends DefaultTool {
 				break;
 			case BvsR_Map.PLANE_MAP:
 				StaticPlatform platform = (StaticPlatform) entity;
-				platform.getGraphicRectangle().setTexturePath(
-						"textures/" + getName());
+				platform.getGraphicRectangle().setTexturePath(getName());
 				platform.getGraphicRectangle().setTextureAnchor(
 						getAnchorRectangle());
 				platform.getGraphicRectangle().setTexturized(true);
 				break;
 			case BvsR_Map.PLANE_BACKGROUND:
 				GraphicEntity genti = (GraphicEntity) entity;
-				genti.getGraphic().setTexturePath("textures/" + getName());
+				genti.getGraphic().setTexturePath(getName());
 				genti.getGraphic().setTextureAnchor(getAnchorRectangle());
 				genti.getGraphic().setTexturized(true);
 				break;

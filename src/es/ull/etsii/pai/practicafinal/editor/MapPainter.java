@@ -1,5 +1,7 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -24,16 +26,28 @@ public class MapPainter extends JPanel {
 	private static final long serialVersionUID = -4939012327823614215L; // serial de la ultima version
 	private BvsR_Map map = null; 										// mapa encargado de dibujar
 	private boolean guiActive = true; 									// almacena si la GUI (HUD) esta visible o no
-
+	public static final Color BACKGRAUND_COLOR = new Color(64, 64, 64);	// Color con el que se rellena el fondo
 	public MapPainter(BvsR_Map map) {
 		setMap(map);
+		setMinimumSize(ScreenManager.getInstance().getScreenDimensions());
+		setPreferredSize(getMinimumSize());
+		setSize(getPreferredSize());
+		setMaximumSize(getPreferredSize());
+		setBackground(BACKGRAUND_COLOR);
 	}
 
 	public static void paintBackground(Graphics g, BvsR_Map map) {
 		ScreenManager screen = ScreenManager.getInstance();
+		g.setColor(BACKGRAUND_COLOR);
 		g.fillRect(0, 0, (int) (screen.getWindWidth() * screen.getRate_x()),
 				(int) (screen.getWindHeight() * screen.getRate_y()));
 		for (Entity ent : map.getBackground()) {
+			GraphicEntity entg = (GraphicEntity) ent;
+			entg.getGraphic().paint(g);
+		}
+	}
+	public void paintBackground(Graphics g) {
+		for (Entity ent : getMap().getBackground()) {
 			GraphicEntity entg = (GraphicEntity) ent;
 			entg.getGraphic().paint(g);
 		}
@@ -60,7 +74,7 @@ public class MapPainter extends JPanel {
 
 	public void paint(Graphics g) {
 		super.paint(g);
-		paintBackground(g, getMap());
+		paintBackground(g);
 		paintStaticMap(g, getMap());
 		paintActors(g, getMap());
 		if (isGuiActive()) {

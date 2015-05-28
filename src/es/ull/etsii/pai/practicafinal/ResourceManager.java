@@ -8,6 +8,7 @@ package es.ull.etsii.pai.practicafinal;
  *
  */
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
@@ -18,9 +19,9 @@ import es.ull.etsii.pai.practicafinal.graphics.Texture;
 
 public class ResourceManager {
 	private Random randGen = new Random();
+	private static String userDir =  System.getProperty("user.dir");
 	private static ResourceManager instance = null;		// Unica instancia de esta clase.
 	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); // Mapa de imagenes con su nombre asociado.
-	
 	/**
 	 * Constructor privado.
 	 */
@@ -47,15 +48,26 @@ public class ResourceManager {
 
 	public BufferedImage getBufferedImage(String path){
 		BufferedImage found = getBufferedImages().get(path);
-		if(found == null)
+		if(found == null){
 			try {
 				found = ImageIO.read(Texture.class.getClassLoader().getResource(path));
 				getBufferedImages().put(path, found);
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+//				e.printStackTrace();
+				found = null;
 			}
+		}
+		if(found == null){
+			try {
+				System.out.println("no se ha encontrado en el jar buscando en textures " + getUserDir()+System.getProperty("file.separator")+path);
+				found = ImageIO.read(new File(getUserDir()+System.getProperty("file.separator")+path));
+				getBufferedImages().put(path, found);
+			} catch (Exception e) {
+				found = null;
+			}
+		}
 		return found;
-	}	
+	}
 	/**
 	 * Getters y setters.
 	 * @return
@@ -63,5 +75,14 @@ public class ResourceManager {
 	public HashMap<String, BufferedImage> getBufferedImages() {
 		return bufferedImages;
 	}
+
+	public static String getUserDir() {
+		return userDir;
+	}
+
+	public static void setUserDir(String userDir) {
+		ResourceManager.userDir = userDir;
+	}
+	
 	
 }
