@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import es.ull.etsii.pai.practicafinal.graphics.Texture;
 
 public class ResourceManager {
+	public static final String NOT_FOUND = "textures/texture_not_found.png";
 	private Random randGen = new Random();
 	private static String userDir =  System.getProperty("user.dir");
 	private static ResourceManager instance = null;		// Unica instancia de esta clase.
@@ -25,7 +26,14 @@ public class ResourceManager {
 	/**
 	 * Constructor privado.
 	 */
-	private ResourceManager(){}
+	private ResourceManager(){
+		try {
+			getBufferedImages().put(NOT_FOUND,ImageIO.read(Texture.class.getClassLoader().getResource(NOT_FOUND)));
+		} catch (IOException e) {
+			System.out.println("No se ha encontrado la textura \"Not Found\"");
+			e.printStackTrace();
+		}
+	}
 	
 	public static  ResourceManager getInstance(){
 		if(instance == null)
@@ -53,7 +61,6 @@ public class ResourceManager {
 				found = ImageIO.read(Texture.class.getClassLoader().getResource(path));
 				getBufferedImages().put(path, found);
 			} catch (Exception e) {
-//				e.printStackTrace();
 				found = null;
 			}
 		}
@@ -63,7 +70,7 @@ public class ResourceManager {
 				found = ImageIO.read(new File(getUserDir()+System.getProperty("file.separator")+path));
 				getBufferedImages().put(path, found);
 			} catch (Exception e) {
-				found = null;
+				found = getBufferedImages().get(NOT_FOUND);
 			}
 		}
 		return found;

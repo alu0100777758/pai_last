@@ -139,10 +139,17 @@ public class Bullet extends Actor implements Physical_active{
 	 * Getters y Setters.
 	 * @return
 	 */
+	
 	public int getDamage() {
 		return damage;
 	}
 
+	public MovementEquation getMotion() {
+		return motion;
+	}
+	public void setMotion(MovementEquation motion) {
+		this.motion = motion;
+	}
 	private void setDamage(int damage) {
 		this.damage = damage;
 	}

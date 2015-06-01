@@ -47,7 +47,7 @@ public class Slipper extends Weapon {
 		setX_offset(-15);
 		setY_offset(10);
 		setMainReloadingTime(RELOADING_TIME);
-		getGraphicShape().setTexturePath("textures/slipperO.png");
+		getGraphicShape().setTexturePath("textures/slipper.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
 	}
