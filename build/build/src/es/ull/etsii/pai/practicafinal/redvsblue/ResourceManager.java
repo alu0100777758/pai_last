@@ -20,6 +20,7 @@ import es.ull.etsii.pai.practicafinal.graphics.Texture;
 public class ResourceManager {
 	public static final String NOT_FOUND = "textures/texture_not_found.png";
 	private Random randGen = new Random();
+	private BufferedImage notFound;
 	private static String userDir =  System.getProperty("user.dir");
 	private static ResourceManager instance = null;		// Unica instancia de esta clase.
 	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); // Mapa de imagenes con su nombre asociado.
@@ -28,7 +29,7 @@ public class ResourceManager {
 	 */
 	private ResourceManager(){
 		try {
-			getBufferedImages().put(NOT_FOUND,ImageIO.read(Texture.class.getClassLoader().getResource(NOT_FOUND)));
+			setNotFound(ImageIO.read(Texture.class.getClassLoader().getResource(NOT_FOUND)));
 		} catch (IOException e) {
 			System.out.println("No se ha encontrado la textura \"Not Found\"");
 			e.printStackTrace();
@@ -70,6 +71,7 @@ public class ResourceManager {
 				found = ImageIO.read(new File(getUserDir()+System.getProperty("file.separator")+path));
 				getBufferedImages().put(path, found);
 			} catch (Exception e) {
+				System.out.println("no se ha encontrado en el directorio");
 				found = getBufferedImages().get(NOT_FOUND);
 			}
 		}
@@ -90,6 +92,15 @@ public class ResourceManager {
 	public static void setUserDir(String userDir) {
 		ResourceManager.userDir = userDir;
 	}
+
+	public BufferedImage getNotFound() {
+		return notFound;
+	}
+
+	public void setNotFound(BufferedImage notFound) {
+		this.notFound = notFound;
+	}
+	
 	
 	
 }

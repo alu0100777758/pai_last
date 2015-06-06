@@ -58,7 +58,7 @@ public class Player extends Actor implements Physical_active {
 	public static final int PUSH_RESIST = 2;				// Resistencia al empuje por frame.
 	private Color color = Color.BLUE; 
 	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",}; // Sonidos que emite al ser golpeado. 
-
+	private boolean physicalResponseSuspended = false; 				// denota si se encuentran desactivadas la reparacion de colisiones.
 	/**
 	 * Crea un jugador en la posicion dada en el mapa dado.
 	 * @param position
@@ -195,6 +195,8 @@ public class Player extends Actor implements Physical_active {
 	 */
 	@Override
 	public boolean repair_collision(Physical_passive actor) {
+		if(isPhysicalResponseSuspended())
+			return true;
 		Rectangle intersection = actor.getCollisionedRectangle(this
 				.getPhysicalRectangle());
 		boolean repaired = false;
@@ -230,7 +232,7 @@ public class Player extends Actor implements Physical_active {
 						new Point((int) getPhysicalRectangle().getMaxX(),
 								(int) getPhysicalRectangle().getMaxY())))
 				&& !isBlock_up()) {
-			if (Math.abs(getSpeed().y()) >= intersection.getHeight()) {
+			if (Math.abs(getSpeed().y()) >= intersection.getHeight() && !isBlock_down()) {
 				this.setPosition(getPosition().add(
 						new Point2D(0, -intersection.getHeight())));// Tocado
 																	// con los
@@ -614,4 +616,13 @@ public class Player extends Actor implements Physical_active {
 	private String getSoundName() {
 		return hitSounds[ResourceManager.getInstance().getRandGen().nextInt(hitSounds.length)];
 	}
+
+	public boolean isPhysicalResponseSuspended() {
+		return physicalResponseSuspended;
+	}
+
+	public void setPhysicalResponseSuspended(boolean physicalResponseSuspended) {
+		this.physicalResponseSuspended = physicalResponseSuspended;
+	}
+	
 }

@@ -1,5 +1,7 @@
 package es.ull.etsii.pai.prct9.geometry;
 
+import java.awt.Point;
+
 public class Segment extends Line {
 
 	public Segment(int x1, int y1, int x2, int y2) {
@@ -7,6 +9,9 @@ public class Segment extends Line {
 	}
 	public Segment(Point2D first, Point2D second) {
 		super(first, second);
+	}
+	public Segment(Point first, Point second) {
+		super(new Point2D(first.getX(), first.getY()), new Point2D(second.getX(), second.getY()));
 	}
 	public Point2D start(){
 		return super.getFirstPoint();
