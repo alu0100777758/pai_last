@@ -19,6 +19,7 @@ public class KeyController {
 	 */
 	public KeyController() {
 		setKeyMap(new HashMap<KeyActions, Integer> ());
+		getKeyMap().put(KeyActions.PAUSE, KeyEvent.VK_P);
 		
 		getKeyMap().put(KeyActions.P1LEFT, KeyEvent.VK_A);
 		getKeyMap().put(KeyActions.P1DOWN, KeyEvent.VK_S);

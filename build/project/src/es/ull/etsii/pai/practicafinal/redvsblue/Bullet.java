@@ -14,6 +14,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets.UZI_bullet;
 import es.ull.etsii.pai.practicafinal.physics.MovementEquation;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
@@ -42,6 +43,7 @@ public class Bullet extends Actor implements Physical_active{
 		super(pos);
 		setPhysicalShape(new PhysicalRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
 		setGraphicShape(new GraphicRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
+		getGraphicShapes().add(getGraphicShape());
 		setSpeed(new Point2D (0, 0));
 		getGraphicShape().setPaint(Color.BLACK); 
 	}
@@ -56,6 +58,7 @@ public class Bullet extends Actor implements Physical_active{
 		setSpeed(speed);
 		setOwner(owner);
 		getGraphicShape().setFlipImage(getOwner().getGraphicShapes().get(0).isFlipImage());
+		getGraphicShapes().add(getGraphicShape());
 	}
 	/**
 	 * Crea una bala con la posicion, velocidad, da�o y empuje indicados por el propietario indicado.
@@ -101,22 +104,34 @@ public class Bullet extends Actor implements Physical_active{
 	 * 
 	 */
 	public void paint(Graphics g) {
-		getGraphicShape().paint(g.create());
-	}
+		for(GraphicRectangle graphic : getGraphicShapes())
+			graphic.paint(g);
+	}	
 	@Override
 	public boolean updatePos(Physical_passive map) {
 		int init = (int)getPosition().x();
-		setPosition(motion.getNewpos(getSpeed(), getPosition())); // cambiar a getnewSpeed si se prefiere , tal como está permite aceleracion dentro del motion al modificar y vel
-		setMaxDistance((int)(getMaxDistance()-(Math.max(init, getPosition().x())-Math.min(init, getPosition().x()))));
-		if(maxDistance <= 0)
-			setDead(true);
-		getGraphicShape().setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+		updatePos();
+		updateDistance(init);
+		if(getMaxDistance() <= 0)
+			actionAtMaxDistance();
+		updateGraphics();
 		if (!map.getPhysicalRectangle().contains(getPhysicalRectangle()))
 			return false;
 		return true;
 	}
+	public void updateGraphics() {
+		getGraphicShape().setLocation(new Point((int)getPosition().x(), (int)getPosition().y()));
+	}
+	private void updateDistance(int init) {
+		setMaxDistance((int)(getMaxDistance()-(Math.max(init, getPosition().x())-Math.min(init, getPosition().x()))));
+	}
+	protected void actionAtMaxDistance() {
+		setDead(true);
+	}
 
-
+	public void updatePos(){
+		setPosition(getMotion().getNewpos(getSpeed(), getPosition())); 
+	}
 	@Override
 	public boolean repair_collisionY(Point2D point) {
 		// TODO Auto-generated method stub
@@ -173,10 +188,35 @@ public class Bullet extends Actor implements Physical_active{
 	@Override
 	public boolean collides(Physical_passive actor) {
 		
-		if(actor.getPhysicalRectangle().collides(getPhysicalRectangle()) || isDead()){
+		if(isLastCollision(actor) || isDead()){
 			return true;
 		}
 		return false;
+	}
+	public boolean isLastCollision(Physical_passive actor){
+		if(actor.getPhysicalRectangle().collides(getPhysicalRectangle())){
+			if(actor instanceof Player){
+				Player player = (Player)actor;
+				if(actor == getOwner())
+					return collidesWithFriend((Player)actor);
+				else
+					return collidesWithEnemy((Player)actor);
+			}
+			return collidesWithOther(actor);
+		}
+		return false;
+	}
+	public boolean collidesWithOther(Physical_passive actor) {
+		setDead(true);
+		return true;
+	}
+	public boolean collidesWithFriend(Player actor) {
+		return false;
+	}
+	public boolean collidesWithEnemy(Player actor) {
+		actor.gotHit(this);
+		setDead(true);
+		return true;
 	}
 	public String getSoundName() {
 		return soundName;

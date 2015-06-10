@@ -9,6 +9,7 @@ package es.ull.etsii.pai.practicafinal.graphics;
  *
  */
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
@@ -29,6 +30,8 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 	private Rectangle textureAnchor = null;
 	private boolean image = false;
 	private boolean flipImage = false;
+	private double rotation = 0;
+	private boolean isRotated = false;
 
 	public boolean isFlipImage() {
 		return flipImage;
@@ -86,6 +89,9 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 					.getBufferedImage(getTexturePath());
 			if (isFlipImage())
 				bimage = createFlipped(bimage);
+//			if(isRotated()){
+//				bimage = createRotated(bimage, getRotation());
+//			}
 			g2.drawImage(bimage, (int) (getLocation().getX() * xrate),
 					(int) (getLocation().getY() * yrate),
 					(int) (getWidth() * xrate), (int) (getHeight() * yrate),
@@ -127,7 +133,21 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 				0));
 		return createTransformed(image, at);
 	}
+	private static BufferedImage createRotated(BufferedImage image, double grades){
+		// create the transform, note that the transformations happen
+        // in reversed order (so check them backwards)
+        AffineTransform at = new AffineTransform();
 
+//        // 4. translate it to the center of the component
+//        at.translate(getWidth() / 2, getHeight() / 2);
+        at.rotate(grades);
+
+        // 1. translate the object so that you rotate it around the 
+        //    center (easier :))
+        at.translate(-image.getWidth()/2, -image.getHeight()/2);
+
+       return createTransformed(image, at);
+	}
 	private static BufferedImage createTransformed(BufferedImage image,
 			AffineTransform at) {
 		BufferedImage newImage = new BufferedImage(image.getWidth(),
@@ -138,5 +158,24 @@ public class GraphicRectangle extends Rectangle implements Drawable {
 		g.dispose();
 		return newImage;
 	}
+	public void enlarge( int xincrease, int yincrease){
+		setSize((int)getWidth()+xincrease,(int)getHeight()+yincrease);
+	}
 
+	public double getRotation() {
+		return rotation;
+	}
+
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
+	}
+
+	public boolean isRotated() {
+		return isRotated;
+	}
+
+	public void setRotated(boolean isRotated) {
+		this.isRotated = isRotated;
+	}
+	
 }

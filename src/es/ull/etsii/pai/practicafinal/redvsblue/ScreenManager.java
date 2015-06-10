@@ -6,10 +6,8 @@ public class ScreenManager {
 	private int windWidth = 1200;						// Ancho de la ventana.
 	private int windHeight = 800;
 	private static ScreenManager instance = null;
-	private ScreenManager(){}
 	private double rate_x = 1;
 	private double rate_y = 1;
-	
 	public static  ScreenManager getInstance(){
 		if(instance == null)
 			instance = new ScreenManager();
@@ -46,5 +44,9 @@ public class ScreenManager {
 	public Dimension getScreenDimensions() {
 		return new Dimension(getWindWidth(), getWindHeight());
 	} 
+	public void updateRate(double width, double height){
+		setRate_x(width/getWindWidth());
+		setRate_y(height/getWindHeight());
+	}
 	
 }

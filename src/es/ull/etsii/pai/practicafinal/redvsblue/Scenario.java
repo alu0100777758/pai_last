@@ -17,6 +17,7 @@ import es.ull.etsii.pai.practicafinal.editor.MapPainter;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
+import es.ull.etsii.pai.practicafinal.physics.PhysicsEngine;
 
 public class Scenario {
 	BvsR_Map mapData = new BvsR_Map(); // Mapa donde se realizara la partida.
@@ -25,13 +26,11 @@ public class Scenario {
 	private boolean ended;
 	private boolean redWins;
 	private boolean blueWins;
+	private boolean paused = false;
+	private RvsB_World world;
+	private PhysicsEngine physicEngine;
 	public static final String[] dieSounds = { "Idie01.wav", "Idie02.wav",
 			"Idie03.wav" };
-	public static final int WINDOW_TOLERANCE = 200; // Numero de pixeles que se
-													// pueden salir los
-													// jugadores de la pantalla
-													// antes de morir.
-
 	/**
 	 * Crea un escenario de alto y ancho definidos con un mapa determinado.
 	 * 
@@ -43,10 +42,6 @@ public class Scenario {
 		setWidth(width);
 		setHeight(height);
 
-		setBackground(new ArrayList<Entity>());
-		setStaticMap(new ArrayList<Entity>());
-		setActors(new ArrayList<Actor>());
-		setGUI(new ArrayList<Entity>());
 		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		try {
 			setMapData(BvsR_Map.load(mapName));
@@ -60,94 +55,15 @@ public class Scenario {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (getMapData().getGUI().isEmpty()) {
-			getMapData().getGUI().add(
-					new Player_gauge(getMapData().getPlayer_one(), 0));
-			getMapData().getGUI().add(
-					new Player_gauge(getMapData().getPlayer_two(),
-							Player_gauge.TOP_RIGHT));
-		}
+		setWorld(new RvsB_World(getMapData()));
+		setPhysicEngine(new PhysicsEngine(getWorld()));
 	}
 
 	/**
 	 * Actualiza el estado del escenario.
 	 */
 	public void update() {
-		Physical_passive map;
-
-		for (int i = 0; i < getActors().size(); i++) {
-			if (!((Physical_active) getActors().get(i))
-					.updatePos(new PhysicalRectangle(-WINDOW_TOLERANCE / 2,
-							-WINDOW_TOLERANCE / 2, ScreenManager.getInstance()
-									.getWindWidth() + WINDOW_TOLERANCE,
-							ScreenManager.getInstance().getWindHeight()
-									+ WINDOW_TOLERANCE))) {
-				getActors().get(i).die();
-				getActors().remove(i);
-			}
-
-		}
-		for (int i = 0; i < getMapData().getBullets().size(); i++) {
-			Bullet bullet = getMapData().getBullets().get(i);
-			if (!bullet.updatePos(new PhysicalRectangle(-WINDOW_TOLERANCE / 2,
-					-WINDOW_TOLERANCE / 2, ScreenManager.getInstance()
-							.getWindWidth() + WINDOW_TOLERANCE, ScreenManager
-							.getInstance().getWindHeight() + WINDOW_TOLERANCE))) {
-				bullet.setDead(true);
-			}
-			if (!bullet.isDead()) {
-				for (int j = 0; j < getActors().size(); j++) {
-					if ( getActors().get(j) instanceof Physical_passive) {
-						if (getActors().get(j) != bullet && bullet.collides((Physical_passive) getActors().get(
-								j)))
-							bullet.setDead(true);
-					}
-				}
-				for(int l = 0; l < getStaticMap().size(); l++){
-					if(getStaticMap().get(l) instanceof Physical_passive){
-						if(bullet.collides((Physical_passive)getMapData().getStaticMap().get(l)))
-							bullet.setDead(true);
-					}
-				}
-			}
-			if(bullet.isDead())
-				getMapData().getBullets().remove(bullet);
-
-		}
-		/**
-		 * Aqui es donde se comprueban colisiones.
-		 */
-		for (int i = 0; i < getStaticMap().size(); i++) {
-			map = (Physical_passive) (getStaticMap().get(i));
-			if (map.collides(getPlayer_one())/* )getPlayer_one().collides(map) */)
-				getPlayer_one().repair_collision(map);
-			if (map.collides(getPlayer_two())/* )getPlayer_one().collides(map) */)
-				getPlayer_two().repair_collision(map);
-			for (int j = 0; j < getActors().size(); j++) {
-				if (getActors().get(j) instanceof Bullet) {
-					if (((Bullet) getActors().get(j)).collides(map))
-						getActors().remove(j);
-				}
-			}
-		}
-		// /**
-		// * Verifica si le pego a algun jugador
-		// */
-		//
-		// for (int i = 0; i < getActors().size(); i++) {
-		// if (getActors().get(i) instanceof Bullet) {
-		// if (getPlayer_one().collides(
-		// getActors().get(i).getPhysicalShape())) {
-		// getPlayer_one().gotHit((Bullet) getActors().get(i));
-		// getActors().remove(getActors().get(i));
-		// } else if (getPlayer_two().collides(
-		// getActors().get(i).getPhysicalShape())) {
-		// getPlayer_two().gotHit((Bullet) getActors().get(i));
-		// getActors().remove(getActors().get(i));
-		// }
-		// }
-		// }
-
+		getPhysicEngine().update();
 		/**
 		 * Verifica si alguien tiene que morir.
 		 */
@@ -177,7 +93,7 @@ public class Scenario {
 	 * @param g
 	 */
 	public void paint(Graphics g) {
-		MapPainter.paint(g, getMapData());
+		getWorld().paint(g);
 	}
 
 	/**
@@ -222,15 +138,6 @@ public class Scenario {
 	public void setActors(ArrayList<Actor> actors) {
 		this.mapData.setActors(actors);
 	}
-
-	public ArrayList<Entity> getGUI() {
-		return mapData.getGUI();
-	}
-
-	public void setGUI(ArrayList<Entity> gUI) {
-		mapData.setGUI(gUI);
-	}
-
 	public RvsBKeyController getKeyController() {
 		return keyController;
 	}
@@ -335,7 +242,20 @@ public class Scenario {
 				getPlayer_two().setLookingAt(Side.RIGHT);
 				// getActors().add(getPlayer_two().shoot());
 				getPlayer_two().shoot();
+			} else if (keyCode == getKeyMap().get(KeyActions.PAUSE)){
+				pause();
 			}
+		}
+
+		private void pause() {
+			if (isPaused()){
+				GameLoop.stepTimer.start();;
+			}
+			else
+				GameLoop.stepTimer.stop();
+			setPaused(!isPaused());
+			// TODO Auto-generated method stub
+			
 		}
 
 		/**
@@ -373,4 +293,29 @@ public class Scenario {
 			}
 		}
 	}
+
+	public RvsB_World getWorld() {
+		return world;
+	}
+
+	public void setWorld(RvsB_World world) {
+		this.world = world;
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
+
+	public PhysicsEngine getPhysicEngine() {
+		return physicEngine;
+	}
+
+	public void setPhysicEngine(PhysicsEngine physicEngine) {
+		this.physicEngine = physicEngine;
+	}
+	
 }

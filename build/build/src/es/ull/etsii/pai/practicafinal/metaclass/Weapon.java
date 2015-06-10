@@ -10,6 +10,7 @@ package es.ull.etsii.pai.practicafinal.metaclass;
 import java.io.Serializable;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
+import es.ull.etsii.pai.practicafinal.redvsblue.Bullet;
 import es.ull.etsii.pai.practicafinal.redvsblue.Player;
 import es.ull.etsii.pai.practicafinal.redvsblue.Side;
 
@@ -167,7 +168,9 @@ public abstract class Weapon implements Serializable{
 				getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH + getX_offset(), (int)getOwner().getPosition().y() + addy + getY_offset());
 		}
 	}
-	
+	protected void addBullet(Bullet bullet){
+		getOwner().getMap().addBullet(bullet);
+	}
 	private void shootSecondaryEffect() {
 		// TODO Auto-generated method stub
 		

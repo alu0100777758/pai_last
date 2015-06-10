@@ -19,6 +19,7 @@ public class BvsR_Map implements Serializable {
 	private ArrayList<Entity> background = new ArrayList<Entity>();
 	private ArrayList<Entity> staticMap = new ArrayList<Entity>();
 	private ArrayList<Actor> actors = new ArrayList<Actor>();
+	private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	private ArrayList<Entity> GUI = new ArrayList<Entity>();
 	private int width;
 	private int height;
@@ -63,6 +64,7 @@ public class BvsR_Map implements Serializable {
 			break;
 		}
 	}
+	
 	public void addBackground(GraphicRectangle rect) {
 		getBackground().add(new GraphicEntity(rect));
 	}
@@ -145,6 +147,9 @@ public class BvsR_Map implements Serializable {
 	public void addActor(Actor actor) {
 		getActors().add(actor);
 	}
+	public void addBullet(Bullet actor) {
+		getBullets().add(actor);
+	}
 
 	public void markForTexture() {
 		for (int i = 0; i < getStaticMap().size(); i++) {
@@ -195,5 +200,12 @@ public class BvsR_Map implements Serializable {
 		map = (BvsR_Map) save.readObject();
 		save.close();
 		return map;
+	}
+	
+	public ArrayList<Bullet> getBullets() {
+		return bullets;
+	}
+	public void setBullets(ArrayList<Bullet> bullets) {
+		this.bullets = bullets;
 	}
 }

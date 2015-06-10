@@ -116,7 +116,7 @@
 			name="RedVSBlue"
 			mainClass="es.ull.etsii.pai.practicafinal.main.Main"
 			toolkit="swing"
-			version="0.2.4"
+			version="0.2.5"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />
@@ -132,7 +132,7 @@
 			<manifest>
 				<attribute name="Implementation-Vendor" value="HansanEldon"/>
 				<attribute name="Implementation-Title" value="RedVSBlue"/>
-				<attribute name="Implementation-Version" value="0.2.4"/>
+				<attribute name="Implementation-Version" value="0.2.5"/>
 				<attribute name="JavaFX-Feature-Proxy" value="None"/>
 			</manifest>
 		</fx:jar>

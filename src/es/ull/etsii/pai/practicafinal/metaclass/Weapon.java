@@ -165,7 +165,7 @@ public abstract class Weapon implements Serializable{
 			if (getOwner().getLookingAt() == Side.LEFT)
 				getGraphicShape().setLocation((int)getOwner().getPosition().x() - getWidth() - getX_offset(), (int)getOwner().getPosition().y() + addy + getY_offset());
 			else 
-				getGraphicShape().setLocation((int)getOwner().getPosition().x() + Player.WIDTH + getX_offset(), (int)getOwner().getPosition().y() + addy + getY_offset());
+				getGraphicShape().setLocation((int)getOwner().getPosition().x() + getOwner().getStats().getWidth() + getX_offset(), (int)getOwner().getPosition().y() + addy + getY_offset());
 		}
 	}
 	protected void addBullet(Bullet bullet){
@@ -199,7 +199,7 @@ public abstract class Weapon implements Serializable{
 	}
 	
 	public void setGraphicShape(){
-		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+Player.WIDTH+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
+		setGraphicShape(new GraphicRectangle((int)getOwner().getPosition().x()+getOwner().getStats().getWidth()+getX_offset(), (int)getOwner().getPosition().y() + getY_offset(),getWidth(), getHeight()));
 	}
 	
 	public int getX_offset() {

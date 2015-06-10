@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.graphics.Drawable;
+import es.ull.etsii.pai.practicafinal.redvsblue.Bullet;
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.redvsblue.Entity;
 import es.ull.etsii.pai.practicafinal.redvsblue.GraphicEntity;
@@ -64,7 +65,11 @@ public class MapPainter extends JPanel {
 			map.getActors().get(i).paint(g.create());
 		}
 	}
-
+	public static void paintBullets(Graphics g, BvsR_Map map) {
+		for (int i = 0; i < map.getBullets().size(); i++) {
+			map.getBullets().get(i).paint(g.create());
+		}
+	}
 	public static void paintGUI(Graphics g, BvsR_Map map) {
 		for (int i = 0; i < map.getGUI().size(); i++) {
 			Drawable gui = (Drawable) (map.getGUI().get(i));
@@ -77,6 +82,7 @@ public class MapPainter extends JPanel {
 		paintBackground(g);
 		paintStaticMap(g, getMap());
 		paintActors(g, getMap());
+		paintBullets(g, getMap());
 		if (isGuiActive()) {
 			paintGUI(g, getMap());
 		}
@@ -86,6 +92,7 @@ public class MapPainter extends JPanel {
 		paintBackground(g, map);
 		paintStaticMap(g, map);
 		paintActors(g, map);
+		paintBullets(g, map);
 		paintGUI(g, map);
 	}
 	public boolean isGuiActive() {

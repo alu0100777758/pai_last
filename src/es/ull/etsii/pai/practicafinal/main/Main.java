@@ -7,19 +7,25 @@ package es.ull.etsii.pai.practicafinal.main;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 import es.ull.etsii.pai.practicafinal.editor.Editor;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
 public class Main {
 		public static void main(String[] args) {
 			Editor.checkFileSystem();
-			EditorFrame frame = new EditorFrame();
+			SceneManager frame = new SceneManager();
+			frame.switchScenario(new RvsB_Menu());
 			frame.setTitle("Red VS Blue Editor");
 		 	frame.setLocationRelativeTo(null); 
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setVisible(true);
+		    frame.setSize(new Dimension(ScreenManager.getInstance().getWindWidth(),ScreenManager.getInstance().getWindHeight()));
+		    frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		    frame.setVisible(true);
 			frame.setFocusable(true);
 		}
 } 

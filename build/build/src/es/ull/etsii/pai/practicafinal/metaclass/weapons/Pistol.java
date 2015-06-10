@@ -50,7 +50,7 @@ public class Pistol extends Weapon{
 		Point2D speed = new Point2D (side, 0);
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
-		getOwner().getMap().getActors().add(new UZI_bullet(position, speed, DAMAGE, PUSH,getOwner(), 10));
+		addBullet(new UZI_bullet(position, speed, DAMAGE, PUSH,getOwner(), 10));
 		AudioManager.startAudio("uziShot.wav");
 	}
 }

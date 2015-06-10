@@ -61,7 +61,7 @@ public class Knife extends Weapon {
 		Bullet breechBullet = new Knife_bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE);
 		breechBullet.setMaxDistance(RANGE);
 		breechBullet.setSoundName("rocketBang.wav");
-		getOwner().getMap().getActors().add(breechBullet);
+		addBullet(breechBullet);
 //		AudioManager.startAudio("KnifeShot.wav");
 	}
 

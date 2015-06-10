@@ -12,6 +12,7 @@ import javax.swing.JPopupMenu;
 
 import es.ull.etsii.pai.practicafinal.metaclass.PowerUpWeapon;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
+import es.ull.etsii.pai.practicafinal.metaclass.weapons.Hook;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.Pistol;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.RocketLauncher;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.Slipper;
@@ -35,6 +36,7 @@ public class PowerUPTool extends PlayerInitTool {
 	public static final int ROCKETLAUNCHER = 1;			// Constante que define la referencia a un arma tipo "rocket launcher"	
 	public static final int PISTOL= 2;					// Constante que define la referencia a un arma tipo "pistol"
 	public static final int SLIPPER = 3;				// Constante que define la referencia a un arma tipo "slipper"
+	public static final int HOOK = 4;
 	private int selectedWeapon = 0;						// emtero que define el tipo de arma seleccionada
 	private JPopupMenu selectionPopup;					// menu desplegable desde donde se selecciona el tipo de arma
 
@@ -73,10 +75,17 @@ public class PowerUPTool extends PlayerInitTool {
 				setSelectedWeapon(SLIPPER);
 			}
 		});
+		JMenuItem whoo = new JMenuItem("Gancho");
+		whoo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setSelectedWeapon(HOOK);
+			}
+		});
 		getPopup().add(wlc);
 		getPopup().add(wuzi);
 		getPopup().add(wpis);
 		getPopup().add(wsli);
+		getPopup().add(whoo);
 	}
 
 	@Override
@@ -108,6 +117,9 @@ public class PowerUPTool extends PlayerInitTool {
 			break;
 		case SLIPPER:
 			weapon = new Slipper((int) e.getX(), (int) e.getY());
+			break;
+		case HOOK:
+			weapon = new Hook((int) e.getX(), (int) e.getY());
 			break;
 		default:
 			break;

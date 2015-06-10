@@ -24,6 +24,7 @@ public class ResourceManager {
 	private static String userDir =  System.getProperty("user.dir");
 	private static ResourceManager instance = null;		// Unica instancia de esta clase.
 	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); // Mapa de imagenes con su nombre asociado.
+	private HashMap<String, BufferedImage> runtimeBufferedImages = new HashMap<String, BufferedImage>(); // Mapa de imagenes con su nombre asociado
 	/**
 	 * Constructor privado.
 	 */
@@ -77,6 +78,10 @@ public class ResourceManager {
 		}
 		return found;
 	}
+	public BufferedImage getRunTimeBufferedImage(String path){
+		BufferedImage found = getBufferedImages().get(path);
+		return found;
+	}
 	/**
 	 * Getters y setters.
 	 * @return
@@ -99,6 +104,15 @@ public class ResourceManager {
 
 	public void setNotFound(BufferedImage notFound) {
 		this.notFound = notFound;
+	}
+
+	public HashMap<String, BufferedImage> getRuntimeBufferedImages() {
+		return runtimeBufferedImages;
+	}
+
+	public void setRuntimeBufferedImages(
+			HashMap<String, BufferedImage> runtimeBufferedImages) {
+		this.runtimeBufferedImages = runtimeBufferedImages;
 	}
 	
 	
