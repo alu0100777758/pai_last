@@ -13,9 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import es.ull.etsii.pai.practicafinal.editor.MapPainter;
-import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
-import es.ull.etsii.pai.practicafinal.physics.Physical_active;
+import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.DefaultModeScoring;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.practicafinal.physics.PhysicsEngine;
 
@@ -73,10 +71,12 @@ public class Scenario {
 		if (getPlayer_one().hasToDie()) {
 			setEnded(true);
 			setRedWins(true);
+			DefaultModeScoring.addWinningScore(getPlayer_two());
 		}
 		if (getPlayer_two().hasToDie()) {
 			setEnded(true);
 			setBlueWins(true);
+			DefaultModeScoring.addWinningScore(getPlayer_one());
 		}
 		if (isEnded()) {
 			AudioManager.stopAll();

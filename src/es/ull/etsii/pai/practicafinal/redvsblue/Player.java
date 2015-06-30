@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
+import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.DefaultModeScoring;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.Knife;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
@@ -25,9 +26,11 @@ import es.ull.etsii.pai.prct9.geometry.Segment;
 public class Player extends Actor implements Physical_active {
 	private static final long serialVersionUID = -3033119409170313204L;
 
+
 	private Point2D speed; 									// Vector velocidad.
 	private Point2D push;									// Vector de empuje.
 
+	private int score;										// puntuacion del jugador.
 	private int hp;											// Cantidad de vida actual.
 	private Side lookingAt;									// Lado al que se esta mirando.
 	private Weapon weapon;									// Arma actual.
@@ -43,6 +46,7 @@ public class Player extends Actor implements Physical_active {
 	private boolean move_right = false;						// True si se esta moviendo a la derecha.
 	private boolean crounched = false;						// True si esta agachado.
 	private boolean shooting = false;						// True si esta disparando.
+	
 	private PlayerData stats = new PlayerData(20, 1, 0, 20, 40, 5, -5.0, 0, 1,
 			150, 2, Color.BLUE, new String[] {"playerhit01.wav","playerhit02.wav","playerhit03.wav",});
 
@@ -69,6 +73,7 @@ public class Player extends Actor implements Physical_active {
 		getGraphicShapes().get(stats.getBODY()).setPaint(Color.BLUE);
 		getGraphicShapes().add(null);
 		
+		setScore(0);
 //		setWeapon(new RocketLauncher(this));
 		setWeapon(new Knife(this));
 	}
@@ -256,6 +261,7 @@ public class Player extends Actor implements Physical_active {
 	 */
 	public void gotHit(Bullet bullet) {
 		if (bullet.getOwner() != this) {
+			DefaultModeScoring.addHitScore(bullet.getOwner());
 			AudioManager.startAudio(bullet.getSoundName());
 			if(!isDead())
 				AudioManager.startAudio(getSoundName());
@@ -374,7 +380,13 @@ public class Player extends Actor implements Physical_active {
 		getSpeed().setY(-stats.getGRAVITY());
 		setBlock_up(false);
 	}
-
+	/**
+	 * Añade una cantidad a la puntuacion.
+	 * @param value
+	 */
+	public void addToScore(int value) {
+		setScore(getScore() + value); 
+	}
 	@Override
 	public PhysicalRectangle getPhysicalRectangle() {
 		return getPhysicalShape();
@@ -620,6 +632,12 @@ public class Player extends Actor implements Physical_active {
 	public void setStats(PlayerData stats) {
 		this.stats = stats;
 	}
-	
-	
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 }
