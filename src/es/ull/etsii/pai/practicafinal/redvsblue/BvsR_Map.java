@@ -15,6 +15,7 @@ public class BvsR_Map implements Serializable {
 	public static final int PLANE_ACTORS = 0;
 	public static final int PLANE_MAP = 1;
 	public static final int PLANE_BACKGROUND = 2;
+	public static final int PLANE_FOREKGROUND = 3;
 	private static final long serialVersionUID = 8439640060806465321L;
 	private ArrayList<Entity> background = new ArrayList<Entity>();
 	private ArrayList<Entity> staticMap = new ArrayList<Entity>();
@@ -39,6 +40,9 @@ public class BvsR_Map implements Serializable {
 		case PLANE_MAP:
 			getStaticMap().add(ent);
 			break;
+		case PLANE_FOREKGROUND:
+			getForeground().add(ent);
+			break;	
 		default:
 			break;
 		}

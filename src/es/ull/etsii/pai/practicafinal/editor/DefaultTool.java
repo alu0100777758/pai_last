@@ -97,7 +97,7 @@ public class DefaultTool extends EditorTool {
 			for (int i = getMap().getForeground().size() - 1; i >= 0; i--) {
 				Entity actor = getMap().getForeground().get(i);
 				if (actor.getShape().contains(p)) {
-					getFoundInplane().add(BvsR_Map.PLANE_BACKGROUND);
+					getFoundInplane().add(BvsR_Map.PLANE_FOREKGROUND);
 					return actor;
 				}
 			}
@@ -210,6 +210,9 @@ public class DefaultTool extends EditorTool {
 				break;
 			case BvsR_Map.PLANE_BACKGROUND:
 				getMap().getBackground().remove(getSelectedActor().get(i));
+				break;
+			case BvsR_Map.PLANE_FOREKGROUND:
+				getMap().getForeground().remove(getSelectedActor().get(i));
 				break;
 			default:
 				break;

@@ -16,6 +16,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,6 +26,8 @@ public class GameFrame extends JFrame implements ActionListener{
 	private JPanel scenarioPanel;				// Panel con el escenario.
 	private JPanel end;
 	private Timer timer; 
+	private long startTime;
+	
 	/**
 	 * Inicia una ventana con un mapa cargado identificado con el parametro.
 	 * 
@@ -59,6 +62,7 @@ public class GameFrame extends JFrame implements ActionListener{
 		}));
 		
 		getTimer().start();
+		setStartTime(System.currentTimeMillis()/1000);
 	}
 
 	/**
@@ -139,4 +143,12 @@ public class GameFrame extends JFrame implements ActionListener{
 			((GameScenario) getScenarioPanel()).getScenario().getMapData().markForTexture();
 		}
 	}
+	public long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
+	
 }
