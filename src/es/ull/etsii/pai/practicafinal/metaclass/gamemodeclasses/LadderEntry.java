@@ -8,6 +8,15 @@ public class LadderEntry implements Serializable, Comparator<LadderEntry>{
 	private String name;
 	private String mode;
 	private int score;
+	
+	public LadderEntry() {
+		
+	}
+	
+	public LadderEntry(String name, int score) {
+		setName(name);
+		setScore(score);
+	}
 	public String getName() {
 		return name;
 	}
