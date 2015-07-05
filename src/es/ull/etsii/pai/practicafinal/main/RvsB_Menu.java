@@ -1,7 +1,5 @@
 package es.ull.etsii.pai.practicafinal.main;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,7 +12,7 @@ import javax.swing.SwingConstants;
 
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
-import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
+import es.ull.etsii.pai.practicafinal.scenes.CreditsScene;
 
 public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public RvsB_Menu() {
@@ -23,15 +21,23 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 //		mainMenu.setBackground(Color.GREEN);
 		mainMenu.setLayout(new BoxLayout(mainMenu, BoxLayout.Y_AXIS));
 		mainMenu.add(Box.createVerticalStrut(200));
+		
 		JButton button = new JButton("jugar");
 		button.setActionCommand("play");
 		button.addActionListener(this);
 		mainMenu.add(button);
 		mainMenu.add(Box.createVerticalStrut(20));
+		
 		JButton button2 = new JButton("editor");
 		button2.setActionCommand("edit");
 		button2.addActionListener(this);
 		mainMenu.add(button2);
+		
+		JButton button3 = new JButton("Creditos");
+		button3.setActionCommand("Credits");
+		button3.addActionListener(this);
+		mainMenu.add(button3);
+		
 		add(mainMenu,SwingConstants.CENTER);
 		setSize(getMaximumSize());
 //		setBackground(Color.RED);
@@ -42,6 +48,9 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		switch (arg0.getActionCommand()) {
 		case "play":
 			getSceneManager().switchScenario(new MapSelector());
+			break;
+		case "Credits":
+			getSceneManager().switchScenario(new CreditsScene(this.getWidth(), this.getHeight()));
 			break;
 		case "edit":
 			EditorFrame frame1 = new EditorFrame();
