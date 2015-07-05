@@ -15,7 +15,9 @@ import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public class CreditsScene extends ScenarioPanel{
-	public final static String TITLE_1 = "Creditos";
+	public final static String TITLE_1 = "Desarrolladores";
+	public final static String TITLE_2 = "Artistas";
+	public final static String TITLE_3 = "Voces";
 	public final static String VOICE_1 = "Elisa Martin";
 	public final static String VOICE_2 = "Gianna Caffera";
 	public final static String ARTIST = "Rafa";
@@ -36,11 +38,15 @@ public class CreditsScene extends ScenarioPanel{
 		setBackground(BACKGROUND_COLOR);
 		
 		getCreditText().add(new TitleCreditText(new Point2D(width / 2, height + 20), TEXT_SPEED, TITLE_1, Color.RED));
-		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, height + 20 + TITLE_GAP), TEXT_SPEED, VOICE_1));
-		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, height + 20 + TITLE_GAP + COLLABORATOR_GAP), TEXT_SPEED, VOICE_2));
-		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, height + 20 + TITLE_GAP + 2 * COLLABORATOR_GAP), TEXT_SPEED, ARTIST));
-		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, height + 20 + TITLE_GAP + 3 * COLLABORATOR_GAP), TEXT_SPEED, DEVELOPER_1));
-		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, height + 20 + TITLE_GAP + 4 * COLLABORATOR_GAP), TEXT_SPEED, DEVELOPER_2));
+		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, getCreditText().get(getCreditText().size() - 1).getPos().y() + COLLABORATOR_GAP), TEXT_SPEED, DEVELOPER_1));
+		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, getCreditText().get(getCreditText().size() - 1).getPos().y() + COLLABORATOR_GAP), TEXT_SPEED, DEVELOPER_2));
+		getCreditText().add(new TitleCreditText(new Point2D(width / 2,getCreditText().get(getCreditText().size() - 1).getPos().y() + TITLE_GAP), TEXT_SPEED, TITLE_2, Color.RED));
+		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, getCreditText().get(getCreditText().size() - 1).getPos().y() + COLLABORATOR_GAP), TEXT_SPEED, ARTIST));
+		getCreditText().add(new TitleCreditText(new Point2D(width / 2, getCreditText().get(getCreditText().size() - 1).getPos().y() + TITLE_GAP), TEXT_SPEED, TITLE_3, Color.RED));
+		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2,getCreditText().get(getCreditText().size() - 1).getPos().y() + COLLABORATOR_GAP), TEXT_SPEED, VOICE_1));
+		getCreditText().add(new CollaboratorCreditText(new Point2D(width / 2, getCreditText().get(getCreditText().size() - 1).getPos().y() + COLLABORATOR_GAP), TEXT_SPEED, VOICE_2));
+		
+		
 		
 		getTimer().start();
 		
