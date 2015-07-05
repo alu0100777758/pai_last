@@ -1,4 +1,12 @@
 package es.ull.etsii.pai.practicafinal.metaclass;
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ *
+ */
 
 
 
@@ -10,12 +18,18 @@ import es.ull.etsii.pai.practicafinal.physics.RectilinearLocomotion;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 
 public abstract class CreditText {
-	private String text;
-	private Point2D pos;
-	private Point2D speed;
-	private MovementEquation movementEquation;
-	private Color color;
+	private String text;							// Texto a mostrar.
+	private Point2D pos;							// Posicion del texto.
+	private Point2D speed;							// Vector de velocidad hacia donde se mueve.
+	private MovementEquation movementEquation;		// Ecuacion de movimiento que rige su movimiento.
+	private Color color;							// Color del texto.
 	
+	/**
+	 * Crea el texto con los parametros dados.
+	 * @param pos
+	 * @param speed
+	 * @param text
+	 */
 	public CreditText(Point2D pos, Point2D speed, String text) {
 		setPos(pos);
 		setSpeed(speed);
@@ -23,7 +37,13 @@ public abstract class CreditText {
 		setMovementEquation(new RectilinearLocomotion());
 		setColor(Color.WHITE);
 	}
-	
+	/**
+	 * Crea el texto con los parametros dados.
+	 * @param pos
+	 * @param speed
+	 * @param text
+	 * @param color
+	 */
 	public CreditText(Point2D pos, Point2D speed, String text, Color color) {
 		this(pos, speed, text);
 		
@@ -38,15 +58,22 @@ public abstract class CreditText {
 		this.color = color;
 	}
 
+	/**
+	 * Mueve el texto a la siguiente posicion segun su velocidad.
+	 */
 	public void update() {
 		setPos(getMovementEquation().getNewpos(getSpeed(), getPos()));
 	}
 	/**
-	 * De esta forma se pueden pintar titulos y otras cosas de distintas formas facilmente.
+	 * De esta forma se pueden pintar titulos y otras cosas que se comporten distinto de varias formas facilmente.
 	 * @param g
 	 */
 	public abstract void paint(Graphics g);
 	
+	/**
+	 * Setters y Getters.
+	 * @return
+	 */
 	public String getText() {
 		return text;
 	}
