@@ -60,7 +60,8 @@ public class GameFrame extends JFrame implements ActionListener{
 				}				
 			}
 		}));
-		
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setUndecorated(true);
 		getTimer().start();
 		setStartTime(System.currentTimeMillis()/1000);
 	}

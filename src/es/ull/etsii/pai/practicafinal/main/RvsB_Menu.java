@@ -46,6 +46,11 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		button3.addActionListener(this);
 		mainMenu.add(button3);
 		
+		JButton button4 = new JButton("Salir");
+		button4.setActionCommand("exit");
+		button4.addActionListener(this);
+		mainMenu.add(button4);
+		
 		add(mainMenu,SwingConstants.CENTER);
 		setSize(getMaximumSize());
 //		setBackground(Color.RED);
@@ -69,6 +74,8 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			frame1.setFocusable(true);
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			break;
+		case "exit":
+			System.exit(0);
 		default:
 			break;
 		}

@@ -41,6 +41,7 @@ public class CreditsScene extends ScenarioPanel{
 	public final static Point2D TEXT_SPEED = new Point2D(0, -5);
 	public final static int TIMER_DELAY = 40;
 	public final static Color BACKGROUND_COLOR = Color.BLACK;
+	public final static int SPEED = 4;
 	
 	private ArrayList<CreditText> creditText;									// Texto a mostrar.
 	private Timer timer;														// Timer para el refresco.
@@ -113,9 +114,9 @@ public class CreditsScene extends ScenarioPanel{
 			for(int i = 0; i < getCreditText().size(); i++) {
 				getCreditText().get(i).update();
 				if (getCreditText().get(i).getPos().y() <= getHeight() )
-					getCreditText().get(i).setSpeed(new Point2D(-5, -5));
+					getCreditText().get(i).setSpeed(new Point2D(-SPEED, -SPEED));
 				if (getCreditText().get(i).getPos().y() <= getHeight()  * 2  / 4)
-					getCreditText().get(i).setSpeed(new Point2D(+5, -5));
+					getCreditText().get(i).setSpeed(new Point2D(SPEED, -SPEED));
 			}
 			
 			repaint();

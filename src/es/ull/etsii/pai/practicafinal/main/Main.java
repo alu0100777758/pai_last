@@ -25,6 +25,8 @@ public class Main {
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    frame.setSize(new Dimension(ScreenManager.getInstance().getWindWidth(),ScreenManager.getInstance().getWindHeight()));
 		    frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+			frame.setUndecorated(true);
 		    frame.setVisible(true);
 			frame.setFocusable(true);
 		}

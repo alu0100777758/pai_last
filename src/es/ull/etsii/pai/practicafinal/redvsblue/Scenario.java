@@ -13,6 +13,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.RepaintManager;
+
 import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.DefaultModeScoring;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.practicafinal.physics.PhysicsEngine;
@@ -29,6 +31,7 @@ public class Scenario {
 	private PhysicsEngine physicEngine;
 	public static final String[] dieSounds = { "Idie01.wav", "Idie02.wav",
 			"Idie03.wav" };
+
 	/**
 	 * Crea un escenario de alto y ancho definidos con un mapa determinado.
 	 * 
@@ -61,28 +64,30 @@ public class Scenario {
 	 * Actualiza el estado del escenario.
 	 */
 	public void update() {
-		getPhysicEngine().update();
-		/**
-		 * Verifica si alguien tiene que morir.
-		 */
-		for (int i = 0; i < getStaticMap().size(); i++)
-			if (((Physical_passive) getStaticMap().get(i)).hasToDie())
-				getStaticMap().remove(i);
-		if (getPlayer_one().hasToDie()) {
-			setEnded(true);
-			setRedWins(true);
-			DefaultModeScoring.addWinningScore(getPlayer_two());
-		}
-		if (getPlayer_two().hasToDie()) {
-			setEnded(true);
-			setBlueWins(true);
-			DefaultModeScoring.addWinningScore(getPlayer_one());
-		}
-		if (isEnded()) {
-			AudioManager.stopAll();
-			AudioManager.startAudio(dieSounds[ResourceManager.getInstance()
-					.getRandGen().nextInt(dieSounds.length)]);
-			GameLoop.stepTimer.stop();
+		if (!isPaused()) {
+			getPhysicEngine().update();
+			/**
+			 * Verifica si alguien tiene que morir.
+			 */
+			for (int i = 0; i < getStaticMap().size(); i++)
+				if (((Physical_passive) getStaticMap().get(i)).hasToDie())
+					getStaticMap().remove(i);
+			if (getPlayer_one().hasToDie()) {
+				setEnded(true);
+				setRedWins(true);
+				DefaultModeScoring.addWinningScore(getPlayer_two());
+			}
+			if (getPlayer_two().hasToDie()) {
+				setEnded(true);
+				setBlueWins(true);
+				DefaultModeScoring.addWinningScore(getPlayer_one());
+			}
+			if (isEnded()) {
+				AudioManager.stopAll();
+				AudioManager.startAudio(dieSounds[ResourceManager.getInstance()
+						.getRandGen().nextInt(dieSounds.length)]);
+				GameLoop.stepTimer.stop();
+			}
 		}
 
 	}
@@ -94,6 +99,11 @@ public class Scenario {
 	 */
 	public void paint(Graphics g) {
 		getWorld().paint(g);
+		if (isPaused()) {
+			ScreenManager sm = ScreenManager.getInstance();
+			g.drawImage(
+					ResourceManager.getInstance().getBufferedImage("Recursos\\textures\\pause.png"), 0, 0,(int)(sm.getWindWidth() * sm.getRate_x()),(int)(sm.getWindHeight() * sm.getRate_y()), null);
+		}
 	}
 
 	/**
@@ -138,6 +148,7 @@ public class Scenario {
 	public void setActors(ArrayList<Actor> actors) {
 		this.mapData.setActors(actors);
 	}
+
 	public RvsBKeyController getKeyController() {
 		return keyController;
 	}
@@ -242,20 +253,28 @@ public class Scenario {
 				getPlayer_two().setLookingAt(Side.RIGHT);
 				// getActors().add(getPlayer_two().shoot());
 				getPlayer_two().shoot();
-			} else if (keyCode == getKeyMap().get(KeyActions.PAUSE)){
+			} else if (keyCode == getKeyMap().get(KeyActions.PAUSE)) {
 				pause();
+			} else if (keyCode == getKeyMap().get(KeyActions.MENU)) {
+				menu();
 			}
 		}
 
+		private void menu() {
+			// TODO Auto-generated method stub
+			System.exit(0);
+		}
+
 		private void pause() {
-			if (isPaused()){
-				GameLoop.stepTimer.start();;
-			}
-			else
-				GameLoop.stepTimer.stop();
+			// if (isPaused()) {
+			// GameLoop.stepTimer.start();
+			// } else {
+			// GameLoop.stepTimer.stop();
+			//
+			// }
 			setPaused(!isPaused());
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		/**
@@ -317,5 +336,5 @@ public class Scenario {
 	public void setPhysicEngine(PhysicsEngine physicEngine) {
 		this.physicEngine = physicEngine;
 	}
-	
+
 }
