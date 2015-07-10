@@ -57,6 +57,7 @@ public class GameFrame extends JFrame implements ActionListener{
 					getContentPane().add(getEnd());
 					validate();
 					repaint();
+					getTimer().stop();
 				}				
 			}
 		}));
