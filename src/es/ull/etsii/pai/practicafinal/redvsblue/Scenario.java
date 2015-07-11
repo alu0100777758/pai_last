@@ -102,7 +102,10 @@ public class Scenario {
 		if (isPaused()) {
 			ScreenManager sm = ScreenManager.getInstance();
 			g.drawImage(
-					ResourceManager.getInstance().getBufferedImage("Recursos\\textures\\pause.png"), 0, 0,(int)(sm.getWindWidth() * sm.getRate_x()),(int)(sm.getWindHeight() * sm.getRate_y()), null);
+					ResourceManager.getInstance().getBufferedImage(
+							"Recursos\\textures\\pause.png"), 0, 0,
+					(int) (sm.getWindWidth() * sm.getRate_x()),
+					(int) (sm.getWindHeight() * sm.getRate_y()), null);
 		}
 	}
 

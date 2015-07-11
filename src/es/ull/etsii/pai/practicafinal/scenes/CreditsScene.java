@@ -31,9 +31,9 @@ public class CreditsScene extends ScenarioPanel{
 	public final static String TITLE_1 = "Desarrolladores";
 	public final static String TITLE_2 = "Artistas";
 	public final static String TITLE_3 = "Voces";
-	public final static String VOICE_1 = "Elisa Martin";
+	public final static String VOICE_1 = "Elisa Martin Dalens";
 	public final static String VOICE_2 = "Gianna Caffera";
-	public final static String ARTIST = "Rafa";
+	public final static String ARTIST = "Rafa García";
 	public final static String DEVELOPER_1 = "Javier Martin Hernandez";
 	public final static String DEVELOPER_2 = "Sabato Ceruso";
 	public final static int TITLE_GAP = 80;

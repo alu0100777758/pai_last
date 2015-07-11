@@ -67,6 +67,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			JButton button = new MapPreview(getMaps().get(i));
 			maps.add(button);
 			button.addActionListener(this);
+			System.out.println(getMaps().get(i));
 		}
 		System.out.println("begin: "+begin + " end: "+end);
 		return maps;
@@ -131,6 +132,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 
 	private void reemplaceCenter(JPanel buildPreview) {
 		remove(getCenter());
+//		getCenter().removeAll();
 		add(buildPreview, BorderLayout.CENTER);
 		validate();
 		repaint();
