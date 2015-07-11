@@ -8,6 +8,9 @@ package es.ull.etsii.pai.practicafinal.main;
  *
  */
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -18,6 +21,7 @@ public class SceneManager extends JFrame {
 	ScenarioPanel	currentScenario ;
 	public SceneManager() {
 		super();
+		this.addKeyListener(new KeyHandler());
 //		setCurrentScenario(scenario);
 //		add(getCurrentScenario());
 //		scenario.setSceneManager(this);
@@ -37,4 +41,29 @@ public class SceneManager extends JFrame {
 		this.currentScenario = currentScenario;
 	}
 	
+	
+	/**
+	 * Manejador de teclas.
+	 * 
+	 * @author Sabato Ceruso.
+	 * @author Javier Martin Hernandez.
+	 *
+	 */
+	class KeyHandler implements KeyListener {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			getCurrentScenario().pulsedKey(e.getKeyCode(), e.getKeyChar());
+		}
+
+		@Override
+		public void keyReleased(KeyEvent arg0) {;		
+			getCurrentScenario().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
+		}
+
+		@Override
+		public void keyTyped(KeyEvent arg0) {
+		}
+
+	}
 }

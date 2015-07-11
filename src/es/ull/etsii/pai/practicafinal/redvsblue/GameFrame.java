@@ -49,9 +49,9 @@ public class GameFrame extends JFrame implements ActionListener{
 					double xrate = ScreenManager.getInstance().getRate_x();
 					double yrate = ScreenManager.getInstance().getRate_y();
 					if (((GameScenario)getScenarioPanel()).getScenario().isBlueWins())
-						setEnd(new WinnerPanel("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));		
+						setEnd(new WinnerPanel("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));		
 					else
-						setEnd(new WinnerPanel("Red",(int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));	
+						setEnd(new WinnerPanel("Red",(int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));	
 					getThis().addKeyListener(new WinnerKeyHandler());
 					remove(getScenarioPanel());
 					getContentPane().add(getEnd());

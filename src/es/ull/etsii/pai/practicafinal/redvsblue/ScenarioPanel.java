@@ -6,6 +6,7 @@ import es.ull.etsii.pai.practicafinal.main.SceneManager;
 
 public class ScenarioPanel extends JPanel {
 	private SceneManager sceneManager;
+	
 	public SceneManager getSceneManager() {
 		return sceneManager;
 	}
@@ -13,4 +14,13 @@ public class ScenarioPanel extends JPanel {
 	public void setSceneManager(SceneManager sceneManager) {
 		this.sceneManager = sceneManager;
 	}
+	
+	public void pulsedKey(int keyCode, char keyChar) {
+		
+	}
+	
+	public void releasedKey(int keyCode, char keyChar) {
+		
+	}
+	
 }

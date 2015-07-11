@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.redvsblue.GameFrame;
 import es.ull.etsii.pai.practicafinal.redvsblue.GameLoop;
+import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
@@ -93,7 +94,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		// MapPreview prev = (MapPreview)e.getSource();
 		switch (e.getActionCommand()) {
 		case "play":
-			GameFrame frame = new GameFrame(getMaps().get(getCurrentMap()));
+			/*GameFrame frame = new GameFrame(getMaps().get(getCurrentMap()));
 			frame.setTitle("Red VS Blue");
 			frame.setSize(ScreenManager.getInstance().getWindWidth(),
 					ScreenManager.getInstance().getWindHeight());
@@ -101,6 +102,8 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			frame.setVisible(true);
 			GameLoop.init(frame);
+			*/
+			getSceneManager().switchScenario(new GameScenario(getMaps().get(getCurrentMap())));
 			break;
 		case "return":
 			getSceneManager().switchScenario(new RvsB_Menu());

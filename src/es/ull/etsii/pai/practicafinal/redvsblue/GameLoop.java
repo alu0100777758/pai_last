@@ -12,6 +12,7 @@ public class GameLoop{
 	  public static Scenario updater ;
 	  public static GameScenario displayer ;
 	  public static  Timer stepTimer ;
+	 
 	  private GameLoop(){
 	  };
 	  public static GameLoop getInstance(){

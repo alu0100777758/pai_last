@@ -12,10 +12,12 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
 
+import es.ull.etsii.pai.practicafinal.main.RvsB_Menu;
 import es.ull.etsii.pai.practicafinal.metaclass.CollaboratorCreditText;
 import es.ull.etsii.pai.practicafinal.metaclass.CreditText;
 import es.ull.etsii.pai.practicafinal.metaclass.TitleCreditText;
@@ -86,6 +88,12 @@ public class CreditsScene extends ScenarioPanel{
 			getCreditText().get(i).paint(g.create());
 		g.drawString(TITLE_1, 960, 1048);
 		
+	}
+	
+	@Override
+	public void releasedKey(int keyCode, char keyChar) {
+		if (keyCode == KeyEvent.VK_SPACE)
+			getSceneManager().switchScenario(new RvsB_Menu());
 	}
 	/**
 	 * Getters y Setters.
