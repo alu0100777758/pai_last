@@ -24,8 +24,10 @@ public class Main {
 			frame.setTitle("Red VS Blue Editor");
 		 	frame.setLocationRelativeTo(null); 
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		   // frame.setSize(new Dimension(ScreenManager.getInstance().getWindWidth(),ScreenManager.getInstance().getWindHeight()));
 		    frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+
 		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		    frame.setUndecorated(true);
 		    frame.setVisible(true);
