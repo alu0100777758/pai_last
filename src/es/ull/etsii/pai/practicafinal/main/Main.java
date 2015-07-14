@@ -24,29 +24,22 @@ public class Main {
 			frame.setTitle("Red VS Blue Editor");
 		 	frame.setLocationRelativeTo(null); 
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    // TODO refactorizar 
 		    class MyAdapter extends ComponentAdapter {
 				@Override
 				public void componentResized(ComponentEvent e) {
 					ScreenManager screen = ScreenManager.getInstance();
 					screen.setRate_x((double)frame.getWidth()/screen.getWindWidth());
 					screen.setRate_y((double)frame.getHeight()/screen.getWindHeight());
-					// notificar al manager del redimensionamiento
+					// TODO notificar al manager de escena el resize (avisar a la escena )
 					//((ScenarioPanel)getScenarioPanel()).getScenario().getMapData().markForTexture();
 				}
 			}
 		    frame.addComponentListener(new MyAdapter());
-		   // frame.setSize(new Dimension(ScreenManager.getInstance().getWindWidth(),ScreenManager.getInstance().getWindHeight()));
 		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		    frame.setUndecorated(true);
 		    frame.setVisible(true);
 			frame.setFocusable(true);
-
-			//***** Esto no funciona!! ***/
-//			ScreenManager.getInstance().setRate_x(frame.getWidth()/ScreenManager.getInstance().getWindWidth());
-//			ScreenManager.getInstance().setRate_y(frame.getHeight()/ScreenManager.getInstance().getWindHeight());
-			System.out.println(frame.getWidth());
-			System.out.println(frame.getHeight());
-	
 		}
 } 
 
