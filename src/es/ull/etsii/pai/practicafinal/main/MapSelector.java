@@ -200,4 +200,10 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		this.center = center;
 	}
 
+	@Override
+	public void sizeUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

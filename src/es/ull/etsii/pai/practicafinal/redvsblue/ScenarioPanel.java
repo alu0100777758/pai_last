@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.main.SceneManager;
 
-public class ScenarioPanel extends JPanel {
+public abstract class ScenarioPanel extends JPanel {
 	private SceneManager sceneManager;
 	
 	public SceneManager getSceneManager() {
@@ -22,5 +22,7 @@ public class ScenarioPanel extends JPanel {
 	public void releasedKey(int keyCode, char keyChar) {
 		
 	}
+
+	public abstract void sizeUpdate();
 	
 }

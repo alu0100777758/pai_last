@@ -88,4 +88,9 @@ public class GameScenario extends ScenarioPanel{
 		}
 		
 	}
+
+	@Override
+	public void sizeUpdate() {
+		getScenario().getMapData().markForTexture();
+	}
 }

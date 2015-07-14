@@ -20,7 +20,7 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.practicafinal.physics.PhysicsEngine;
 
 public class Scenario {
-	BvsR_Map mapData = new BvsR_Map(); // Mapa donde se realizara la partida.
+	public static final String PAUSE_TEXTURE = "Recursos\\textures\\pause.png";
 	RvsBKeyController keyController = new RvsBKeyController(); // Controlador de
 																// teclas.
 	private boolean ended;
@@ -40,23 +40,20 @@ public class Scenario {
 	 * @param mapName
 	 */
 	public Scenario(Integer width, Integer height, String mapName) {
-		setWidth(width);
-		setHeight(height);
+//		setWidth(width);
+//		setHeight(height);
 
 		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		try {
-			setMapData(BvsR_Map.load(mapName));
-
+			setWorld(new RvsB_World(BvsR_Map.load(mapName)));
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
 		} catch (ClassNotFoundException e) {
 			System.out.println("class not found");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		setWorld(new RvsB_World(getMapData()));
 		setPhysicEngine(new PhysicsEngine(getWorld()));
 	}
 
@@ -103,7 +100,7 @@ public class Scenario {
 			ScreenManager sm = ScreenManager.getInstance();
 			g.drawImage(
 					ResourceManager.getInstance().getBufferedImage(
-							"Recursos\\textures\\pause.png"), 0, 0,
+							PAUSE_TEXTURE), 0, 0,
 					(int) (sm.getWindWidth() * sm.getRate_x()),
 					(int) (sm.getWindHeight() * sm.getRate_y()), null);
 		}
@@ -113,43 +110,43 @@ public class Scenario {
 	 * Getters y Setters**************
 	 */
 	public Integer getWidth() {
-		return mapData.getWidth();
+		return getWorld().getMapData().getWidth();
 	}
 
 	public void setWidth(Integer width) {
-		this.mapData.setWidth(width);
+		getWorld().getMapData().setWidth(width);
 	}
 
 	public Integer getHeight() {
-		return mapData.getHeight();
+		return getWorld().getMapData().getHeight();
 	}
 
 	public void setHeight(Integer height) {
-		this.mapData.setHeight(height);
+		getWorld().getMapData().setHeight(height);
 	}
 
 	public ArrayList<Entity> getBackground() {
-		return mapData.getBackground();
+		return getWorld().getMapData().getBackground();
 	}
 
 	public void setBackground(ArrayList<Entity> background) {
-		this.mapData.setBackground(background);
+		getWorld().getMapData().setBackground(background);
 	}
 
 	public ArrayList<Entity> getStaticMap() {
-		return mapData.getStaticMap();
+		return getWorld().getMapData().getStaticMap();
 	}
 
 	public void setStaticMap(ArrayList<Entity> staticMap) {
-		this.mapData.setStaticMap(staticMap);
+		getWorld().getMapData().setStaticMap(staticMap);
 	}
 
 	public ArrayList<Actor> getActors() {
-		return mapData.getActors();
+		return getWorld().getMapData().getActors();
 	}
 
 	public void setActors(ArrayList<Actor> actors) {
-		this.mapData.setActors(actors);
+		getWorld().getMapData().setActors(actors);
 	}
 
 	public RvsBKeyController getKeyController() {
@@ -161,27 +158,27 @@ public class Scenario {
 	}
 
 	public Player getPlayer_two() {
-		return mapData.getPlayer_two();
+		return getWorld().getMapData().getPlayer_two();
 	}
 
 	public void setPlayer_two(Player player_two) {
-		this.mapData.setPlayer_one(player_two);
+		getWorld().getMapData().setPlayer_one(player_two);
 	}
 
 	public Player getPlayer_one() {
-		return mapData.getPlayer_one();
+		return getWorld().getMapData().getPlayer_one();
 	}
 
 	public void setPlayer_one(Player player_one) {
-		this.mapData.setPlayer_one(player_one);
+		getWorld().getMapData().setPlayer_one(player_one);
 	}
 
 	public BvsR_Map getMapData() {
-		return mapData;
+		return getWorld().getMapData();
 	}
 
 	public void setMapData(BvsR_Map mapData) {
-		this.mapData = mapData;
+		getWorld().setMapData(mapData);
 	}
 
 	public boolean isEnded() {

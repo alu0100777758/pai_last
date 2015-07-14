@@ -50,5 +50,11 @@ public class WinnerPanel extends ScenarioPanel {
 		if (keyCode == KeyEvent.VK_SPACE)
 			getSceneManager().switchScenario(new RvsB_Menu());
 	}
+
+	@Override
+	public void sizeUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

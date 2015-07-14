@@ -10,7 +10,10 @@ package es.ull.etsii.pai.practicafinal.main;
  */
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.GridBagLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,10 +28,13 @@ import javax.swing.plaf.metal.MetalButtonUI;
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 import es.ull.etsii.pai.practicafinal.scenes.CreditsScene;
 
 public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	private BackgroundPanel pict;
+	private BackgroundPanel menuBackground;
+	private JPanel menuButtons;
 	public static final String PLAY_PICT = "Recursos\\textures\\menu_play.png";
 	public static final String EDITOR_PICT = "Recursos\\textures\\menu_editor.png";
 	public static final String CREDITS_PICT = "Recursos\\textures\\menu_credits.png";
@@ -37,42 +43,46 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public static final String BACKGROUND = "Recursos\\textures\\menu_background.png";
 
 	public RvsB_Menu() {
-		BackgroundPanel mainmenu = new BackgroundPanel(ResourceManager.getInstance()
-				.getBufferedImage(BACKGROUND));
-		mainmenu.setLayout(new BoxLayout(mainmenu, BoxLayout.X_AXIS));
-		JPanel mainMenu = new JPanel();
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		setMenuBackground(new BackgroundPanel(ResourceManager.getInstance()
+				.getBufferedImage(BACKGROUND)));
+		LayoutManager menulay ;
+//		menulay = new BoxLayout(getMenuBackground(), BoxLayout.X_AXIS);
+		menulay = new GridBagLayout();
+		getMenuBackground().setLayout(menulay);
+		setMenuButtons(new JPanel());
 		setPict(new BackgroundPanel(ResourceManager.getInstance()
 				.getBufferedImage(DEFAULT_PICT)));
 		pict.setBackground(Color.RED);
 		// mainMenu.setBackground(Color.GREEN);
-		mainMenu.setLayout(new BoxLayout(mainMenu, BoxLayout.Y_AXIS));
-		mainMenu.add(Box.createVerticalStrut(200));
+		getMenuButtons().setLayout(new BoxLayout(getMenuButtons(), BoxLayout.Y_AXIS));
+		getMenuButtons().add(Box.createVerticalStrut(200));
 
 		menuButton button = new menuButton("jugar");
 		button.setActionCommand("play");
 		button.addActionListener(this);
-		mainMenu.add(button);
-		mainMenu.add(Box.createVerticalStrut(20));
+		getMenuButtons().add(button);
+		getMenuButtons().add(Box.createVerticalStrut(20));
 
 		menuButton button2 = new menuButton("editor");
 		button2.setActionCommand("edit");
 		button2.addActionListener(this);
-		mainMenu.add(button2);
+		getMenuButtons().add(button2);
 
 		menuButton button3 = new menuButton("Creditos");
 		button3.setActionCommand("Credits");
 		button3.addActionListener(this);
-		mainMenu.add(button3);
+		getMenuButtons().add(button3);
 
 		menuButton button4 = new menuButton("Salir");
 		button4.setActionCommand("exit");
 		button4.addActionListener(this);
-		mainMenu.add(button4);
+		getMenuButtons().add(button4);
 
-		mainmenu.add(mainMenu);
-		mainmenu.add(pict);
-		mainmenu.setSize(getMaximumSize());
-		add(mainmenu);
+		getMenuBackground().add(getMenuButtons());
+		getMenuBackground().add(pict);
+		getMenuBackground().setSize(getMaximumSize());
+		add(getMenuBackground());
 		// setBackground(Color.RED);
 	}
 
@@ -150,6 +160,30 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 
 	public void setPict(BackgroundPanel pict) {
 		this.pict = pict;
+	}
+
+	@Override
+	public void sizeUpdate() {
+		ScreenManager sm = ScreenManager.getInstance();
+		getMenuBackground().setSize(sm.getCurrentWidth(),sm.getCurrentHeight());
+		getPict().setSize(sm.getCurrentWidth()/2, sm.getCurrentHeight());
+		getMenuButtons().setSize(sm.getCurrentWidth()/2, sm.getCurrentHeight());
+	}
+
+	public BackgroundPanel getMenuBackground() {
+		return menuBackground;
+	}
+
+	public void setMenuBackground(BackgroundPanel menuBackground) {
+		this.menuBackground = menuBackground;
+	}
+
+	public JPanel getMenuButtons() {
+		return menuButtons;
+	}
+
+	public void setMenuButtons(JPanel menuButtons) {
+		this.menuButtons = menuButtons;
 	}
 
 }

@@ -31,13 +31,12 @@ public class Main {
 					ScreenManager screen = ScreenManager.getInstance();
 					screen.setRate_x((double)frame.getWidth()/screen.getWindWidth());
 					screen.setRate_y((double)frame.getHeight()/screen.getWindHeight());
-					// TODO notificar al manager de escena el resize (avisar a la escena )
-					//((ScenarioPanel)getScenarioPanel()).getScenario().getMapData().markForTexture();
+					frame.notify_resize();
 				}
 			}
 		    frame.addComponentListener(new MyAdapter());
-		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		    frame.setUndecorated(true);
+//		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+//		    frame.setUndecorated(true);
 		    frame.setVisible(true);
 			frame.setFocusable(true);
 		}

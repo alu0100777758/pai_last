@@ -66,4 +66,7 @@ public class SceneManager extends JFrame {
 		}
 
 	}
+	public void notify_resize(){
+		getCurrentScenario().sizeUpdate();
+	}
 }

@@ -82,12 +82,8 @@ public class CreditsScene extends ScenarioPanel{
 	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g.create());
-		
-		g.setColor(Color.WHITE);
 		for (int i = 0; i < getCreditText().size(); i++) 
 			getCreditText().get(i).paint(g.create());
-		g.drawString(TITLE_1, 960, 1048);
-		
 	}
 	
 	@Override
@@ -130,6 +126,12 @@ public class CreditsScene extends ScenarioPanel{
 			repaint();
 			
 		}
+		
+	}
+
+	@Override
+	public void sizeUpdate() {
+		// TODO Auto-generated method stub
 		
 	}
 }
