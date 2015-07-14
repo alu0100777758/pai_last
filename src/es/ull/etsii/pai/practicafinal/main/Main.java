@@ -35,8 +35,8 @@ public class Main {
 				}
 			}
 		    frame.addComponentListener(new MyAdapter());
-//		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-//		    frame.setUndecorated(true);
+		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		    frame.setUndecorated(true);
 		    frame.setVisible(true);
 			frame.setFocusable(true);
 		}
