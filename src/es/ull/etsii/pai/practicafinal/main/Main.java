@@ -7,13 +7,13 @@ package es.ull.etsii.pai.practicafinal.main;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
-import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 
 import es.ull.etsii.pai.practicafinal.editor.Editor;
-import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
-import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
 public class Main {
@@ -24,19 +24,26 @@ public class Main {
 			frame.setTitle("Red VS Blue Editor");
 		 	frame.setLocationRelativeTo(null); 
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		    class MyAdapter extends ComponentAdapter {
+				@Override
+				public void componentResized(ComponentEvent e) {
+					ScreenManager screen = ScreenManager.getInstance();
+					screen.setRate_x((double)frame.getWidth()/screen.getWindWidth());
+					screen.setRate_y((double)frame.getHeight()/screen.getWindHeight());
+					// notificar al manager del redimensionamiento
+					//((ScenarioPanel)getScenarioPanel()).getScenario().getMapData().markForTexture();
+				}
+			}
+		    frame.addComponentListener(new MyAdapter());
 		   // frame.setSize(new Dimension(ScreenManager.getInstance().getWindWidth(),ScreenManager.getInstance().getWindHeight()));
-		    frame.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-
 		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		    frame.setUndecorated(true);
 		    frame.setVisible(true);
 			frame.setFocusable(true);
 
-
 			//***** Esto no funciona!! ***/
-			ScreenManager.getInstance().setWindHeight(frame.getWidth());
-			ScreenManager.getInstance().setWindHeight(frame.getHeight());
+//			ScreenManager.getInstance().setRate_x(frame.getWidth()/ScreenManager.getInstance().getWindWidth());
+//			ScreenManager.getInstance().setRate_y(frame.getHeight()/ScreenManager.getInstance().getWindHeight());
 			System.out.println(frame.getWidth());
 			System.out.println(frame.getHeight());
 	

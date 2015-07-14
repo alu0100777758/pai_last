@@ -3,8 +3,8 @@ package es.ull.etsii.pai.practicafinal.redvsblue;
 import java.awt.Dimension;
 
 public class ScreenManager {
-	private int windWidth = 1366;						// Ancho de la ventana.
-	private int windHeight = 768;
+	public static int windWidth = 1200;						// Ancho de la ventana.
+	public static int windHeight = 800;
 	private static ScreenManager instance = null;
 	private double rate_x = 1;
 	private double rate_y = 1;
@@ -16,15 +16,15 @@ public class ScreenManager {
 	public int getWindWidth() {
 		return windWidth;
 	}
-	public void setWindWidth(int windWidth) {
-		this.windWidth = windWidth;
-	}
+//	public void setWindWidth(int windWidth) {
+//		this.windWidth = windWidth;
+//	}
 	public int getWindHeight() {
 		return windHeight;
 	}
-	public void setWindHeight(int windHeight) {
-		this.windHeight = windHeight;
-	}
+//	public void setWindHeight(int windHeight) {
+//		this.windHeight = windHeight;
+//	}
 	public double getRate_x() {
 		return rate_x;
 	}
