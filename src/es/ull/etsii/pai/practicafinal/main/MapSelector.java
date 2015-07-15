@@ -38,7 +38,6 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	private int currentPreview = 0;
 	private JComponent center;
 	private ArrayList<MapPreview> levels = new ArrayList<MapPreview>();
-	private JPanel southPanel = new JPanel();
 
 	public MapSelector() {
 		scanDir();
@@ -59,7 +58,8 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		setCenter(buildPreview(new JPanel()));
 		add(getCenter(), BorderLayout.CENTER);
 		
-		//add(new bottomLayer(), BorderLayout.SOUTH);
+		//add(southPanel, BorderLayout.SOUTH);
+		add(new bottomLayer(), BorderLayout.SOUTH);
 		
 	}
 
@@ -161,36 +161,55 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	}
 	class bottomLayer extends JPanel {
 		public bottomLayer() {
-			setLayout(new GridBagLayout());
+			ScreenManager screen = ScreenManager.getInstance();
+			setLayout(new GridLayout(3, 1));
 			GridBagConstraints c = new GridBagConstraints();
 			JPanel description = new JPanel();
 			description.setBackground(Color.GREEN);
+			description.setOpaque(false);
+			this.setOpaque(false);
 			description.setLayout(new GridLayout(4, 4));
 			JButton leftArrow = new JButton();
 			JButton rightArrow = new JButton();
-			c.fill = GridBagConstraints.VERTICAL;
+		/*	c.fill = GridBagConstraints.NONE;
 			c.weightx = 0.0;
 			c.weighty = 0.2;
 			c.anchor = GridBagConstraints.WEST;
+			*/
 			leftArrow.setIcon(new ImageIcon(ResourceManager.getInstance()
 					.getBufferedImage("icons/return.png")));
-			add(leftArrow, c);
+			//add(leftArrow, c);
 			leftArrow.setActionCommand("return");
 			leftArrow.addActionListener(MapSelector.this);
-			c.anchor = GridBagConstraints.CENTER;
+		/*	c.anchor = GridBagConstraints.CENTER;
 			c.fill = GridBagConstraints.BOTH;
 			c.weightx = 0.5;
 			c.weighty = 0.5;
-			add(description, c);
+			
+		//	add(description, c);
 			c.fill = GridBagConstraints.VERTICAL;
 			c.weightx = 0.0;
 			c.weighty = 0.2;
 			c.anchor = GridBagConstraints.EAST;
+			*/
 			rightArrow.setActionCommand("play");
 			rightArrow.addActionListener(MapSelector.this);
 			rightArrow.setIcon(new ImageIcon(ResourceManager.getInstance()
 					.getBufferedImage("icons/play.png")));
-			add(rightArrow, c);
+		//	add(rightArrow, c);
+		
+			add(Box.createHorizontalStrut(1));
+			JPanel content = new JPanel(new BorderLayout());
+			content.add(leftArrow, BorderLayout.WEST);
+			content.add(description, BorderLayout.CENTER);
+			content.add(rightArrow, BorderLayout.EAST);
+			content.setOpaque(false);
+			add(content);
+			add(Box.createHorizontalStrut(1));
+			this.setMinimumSize(new Dimension(screen.getCurrentWidth(),(int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
+			this.setMaximumSize(new Dimension(screen.getCurrentWidth(),(int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
+			this.setPreferredSize(new Dimension(screen.getCurrentWidth(),(int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
+			this.setOpaque(false);
 		}
 	}
 
