@@ -11,11 +11,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
@@ -26,9 +25,10 @@ import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 public class MapSelector extends ScenarioPanel implements ActionListener {
 	private static final int PREVIEW_ROW = 4;
 	public static final int PREVIEW_COL = 4;
-	public static final double TOP_MARGIN = 0.1;
-	public static final double BOTTOM_MARGIN = 0.4;
-	public static final double SIDE_MARGINS = 0.1;
+	public static final double TOP_MARGIN = 0.15;
+	public static final double BOTTOM_MARGIN = 0.25;
+	public static final double SIDE_MARGINS = 0.10;
+	public static final double GAP_BETWEEN_LEVELS = 0.05;
 	
 	private static final String MAPS_PATH = System.getProperty("user.dir")
 			+ System.getProperty("file.separator") + "maps";
@@ -38,7 +38,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	private int currentPreview = 0;
 	private JComponent center;
 	private ArrayList<MapPreview> levels = new ArrayList<MapPreview>();
-
+	private JPanel southPanel = new JPanel();
 
 	public MapSelector() {
 		scanDir();
@@ -47,35 +47,26 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 
 	private void fillGrid() {
 		setLayout(new BorderLayout());
-		JPanel sidePanel = new JPanel();
-		JPanel topPanel = new JPanel();
-		JPanel bottomPanel = new JPanel();
+		
 		ScreenManager screen = ScreenManager.getInstance();
-		
-		topPanel.setOpaque(false);
-		topPanel.setMinimumSize(new Dimension((int)(screen.getCurrentWidth()), (int)(screen.getCurrentHeight() * TOP_MARGIN)));
-		bottomPanel.setOpaque(false);
-		bottomPanel.setMinimumSize(new Dimension((int)(screen.getCurrentWidth()), (int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
-		sidePanel.setOpaque(false);
-		sidePanel.setMinimumSize(new Dimension((int)(screen.getCurrentWidth() * SIDE_MARGINS), screen.getCurrentHeight()));
-		
+
 		setBackground(Color.GRAY);
-		add(topPanel, BorderLayout.NORTH);
-		add(bottomPanel, BorderLayout.SOUTH);
-		add(sidePanel, BorderLayout.EAST);
-		add(sidePanel, BorderLayout.WEST);
+		
+		add(Box.createHorizontalStrut((int)(screen.getCurrentWidth() * SIDE_MARGINS)), BorderLayout.WEST);
+		add(Box.createHorizontalStrut((int)(screen.getCurrentWidth() * SIDE_MARGINS)), BorderLayout.EAST);
+		add(Box.createVerticalStrut((int)(screen.getCurrentHeight() * TOP_MARGIN)), BorderLayout.NORTH);
+		add(Box.createVerticalStrut((int)(screen.getCurrentHeight() * BOTTOM_MARGIN)), BorderLayout.SOUTH);
 		setCenter(buildPreview(new JPanel()));
 		add(getCenter(), BorderLayout.CENTER);
 		
-		System.out.println(topPanel.getHeight());
 		//add(new bottomLayer(), BorderLayout.SOUTH);
 		
 	}
 
 	public JPanel buildPreview(JPanel maps) {
 		GridLayout layout = new GridLayout(PREVIEW_COL, PREVIEW_ROW);
-		layout.setHgap(50);
-		layout.setVgap(50);
+		layout.setHgap((int)(ScreenManager.getInstance().getCurrentWidth() * GAP_BETWEEN_LEVELS));
+		layout.setVgap((int)(ScreenManager.getInstance().getCurrentHeight() * GAP_BETWEEN_LEVELS));
 		maps.setOpaque(false);
 		maps.setLayout(layout);
 		int end = (1 + getCurrentPreview()) * PREVIEW_COL * PREVIEW_ROW;
