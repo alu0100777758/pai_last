@@ -136,7 +136,7 @@ public class MapPainter extends JPanel {
 		this.foregroundActive = foregroundActive;
 	}
 
-	public static BufferedImage getPict(BvsR_Map mapa, int width, int height) {
+	public static BufferedImage getPict(BvsR_Map mapa) {
 		 BufferedImage image = new BufferedImage(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight(), BufferedImage.TYPE_3BYTE_BGR);
 		 Graphics preview = image.getGraphics();
 		 paint(preview, mapa);

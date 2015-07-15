@@ -38,7 +38,7 @@ public class MapPreview extends JButton {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		setSnapshot(MapPainter.getPict(getMapa(), getWidth(), getHeight()));
+		setSnapshot(MapPainter.getPict(getMapa()));
 		setActionCommand(getName());
 		setUI(new previewUi());
 		
@@ -90,7 +90,6 @@ public class MapPreview extends JButton {
 	}
 
 	class previewUi extends MetalButtonUI {
-		private static final int MARGIN = 10;
 
 //		@Override
 //		public void paintBorder(Component c, Graphics g, int x, int y,

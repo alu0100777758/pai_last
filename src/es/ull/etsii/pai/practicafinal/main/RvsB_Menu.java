@@ -10,16 +10,21 @@ package es.ull.etsii.pai.practicafinal.main;
  */
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Event;
+import java.awt.Graphics;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -55,21 +60,22 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 				.getBufferedImage(DEFAULT_PICT)));
 		pict.setBackground(Color.RED);
 		// mainMenu.setBackground(Color.GREEN);
-		getMenuButtons().setLayout(new BoxLayout(getMenuButtons(), BoxLayout.Y_AXIS));
-		getMenuButtons().add(Box.createVerticalStrut(200));
-
+//		getMenuButtons().setLayout(new BoxLayout(getMenuButtons(), BoxLayout.Y_AXIS));
+		getMenuButtons().setLayout(new GridLayout(6,2));
+		
+		getMenuButtons().add(Box.createVerticalStrut(20));
+		
 		menuButton button = new menuButton("jugar");
 		button.setActionCommand("play");
 		button.addActionListener(this);
 		getMenuButtons().add(button);
-		getMenuButtons().add(Box.createVerticalStrut(20));
-
+		
 		menuButton button2 = new menuButton("editor");
 		button2.setActionCommand("edit");
 		button2.addActionListener(this);
 		getMenuButtons().add(button2);
 
-		menuButton button3 = new menuButton("Creditos");
+		menuButton button3 = new menuButton("Créditos");
 		button3.setActionCommand("Credits");
 		button3.addActionListener(this);
 		getMenuButtons().add(button3);
@@ -82,6 +88,9 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		getMenuBackground().add(getMenuButtons());
 		getMenuBackground().add(pict);
 		getMenuBackground().setSize(getMaximumSize());
+		
+		getMenuButtons().add(Box.createVerticalStrut(20));
+		
 		add(getMenuBackground());
 		// setBackground(Color.RED);
 	}
@@ -150,8 +159,11 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 					RvsB_Menu.this.changePict(getActionCommand());
 				}
 			});
+			setUI(new MenuUI());
+			setOpaque(false);
+			setContentAreaFilled(false);
+			setBorderPainted(false);
 		}
-
 	}
 
 	public BackgroundPanel getPict() {
@@ -167,7 +179,8 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		ScreenManager sm = ScreenManager.getInstance();
 		getMenuBackground().setSize(sm.getCurrentWidth(),sm.getCurrentHeight());
 		getPict().setSize(sm.getCurrentWidth()/2, sm.getCurrentHeight());
-		getMenuButtons().setSize(sm.getCurrentWidth()/2, sm.getCurrentHeight());
+		getMenuButtons().setPreferredSize(new Dimension(sm.getCurrentWidth()/2, sm.getCurrentHeight()));
+		getMenuButtons().setBackground(Color.RED);
 	}
 
 	public BackgroundPanel getMenuBackground() {
