@@ -10,25 +10,21 @@ package es.ull.etsii.pai.practicafinal.main;
  */
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.plaf.metal.MetalButtonUI;
 
 import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
@@ -37,6 +33,7 @@ import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 import es.ull.etsii.pai.practicafinal.scenes.CreditsScene;
 
 public class RvsB_Menu extends ScenarioPanel implements ActionListener {
+	private static final long serialVersionUID = 169028678534289322L;
 	private BackgroundPanel pict;
 	private BackgroundPanel menuBackground;
 	private JPanel menuButtons;
@@ -46,13 +43,16 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public static final String EXIT_PICT = "Recursos\\textures\\menu_exit.png";
 	public static final String DEFAULT_PICT = PLAY_PICT;
 	public static final String BACKGROUND = "Recursos\\textures\\menu_background.png";
+	public static final int OPTIONS = 4;
+	public static menuButton selection = null;
+	private int indexOfSelection = 1;
 
 	public RvsB_Menu() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setMenuBackground(new BackgroundPanel(ResourceManager.getInstance()
 				.getBufferedImage(BACKGROUND)));
-		LayoutManager menulay ;
-//		menulay = new BoxLayout(getMenuBackground(), BoxLayout.X_AXIS);
+		LayoutManager menulay;
+		// menulay = new BoxLayout(getMenuBackground(), BoxLayout.X_AXIS);
 		menulay = new GridBagLayout();
 		getMenuBackground().setLayout(menulay);
 		setMenuButtons(new JPanel());
@@ -60,16 +60,17 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 				.getBufferedImage(DEFAULT_PICT)));
 		pict.setBackground(Color.RED);
 		// mainMenu.setBackground(Color.GREEN);
-//		getMenuButtons().setLayout(new BoxLayout(getMenuButtons(), BoxLayout.Y_AXIS));
-		getMenuButtons().setLayout(new GridLayout(6,2));
-		
+		// getMenuButtons().setLayout(new BoxLayout(getMenuButtons(),
+		// BoxLayout.Y_AXIS));
+		getMenuButtons().setLayout(new GridLayout(6, 2));
+
 		getMenuButtons().add(Box.createVerticalStrut(20));
-		
+
 		menuButton button = new menuButton("jugar");
 		button.setActionCommand("play");
 		button.addActionListener(this);
 		getMenuButtons().add(button);
-		
+
 		menuButton button2 = new menuButton("editor");
 		button2.setActionCommand("edit");
 		button2.addActionListener(this);
@@ -88,13 +89,15 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		getMenuBackground().add(getMenuButtons());
 		getMenuBackground().add(pict);
 		getMenuBackground().setSize(getMaximumSize());
-		
+
 		getMenuButtons().add(Box.createVerticalStrut(20));
-		
+
 		add(getMenuBackground());
+		setSelection((menuButton) getMenuButtons().getComponent(
+				getIndexOfSelection()));
 		ScreenManager sm = ScreenManager.getInstance();
-		getMenuButtons().setPreferredSize(new Dimension(sm.getCurrentWidth()/2, sm.getCurrentHeight()));
-		// setBackground(Color.RED);
+		getMenuButtons().setPreferredSize(
+				new Dimension(sm.getCurrentWidth() / 2, sm.getCurrentHeight()));
 	}
 
 	public void changePict(String nemoticon) {
@@ -109,14 +112,14 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 							.getBufferedImage(CREDITS_PICT));
 			break;
 		case "edit":
-			getPict().setImage(
-					ResourceManager.getInstance()
-							.getBufferedImage(EDITOR_PICT));
+			getPict()
+					.setImage(
+							ResourceManager.getInstance().getBufferedImage(
+									EDITOR_PICT));
 			break;
 		case "exit":
 			getPict().setImage(
-					ResourceManager.getInstance()
-							.getBufferedImage(EXIT_PICT));
+					ResourceManager.getInstance().getBufferedImage(EXIT_PICT));
 			break;
 
 		default:
@@ -124,7 +127,6 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		}
 		repaint();
 		validate();
-		System.out.println("cambiando imagen a : " + nemoticon);
 	}
 
 	@Override
@@ -153,7 +155,32 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		}
 	}
 
+	@Override
+	public void pulsedKey(int keyCode, char keyChar) {
+		switch (keyCode) {
+		case KeyEvent.VK_DOWN:
+		case KeyEvent.VK_S:
+		case KeyEvent.VK_RIGHT:
+			next();
+			break;
+		case KeyEvent.VK_UP:
+		case KeyEvent.VK_W:
+		case KeyEvent.VK_LEFT:
+			prev();
+			break;
+		case KeyEvent.VK_ENTER:
+			actionPerformed(new ActionEvent(getSelection(),
+					ActionEvent.ACTION_FIRST, getSelection().getActionCommand()));
+		default:
+			break;
+		}
+		System.out.println("evento");
+	}
+
+	@SuppressWarnings("serial")
 	class menuButton extends JButton {
+		private boolean selected;
+
 		public menuButton(String string) {
 			super(string);
 			addMouseListener(new java.awt.event.MouseAdapter() {
@@ -165,7 +192,25 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			setOpaque(false);
 			setContentAreaFilled(false);
 			setBorderPainted(false);
+			addMouseListener(new MouseAdapter() {
+				public void mouseEntered(MouseEvent evt) {
+					select();
+				}
+			});
 		}
+
+		public void select() {
+			RvsB_Menu.setSelection(this);
+		}
+
+		public boolean isSelected() {
+			return selected;
+		}
+
+		public void setSelected(boolean selected) {
+			this.selected = selected;
+		}
+
 	}
 
 	public BackgroundPanel getPict() {
@@ -179,9 +224,31 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	@Override
 	public void sizeUpdate() {
 		ScreenManager sm = ScreenManager.getInstance();
-		getMenuBackground().setSize(sm.getCurrentWidth(),sm.getCurrentHeight());
-		getPict().setSize(sm.getCurrentWidth()/2, sm.getCurrentHeight());
-		getMenuButtons().setPreferredSize(new Dimension(sm.getCurrentWidth()/2, sm.getCurrentHeight()));
+		getMenuBackground()
+				.setSize(sm.getCurrentWidth(), sm.getCurrentHeight());
+		getPict().setSize(sm.getCurrentWidth() / 2, sm.getCurrentHeight());
+		getMenuButtons().setPreferredSize(
+				new Dimension(sm.getCurrentWidth() / 2, sm.getCurrentHeight()));
+	}
+
+	public void next() {
+		setIndexOfSelection(getIndexOfSelection() + 1);
+		if (getIndexOfSelection() > OPTIONS)
+			setIndexOfSelection(1);
+		setSelection((menuButton) getMenuButtons().getComponent(
+				getIndexOfSelection()));
+		changePict(getSelection().getActionCommand());
+		repaint();
+	}
+
+	public void prev() {
+		setIndexOfSelection(getIndexOfSelection() - 1);
+		if (getIndexOfSelection() < 1)
+			setIndexOfSelection(OPTIONS);
+		setSelection((menuButton) getMenuButtons().getComponent(
+				getIndexOfSelection()));
+		changePict(getSelection().getActionCommand());
+		repaint();
 	}
 
 	public BackgroundPanel getMenuBackground() {
@@ -198,6 +265,22 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 
 	public void setMenuButtons(JPanel menuButtons) {
 		this.menuButtons = menuButtons;
+	}
+
+	public static menuButton getSelection() {
+		return selection;
+	}
+
+	public static void setSelection(menuButton slection) {
+		RvsB_Menu.selection = slection;
+	}
+
+	public int getIndexOfSelection() {
+		return indexOfSelection;
+	}
+
+	public void setIndexOfSelection(int indexOfSelection) {
+		this.indexOfSelection = indexOfSelection;
 	}
 
 }

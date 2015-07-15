@@ -20,6 +20,8 @@ import javax.swing.plaf.basic.BasicButtonUI;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 
 public class MenuUI extends BasicButtonUI {
+	private static final int SELECTION_GAP = 10;
+
 	public static final String BACKGROUND_TEXTURE = "Recursos\\textures\\menu_item_background.png";
 
 	private final static MenuUI m_buttonUI = new MenuUI();
@@ -29,15 +31,17 @@ public class MenuUI extends BasicButtonUI {
 	protected Border m_borderLowered = UIManager
 			.getBorder("Button.borderPressed");
 
-	protected Color selected = new Color((float)1, (float)1, (float)1, (float)0.3);
+	protected Color selected = new Color((float) 1, (float) 1, (float) 1,
+			(float) 0.3);
 
-	protected Color unselected = new Color((float)1, (float)1, (float)1, (float)0.0);
+	protected Color unselected = new Color((float) 1, (float) 1, (float) 1,
+			(float) 0.0);
 
 	protected Color m_focusBorder = Color.BLUE;
 
 	private Font font = new Font("Impact", Font.PLAIN, 72);
-	private Color fontColor = new Color(0,92,40);
-
+	private Color fontColor = new Color(0, 92, 40);
+	private Font selectionFont = new Font("Impact", Font.PLAIN, 62);
 	public Font getFont() {
 		return font;
 	}
@@ -53,18 +57,26 @@ public class MenuUI extends BasicButtonUI {
 	public void paint(Graphics g, JComponent c) {
 		AbstractButton b = (AbstractButton) c;
 		Dimension d = b.getSize();
-
-		g.setFont(getFont());
-		FontMetrics fm = g.getFontMetrics();
+		if(c==RvsB_Menu.getSelection()){
+			g.drawImage(
+					ResourceManager.getInstance().getBufferedImage(
+							BACKGROUND_TEXTURE), SELECTION_GAP, SELECTION_GAP, c.getWidth()- ( 2 * SELECTION_GAP) , c.getHeight()-(2 * SELECTION_GAP),null);
+		g.setFont(getSelectionFont());
+		}
+		else {
 		g.drawImage(
 				ResourceManager.getInstance().getBufferedImage(
 						BACKGROUND_TEXTURE), 0, 0, c.getWidth(), c.getHeight(),
 				null);
+		g.setFont(getFont());
+		}
+		FontMetrics fm = g.getFontMetrics();
 		g.setColor(fontColor);
 		String caption = b.getText();
 		int x = (d.width - fm.stringWidth(caption)) / 2;
 		int y = (d.height + fm.getAscent()) / 2;
 		g.drawString(caption, x, y);
+		
 
 	}
 
@@ -81,46 +93,29 @@ public class MenuUI extends BasicButtonUI {
 	public void mouseClicked(MouseEvent e) {
 	}
 
-//	public void mousePressed(MouseEvent e) {
-//		JComponent c = (JComponent) e.getComponent();
-//		c.setBorder(m_borderLowered);
-//		c.setBackground(m_backgroundPressed);
-//	}
-//
-//	public void mouseReleased(MouseEvent e) {
-//		JComponent c = (JComponent) e.getComponent();
-//		c.setBorder(m_borderRaised);
-//		c.setBackground(m_backgroundNormal);
-//	}
+	// public void mousePressed(MouseEvent e) {
+	// JComponent c = (JComponent) e.getComponent();
+	// c.setBorder(m_borderLowered);
+	// c.setBackground(m_backgroundPressed);
+	// }
+	//
+	// public void mouseReleased(MouseEvent e) {
+	// JComponent c = (JComponent) e.getComponent();
+	// c.setBorder(m_borderRaised);
+	// c.setBackground(m_backgroundNormal);
+	// }
 
 	public void mouseEntered(MouseEvent e) {
-		JComponent c = (JComponent) e.getComponent();
-		c.setBackground(selected);
-		c.repaint();
+		RvsB_Menu.menuButton c = (RvsB_Menu.menuButton) e.getComponent();
+		c.select();
 	}
 
-	public void mouseExited(MouseEvent e) {
-		JComponent c = (JComponent) e.getComponent();
-		c.setBackground(unselected);
-		c.repaint();
+	public Font getSelectionFont() {
+		return selectionFont;
 	}
 
-	public void keyTyped(KeyEvent e) {
+	public void setSelectionFont(Font selectionFont) {
+		this.selectionFont = selectionFont;
 	}
-
-	public void keyPressed(KeyEvent e) {
-		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_SPACE) {
-			JComponent c = (JComponent) e.getComponent();
-			c.setBorder(m_borderLowered);
-		}
-	}
-
-	public void keyReleased(KeyEvent e) {
-		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_ENTER || code == KeyEvent.VK_SPACE) {
-			JComponent c = (JComponent) e.getComponent();
-			c.setBorder(m_borderRaised);
-		}
-	}
+	
 }

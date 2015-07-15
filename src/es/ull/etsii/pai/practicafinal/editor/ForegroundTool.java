@@ -1,7 +1,5 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
-import java.awt.Graphics;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 

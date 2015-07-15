@@ -1,25 +1,15 @@
 package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.text.AttributedCharacterIterator;
 
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.graphics.Drawable;
-import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
-import es.ull.etsii.pai.practicafinal.redvsblue.Bullet;
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.redvsblue.Entity;
 import es.ull.etsii.pai.practicafinal.redvsblue.GraphicEntity;
-import es.ull.etsii.pai.practicafinal.redvsblue.RvsB_World;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
 
@@ -140,7 +130,6 @@ public class MapPainter extends JPanel {
 		 BufferedImage image = new BufferedImage(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight(), BufferedImage.TYPE_3BYTE_BGR);
 		 Graphics preview = image.getGraphics();
 		 paint(preview, mapa);
-		 paintForeground(preview, mapa);
 		 return image;
 	}
 

@@ -30,7 +30,6 @@ import es.ull.etsii.pai.practicafinal.redvsblue.AudioManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.redvsblue.GameFrame;
 import es.ull.etsii.pai.practicafinal.redvsblue.GameLoop;
-import es.ull.etsii.pai.practicafinal.redvsblue.Player_gauge;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
