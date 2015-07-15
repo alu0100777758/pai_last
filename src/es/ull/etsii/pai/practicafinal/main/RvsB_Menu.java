@@ -174,7 +174,6 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		default:
 			break;
 		}
-		System.out.println("evento");
 	}
 
 	@SuppressWarnings("serial")
