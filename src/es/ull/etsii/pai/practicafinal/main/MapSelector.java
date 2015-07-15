@@ -2,6 +2,7 @@ package es.ull.etsii.pai.practicafinal.main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -10,25 +11,34 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
 public class MapSelector extends ScenarioPanel implements ActionListener {
 	private static final int PREVIEW_ROW = 4;
 	public static final int PREVIEW_COL = 4;
+	public static final double TOP_MARGIN = 0.1;
+	public static final double BOTTOM_MARGIN = 0.4;
+	public static final double SIDE_MARGINS = 0.1;
+	
 	private static final String MAPS_PATH = System.getProperty("user.dir")
 			+ System.getProperty("file.separator") + "maps";
+	
 	private ArrayList<String> maps = new ArrayList<String>();
 	private int currentMap = 0;
 	private int currentPreview = 0;
 	private JComponent center;
 	private ArrayList<MapPreview> levels = new ArrayList<MapPreview>();
+
 
 	public MapSelector() {
 		scanDir();
@@ -37,29 +47,36 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 
 	private void fillGrid() {
 		setLayout(new BorderLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		JButton leftArrow = new JButton();
-		JButton rightArrow = new JButton();
-		leftArrow.setIcon(new ImageIcon(ResourceManager.getInstance()
-				.getBufferedImage("textures/selector_larrow.png")));
-		leftArrow.setActionCommand("decrease");
-		leftArrow.addActionListener(this);
-		add(leftArrow, BorderLayout.WEST);
+		JPanel sidePanel = new JPanel();
+		JPanel topPanel = new JPanel();
+		JPanel bottomPanel = new JPanel();
+		ScreenManager screen = ScreenManager.getInstance();
+		
+		topPanel.setOpaque(false);
+		topPanel.setMinimumSize(new Dimension((int)(screen.getCurrentWidth()), (int)(screen.getCurrentHeight() * TOP_MARGIN)));
+		bottomPanel.setOpaque(false);
+		bottomPanel.setMinimumSize(new Dimension((int)(screen.getCurrentWidth()), (int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
+		sidePanel.setOpaque(false);
+		sidePanel.setMinimumSize(new Dimension((int)(screen.getCurrentWidth() * SIDE_MARGINS), screen.getCurrentHeight()));
+		
+		setBackground(Color.GRAY);
+		add(topPanel, BorderLayout.NORTH);
+		add(bottomPanel, BorderLayout.SOUTH);
+		add(sidePanel, BorderLayout.EAST);
+		add(sidePanel, BorderLayout.WEST);
 		setCenter(buildPreview(new JPanel()));
 		add(getCenter(), BorderLayout.CENTER);
-		rightArrow.setIcon(new ImageIcon(ResourceManager.getInstance()
-				.getBufferedImage("textures/selector_arrow.png")));
-		rightArrow.setActionCommand("increase");
-		rightArrow.addActionListener(this);
-		add(rightArrow, BorderLayout.EAST);
-		add(new bottomLayer(), BorderLayout.SOUTH);
+		
+		System.out.println(topPanel.getHeight());
+		//add(new bottomLayer(), BorderLayout.SOUTH);
+		
 	}
 
 	public JPanel buildPreview(JPanel maps) {
 		GridLayout layout = new GridLayout(PREVIEW_COL, PREVIEW_ROW);
 		layout.setHgap(50);
 		layout.setVgap(50);
-		maps.setBackground(Color.BLACK);
+		maps.setOpaque(false);
 		maps.setLayout(layout);
 		int end = (1 + getCurrentPreview()) * PREVIEW_COL * PREVIEW_ROW;
 		end = end < getMaps().size() ? end : getMaps().size();
