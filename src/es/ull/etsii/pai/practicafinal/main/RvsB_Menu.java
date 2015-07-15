@@ -92,6 +92,8 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		getMenuButtons().add(Box.createVerticalStrut(20));
 		
 		add(getMenuBackground());
+		ScreenManager sm = ScreenManager.getInstance();
+		getMenuButtons().setPreferredSize(new Dimension(sm.getCurrentWidth()/2, sm.getCurrentHeight()));
 		// setBackground(Color.RED);
 	}
 
@@ -180,7 +182,6 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		getMenuBackground().setSize(sm.getCurrentWidth(),sm.getCurrentHeight());
 		getPict().setSize(sm.getCurrentWidth()/2, sm.getCurrentHeight());
 		getMenuButtons().setPreferredSize(new Dimension(sm.getCurrentWidth()/2, sm.getCurrentHeight()));
-		getMenuButtons().setBackground(Color.RED);
 	}
 
 	public BackgroundPanel getMenuBackground() {

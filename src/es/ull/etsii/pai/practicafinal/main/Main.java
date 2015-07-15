@@ -39,14 +39,6 @@ public class Main {
 		    frame.setUndecorated(true);
 		    frame.setVisible(true);
 			frame.setFocusable(true);
-			try {
-				Thread.sleep(200);
-				frame.validate();
-				frame.repaint();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 } 
 
