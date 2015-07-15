@@ -16,10 +16,13 @@ import es.ull.etsii.pai.practicafinal.editor.MapPainter;
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 
 public class MapPreview extends JButton {
-	private static final int MARGIN = 0;
+	private static final int MARGIN = 10;
 	private String name;
 	private BvsR_Map mapa = null;
 	private BufferedImage snapshot = null;
+	private boolean selected;
+	
+
 
 	public MapPreview(String mapname) {
 		this.name = mapname;
@@ -27,7 +30,7 @@ public class MapPreview extends JButton {
 //		System.out.println("path: " + name);
 		try {
 			setMapa(BvsR_Map.load(name));
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) { 
 			System.out.println("file not found");
 		} catch (ClassNotFoundException e) {
 			System.out.println("class not found");
@@ -38,6 +41,7 @@ public class MapPreview extends JButton {
 		setSnapshot(MapPainter.getPict(getMapa(), getWidth(), getHeight()));
 		setActionCommand(getName());
 		setUI(new previewUi());
+		
 	}
 
 	// @Override
@@ -54,7 +58,13 @@ public class MapPreview extends JButton {
 //	g2.setColor(Color.RED);
 //	g2.drawRoundRect((int)getLocation().x,(int) getLocation().y, getWidth(),getHeight(), MARGIN, MARGIN);
 //	}
+	public boolean isSelected() {
+		return selected;
+	}
 
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 	public BvsR_Map getMapa() {
 		return mapa;
 	}
@@ -80,7 +90,7 @@ public class MapPreview extends JButton {
 	}
 
 	class previewUi extends MetalButtonUI {
-		private static final int MARGIN = 0;
+		private static final int MARGIN = 10;
 
 //		@Override
 //		public void paintBorder(Component c, Graphics g, int x, int y,
@@ -94,7 +104,11 @@ public class MapPreview extends JButton {
 		@Override
 		public void paint(Graphics g, JComponent c) {
 			MapPreview c2 = (MapPreview) c;
-			g.drawImage(c2.getSnapshot(), 0, 0, getWidth(), getHeight(), null);
+			c2.setBackground(Color.BLUE);
+			if (isSelected())
+				g.drawImage(c2.getSnapshot(), MARGIN, MARGIN, getWidth() - 2 * MARGIN, getHeight() - 2 * MARGIN, null);
+			else 
+				g.drawImage(c2.getSnapshot(), 0, 0, getWidth(), getHeight(), null);
 		}
 
 //		@Override

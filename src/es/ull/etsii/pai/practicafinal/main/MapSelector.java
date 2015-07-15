@@ -13,15 +13,11 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import es.ull.etsii.pai.practicafinal.redvsblue.GameFrame;
-import es.ull.etsii.pai.practicafinal.redvsblue.GameLoop;
 import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
-import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
 public class MapSelector extends ScenarioPanel implements ActionListener {
 	private static final int PREVIEW_ROW = 4;
@@ -32,6 +28,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	private int currentMap = 0;
 	private int currentPreview = 0;
 	private JComponent center;
+	private ArrayList<MapPreview> levels = new ArrayList<MapPreview>();
 
 	public MapSelector() {
 		scanDir();
@@ -59,8 +56,11 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	}
 
 	public JPanel buildPreview(JPanel maps) {
-		maps.setBackground(Color.GREEN);
-		maps.setLayout(new GridLayout(PREVIEW_COL, PREVIEW_ROW));
+		GridLayout layout = new GridLayout(PREVIEW_COL, PREVIEW_ROW);
+		layout.setHgap(50);
+		layout.setVgap(50);
+		maps.setBackground(Color.BLACK);
+		maps.setLayout(layout);
 		int end = (1 + getCurrentPreview()) * PREVIEW_COL * PREVIEW_ROW;
 		end = end < getMaps().size() ? end : getMaps().size();
 		int begin = getCurrentPreview()*PREVIEW_COL * PREVIEW_ROW;
@@ -68,6 +68,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			JButton button = new MapPreview(getMaps().get(i));
 			maps.add(button);
 			button.addActionListener(this);
+			getLevels().add((MapPreview) button);
 			System.out.println(getMaps().get(i));
 		}
 		System.out.println("begin: "+begin + " end: "+end);
@@ -95,15 +96,6 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		// MapPreview prev = (MapPreview)e.getSource();
 		switch (e.getActionCommand()) {
 		case "play":
-			/*GameFrame frame = new GameFrame(getMaps().get(getCurrentMap()));
-			frame.setTitle("Red VS Blue");
-			frame.setSize(ScreenManager.getInstance().getWindWidth(),
-					ScreenManager.getInstance().getWindHeight());
-			frame.setLocationRelativeTo(null);
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frame.setVisible(true);
-			GameLoop.init(frame);
-			*/
 			getSceneManager().switchScenario(new GameScenario(getMaps().get(getCurrentMap())));
 			break;
 		case "return":
@@ -116,7 +108,11 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			back();
 			break;
 		default:
-			setCurrentMap(getMaps().indexOf(e.getActionCommand()));
+			setCurrentMap(getMaps().indexOf(e.getActionCommand()));	
+			for (MapPreview button : getLevels())
+					button.setSelected(false);
+			((MapPreview)e.getSource()).setSelected(true);
+			repaint();
 			break;
 		}
 
@@ -148,7 +144,13 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	public void setCurrentMap(int currentMap) {
 		this.currentMap = currentMap;
 	}
+	public ArrayList<MapPreview> getLevels() {
+		return levels;
+	}
 
+	public void setLevels(ArrayList<MapPreview> levels) {
+		this.levels = levels;
+	}
 	class bottomLayer extends JPanel {
 		public bottomLayer() {
 			setLayout(new GridBagLayout());
