@@ -8,18 +8,24 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
@@ -41,6 +47,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	private int currentPreview = 0;
 	private JComponent center;
 	private ArrayList<MapPreview> levels = new ArrayList<MapPreview>();
+	private JLabel mapText = new JLabel();
 
 	public MapSelector() {
 		scanDir();
@@ -53,7 +60,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		setCurrentMap(0);
 	}
 
 	protected void paintComponent (Graphics g) {
@@ -117,6 +124,46 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	}
 
 	@Override
+	public void releasedKey(int keyCode, char keyChar) {
+		if(keyCode == KeyEvent.VK_SPACE)
+			getSceneManager().switchScenario(new GameScenario(getMaps().get(getCurrentMap())));
+		else if (keyCode == KeyEvent.VK_D) {
+			int map = getCurrentMap() + 1;
+			
+			if (map >= getMaps().size())
+				map--;
+			setCurrentMap(map); 
+			repaint();
+			
+		}
+		else if (keyCode == KeyEvent.VK_A) {
+			int map = getCurrentMap() - 1;
+			
+			if (map < 0)
+				map++;
+			setCurrentMap(map); 
+			repaint();
+		}
+		else if (keyCode == KeyEvent.VK_W) {
+			int map = getCurrentMap() - PREVIEW_ROW;
+			
+			if (map < 0)
+				map+= PREVIEW_ROW;
+			setCurrentMap(map); 
+			repaint();
+		}
+		else if (keyCode == KeyEvent.VK_S) {
+			int map = getCurrentMap() + PREVIEW_ROW;
+			
+			if (map < 0)
+				map-= PREVIEW_ROW;
+			setCurrentMap(map); 
+			repaint();
+		}
+		
+	}
+
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		// MapPreview prev = (MapPreview)e.getSource();
 		switch (e.getActionCommand()) {
@@ -133,10 +180,27 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			back();
 			break;
 		default:
+			if (((MapPreview)e.getSource()).isSelected())
+				getSceneManager().switchScenario(new GameScenario(getMaps().get(getCurrentMap())));
 			setCurrentMap(getMaps().indexOf(e.getActionCommand()));	
-			for (MapPreview button : getLevels())
-					button.setSelected(false);
-			((MapPreview)e.getSource()).setSelected(true);
+			
+
+			try {
+				mapText.setText(BvsR_Map.load(getMaps().get(getCurrentMap())).getDescription());
+				mapText.setText(getMaps().get(getCurrentMap()));
+				
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			System.out.println(mapText.getText());
 			repaint();
 			break;
 		}
@@ -168,6 +232,10 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 
 	public void setCurrentMap(int currentMap) {
 		this.currentMap = currentMap;
+		
+		for (MapPreview button : getLevels())
+			button.setSelected(false);
+		getLevels().get(currentMap).setSelected(true);
 	}
 	public ArrayList<MapPreview> getLevels() {
 		return levels;
@@ -181,12 +249,15 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			ScreenManager screen = ScreenManager.getInstance();
 			setLayout(new BorderLayout());
 			JPanel gridPanel = new JPanel(new GridLayout(3, 1));
+			JPanel content = new JPanel(new BorderLayout());
 			gridPanel.setOpaque(false);
 			GridBagConstraints c = new GridBagConstraints();
 			JPanel description = new JPanel();
 			description.setBackground(Color.GREEN);
 			description.setOpaque(false);
 			this.setOpaque(false);
+			description.add(mapText);
+			mapText.setBackground(Color.WHITE);
 			description.setLayout(new GridLayout(4, 4));
 			JButton leftArrow = new JButton();
 			JButton rightArrow = new JButton();
@@ -202,7 +273,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 					.getBufferedImage("icons/play.png")));
 		
 			gridPanel.add(Box.createHorizontalStrut(1));
-			JPanel content = new JPanel(new BorderLayout());
+			
 			content.add(leftArrow, BorderLayout.WEST);
 			content.add(description, BorderLayout.CENTER);
 			content.add(rightArrow, BorderLayout.EAST);
