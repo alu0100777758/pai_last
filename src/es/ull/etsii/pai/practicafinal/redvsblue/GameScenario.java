@@ -19,6 +19,8 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import es.ull.etsii.pai.practicafinal.scenes.WinnerScene;
+
 public class GameScenario extends ScenarioPanel{
 	private Scenario scenario;				// Escenario que se esta mostrando actualmente.
 	private GameLoopHandler gameLoopHandler;

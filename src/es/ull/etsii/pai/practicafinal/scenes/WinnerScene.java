@@ -1,4 +1,4 @@
-package es.ull.etsii.pai.practicafinal.redvsblue;
+package es.ull.etsii.pai.practicafinal.scenes;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +9,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.main.RvsB_Menu;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
 @SuppressWarnings("serial")
 public class WinnerScene extends ScenarioPanel {
@@ -34,9 +36,9 @@ public class WinnerScene extends ScenarioPanel {
 		g.setColor(Color.BLACK);
 		g.setColor(Color.WHITE);
 		g.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_MAIN_SIZE));
-		g.drawString(winnerName + WIN_TEXT, getWidth() / 2 - getWidth() / 3,(int) screen.getRate_y() * 180);
+		g.drawString(winnerName + WIN_TEXT, screen.getCurrentWidth() / 2 - screen.getCurrentWidth() / 3,screen.getCurrentHeight() / 4);
 		g.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_SUBTEXT_SIZE));
-		g.drawString(CLOSE_TEXT, getWidth() / 2 - getWidth()/ 4, (int)screen.getRate_y() * 300);
+		g.drawString(CLOSE_TEXT, screen.getCurrentWidth() / 2 - screen.getCurrentWidth()/ 4, screen.getCurrentHeight() * 2 / 4 );
 	}
 
 	@Override
