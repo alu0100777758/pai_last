@@ -79,12 +79,11 @@ public class GameScenario extends ScenarioPanel{
 			Toolkit.getDefaultToolkit().sync();
 			
 			if (getScenario().isEnded()){
-				double xrate = ScreenManager.getInstance().getRate_x();
-				double yrate = ScreenManager.getInstance().getRate_y();
+			
 				if (getScenario().isBlueWins())
-					getSceneManager().switchScenario(new WinnerScene("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));		
+					getSceneManager().switchScenario(new WinnerScene("Blue", getScenario().getPlayer_one().getScore()));		
 				else
-					getSceneManager().switchScenario(new WinnerScene("Red", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));
+					getSceneManager().switchScenario(new WinnerScene("Red", getScenario().getPlayer_two().getScore()));
 				getSceneManager().getCurrentScenario().repaint();
 			}
 		}

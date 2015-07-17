@@ -102,9 +102,9 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			maps.add(button);
 			button.addActionListener(this);
 			getLevels().add((MapPreview) button);
-			System.out.println(getMaps().get(i));
+			//System.out.println(getMaps().get(i));
 		}
-		System.out.println("begin: " + begin + " end: " + end);
+		//System.out.println("begin: " + begin + " end: " + end);
 		return maps;
 	}
 

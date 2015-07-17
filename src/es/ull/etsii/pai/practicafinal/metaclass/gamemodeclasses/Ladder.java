@@ -78,9 +78,13 @@ public class Ladder{
 		return result; 
 	}
 
-	public boolean canEnter (LadderEntry entry)  {
-		insertEntry(entry);
-		return getLadder().contains(entry);
+	public boolean canEnter (int score)  {
+		if (getLadder().size() < MAX_ENTRIES)
+			return true;
+		if (getLadder().first().getScore() < score)
+			return true;
+		return false;
+		
 	}
 	private TreeSet<LadderEntry> getLadder() {
 		return ladder;
