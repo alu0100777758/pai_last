@@ -19,6 +19,7 @@ import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 public class Main {
 		public static void main(String[] args) {
 			Editor.checkFileSystem();
+			System.setProperty("sun.java2d.opengl","True");
 			SceneManager frame = new SceneManager();		
 			frame.switchScenario(new RvsB_Menu());
 			frame.setTitle("Red VS Blue Editor");
