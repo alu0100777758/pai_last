@@ -20,9 +20,17 @@ public class Ladder{
 	public final static int MAX_ENTRIES = 10;
 	
 	private TreeSet<LadderEntry> ladder;
+	private static Ladder instance = null;
 	
-	public Ladder() throws FileNotFoundException, ClassNotFoundException, IOException {				
+	private Ladder() throws FileNotFoundException, ClassNotFoundException, IOException {				
 		loadLadder();
+	}
+	
+	
+	public static Ladder getInstance() throws FileNotFoundException, ClassNotFoundException, IOException {
+		if (instance == null)
+			instance = new Ladder();
+		return instance;
 	}
 	
 	/**
@@ -70,7 +78,10 @@ public class Ladder{
 		return result; 
 	}
 
-
+	public boolean canEnter (LadderEntry entry)  {
+		insertEntry(entry);
+		return getLadder().contains(entry);
+	}
 	private TreeSet<LadderEntry> getLadder() {
 		return ladder;
 	}

@@ -22,6 +22,7 @@ import es.ull.etsii.pai.practicafinal.metaclass.CollaboratorCreditText;
 import es.ull.etsii.pai.practicafinal.metaclass.CreditText;
 import es.ull.etsii.pai.practicafinal.metaclass.TitleCreditText;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 import es.ull.etsii.pai.prct9.geometry.Point2D;
 /**
  * Clase encargada de mostrar la escena de creditos.
@@ -53,7 +54,10 @@ public class CreditsScene extends ScenarioPanel{
 	 * @param width Ancho de la escena.
 	 * @param height Alto de la escena.
 	 */
-	public CreditsScene(int width, int height) {
+	public CreditsScene() {
+		int width = ScreenManager.getInstance().getCurrentWidth() - 400; // SOLO PROVISIONAL!!!!!
+		int height = ScreenManager.getInstance().getCurrentHeight();
+		
 		setCreditText(new ArrayList<CreditText>());
 		setTimer(new Timer(TIMER_DELAY, new TimerHandler()));
 		setBackground(BACKGROUND_COLOR);
@@ -117,10 +121,10 @@ public class CreditsScene extends ScenarioPanel{
 		public void actionPerformed(ActionEvent e) {
 			for(int i = 0; i < getCreditText().size(); i++) {
 				getCreditText().get(i).update();
-				if (getCreditText().get(i).getPos().y() <= getHeight() )
+				/*if (getCreditText().get(i).getPos().y() <= getHeight() )
 					getCreditText().get(i).setSpeed(new Point2D(-SPEED, -SPEED));
 				if (getCreditText().get(i).getPos().y() <= getHeight()  * 2  / 4)
-					getCreditText().get(i).setSpeed(new Point2D(SPEED, -SPEED));
+					getCreditText().get(i).setSpeed(new Point2D(SPEED, -SPEED));*/
 			}
 			
 			repaint();

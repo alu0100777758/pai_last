@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import es.ull.etsii.pai.practicafinal.main.RvsB_Menu;
 
 @SuppressWarnings("serial")
-public class WinnerPanel extends ScenarioPanel {
+public class WinnerScene extends ScenarioPanel {
 	public static final String WIN_TEXT = " Wins!";
 	public static final String CLOSE_TEXT = "Press spacebar to close";
 	public static final String FONT_NAME = "Cantarell";
@@ -20,7 +20,7 @@ public class WinnerPanel extends ScenarioPanel {
 	public static final int FONT_SUBTEXT_SIZE = 20;
 	private String winnerName;
 	
-	public WinnerPanel(String name, int width, int height) {
+	public WinnerScene(String name, int width, int height) {
 		this.winnerName = name;
 		this.setBackground(Color.BLACK);
 		

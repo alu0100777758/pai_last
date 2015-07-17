@@ -80,9 +80,9 @@ public class GameScenario extends ScenarioPanel{
 				double xrate = ScreenManager.getInstance().getRate_x();
 				double yrate = ScreenManager.getInstance().getRate_y();
 				if (getScenario().isBlueWins())
-					getSceneManager().switchScenario(new WinnerPanel("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));		
+					getSceneManager().switchScenario(new WinnerScene("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));		
 				else
-					getSceneManager().switchScenario(new WinnerPanel("Red", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));
+					getSceneManager().switchScenario(new WinnerScene("Red", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));
 				getSceneManager().getCurrentScenario().repaint();
 			}
 		}
