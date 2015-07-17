@@ -42,7 +42,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	private BufferedImage img;
 	private static final String MAPS_PATH = System.getProperty("user.dir")
 			+ System.getProperty("file.separator") + "maps";
-	
+
 	private ArrayList<String> maps = new ArrayList<String>();
 	private int currentMap = 0;
 	private int currentPreview = 0;
@@ -53,45 +53,50 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	public MapSelector() {
 		scanDir();
 		fillGrid();
-		
 
 		img = ResourceManager.getInstance().getBufferedImage(BACKGROUND);
-		
+
 	}
 
-	protected void paintComponent (Graphics g) {
+	protected void paintComponent(Graphics g) {
 		super.paintComponent(g.create());
-		
-		g.drawImage(img, 0, 0, ScreenManager.getInstance().getCurrentWidth(), ScreenManager.getInstance().getCurrentHeight(), this);
+
+		g.drawImage(img, 0, 0, ScreenManager.getInstance().getCurrentWidth(),
+				ScreenManager.getInstance().getCurrentHeight(), this);
 	}
+
 	private void fillGrid() {
 		setLayout(new BorderLayout());
-		
+
 		ScreenManager screen = ScreenManager.getInstance();
 
 		setBackground(Color.GRAY);
-		
-		add(Box.createHorizontalStrut((int)(screen.getCurrentWidth() * SIDE_MARGINS)), BorderLayout.WEST);
-		add(Box.createHorizontalStrut((int)(screen.getCurrentWidth() * SIDE_MARGINS)), BorderLayout.EAST);
-		add(Box.createVerticalStrut((int)(screen.getCurrentHeight() * TOP_MARGIN)), BorderLayout.NORTH);
-		add(Box.createVerticalStrut((int)(screen.getCurrentHeight() * BOTTOM_MARGIN)), BorderLayout.SOUTH);
+
+		add(Box.createHorizontalStrut((int) (screen.getCurrentWidth() * SIDE_MARGINS)),
+				BorderLayout.WEST);
+		add(Box.createHorizontalStrut((int) (screen.getCurrentWidth() * SIDE_MARGINS)),
+				BorderLayout.EAST);
+		add(Box.createVerticalStrut((int) (screen.getCurrentHeight() * TOP_MARGIN)),
+				BorderLayout.NORTH);
+		add(Box.createVerticalStrut((int) (screen.getCurrentHeight() * BOTTOM_MARGIN)),
+				BorderLayout.SOUTH);
 		setCenter(buildPreview(new JPanel()));
 		add(getCenter(), BorderLayout.CENTER);
-		
-		//add(southPanel, BorderLayout.SOUTH);
+
+		// add(southPanel, BorderLayout.SOUTH);
 		add(new bottomLayer(), BorderLayout.SOUTH);
-		
+
 	}
 
 	public JPanel buildPreview(JPanel maps) {
 		GridLayout layout = new GridLayout(PREVIEW_COL, PREVIEW_ROW);
-		layout.setHgap((int)(ScreenManager.getInstance().getCurrentWidth() * GAP_BETWEEN_LEVELS));
-		layout.setVgap((int)(ScreenManager.getInstance().getCurrentHeight() * GAP_BETWEEN_LEVELS));
+		layout.setHgap((int) (ScreenManager.getInstance().getCurrentWidth() * GAP_BETWEEN_LEVELS));
+		layout.setVgap((int) (ScreenManager.getInstance().getCurrentHeight() * GAP_BETWEEN_LEVELS));
 		maps.setOpaque(false);
 		maps.setLayout(layout);
 		int end = (1 + getCurrentPreview()) * PREVIEW_COL * PREVIEW_ROW;
 		end = end < getMaps().size() ? end : getMaps().size();
-		int begin = getCurrentPreview()*PREVIEW_COL * PREVIEW_ROW;
+		int begin = getCurrentPreview() * PREVIEW_COL * PREVIEW_ROW;
 		for (int i = begin; i < end; i++) {
 			JButton button = new MapPreview(getMaps().get(i));
 			maps.add(button);
@@ -99,7 +104,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			getLevels().add((MapPreview) button);
 			System.out.println(getMaps().get(i));
 		}
-		System.out.println("begin: "+begin + " end: "+end);
+		System.out.println("begin: " + begin + " end: " + end);
 		return maps;
 	}
 
@@ -121,42 +126,53 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 
 	@Override
 	public void releasedKey(int keyCode, char keyChar) {
-		if(keyCode == KeyEvent.VK_SPACE)
-			getSceneManager().switchScenario(new GameScenario(getMaps().get(getCurrentMap())));
-		else if (keyCode == KeyEvent.VK_D) {
+		switch (keyCode) {
+		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_ENTER:
+			getSceneManager().switchScenario(
+					new GameScenario(getMaps().get(getCurrentMap())));
+			break;
+		case KeyEvent.VK_D:
+		case KeyEvent.VK_RIGHT:
 			int map = getCurrentMap() + 1;
-			
+
 			if (map >= getMaps().size())
 				map--;
-			setCurrentMap(map); 
+			setCurrentMap(map);
 			repaint();
-			
-		}
-		else if (keyCode == KeyEvent.VK_A) {
-			int map = getCurrentMap() - 1;
-			
+			break;
+		case KeyEvent.VK_A:
+		case KeyEvent.VK_LEFT:
+			map = getCurrentMap() - 1;
+
 			if (map < 0)
 				map++;
-			setCurrentMap(map); 
+			setCurrentMap(map);
 			repaint();
-		}
-		else if (keyCode == KeyEvent.VK_W) {
-			int map = getCurrentMap() - PREVIEW_ROW;
-			
+			break;
+		case KeyEvent.VK_W:
+		case KeyEvent.VK_UP:
+			 map = getCurrentMap() - PREVIEW_ROW;
+
+				if (map < 0)
+					map += PREVIEW_ROW;
+				setCurrentMap(map);
+				repaint();
+				break;
+		case KeyEvent.VK_S:
+		case KeyEvent.VK_DOWN:
+			map = getCurrentMap() + PREVIEW_ROW;
+
 			if (map < 0)
-				map+= PREVIEW_ROW;
-			setCurrentMap(map); 
+				map -= PREVIEW_ROW;
+			setCurrentMap(map);
 			repaint();
-		}
-		else if (keyCode == KeyEvent.VK_S) {
-			int map = getCurrentMap() + PREVIEW_ROW;
+			break;
 			
-			if (map < 0)
-				map-= PREVIEW_ROW;
-			setCurrentMap(map); 
-			repaint();
+		default:
+			break;
 		}
-		
+
 	}
 
 	@Override
@@ -164,7 +180,8 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		// MapPreview prev = (MapPreview)e.getSource();
 		switch (e.getActionCommand()) {
 		case "play":
-			getSceneManager().switchScenario(new GameScenario(getMaps().get(getCurrentMap())));
+			getSceneManager().switchScenario(
+					new GameScenario(getMaps().get(getCurrentMap())));
 			break;
 		case "return":
 			getSceneManager().switchScenario(new RvsB_Menu());
@@ -176,15 +193,16 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			back();
 			break;
 		default:
-			if (((MapPreview)e.getSource()).isSelected())
-				getSceneManager().switchScenario(new GameScenario(getMaps().get(getCurrentMap())));
-			setCurrentMap(getMaps().indexOf(e.getActionCommand()));	
-			
+			if (((MapPreview) e.getSource()).isSelected())
+				getSceneManager().switchScenario(
+						new GameScenario(getMaps().get(getCurrentMap())));
+			setCurrentMap(getMaps().indexOf(e.getActionCommand()));
 
 			try {
-				mapText.setText(BvsR_Map.load(getMaps().get(getCurrentMap())).getDescription());
+				mapText.setText(BvsR_Map.load(getMaps().get(getCurrentMap()))
+						.getDescription());
 				mapText.setText(getMaps().get(getCurrentMap()));
-				
+
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -195,7 +213,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 			System.out.println(mapText.getText());
 			repaint();
 			break;
@@ -216,7 +234,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 
 	private void reemplaceCenter(JPanel buildPreview) {
 		remove(getCenter());
-//		getCenter().removeAll();
+		// getCenter().removeAll();
 		add(buildPreview, BorderLayout.CENTER);
 		validate();
 		repaint();
@@ -228,11 +246,12 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 
 	public void setCurrentMap(int currentMap) {
 		this.currentMap = currentMap;
-		
+
 		for (MapPreview button : getLevels())
 			button.setSelected(false);
 		getLevels().get(currentMap).setSelected(true);
 	}
+
 	public ArrayList<MapPreview> getLevels() {
 		return levels;
 	}
@@ -240,6 +259,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	public void setLevels(ArrayList<MapPreview> levels) {
 		this.levels = levels;
 	}
+
 	class bottomLayer extends JPanel {
 		public bottomLayer() {
 			ScreenManager screen = ScreenManager.getInstance();
@@ -267,23 +287,29 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			rightArrow.addActionListener(MapSelector.this);
 			rightArrow.setIcon(new ImageIcon(ResourceManager.getInstance()
 					.getBufferedImage("icons/play.png")));
-		
+
 			gridPanel.add(Box.createHorizontalStrut(1));
-			
+
 			content.add(leftArrow, BorderLayout.WEST);
 			content.add(description, BorderLayout.CENTER);
 			content.add(rightArrow, BorderLayout.EAST);
 			content.setOpaque(false);
 			gridPanel.add(Box.createHorizontalStrut(1));
 			gridPanel.add(content);
-			
+
 			add(gridPanel, BorderLayout.CENTER);
-			add(Box.createHorizontalStrut((int)(screen.getCurrentWidth() * GAP_BETWEEN_LEVELS / 2)), BorderLayout.WEST);  
-			add(Box.createHorizontalStrut((int)(screen.getCurrentWidth() * GAP_BETWEEN_LEVELS / 2)), BorderLayout.EAST);  
-			add(Box.createVerticalStrut((int)(screen.getCurrentHeight() * GAP_BETWEEN_LEVELS / 2)), BorderLayout.SOUTH);  
-			this.setMinimumSize(new Dimension(screen.getCurrentWidth(),(int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
-			this.setMaximumSize(new Dimension(screen.getCurrentWidth(),(int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
-			this.setPreferredSize(new Dimension(screen.getCurrentWidth(),(int)(screen.getCurrentHeight() * BOTTOM_MARGIN)));
+			add(Box.createHorizontalStrut((int) (screen.getCurrentWidth()
+					* GAP_BETWEEN_LEVELS / 2)), BorderLayout.WEST);
+			add(Box.createHorizontalStrut((int) (screen.getCurrentWidth()
+					* GAP_BETWEEN_LEVELS / 2)), BorderLayout.EAST);
+			add(Box.createVerticalStrut((int) (screen.getCurrentHeight()
+					* GAP_BETWEEN_LEVELS / 2)), BorderLayout.SOUTH);
+			this.setMinimumSize(new Dimension(screen.getCurrentWidth(),
+					(int) (screen.getCurrentHeight() * BOTTOM_MARGIN)));
+			this.setMaximumSize(new Dimension(screen.getCurrentWidth(),
+					(int) (screen.getCurrentHeight() * BOTTOM_MARGIN)));
+			this.setPreferredSize(new Dimension(screen.getCurrentWidth(),
+					(int) (screen.getCurrentHeight() * BOTTOM_MARGIN)));
 			this.setOpaque(false);
 		}
 	}
@@ -307,7 +333,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	@Override
 	public void sizeUpdate() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

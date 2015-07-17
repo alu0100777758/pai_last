@@ -133,9 +133,11 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		switch (arg0.getActionCommand()) {
 		case "play":
+			getSceneManager().setKeyHandlerON(false);
 			getSceneManager().switchScenario(new MapSelector());
 			break;
 		case "Credits":
+			getSceneManager().setKeyHandlerON(false);
 			getSceneManager().switchScenario(
 					new CreditsScene(this.getWidth(), this.getHeight()));
 			break;
@@ -169,8 +171,10 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			prev();
 			break;
 		case KeyEvent.VK_ENTER:
+		case KeyEvent.VK_SPACE:
 			actionPerformed(new ActionEvent(getSelection(),
 					ActionEvent.ACTION_FIRST, getSelection().getActionCommand()));
+			
 		default:
 			break;
 		}
