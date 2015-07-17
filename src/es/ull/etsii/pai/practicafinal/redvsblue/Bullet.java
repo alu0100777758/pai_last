@@ -13,6 +13,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import es.ull.etsii.pai.practicafinal.graphics.AnimatedGraphicRectangle;
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets.UZI_bullet;
 import es.ull.etsii.pai.practicafinal.physics.MovementEquation;
@@ -24,7 +25,7 @@ import es.ull.etsii.pai.prct9.geometry.Point2D;
 import es.ull.etsii.pai.prct9.geometry.Segment;
 
 public class Bullet extends Actor implements Physical_active{
-	private GraphicRectangle graphicShape;							// Forma grafica de la bala.
+	private AnimatedGraphicRectangle graphicShape;							// Forma grafica de la bala.
 	private Point2D speed;											// Vector de velocidad.
 	private int damage = 0;											// Da�o de la bala.
 	private int push = 0; 											// Empuje.
@@ -42,7 +43,7 @@ public class Bullet extends Actor implements Physical_active{
 	public Bullet (Point2D pos) {
 		super(pos);
 		setPhysicalShape(new PhysicalRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
-		setGraphicShape(new GraphicRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
+		setGraphicShape(new AnimatedGraphicRectangle((int) pos.x(), (int)pos.y(), bulletSize, bulletSize));
 		getGraphicShapes().add(getGraphicShape());
 		setSpeed(new Point2D (0, 0));
 		getGraphicShape().setPaint(Color.BLACK); 
@@ -180,7 +181,13 @@ public class Bullet extends Actor implements Physical_active{
 	public GraphicRectangle getGraphicShape() {
 		return graphicShape;
 	}
-	public void setGraphicShape(GraphicRectangle graphicShape) {
+	public void addSprite(String path){
+		graphicShape.addTexturePath(path);
+	}
+	public void setAnimDelay(int value){
+		graphicShape.setMaxDelay(value);
+	}
+	public void setGraphicShape(AnimatedGraphicRectangle graphicShape) {
 		this.graphicShape = graphicShape;
 	}
 

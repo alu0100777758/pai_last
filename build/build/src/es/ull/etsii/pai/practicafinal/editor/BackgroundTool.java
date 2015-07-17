@@ -31,6 +31,9 @@ public class BackgroundTool extends RectangleTool{
 		GraphicRectangle rect = new GraphicRectangle(beginX, beginY, endX - beginX,
 				endY - beginY);
 		rect.setPaint(Color.BLUE);
+		addRectangle(rect);
+	}
+	protected void addRectangle(GraphicRectangle rect) {
 		getMap().addBackground(rect);
 	}
 }

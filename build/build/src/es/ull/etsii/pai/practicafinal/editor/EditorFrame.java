@@ -30,7 +30,6 @@ import es.ull.etsii.pai.practicafinal.redvsblue.AudioManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.redvsblue.GameFrame;
 import es.ull.etsii.pai.practicafinal.redvsblue.GameLoop;
-import es.ull.etsii.pai.practicafinal.redvsblue.Player_gauge;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
@@ -159,10 +158,10 @@ public class EditorFrame extends JFrame implements ActionListener,
 		launchGameScenario.setToolTipText("Lanzar partida");
 		launchGameScenario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(getMap().getGUI().isEmpty()){
-					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_one(),0));
-					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_two(),Player_gauge.TOP_RIGHT));
-				}
+//				if(getMap().getGUI().isEmpty()){
+//					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_one(),0));
+//					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_two(),Player_gauge.TOP_RIGHT));
+//				}
 				saveMap(TEMP_FILE_MAP);
 				GameFrame frame = new GameFrame(TEMP_FILE_MAP);
 				frame.setTitle("Red VS Blue");

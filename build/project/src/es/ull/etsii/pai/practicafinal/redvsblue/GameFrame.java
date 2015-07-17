@@ -16,6 +16,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -25,40 +26,45 @@ public class GameFrame extends JFrame implements ActionListener{
 	private JPanel scenarioPanel;				// Panel con el escenario.
 	private JPanel end;
 	private Timer timer; 
+	private long startTime;
+	
 	/**
 	 * Inicia una ventana con un mapa cargado identificado con el parametro.
 	 * 
 	 * @param mapName
 	 */
 	public GameFrame(String mapName) {
-		setScenarioPanel(new ScenarioPanel(mapName));
+		setScenarioPanel(new GameScenario(mapName));
 		this.add(getScenarioPanel());
 		this.addKeyListener(new KeyHandler());
 		addComponentListener(new MyAdapter());
-		GameLoop.setDisplayer((ScenarioPanel)scenarioPanel);
-		GameLoop.setUpdater(((ScenarioPanel)scenarioPanel).getScenario());
+		GameLoop.setDisplayer((GameScenario)scenarioPanel);
+		GameLoop.setUpdater(((GameScenario)scenarioPanel).getScenario());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		setTimer(new Timer(1000, new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (((ScenarioPanel)getScenarioPanel()).getScenario().isEnded()) {
+				if (((GameScenario)getScenarioPanel()).getScenario().isEnded()) {
 					double xrate = ScreenManager.getInstance().getRate_x();
 					double yrate = ScreenManager.getInstance().getRate_y();
-					if (((ScenarioPanel)getScenarioPanel()).getScenario().isBlueWins())
-						setEnd(new WinnerPanel("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));		
+					if (((GameScenario)getScenarioPanel()).getScenario().isBlueWins())
+						setEnd(new WinnerPanel("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));		
 					else
-						setEnd(new WinnerPanel("Red",(int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate), getThis()));	
+						setEnd(new WinnerPanel("Red",(int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));	
 					getThis().addKeyListener(new WinnerKeyHandler());
 					remove(getScenarioPanel());
 					getContentPane().add(getEnd());
 					validate();
 					repaint();
+					getTimer().stop();
 				}				
 			}
 		}));
-		
+		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		setUndecorated(true);
 		getTimer().start();
+		setStartTime(System.currentTimeMillis()/1000);
 	}
 
 	/**
@@ -100,13 +106,13 @@ public class GameFrame extends JFrame implements ActionListener{
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			((ScenarioPanel) getScenarioPanel()).getScenario().getKeyController()
+			((GameScenario) getScenarioPanel()).getScenario().getKeyController()
 					.pulsedKey(e.getKeyCode(), e.getKeyChar());
 		}
 
 		@Override
 		public void keyReleased(KeyEvent arg0) {;		
-			((ScenarioPanel)getScenarioPanel()).getScenario().getKeyController().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
+			((GameScenario)getScenarioPanel()).getScenario().getKeyController().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
 		}
 
 		@Override
@@ -124,7 +130,7 @@ public class GameFrame extends JFrame implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource().getClass().equals(Timer.class)) {
-			((ScenarioPanel) getScenarioPanel()).getScenario().update();
+			((GameScenario) getScenarioPanel()).getScenario().update();
 			getScenarioPanel().repaint();
 			Toolkit.getDefaultToolkit().sync();
 		}
@@ -136,7 +142,15 @@ public class GameFrame extends JFrame implements ActionListener{
 			ScreenManager screen = ScreenManager.getInstance();
 			screen.setRate_x((double)getWidth()/screen.getWindWidth());
 			screen.setRate_y((double)getHeight()/screen.getWindHeight());
-			((ScenarioPanel) getScenarioPanel()).getScenario().getMapData().markForTexture();
+			((GameScenario) getScenarioPanel()).getScenario().getMapData().markForTexture();
 		}
 	}
+	public long getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(long startTime) {
+		this.startTime = startTime;
+	}
+	
 }

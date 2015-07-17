@@ -93,6 +93,15 @@ public class DefaultTool extends EditorTool {
 	 * @return	entidad inmediatamente bajo ese punto (priorizando desde el ultimo objeto dibujado)
 	 */
 	protected Entity getFirstFor(Point p) {
+		if (getMap().getForeground().size() != 0) {
+			for (int i = getMap().getForeground().size() - 1; i >= 0; i--) {
+				Entity actor = getMap().getForeground().get(i);
+				if (actor.getShape().contains(p)) {
+					getFoundInplane().add(BvsR_Map.PLANE_FOREKGROUND);
+					return actor;
+				}
+			}
+		}
 		if (getMap().getActors().size() != 0) {
 			for (int i = getMap().getActors().size() - 1; i >= 0; i--) {
 				Actor actor = getMap().getActors().get(i);
@@ -201,6 +210,9 @@ public class DefaultTool extends EditorTool {
 				break;
 			case BvsR_Map.PLANE_BACKGROUND:
 				getMap().getBackground().remove(getSelectedActor().get(i));
+				break;
+			case BvsR_Map.PLANE_FOREKGROUND:
+				getMap().getForeground().remove(getSelectedActor().get(i));
 				break;
 			default:
 				break;

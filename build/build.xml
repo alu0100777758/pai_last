@@ -34,12 +34,12 @@
 		<mkdir dir="project" />
 		<copy todir="project">
 			<fileset dir="C:\Users\Eldon\Documents\GitHub\pai_last">
-				<include name="src/**" />
+				<include name="Recursos/**" />
 			</fileset>
 		</copy>
 		<copy todir="project">
 			<fileset dir="C:\Users\Eldon\Documents\GitHub\pai_last">
-				<include name="Recursos/**" />
+				<include name="src/**" />
 			</fileset>
 		</copy>
 	
@@ -116,7 +116,7 @@
 			name="RedVSBlue"
 			mainClass="es.ull.etsii.pai.practicafinal.main.Main"
 			toolkit="swing"
-			version="0.2.5"
+			version="0.4.6"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />

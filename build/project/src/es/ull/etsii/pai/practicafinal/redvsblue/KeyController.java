@@ -19,6 +19,8 @@ public class KeyController {
 	 */
 	public KeyController() {
 		setKeyMap(new HashMap<KeyActions, Integer> ());
+		getKeyMap().put(KeyActions.PAUSE, KeyEvent.VK_P);
+		getKeyMap().put(KeyActions.MENU, KeyEvent.VK_ESCAPE);
 		
 		getKeyMap().put(KeyActions.P1LEFT, KeyEvent.VK_A);
 		getKeyMap().put(KeyActions.P1DOWN, KeyEvent.VK_S);
@@ -33,6 +35,7 @@ public class KeyController {
 		getKeyMap().put(KeyActions.P2UP, KeyEvent.VK_UP);
 		getKeyMap().put(KeyActions.P2SHOOTLEFT, KeyEvent.VK_NUMPAD2);
 		getKeyMap().put(KeyActions.P2SHOOTRIGHT, KeyEvent.VK_NUMPAD3);
+		
 	}
 	/**
 	 * Modifica la tecla con la que se realiza alguna accion

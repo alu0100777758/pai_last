@@ -13,24 +13,24 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import es.ull.etsii.pai.practicafinal.editor.MapPainter;
-import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
-import es.ull.etsii.pai.practicafinal.physics.Physical_active;
+import javax.swing.RepaintManager;
+
+import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.DefaultModeScoring;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
+import es.ull.etsii.pai.practicafinal.physics.PhysicsEngine;
 
 public class Scenario {
-	BvsR_Map mapData = new BvsR_Map(); // Mapa donde se realizara la partida.
+	public static final String PAUSE_TEXTURE = "Recursos\\textures\\pause.png";
 	RvsBKeyController keyController = new RvsBKeyController(); // Controlador de
 																// teclas.
 	private boolean ended;
 	private boolean redWins;
 	private boolean blueWins;
+	private boolean paused = false;
+	private RvsB_World world;
+	private PhysicsEngine physicEngine;
 	public static final String[] dieSounds = { "Idie01.wav", "Idie02.wav",
 			"Idie03.wav" };
-	public static final int WINDOW_TOLERANCE = 200; // Numero de pixeles que se
-													// pueden salir los
-													// jugadores de la pantalla
-													// antes de morir.
 
 	/**
 	 * Crea un escenario de alto y ancho definidos con un mapa determinado.
@@ -40,133 +40,51 @@ public class Scenario {
 	 * @param mapName
 	 */
 	public Scenario(Integer width, Integer height, String mapName) {
-		setWidth(width);
-		setHeight(height);
+//		setWidth(width);
+//		setHeight(height);
 
-		setBackground(new ArrayList<Entity>());
-		setStaticMap(new ArrayList<Entity>());
-		setActors(new ArrayList<Actor>());
-		setGUI(new ArrayList<Entity>());
 		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		try {
-			setMapData(BvsR_Map.load(mapName));
-
+			setWorld(new RvsB_World(BvsR_Map.load(mapName)));
 		} catch (FileNotFoundException e) {
 			System.out.println("file not found");
 		} catch (ClassNotFoundException e) {
 			System.out.println("class not found");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (getMapData().getGUI().isEmpty()) {
-			getMapData().getGUI().add(
-					new Player_gauge(getMapData().getPlayer_one(), 0));
-			getMapData().getGUI().add(
-					new Player_gauge(getMapData().getPlayer_two(),
-							Player_gauge.TOP_RIGHT));
-		}
+		setPhysicEngine(new PhysicsEngine(getWorld()));
 	}
 
 	/**
 	 * Actualiza el estado del escenario.
 	 */
 	public void update() {
-		Physical_passive map;
-
-		for (int i = 0; i < getActors().size(); i++) {
-			if (!((Physical_active) getActors().get(i))
-					.updatePos(new PhysicalRectangle(-WINDOW_TOLERANCE / 2,
-							-WINDOW_TOLERANCE / 2, ScreenManager.getInstance()
-									.getWindWidth() + WINDOW_TOLERANCE,
-							ScreenManager.getInstance().getWindHeight()
-									+ WINDOW_TOLERANCE))) {
-				getActors().get(i).die();
-				getActors().remove(i);
+		if (!isPaused()) {
+			getPhysicEngine().update();
+			/**
+			 * Verifica si alguien tiene que morir.
+			 */
+			for (int i = 0; i < getStaticMap().size(); i++)
+				if (((Physical_passive) getStaticMap().get(i)).hasToDie())
+					getStaticMap().remove(i);
+			if (getPlayer_one().hasToDie()) {
+				setEnded(true);
+				setRedWins(true);
+				DefaultModeScoring.addWinningScore(getPlayer_two());
 			}
-
-		}
-		for (int i = 0; i < getMapData().getBullets().size(); i++) {
-			Bullet bullet = getMapData().getBullets().get(i);
-			if (!bullet.updatePos(new PhysicalRectangle(-WINDOW_TOLERANCE / 2,
-					-WINDOW_TOLERANCE / 2, ScreenManager.getInstance()
-							.getWindWidth() + WINDOW_TOLERANCE, ScreenManager
-							.getInstance().getWindHeight() + WINDOW_TOLERANCE))) {
-				bullet.setDead(true);
+			if (getPlayer_two().hasToDie()) {
+				setEnded(true);
+				setBlueWins(true);
+				DefaultModeScoring.addWinningScore(getPlayer_one());
 			}
-			if (!bullet.isDead()) {
-				for (int j = 0; j < getActors().size(); j++) {
-					if ( getActors().get(j) instanceof Physical_passive) {
-						if (getActors().get(j) != bullet && bullet.collides((Physical_passive) getActors().get(
-								j)))
-							bullet.setDead(true);
-					}
-				}
-				for(int l = 0; l < getStaticMap().size(); l++){
-					if(getStaticMap().get(l) instanceof Physical_passive){
-						if(bullet.collides((Physical_passive)getMapData().getStaticMap().get(l)))
-							bullet.setDead(true);
-					}
-				}
+			if (isEnded()) {
+				AudioManager.stopAll();
+				AudioManager.startAudio(dieSounds[ResourceManager.getInstance()
+						.getRandGen().nextInt(dieSounds.length)]);
+				GameLoop.stepTimer.stop();
 			}
-			if(bullet.isDead())
-				getMapData().getBullets().remove(bullet);
-
-		}
-		/**
-		 * Aqui es donde se comprueban colisiones.
-		 */
-		for (int i = 0; i < getStaticMap().size(); i++) {
-			map = (Physical_passive) (getStaticMap().get(i));
-			if (map.collides(getPlayer_one())/* )getPlayer_one().collides(map) */)
-				getPlayer_one().repair_collision(map);
-			if (map.collides(getPlayer_two())/* )getPlayer_one().collides(map) */)
-				getPlayer_two().repair_collision(map);
-			for (int j = 0; j < getActors().size(); j++) {
-				if (getActors().get(j) instanceof Bullet) {
-					if (((Bullet) getActors().get(j)).collides(map))
-						getActors().remove(j);
-				}
-			}
-		}
-		// /**
-		// * Verifica si le pego a algun jugador
-		// */
-		//
-		// for (int i = 0; i < getActors().size(); i++) {
-		// if (getActors().get(i) instanceof Bullet) {
-		// if (getPlayer_one().collides(
-		// getActors().get(i).getPhysicalShape())) {
-		// getPlayer_one().gotHit((Bullet) getActors().get(i));
-		// getActors().remove(getActors().get(i));
-		// } else if (getPlayer_two().collides(
-		// getActors().get(i).getPhysicalShape())) {
-		// getPlayer_two().gotHit((Bullet) getActors().get(i));
-		// getActors().remove(getActors().get(i));
-		// }
-		// }
-		// }
-
-		/**
-		 * Verifica si alguien tiene que morir.
-		 */
-		for (int i = 0; i < getStaticMap().size(); i++)
-			if (((Physical_passive) getStaticMap().get(i)).hasToDie())
-				getStaticMap().remove(i);
-		if (getPlayer_one().hasToDie()) {
-			setEnded(true);
-			setRedWins(true);
-		}
-		if (getPlayer_two().hasToDie()) {
-			setEnded(true);
-			setBlueWins(true);
-		}
-		if (isEnded()) {
-			AudioManager.stopAll();
-			AudioManager.startAudio(dieSounds[ResourceManager.getInstance()
-					.getRandGen().nextInt(dieSounds.length)]);
-			GameLoop.stepTimer.stop();
 		}
 
 	}
@@ -177,58 +95,58 @@ public class Scenario {
 	 * @param g
 	 */
 	public void paint(Graphics g) {
-		MapPainter.paint(g, getMapData());
+		getWorld().paint(g);
+		if (isPaused()) {
+			ScreenManager sm = ScreenManager.getInstance();
+			g.drawImage(
+					ResourceManager.getInstance().getBufferedImage(
+							PAUSE_TEXTURE), 0, 0,
+					(int) (sm.getWindWidth() * sm.getRate_x()),
+					(int) (sm.getWindHeight() * sm.getRate_y()), null);
+		}
 	}
 
 	/**
 	 * Getters y Setters**************
 	 */
 	public Integer getWidth() {
-		return mapData.getWidth();
+		return getWorld().getMapData().getWidth();
 	}
 
 	public void setWidth(Integer width) {
-		this.mapData.setWidth(width);
+		getWorld().getMapData().setWidth(width);
 	}
 
 	public Integer getHeight() {
-		return mapData.getHeight();
+		return getWorld().getMapData().getHeight();
 	}
 
 	public void setHeight(Integer height) {
-		this.mapData.setHeight(height);
+		getWorld().getMapData().setHeight(height);
 	}
 
 	public ArrayList<Entity> getBackground() {
-		return mapData.getBackground();
+		return getWorld().getMapData().getBackground();
 	}
 
 	public void setBackground(ArrayList<Entity> background) {
-		this.mapData.setBackground(background);
+		getWorld().getMapData().setBackground(background);
 	}
 
 	public ArrayList<Entity> getStaticMap() {
-		return mapData.getStaticMap();
+		return getWorld().getMapData().getStaticMap();
 	}
 
 	public void setStaticMap(ArrayList<Entity> staticMap) {
-		this.mapData.setStaticMap(staticMap);
+		getWorld().getMapData().setStaticMap(staticMap);
 	}
 
 	public ArrayList<Actor> getActors() {
-		return mapData.getActors();
+		return getWorld().getMapData().getActors();
 	}
 
 	public void setActors(ArrayList<Actor> actors) {
-		this.mapData.setActors(actors);
-	}
-
-	public ArrayList<Entity> getGUI() {
-		return mapData.getGUI();
-	}
-
-	public void setGUI(ArrayList<Entity> gUI) {
-		mapData.setGUI(gUI);
+		getWorld().getMapData().setActors(actors);
 	}
 
 	public RvsBKeyController getKeyController() {
@@ -240,27 +158,27 @@ public class Scenario {
 	}
 
 	public Player getPlayer_two() {
-		return mapData.getPlayer_two();
+		return getWorld().getMapData().getPlayer_two();
 	}
 
 	public void setPlayer_two(Player player_two) {
-		this.mapData.setPlayer_one(player_two);
+		getWorld().getMapData().setPlayer_one(player_two);
 	}
 
 	public Player getPlayer_one() {
-		return mapData.getPlayer_one();
+		return getWorld().getMapData().getPlayer_one();
 	}
 
 	public void setPlayer_one(Player player_one) {
-		this.mapData.setPlayer_one(player_one);
+		getWorld().getMapData().setPlayer_one(player_one);
 	}
 
 	public BvsR_Map getMapData() {
-		return mapData;
+		return getWorld().getMapData();
 	}
 
 	public void setMapData(BvsR_Map mapData) {
-		this.mapData = mapData;
+		getWorld().setMapData(mapData);
 	}
 
 	public boolean isEnded() {
@@ -335,7 +253,28 @@ public class Scenario {
 				getPlayer_two().setLookingAt(Side.RIGHT);
 				// getActors().add(getPlayer_two().shoot());
 				getPlayer_two().shoot();
+			} else if (keyCode == getKeyMap().get(KeyActions.PAUSE)) {
+				pause();
+			} else if (keyCode == getKeyMap().get(KeyActions.MENU)) {
+				menu();
 			}
+		}
+
+		private void menu() {
+			// TODO Auto-generated method stub
+			System.exit(0);
+		}
+
+		private void pause() {
+			// if (isPaused()) {
+			// GameLoop.stepTimer.start();
+			// } else {
+			// GameLoop.stepTimer.stop();
+			//
+			// }
+			setPaused(!isPaused());
+			// TODO Auto-generated method stub
+
 		}
 
 		/**
@@ -373,4 +312,29 @@ public class Scenario {
 			}
 		}
 	}
+
+	public RvsB_World getWorld() {
+		return world;
+	}
+
+	public void setWorld(RvsB_World world) {
+		this.world = world;
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused = paused;
+	}
+
+	public PhysicsEngine getPhysicEngine() {
+		return physicEngine;
+	}
+
+	public void setPhysicEngine(PhysicsEngine physicEngine) {
+		this.physicEngine = physicEngine;
+	}
+
 }

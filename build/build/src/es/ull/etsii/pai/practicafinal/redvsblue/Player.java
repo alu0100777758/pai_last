@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 import es.ull.etsii.pai.practicafinal.metaclass.Weapon;
+import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.DefaultModeScoring;
 import es.ull.etsii.pai.practicafinal.metaclass.weapons.Knife;
 import es.ull.etsii.pai.practicafinal.physics.PhysicalRectangle;
 import es.ull.etsii.pai.practicafinal.physics.Physical_active;
@@ -25,62 +26,54 @@ import es.ull.etsii.pai.prct9.geometry.Segment;
 public class Player extends Actor implements Physical_active {
 	private static final long serialVersionUID = -3033119409170313204L;
 
+
 	private Point2D speed; 									// Vector velocidad.
 	private Point2D push;									// Vector de empuje.
 
+	private int score;										// puntuacion del jugador.
 	private int hp;											// Cantidad de vida actual.
-	private int maxHp;										// Cantidad de vida maxima.	
-	private int maxJumpTTL = 20;							// Numero maximo de frames de duracion de un salto.
-	private double climbPertTick = 1;						// Cantidad de desplazamiento en el eje y por frame durante el salto.
 	private Side lookingAt;									// Lado al que se esta mirando.
 	private Weapon weapon;									// Arma actual.
-	private BvsR_Map map;									// Mapa en que se encuentra el jugador.
+	private RvsB_World map;									// Mapa en que se encuentra el jugador.
 	private boolean dead = false;							// True si esta muerto.
 	private boolean block_up = false;						// True si no se puede mover hacia arriba.
 	private boolean block_down = false;						// True si no se puede mover hacia abajo.
 	private boolean block_left = false;						// True si no se puede mover a la izquierda.
 	private boolean block_right = false;					// True si no se puede mover a la derecha.
-	private int jumpTTL = 0;								// Numero de frames que puede seguir saltando.
 	private boolean move_up = false;						// True si esta saltando.
 	private boolean move_down = false;						// True si se esta agachando.
 	private boolean move_left = false;						// True si se esta moviendo a la izquierda. 
 	private boolean move_right = false;						// True si se esta moviendo a la derecha.
 	private boolean crounched = false;						// True si esta agachado.
 	private boolean shooting = false;						// True si esta disparando.
-	public static final int WIDTH = 20;						// Ancho del personaje.
-	public int HEIGHT = 40;									// Alto del personaje.
-	public static final int SPEED = 5;						// Velocidad de movimiento por frame.
-	public static final double TIME = 1.0;					// 
-	public static double GRAVITY = -5.0;					// Gravedad que se le aplica al jugador.
-	public static final int BODY = 0;						// Indice donde se guarda el grafico del cuerpo.
-	public static final int WEAPON = 1;						// Indice donde se guarda el grafico del arma.
-	public static final int DEFAULT_MAX_HP = 150;			// Vida maxima por defecto.
-	public static final int PUSH_RESIST = 2;				// Resistencia al empuje por frame.
-	private Color color = Color.BLUE; 
-	private String [] hitSounds = {"playerhit01.wav","playerhit02.wav","playerhit03.wav",}; // Sonidos que emite al ser golpeado. 
+	
+	private PlayerData stats = new PlayerData(20, 1, 0, 20, 40, 5, -5.0, 0, 1,
+			150, 2, Color.BLUE, new String[] {"playerhit01.wav","playerhit02.wav","playerhit03.wav",});
+
 	private boolean physicalResponseSuspended = false; 				// denota si se encuentran desactivadas la reparacion de colisiones.
 	/**
 	 * Crea un jugador en la posicion dada en el mapa dado.
 	 * @param position
 	 * @param map
 	 */
-	public Player(Point2D position, BvsR_Map map) {
+	public Player(Point2D position, RvsB_World map) {
 		super(position);
-		setHp(DEFAULT_MAX_HP);
-		setMaxHp(DEFAULT_MAX_HP);
+		setHp(stats.getDEFAULT_MAX_HP());
+		setMaxHp(stats.getDEFAULT_MAX_HP());
 		setMap(map);
 		setSpeed(new Point2D(0, 0));
 		setPhysicalShape(new PhysicalRectangle((int) getPosition().x(),
-				(int) getPosition().y(), WIDTH, HEIGHT));
+				(int) getPosition().y(), stats.getWidth(), stats.getHeight()));
 		setLookingAt(Side.RIGHT);
 		setPush(new Point2D(0, 0));
 		setJump(100, 0.33);
 		getGraphicShapes().add(
 				new GraphicRectangle((int) getPosition().x(),
-						(int) getPosition().y(), WIDTH, HEIGHT));
-		getGraphicShapes().get(BODY).setPaint(Color.BLUE);
+						(int) getPosition().y(), stats.getWidth(), stats.getHeight()));
+		getGraphicShapes().get(stats.getBODY()).setPaint(Color.BLUE);
 		getGraphicShapes().add(null);
 		
+		setScore(0);
 //		setWeapon(new RocketLauncher(this));
 		setWeapon(new Knife(this));
 	}
@@ -101,7 +94,7 @@ public class Player extends Actor implements Physical_active {
 	 * @return
 	 */
 	private boolean moveLeft() {
-		getSpeed().setX(-SPEED);
+		getSpeed().setX(-stats.getSPEED());
 		setBlock_right(false);
 		return true;
 	}
@@ -111,7 +104,7 @@ public class Player extends Actor implements Physical_active {
 	 * @return
 	 */
 	private boolean moveRight() {
-		getSpeed().setX(SPEED);
+		getSpeed().setX(stats.getSPEED());
 		setBlock_left(false);
 		return true;
 	}
@@ -121,14 +114,14 @@ public class Player extends Actor implements Physical_active {
 	 * @return
 	 */
 	private boolean moveUP() {
-		HEIGHT = 40;
-		getPosition().setY(getPosition().y() - HEIGHT / 2);
+		stats.setHeight(40);
+		getPosition().setY(getPosition().y() - stats.getHeight() / 2);
 
-		getGraphicShapes().get(BODY).setLocation(
+		getGraphicShapes().get(stats.getBODY()).setLocation(
 				new Point((int) getPosition().x(), (int) getPosition().y()));
-		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
+		getGraphicShapes().get(stats.getBODY()).setSize(stats.getWidth(), stats.getHeight());
 		setPhysicalShape(new PhysicalRectangle((int) getPosition().x(),
-				(int) getPosition().y(), WIDTH, HEIGHT));
+				(int) getPosition().y(), stats.getWidth(), stats.getHeight()));
 		setUP(false);
 		setCrounched(false);
 		return true;
@@ -139,13 +132,13 @@ public class Player extends Actor implements Physical_active {
 	 * @return
 	 */
 	private boolean moveDown() {
-		getPosition().setY(getPosition().y() + HEIGHT / 2);
-		HEIGHT = 20;
-		getGraphicShapes().get(BODY).setLocation(
+		getPosition().setY(getPosition().y() + stats.getHeight() / 2);
+		stats.setHeight(20);
+		getGraphicShapes().get(stats.getBODY()).setLocation(
 				new Point((int) getPosition().x(), (int) getPosition().y()));
-		getGraphicShapes().get(BODY).setSize(WIDTH, HEIGHT);
+		getGraphicShapes().get(stats.getBODY()).setSize(stats.getWidth(), stats.getHeight());
 		setPhysicalShape(new PhysicalRectangle((int) getPosition().x(),
-				(int) getPosition().y(), WIDTH, HEIGHT));
+				(int) getPosition().y(), stats.getWidth(), stats.getHeight()));
 		setCrounched(true);
 		return true;
 	}
@@ -268,6 +261,7 @@ public class Player extends Actor implements Physical_active {
 	 */
 	public void gotHit(Bullet bullet) {
 		if (bullet.getOwner() != this) {
+			DefaultModeScoring.addHitScore(bullet.getOwner());
 			AudioManager.startAudio(bullet.getSoundName());
 			if(!isDead())
 				AudioManager.startAudio(getSoundName());
@@ -289,13 +283,13 @@ public class Player extends Actor implements Physical_active {
 	public void die() {
 		setDead(true);
 		setHp(0);
-		getGraphicShapes().get(BODY).setLocation((int) getPosition().x(),
-				(int) getPosition().y() + HEIGHT - WIDTH);
-		getGraphicShapes().get(BODY).setSize(HEIGHT, WIDTH);
+		getGraphicShapes().get(stats.getBODY()).setLocation((int) getPosition().x(),
+				(int) getPosition().y() + stats.getHeight() - stats.getWidth());
+		getGraphicShapes().get(stats.getBODY()).setSize(stats.getHeight(), stats.getWidth());
 		getPhysicalRectangle().setLocation((int) getPosition().x(),
-				(int) getPosition().y() + HEIGHT - WIDTH);
-		getPhysicalRectangle().setSize(HEIGHT, WIDTH);
-		getGraphicShapes().remove(WEAPON);
+				(int) getPosition().y() + stats.getHeight() - stats.getWidth());
+		getPhysicalRectangle().setSize(stats.getHeight(), stats.getWidth());
+		getGraphicShapes().remove(stats.getWEAPON());
 	}
 
 	/**
@@ -319,12 +313,12 @@ public class Player extends Actor implements Physical_active {
 	 * Actualiza el empuje.
 	 */
 	private void updatePush() {
-		if ((int) getPush().x() == 0 || Math.abs(getPush().x()) < PUSH_RESIST)
+		if ((int) getPush().x() == 0 || Math.abs(getPush().x()) < stats.getPUSH_RESIST())
 			getPush().setX(0);
 		else if (getPush().x() > 0)
-			getPush().setX(getPush().x() - PUSH_RESIST);
+			getPush().setX(getPush().x() - stats.getPUSH_RESIST());
 		else
-			getPush().setX(getPush().x() + PUSH_RESIST);
+			getPush().setX(getPush().x() + stats.getPUSH_RESIST());
 	}
 
 	/**
@@ -349,7 +343,7 @@ public class Player extends Actor implements Physical_active {
 			}
 			// Aqui es donde realmente cambiamos la posicion una vez calculado
 			// donde va a ir.
-			getGraphicShapes().get(BODY)
+			getGraphicShapes().get(stats.getBODY())
 					.setLocation(
 							new Point((int) getPosition().x(),
 									(int) getPosition().y()));
@@ -383,10 +377,16 @@ public class Player extends Actor implements Physical_active {
 	 * Hace caer al personaje segun marca la gravedad.
 	 */
 	public void fall() {
-		getSpeed().setY(-GRAVITY);
+		getSpeed().setY(-stats.getGRAVITY());
 		setBlock_up(false);
 	}
-
+	/**
+	 * Añade una cantidad a la puntuacion.
+	 * @param value
+	 */
+	public void addToScore(int value) {
+		setScore(getScore() + value); 
+	}
 	@Override
 	public PhysicalRectangle getPhysicalRectangle() {
 		return getPhysicalShape();
@@ -433,11 +433,11 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public int getJumpTTL() {
-		return jumpTTL;
+		return stats.getJumpTTL();
 	}
 
 	public void setJumpTTL(int jumpTTL) {
-		this.jumpTTL = jumpTTL;
+		this.stats.setJumpTTL(jumpTTL);
 	}
 
 	public boolean isBlock_up() {
@@ -505,11 +505,11 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public int getMaxJumpTTL() {
-		return maxJumpTTL;
+		return stats.getMaxJumpTTL();
 	}
 
 	public void setMaxJumpTTL(int velY) {
-		this.maxJumpTTL = velY;
+		this.stats.setMaxJumpTTL(velY);
 	}
 
 	public boolean isCrounched() {
@@ -550,14 +550,14 @@ public class Player extends Actor implements Physical_active {
 
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
-		getGraphicShapes().set(WEAPON, weapon.getGraphicShape());
+		getGraphicShapes().set(stats.getWEAPON(), weapon.getGraphicShape());
 	}
 
-	public BvsR_Map getMap() {
+	public RvsB_World getMap() {
 		return map;
 	}
 
-	private void setMap(BvsR_Map map) {
+	public void setMap(RvsB_World map) {
 		this.map = map;
 	}
 
@@ -586,11 +586,11 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public int getMaxHp() {
-		return maxHp;
+		return stats.getMaxHp();
 	}
 
 	public void setMaxHp(int maxHp) {
-		this.maxHp = maxHp;
+		this.stats.setMaxHp(maxHp);
 	}
 
 	public void setJump(int height, double timeSeconds) {
@@ -599,22 +599,22 @@ public class Player extends Actor implements Physical_active {
 	}
 
 	public Color getColor() {
-		return color;
+		return stats.getColor();
 	}
 
 	public double getClimbPertTick() {
-		return climbPertTick;
+		return stats.getClimbPertTick();
 	}
 
 	public void setClimbPertTick(double climbPertTick) {
-		this.climbPertTick = climbPertTick;
+		this.stats.setClimbPertTick(climbPertTick);
 	}
 
 	public void setColor(Color color) {
-		this.color = color;
+		this.stats.setColor(color);
 	}
 	private String getSoundName() {
-		return hitSounds[ResourceManager.getInstance().getRandGen().nextInt(hitSounds.length)];
+		return stats.getHitSounds()[ResourceManager.getInstance().getRandGen().nextInt(stats.getHitSounds().length)];
 	}
 
 	public boolean isPhysicalResponseSuspended() {
@@ -624,5 +624,20 @@ public class Player extends Actor implements Physical_active {
 	public void setPhysicalResponseSuspended(boolean physicalResponseSuspended) {
 		this.physicalResponseSuspended = physicalResponseSuspended;
 	}
-	
+
+	public PlayerData getStats() {
+		return stats;
+	}
+
+	public void setStats(PlayerData stats) {
+		this.stats = stats;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 }

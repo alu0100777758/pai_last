@@ -7,19 +7,62 @@ package es.ull.etsii.pai.practicafinal.main;
  * @author Javier Martin Hernandez alu0100777758@ull.edu.es
  *
  */
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.JFrame;
 
 import es.ull.etsii.pai.practicafinal.editor.Editor;
-import es.ull.etsii.pai.practicafinal.editor.EditorFrame;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
+import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
 public class Main {
 		public static void main(String[] args) {
 			Editor.checkFileSystem();
-			EditorFrame frame = new EditorFrame();
+			SceneManager frame = new SceneManager();		
+			frame.switchScenario(new RvsB_Menu());
 			frame.setTitle("Red VS Blue Editor");
 		 	frame.setLocationRelativeTo(null); 
 		    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setVisible(true);
+		    // TODO refactorizar 
+		    class MyAdapter extends ComponentAdapter {
+				@Override
+				public void componentResized(ComponentEvent e) {
+					ScreenManager screen = ScreenManager.getInstance();
+					screen.setRate_x((double)frame.getWidth()/screen.getWindWidth());
+					screen.setRate_y((double)frame.getHeight()/screen.getWindHeight());
+					frame.notify_resize();
+				}
+			}
+		    frame.addComponentListener(new MyAdapter());
+		    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		    frame.setUndecorated(true);
+		    frame.setVisible(true);
 			frame.setFocusable(true);
+			try {
+				Thread.sleep(250);
+				frame.validate();
+				frame.requestFocus();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 } 
+
+/** Seria bueno contar como funcionan las clases singleton para los mas "avanzados"
+  * 
+  * Cuidado en el setUpdater del gameLoop!!! no se si esta del todo bien y si hace lo que creo 
+  * que se supone que hace.
+  *	
+  *	Ahora que miro el GameLoop, creo que seria bueno tener un metodo para pararlo cuando tenemos escenarios
+  * estaticos como la pantalla de ganador.
+  *
+  * Averiguar en que momento se para el gameloop al setearse a true el atributo ended del escenario de juego.
+  *
+  * Glitch en el screen manager, si se explicita el ancho y alto de la ventana a la resolucion del monitor
+  * todo correcto, si se cambia durante la ejecucion como se esta haciendo en el main falla.
+  * Ademas, cambiar el x rate, e y rate a valores distintos de 1 da comportamientos extraños tanto en el selector
+  * como en la pantalla de ganador. (Estas cosas pasan en mi portatil porque tiene resolucion 1366x768, en el 
+  * sobremesa no pasa).
+**/

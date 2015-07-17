@@ -72,6 +72,10 @@ public class Rope_bullet extends Bullet {
 
 	@Override
 	public boolean collidesWithOther(Physical_passive actor) {
+		if (isBackState()) {
+			setDead(true);
+			return true;
+		}
 		initBackState();
 		return false;
 	}

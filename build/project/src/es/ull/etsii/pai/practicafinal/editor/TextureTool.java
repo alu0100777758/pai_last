@@ -85,8 +85,8 @@ public class TextureTool extends DefaultTool {
 
 	public static void copyFile(String sourcepath, String destpath)
 			throws IOException {
-//		System.out.println("from sourcepath: " + sourcepath + " to : "
-//				+ destpath);
+		System.out.println("from sourcepath: " + sourcepath + " to : "
+				+ destpath);
 		File sourceFile = new File(sourcepath);
 		File destFile = new File(destpath);
 		if (!destFile.exists()) {

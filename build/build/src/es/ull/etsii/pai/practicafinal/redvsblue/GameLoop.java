@@ -10,8 +10,9 @@ public class GameLoop{
 	  public static final int FRAMES_PER_SECOND = 60;
 	  public static final long SKIP_TICKS = 1000 / FRAMES_PER_SECOND;
 	  public static Scenario updater ;
-	  public static ScenarioPanel displayer ;
+	  public static GameScenario displayer ;
 	  public static  Timer stepTimer ;
+	 
 	  private GameLoop(){
 	  };
 	  public static GameLoop getInstance(){
@@ -28,11 +29,11 @@ public class GameLoop{
 		GameLoop.updater = updater;
 	}
 
-	public static ScenarioPanel getDisplayer() {
+	public static GameScenario getDisplayer() {
 		return displayer;
 	}
 
-	public static  void setDisplayer(ScenarioPanel displayer) {
+	public static  void setDisplayer(GameScenario displayer) {
 		GameLoop.displayer = displayer;
 	}
 	public static void init(ActionListener toUdateobject){

@@ -2,11 +2,11 @@ package es.ull.etsii.pai.practicafinal.editor;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.graphics.Drawable;
-import es.ull.etsii.pai.practicafinal.redvsblue.Bullet;
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 import es.ull.etsii.pai.practicafinal.redvsblue.Entity;
 import es.ull.etsii.pai.practicafinal.redvsblue.GraphicEntity;
@@ -28,6 +28,7 @@ public class MapPainter extends JPanel {
 	private BvsR_Map map = null; 										// mapa encargado de dibujar
 	private boolean guiActive = true; 									// almacena si la GUI (HUD) esta visible o no
 	public static final Color BACKGRAUND_COLOR = new Color(64, 64, 64);	// Color con el que se rellena el fondo
+	private boolean foregroundActive = true;
 	public MapPainter(BvsR_Map map) {
 		setMap(map);
 		setMinimumSize(ScreenManager.getInstance().getScreenDimensions());
@@ -65,15 +66,21 @@ public class MapPainter extends JPanel {
 			map.getActors().get(i).paint(g.create());
 		}
 	}
-	public static void paintBullets(Graphics g, BvsR_Map map) {
-		for (int i = 0; i < map.getBullets().size(); i++) {
-			map.getBullets().get(i).paint(g.create());
-		}
-	}
-	public static void paintGUI(Graphics g, BvsR_Map map) {
-		for (int i = 0; i < map.getGUI().size(); i++) {
-			Drawable gui = (Drawable) (map.getGUI().get(i));
-			gui.paint(g.create());
+//	public static void paintBullets(Graphics g, RvsB_World map) {
+//		for (int i = 0; i < map.getBullets().size(); i++) {
+//			map.getBullets().get(i).paint(g.create());
+//		}
+//	}
+//	public static void paintGUI(Graphics g, RvsB_World map) {
+//		for (int i = 0; i < map.getGUI().size(); i++) {
+//			Drawable gui = (Drawable) (map.getGUI().get(i));
+//			gui.paint(g.create());
+//		}
+//	}
+	public static void paintForeground(Graphics g, BvsR_Map map){
+		for (Entity ent : map.getForeground()) {
+			GraphicEntity entg = (GraphicEntity) ent;
+			entg.getGraphic().paint(g);
 		}
 	}
 
@@ -82,18 +89,18 @@ public class MapPainter extends JPanel {
 		paintBackground(g);
 		paintStaticMap(g, getMap());
 		paintActors(g, getMap());
-		paintBullets(g, getMap());
-		if (isGuiActive()) {
-			paintGUI(g, getMap());
-		}
+		if(isForegroundActive())
+			MapPainter.paintForeground(g, getMap());
+//		paintBullets(g, getMap());
+//		if (isGuiActive()) {
+//			paintGUI(g, getMap());
+//		}
 	}
 
 	public static void paint(Graphics g, BvsR_Map map) {
 		paintBackground(g, map);
 		paintStaticMap(g, map);
 		paintActors(g, map);
-		paintBullets(g, map);
-		paintGUI(g, map);
 	}
 	public boolean isGuiActive() {
 		return guiActive;
@@ -109,6 +116,21 @@ public class MapPainter extends JPanel {
 
 	public void setMap(BvsR_Map map) {
 		this.map = map;
+	}
+
+	public boolean isForegroundActive() {
+		return foregroundActive;
+	}
+
+	public void setForegroundActive(boolean foregroundActive) {
+		this.foregroundActive = foregroundActive;
+	}
+
+	public static BufferedImage getPict(BvsR_Map mapa) {
+		 BufferedImage image = new BufferedImage(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight(), BufferedImage.TYPE_3BYTE_BGR);
+		 Graphics preview = image.getGraphics();
+		 paint(preview, mapa);
+		 return image;
 	}
 
 }

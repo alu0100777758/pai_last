@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 
 public class Editor{
 	public static void main(String[] args) {
+		checkFileSystem();
 		EditorFrame frame = new EditorFrame();
 		frame.setTitle("Red VS Blue Editor");
 	 	frame.setLocationRelativeTo(null); // Center the frame
@@ -14,7 +15,11 @@ public class Editor{
 		frame.setFocusable(true);
 	}
 	public static void checkFileSystem(){
-		File texturesDir = new File(System.getProperty("user.dir")+ System.getProperty("file.separator")+ "textures");
-		texturesDir.mkdir();
+		// directorio texturas 
+		File dir = new File(System.getProperty("user.dir")+ System.getProperty("file.separator")+ "textures");
+		dir.mkdir();
+		// directorio de mapas
+		dir = new File(System.getProperty("user.dir")+ System.getProperty("file.separator")+ "maps");
+		dir.mkdir();
 	}
 }

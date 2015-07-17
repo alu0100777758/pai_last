@@ -34,7 +34,7 @@ public class PlayerInitTool extends EditorTool {
 	}
 
 	protected void add(MouseEvent e) {
-		addPlayer(new Player(new Point2D(e.getX(), e.getY()), getMap()));
+		addPlayer(new Player(new Point2D(e.getX(), e.getY()), null));
 		setModified(true);
 	}
 	/**
@@ -44,20 +44,20 @@ public class PlayerInitTool extends EditorTool {
 		if (player != null) {
 			if (getMap().getPlayer_one() == null) {
 				getMap().setPlayer_one(player);
-				player.getGraphicShapes().get(Player.BODY)
+				player.getGraphicShapes().get(player.getStats().getBODY())
 						.setTexturePath("textures/blue.png");
-				player.getGraphicShapes().get(Player.BODY)
+				player.getGraphicShapes().get(player.getStats().getBODY())
 						.setTextureAnchor(player.getPhysicalRectangle());
-				player.getGraphicShapes().get(Player.BODY).setImage(true);
+				player.getGraphicShapes().get(player.getStats().getBODY()).setImage(true);
 				getMap().addActor(getMap().getPlayer_one());
 			} else if (getMap().getPlayer_two() == null) {
 				player.setColor(Color.RED);
 				getMap().setPlayer_two(player);
-				player.getGraphicShapes().get(Player.BODY)
+				player.getGraphicShapes().get(player.getStats().getBODY())
 						.setTexturePath("textures/red.png");
-				player.getGraphicShapes().get(Player.BODY)
+				player.getGraphicShapes().get(player.getStats().getBODY())
 						.setTextureAnchor(player.getPhysicalRectangle());
-				player.getGraphicShapes().get(Player.BODY).setImage(true);
+				player.getGraphicShapes().get(player.getStats().getBODY()).setImage(true);
 				getMap().addActor(getMap().getPlayer_two());
 			}
 		}
