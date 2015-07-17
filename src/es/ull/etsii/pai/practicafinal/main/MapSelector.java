@@ -54,19 +54,9 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		scanDir();
 		fillGrid();
 		
-<<<<<<< HEAD
+
 		img = ResourceManager.getInstance().getBufferedImage(BACKGROUND);
 		
-=======
-		
-		try {
-			img = ImageIO.read(new File ("Recursos/textures/metal.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setCurrentMap(0);
->>>>>>> origin/master
 	}
 
 	protected void paintComponent (Graphics g) {
