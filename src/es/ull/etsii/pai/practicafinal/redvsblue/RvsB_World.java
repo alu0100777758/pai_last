@@ -23,7 +23,9 @@ public class RvsB_World implements Drawable {
 	}
 	private void setPlayers() {
 		getPlayer_one().setMap(this);
+		getPlayer_one().setReloadSound("bluereload.wav");
 		getPlayer_two().setMap(this);
+		getPlayer_two().setReloadSound("redreload.wav");
 	}
 	public void addBullet(Bullet actor) {
 		getBullets().add(actor);
