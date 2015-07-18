@@ -157,6 +157,7 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			break;
 		case "score":
 			getSceneManager().switchScenario(new ScoreScene());
+			break;
 		case "exit":
 			System.exit(0);
 		default:

@@ -4,14 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import es.ull.etsii.pai.practicafinal.main.RvsB_Menu;
 import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.Ladder;
+import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.LadderEntry;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
@@ -29,13 +27,18 @@ public class WinnerScene extends ScenarioPanel {
 	
 	public WinnerScene(String name, int score) {
 		this.winnerName = name;
+		
 		this.setBackground(Color.BLACK);
 		setWinnerScore(score);
 		Ladder ladder = null;
 		    ladder = Ladder.getInstance();
 		
 		if (ladder.canEnter(score)) {
-			System.out.println(JOptionPane.showInputDialog(this));
+			String aux = JOptionPane.showInputDialog(this);
+			LadderEntry entry = new LadderEntry(aux, score);
+			
+			ladder.insertEntry(entry);
+			ladder.saveLadder();
 		}
 		
 		
