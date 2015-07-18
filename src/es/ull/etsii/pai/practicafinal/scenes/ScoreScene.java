@@ -45,12 +45,15 @@ public class ScoreScene extends ScenarioPanel {
 		super.paintComponent(g.create());
 		ArrayList<LadderEntry> entries = ladder.getAllEntries();
 		ScreenManager screen = ScreenManager.getInstance();
-		int yPosition = VERTICAL_GAP;
+		int yPosition = 3 * VERTICAL_GAP;
 		
 		
 		g.setFont(new Font(FONT, Font.ITALIC, 48));
-		g.setColor(Color.WHITE);        
 		
+		g.setColor(Color.RED);
+		
+		g.drawString("Records", screen.getCurrentWidth() / 4 + 180, VERTICAL_GAP);
+		g.setColor(Color.WHITE);        
 		for (int i = entries.size() - 1; i >= 0; i--) {
 			g.drawString(entries.get(i).getName(), screen.getCurrentWidth() / 4 + 120, yPosition);
 			g.drawString(entries.get(i).getScore() + "", screen.getCurrentWidth() / 2, yPosition);

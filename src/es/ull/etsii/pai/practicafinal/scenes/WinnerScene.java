@@ -34,7 +34,7 @@ public class WinnerScene extends ScenarioPanel {
 		    ladder = Ladder.getInstance();
 		
 		if (ladder.canEnter(score)) {
-			String aux = JOptionPane.showInputDialog(this);
+			String aux = JOptionPane.showInputDialog("¡¡Escribe tu nombre!!");
 			LadderEntry entry = new LadderEntry(aux, score);
 			
 			ladder.insertEntry(entry);
