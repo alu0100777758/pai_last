@@ -59,6 +59,7 @@ public abstract class Weapon implements Serializable{
 	public Weapon(Player owner) {
 		setOwner(owner);
 		setGraphicShape();
+		setReload_able(true);
 	}
 	
 	/**
