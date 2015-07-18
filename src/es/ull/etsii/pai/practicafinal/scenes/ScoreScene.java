@@ -17,12 +17,8 @@ public class ScoreScene extends ScenarioPanel {
 	private Ladder ladder;
 	
 	public ScoreScene () {
-		try {
 			ladder = Ladder.getInstance();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 	@Override
 	protected void paintComponent(Graphics g) {

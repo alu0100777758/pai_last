@@ -32,12 +32,7 @@ public class WinnerScene extends ScenarioPanel {
 		this.setBackground(Color.BLACK);
 		setWinnerScore(score);
 		Ladder ladder = null;
-		try {
 		    ladder = Ladder.getInstance();
-		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		if (ladder.canEnter(score)) {
 			System.out.println(JOptionPane.showInputDialog(this));
