@@ -41,10 +41,11 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public static final String PLAY_PICT = "textures/menu_play.png";
 	public static final String EDITOR_PICT = "textures/menu_editor.png";
 	public static final String CREDITS_PICT = "textures/menu_credits.png";
+	public static final String LADDER_PICT = "textures/menu_ladder.png";
 	public static final String EXIT_PICT = "textures/menu_exit.png";
 	public static final String DEFAULT_PICT = PLAY_PICT;
 	public static final String BACKGROUND = "textures/menu_background.png";
-	public static final int OPTIONS = 4;
+	public static final int OPTIONS = 5;
 	public static menuButton selection = null;
 	private int indexOfSelection = 1;
 
@@ -127,7 +128,10 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			getPict().setImage(
 					ResourceManager.getInstance().getBufferedImage(EXIT_PICT));
 			break;
-		
+		case "score":
+			getPict().setImage(
+					ResourceManager.getInstance().getBufferedImage(LADDER_PICT));
+			break;
 		default:
 			break;
 		}
