@@ -31,6 +31,7 @@ public class Rope_bullet extends Bullet {
 			Player owner, int bulletSize) {
 		super(pos, speed, damage, push, owner, bulletSize);
 		setTextureImage();
+		setPullSpeed(new Point2D(-speed.x(), -20));
 	}
 
 	protected void setTextureImage() {
@@ -72,7 +73,7 @@ public class Rope_bullet extends Bullet {
 
 	@Override
 	public boolean collidesWithOther(Physical_passive actor) {
-		if (isBackState()) {
+		if (isBackState() && actor.getClass()==Player.class) {
 			setDead(true);
 			return true;
 		}
@@ -86,7 +87,8 @@ public class Rope_bullet extends Bullet {
 		if (isBackState()) {
 			if (getTarget() != null)
 				pullEnemy();
-			else if(Math.abs(getOwner().getPosition().x()-getPhysicalRectangle().getLocation().getX()) > 20)
+			else if (Math.abs(getOwner().getPosition().x()
+					- getPhysicalRectangle().getLocation().getX()) > 20)
 				pushOwner();
 			else
 				setDead(true);
@@ -97,9 +99,11 @@ public class Rope_bullet extends Bullet {
 
 	private void pushOwner() {
 		getOwner().addPosition(getPullSpeed());
-		getPullSpeed().setY((getPosition().y()-getOwner().getPhysicalRectangle().getY())/5);
-//		if(getOwner().getPosition().y()<=getPosition().y())
-//		getPullSpeed().setY(getPullSpeed().y()*0.2);
+		getPullSpeed()
+				.setY((getPosition().y() - getOwner().getPhysicalRectangle()
+						.getY()) / 5);
+		if (getOwner().getPosition().y() <= getPosition().y())
+			getPullSpeed().setY(getPullSpeed().y() * 0.2);
 	}
 
 	private void pullEnemy() {
@@ -111,10 +115,11 @@ public class Rope_bullet extends Bullet {
 		if (!isBackState()) {
 			if (getTarget() != null)
 				setSpeed(new Point2D(-getSpeed().x(), getSpeed().y()));
-			else{
+			else {
 				double yvel = 0;
-				if(getOwner().getPosition().y()>getPosition().y())
-					yvel = (getPosition().y()-getOwner().getPhysicalRectangle().getY())/5;
+				if (getOwner().getPosition().y() > getPosition().y())
+					yvel = (getPosition().y() - getOwner()
+							.getPhysicalRectangle().getY()) / 5;
 				setPullSpeed(new Point2D(getSpeed().x(), yvel));
 				setSpeed(new Point2D(0, 0));
 			}
@@ -153,6 +158,5 @@ public class Rope_bullet extends Bullet {
 	public void setPullSpeed(Point2D pullSpeed) {
 		this.pullSpeed = pullSpeed;
 	}
-	
 
 }

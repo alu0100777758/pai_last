@@ -49,7 +49,7 @@ public class Player extends Actor implements Physical_active {
 	
 	private PlayerData stats = new PlayerData(20, 1, 0, 20, 40, 5, -5.0, 0, 1,
 			150, 2, Color.BLUE, new String[] {"playerhit01.wav","playerhit02.wav","playerhit03.wav",});
-
+	private String reloadSound = "";
 	private boolean physicalResponseSuspended = false; 				// denota si se encuentran desactivadas la reparacion de colisiones.
 	/**
 	 * Crea un jugador en la posicion dada en el mapa dado.
@@ -403,7 +403,9 @@ public class Player extends Actor implements Physical_active {
 	public ArrayList<Segment> getSegmentList() {
 		return getPhysicalShape().getSegmentList();
 	}
-
+	public void playReload(){
+		AudioManager.reproduceAudio(getReloadSound());
+	}
 	/**
 	 * Getters y Setters.
 	 * 
@@ -640,4 +642,13 @@ public class Player extends Actor implements Physical_active {
 	public void setScore(int score) {
 		this.score = score;
 	}
+
+	public String getReloadSound() {
+		return reloadSound;
+	}
+
+	public void setReloadSound(String reloadSound) {
+		this.reloadSound = reloadSound;
+	}
+	
 }

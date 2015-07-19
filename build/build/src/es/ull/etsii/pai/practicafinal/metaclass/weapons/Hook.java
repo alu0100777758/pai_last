@@ -49,6 +49,7 @@ public class Hook extends Weapon{
 		getGraphicShape().setTexturePath("textures/hook.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
+		setReload_able(false);
 	}
 	protected void shootSecondary() {}
 

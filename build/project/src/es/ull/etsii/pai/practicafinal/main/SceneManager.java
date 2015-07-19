@@ -1,4 +1,5 @@
 package es.ull.etsii.pai.practicafinal.main;
+
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.
@@ -18,30 +19,35 @@ import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
 
 public class SceneManager extends JFrame {
-	ScenarioPanel	currentScenario ;
+	ScenarioPanel currentScenario;
+	private boolean keyHandlerON = true;
+
 	public SceneManager() {
 		super();
 		this.addKeyListener(new KeyHandler());
-//		setCurrentScenario(scenario);
-//		add(getCurrentScenario());
-//		scenario.setSceneManager(this);
+		// setCurrentScenario(scenario);
+		// add(getCurrentScenario());
+		// scenario.setSceneManager(this);
 	}
-	public void switchScenario(ScenarioPanel scenario){
-		if(currentScenario != null)
+
+	public void switchScenario(ScenarioPanel scenario) {
+		if (currentScenario != null)
 			remove(getCurrentScenario());
 		setCurrentScenario(scenario);
 		add(scenario);
 		scenario.setSceneManager(this);
 		validate();
+		setKeyHandlerON(true);
 	}
+
 	public ScenarioPanel getCurrentScenario() {
 		return currentScenario;
 	}
+
 	public void setCurrentScenario(ScenarioPanel currentScenario) {
 		this.currentScenario = currentScenario;
 	}
-	
-	
+
 	/**
 	 * Manejador de teclas.
 	 * 
@@ -53,12 +59,15 @@ public class SceneManager extends JFrame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
-			getCurrentScenario().pulsedKey(e.getKeyCode(), e.getKeyChar());
+			if (isKeyHandlerON())
+				getCurrentScenario().pulsedKey(e.getKeyCode(), e.getKeyChar());
 		}
 
 		@Override
-		public void keyReleased(KeyEvent arg0) {;		
-			getCurrentScenario().releasedKey(arg0.getKeyCode(), arg0.getKeyChar());
+		public void keyReleased(KeyEvent arg0) {
+			if (isKeyHandlerON())
+				getCurrentScenario().releasedKey(arg0.getKeyCode(),
+						arg0.getKeyChar());
 		}
 
 		@Override
@@ -66,7 +75,17 @@ public class SceneManager extends JFrame {
 		}
 
 	}
-	public void notify_resize(){
+
+	public void notify_resize() {
 		getCurrentScenario().sizeUpdate();
 	}
+
+	public boolean isKeyHandlerON() {
+		return keyHandlerON;
+	}
+
+	public void setKeyHandlerON(boolean keyHandlerON) {
+		this.keyHandlerON = keyHandlerON;
+	}
+
 }

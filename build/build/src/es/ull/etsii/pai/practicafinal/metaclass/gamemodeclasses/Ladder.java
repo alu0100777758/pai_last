@@ -12,17 +12,32 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
+
 
 public class Ladder{
 	private static final long serialVersionUID = -909949403806750885L;
 	
-	public final static String LADDER_FILE = "ladder";
+	public final static String LADDER_FILE = "ladder.sav";
 	public final static int MAX_ENTRIES = 10;
 	
 	private TreeSet<LadderEntry> ladder;
+	private static Ladder instance = null;
 	
-	public Ladder() throws FileNotFoundException, ClassNotFoundException, IOException {				
-		loadLadder();
+	private Ladder() {
+		try{
+			loadLadder();
+		}catch(Exception e){
+			ladder = new TreeSet<LadderEntry>();
+			saveLadder();
+		}
+	}
+	
+	
+	public static Ladder getInstance() {
+		if (instance == null)
+			instance = new Ladder();
+		return instance;
 	}
 	
 	/**
@@ -54,6 +69,7 @@ public class Ladder{
 		ladder = (TreeSet<LadderEntry>)save.readObject();
 		this.setLadder(ladder);
 		save.close();
+		
 	}
 	
 	public void insertEntry(LadderEntry entry) {
@@ -70,7 +86,14 @@ public class Ladder{
 		return result; 
 	}
 
-
+	public boolean canEnter (int score)  {
+		if (getLadder().size() < MAX_ENTRIES)
+			return true;
+		if (getLadder().first().getScore() < score)
+			return true;
+		return false;
+		
+	}
 	private TreeSet<LadderEntry> getLadder() {
 		return ladder;
 	}

@@ -40,6 +40,7 @@ public abstract class Weapon implements Serializable{
 	private int height = 10;					// Alto del arma.
 	private int y_offset = 10;					// Offset de la y.
 	private int x_offset = 0;					// Offset de la x.
+	private boolean reload_able = true; 		// marca si un arma necesita recargar.
 	
 
 	/**
@@ -58,6 +59,7 @@ public abstract class Weapon implements Serializable{
 	public Weapon(Player owner) {
 		setOwner(owner);
 		setGraphicShape();
+		setReload_able(true);
 	}
 	
 	/**
@@ -91,9 +93,10 @@ public abstract class Weapon implements Serializable{
 	 * @return
 	 */
 	private boolean canShootPrimary() {
-		if (getMainAmmo() <= 0) {
+		if (isReload_able() && getMainAmmo() <= 0) {
 			setReloading(true);
 			setReloadingCooldown(getMainReloadingTime());
+			getOwner().playReload();
 		}
 		else if (getMainCooldown() <= 0) {
 			setMainCooldown(getFireRate());
@@ -362,5 +365,12 @@ public abstract class Weapon implements Serializable{
 	public void setReloadingCooldown(int reloadingCooldown) {
 		this.reloadingCooldown = reloadingCooldown;
 	}
+	public boolean isReload_able() {
+		return reload_able;
+	}
+	public void setReload_able(boolean reload_able) {
+		this.reload_able = reload_able;
+	}
+	
 	
 }

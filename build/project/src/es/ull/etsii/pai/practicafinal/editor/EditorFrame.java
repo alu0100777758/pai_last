@@ -26,10 +26,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import es.ull.etsii.pai.practicafinal.main.SceneManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.AudioManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.redvsblue.GameFrame;
-import es.ull.etsii.pai.practicafinal.redvsblue.GameLoop;
+import es.ull.etsii.pai.practicafinal.redvsblue.GameScenario;
 import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
@@ -163,20 +163,23 @@ public class EditorFrame extends JFrame implements ActionListener,
 //					getMap().getGUI().add(new Player_gauge(getMap().getPlayer_two(),Player_gauge.TOP_RIGHT));
 //				}
 				saveMap(TEMP_FILE_MAP);
-				GameFrame frame = new GameFrame(TEMP_FILE_MAP);
+//				GameFrame frame = new GameFrame(TEMP_FILE_MAP);
+				SceneManager frame = new SceneManager();
 				frame.setTitle("Red VS Blue");
 				frame.setSize(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight());
 			 	frame.setLocationRelativeTo(null); 
 			 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			 	frame.setVisible(true);
-				GameLoop.init(frame);
+			 	frame.switchScenario(
+						new GameScenario(TEMP_FILE_MAP));
+			 	frame.setResizable(false);
 				frame.addWindowListener(new WindowAdapter()
 		        {
 		            @Override
 		            public void windowClosing(WindowEvent e)
 		            {
 		                AudioManager.stopAll();
-		                GameLoop.stepTimer.stop();
+//		                GameLoop.stepTimer.stop();
 		                e.getWindow().dispose();
 		                ScreenManager.getInstance().setRate_x(1);
 		                ScreenManager.getInstance().setRate_y(1);

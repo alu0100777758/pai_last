@@ -18,6 +18,8 @@ public class rocket_bullet extends Bullet {
 	}
 	protected void setTextureImage(){
 		getGraphicShape().setTexturePath("textures/rocket.png");
+//		addSprite("textures/rocket1.png");
+		setAnimDelay(25);
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
 	}

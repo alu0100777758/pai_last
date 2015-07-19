@@ -116,7 +116,7 @@
 			name="RedVSBlue"
 			mainClass="es.ull.etsii.pai.practicafinal.main.Main"
 			toolkit="swing"
-			version="0.4.6"
+			version="0.5.0"
 		/>
 	
 		<mkdir dir="build/classes/META-INF" />

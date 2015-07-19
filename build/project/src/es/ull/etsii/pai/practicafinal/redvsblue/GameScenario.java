@@ -19,6 +19,8 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import es.ull.etsii.pai.practicafinal.scenes.WinnerScene;
+
 public class GameScenario extends ScenarioPanel{
 	private Scenario scenario;				// Escenario que se esta mostrando actualmente.
 	private GameLoopHandler gameLoopHandler;
@@ -77,12 +79,11 @@ public class GameScenario extends ScenarioPanel{
 			Toolkit.getDefaultToolkit().sync();
 			
 			if (getScenario().isEnded()){
-				double xrate = ScreenManager.getInstance().getRate_x();
-				double yrate = ScreenManager.getInstance().getRate_y();
+			
 				if (getScenario().isBlueWins())
-					getSceneManager().switchScenario(new WinnerPanel("Blue", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));		
+					getSceneManager().switchScenario(new WinnerScene("Blue", getScenario().getPlayer_one().getScore()));		
 				else
-					getSceneManager().switchScenario(new WinnerPanel("Red", (int)(ScreenManager.getInstance().getWindWidth() * xrate), (int)(ScreenManager.getInstance().getWindHeight() * yrate)));
+					getSceneManager().switchScenario(new WinnerScene("Red", getScenario().getPlayer_two().getScore()));
 				getSceneManager().getCurrentScenario().repaint();
 			}
 		}

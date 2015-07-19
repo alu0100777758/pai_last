@@ -31,6 +31,7 @@ import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 import es.ull.etsii.pai.practicafinal.scenes.CreditsScene;
+import es.ull.etsii.pai.practicafinal.scenes.ScoreScene;
 
 public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	private static final long serialVersionUID = 169028678534289322L;
@@ -40,10 +41,11 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public static final String PLAY_PICT = "textures/menu_play.png";
 	public static final String EDITOR_PICT = "textures/menu_editor.png";
 	public static final String CREDITS_PICT = "textures/menu_credits.png";
+	public static final String LADDER_PICT = "textures/menu_ladder.png";
 	public static final String EXIT_PICT = "textures/menu_exit.png";
 	public static final String DEFAULT_PICT = PLAY_PICT;
 	public static final String BACKGROUND = "textures/menu_background.png";
-	public static final int OPTIONS = 4;
+	public static final int OPTIONS = 5;
 	public static menuButton selection = null;
 	private int indexOfSelection = 1;
 
@@ -62,7 +64,7 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		// mainMenu.setBackground(Color.GREEN);
 		// getMenuButtons().setLayout(new BoxLayout(getMenuButtons(),
 		// BoxLayout.Y_AXIS));
-		getMenuButtons().setLayout(new GridLayout(6, 2));
+		getMenuButtons().setLayout(new GridLayout(7, 2));
 
 		getMenuButtons().add(Box.createVerticalStrut(20));
 
@@ -81,6 +83,11 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		button3.addActionListener(this);
 		getMenuButtons().add(button3);
 
+		menuButton score = new menuButton("Puntuaciones");
+		score.setActionCommand("score");
+		score.addActionListener(this);
+		getMenuButtons().add(score);
+		
 		menuButton button4 = new menuButton("Salir");
 		button4.setActionCommand("exit");
 		button4.addActionListener(this);
@@ -121,7 +128,10 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			getPict().setImage(
 					ResourceManager.getInstance().getBufferedImage(EXIT_PICT));
 			break;
-
+		case "score":
+			getPict().setImage(
+					ResourceManager.getInstance().getBufferedImage(LADDER_PICT));
+			break;
 		default:
 			break;
 		}
@@ -133,11 +143,12 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		switch (arg0.getActionCommand()) {
 		case "play":
+			//getSceneManager().setKeyHandlerON(false);
 			getSceneManager().switchScenario(new MapSelector());
 			break;
 		case "Credits":
-			getSceneManager().switchScenario(
-					new CreditsScene(this.getWidth(), this.getHeight()));
+			getSceneManager().setKeyHandlerON(false);
+			getSceneManager().switchScenario(new CreditsScene());
 			break;
 		case "edit":
 			EditorFrame frame1 = new EditorFrame();
@@ -148,6 +159,9 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			frame1.setFocusable(true);
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			break;
+		case "score":
+			getSceneManager().switchScenario(new ScoreScene());
+			break;
 		case "exit":
 			System.exit(0);
 		default:
@@ -156,7 +170,7 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	}
 
 	@Override
-	public void pulsedKey(int keyCode, char keyChar) {
+	public void releasedKey(int keyCode, char keyChar) {
 		switch (keyCode) {
 		case KeyEvent.VK_DOWN:
 		case KeyEvent.VK_S:
@@ -169,8 +183,10 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			prev();
 			break;
 		case KeyEvent.VK_ENTER:
+		case KeyEvent.VK_SPACE:
 			actionPerformed(new ActionEvent(getSelection(),
-					ActionEvent.ACTION_FIRST, getSelection().getActionCommand()));
+					ActionEvent.ACTION_FIRST, getSelection().getActionCommand()));	
+			break;
 		default:
 			break;
 		}

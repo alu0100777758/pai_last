@@ -50,6 +50,7 @@ public class Slipper extends Weapon {
 		getGraphicShape().setTexturePath("textures/slipper.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
+		setReload_able(false);
 	}
 	
 	protected void shootSecondary() {}

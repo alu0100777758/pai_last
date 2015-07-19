@@ -20,7 +20,7 @@ import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.practicafinal.physics.PhysicsEngine;
 
 public class Scenario {
-	public static final String PAUSE_TEXTURE = "Recursos\\textures\\pause.png";
+	public static final String PAUSE_TEXTURE = "textures/pause.png";
 	RvsBKeyController keyController = new RvsBKeyController(); // Controlador de
 																// teclas.
 	private boolean ended;
@@ -263,6 +263,7 @@ public class Scenario {
 		private void menu() {
 			// TODO Auto-generated method stub
 			System.exit(0);
+			
 		}
 
 		private void pause() {

@@ -48,6 +48,7 @@ public class Knife extends Weapon {
 		getGraphicShape().setTexturePath("textures/knife.png");
 		getGraphicShape().setTextureAnchor(getGraphicShape());
 		getGraphicShape().setImage(true);
+		setReload_able(false);
 	}
 	
 	protected void shootSecondary() {}

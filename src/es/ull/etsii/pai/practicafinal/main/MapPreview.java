@@ -28,6 +28,7 @@ public class MapPreview extends JButton {
 		this.name = mapname;
 //		add(new JLabel(getName()));
 //		System.out.println("path: " + name);
+//		if(mapname != "void"){
 		try {
 			setMapa(BvsR_Map.load(name));
 		} catch (FileNotFoundException e) { 
@@ -39,6 +40,7 @@ public class MapPreview extends JButton {
 			e.printStackTrace();
 		}
 		setSnapshot(MapPainter.getPict(getMapa()));
+//		}
 		setActionCommand(getName());
 		setUI(new previewUi());
 		

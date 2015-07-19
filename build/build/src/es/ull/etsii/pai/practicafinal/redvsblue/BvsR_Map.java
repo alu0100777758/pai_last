@@ -166,6 +166,7 @@ public class BvsR_Map implements Serializable {
 		map = (BvsR_Map) save.readObject();
 		save.close();
 		return map;
+		
 	}
 
 	public ArrayList<Entity> getForeground() {
