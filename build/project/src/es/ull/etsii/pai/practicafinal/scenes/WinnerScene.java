@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JOptionPane;
 
+import es.ull.etsii.pai.practicafinal.main.MapSelector;
 import es.ull.etsii.pai.practicafinal.main.RvsB_Menu;
 import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.Ladder;
 import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.LadderEntry;
@@ -31,7 +32,7 @@ public class WinnerScene extends ScenarioPanel {
 		this.setBackground(Color.BLACK);
 		setWinnerScore(score);
 		Ladder ladder = null;
-		    ladder = Ladder.getInstance();
+		/*    ladder = Ladder.getInstance();
 		
 		if (ladder.canEnter(score)) {
 			String aux = JOptionPane.showInputDialog("¡¡Escribe tu nombre!!");
@@ -40,7 +41,7 @@ public class WinnerScene extends ScenarioPanel {
 			ladder.insertEntry(entry);
 			ladder.saveLadder();
 		}
-		
+		*/
 		
 	}
 
@@ -52,8 +53,8 @@ public class WinnerScene extends ScenarioPanel {
 		g.setColor(Color.WHITE);
 		g.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_MAIN_SIZE));
 		g.drawString(winnerName + WIN_TEXT, screen.getCurrentWidth() / 2 - screen.getCurrentWidth() / 3,screen.getCurrentHeight() / 4);
-		g.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_SUBTEXT_SIZE));
-		g.drawString(CLOSE_TEXT, screen.getCurrentWidth() / 2 - screen.getCurrentWidth()/ 4, screen.getCurrentHeight() * 2 / 4 );
+		g.setFont(new Font(FONT_NAME, FONT_STYLE, FONT_SUBTEXT_SIZE)); 
+		g.drawString(CLOSE_TEXT, screen.getCurrentWidth() / 2 - screen.getCurrentWidth() / 4, screen.getCurrentHeight() * 2 / 4 );
 	}
 
 	public int getWinnerScore() {
@@ -73,7 +74,7 @@ public class WinnerScene extends ScenarioPanel {
 	@Override
 	public void releasedKey(int keyCode, char keyChar) {
 		if (keyCode == KeyEvent.VK_SPACE)
-			getSceneManager().switchScenario(new RvsB_Menu());
+			getSceneManager().switchScenario(new MapSelector());
 	}
 
 	@Override

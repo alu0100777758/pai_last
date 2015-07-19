@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 import javax.swing.RepaintManager;
 
+import es.ull.etsii.pai.practicafinal.main.MapSelector;
+import es.ull.etsii.pai.practicafinal.main.SceneManager;
 import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.DefaultModeScoring;
 import es.ull.etsii.pai.practicafinal.physics.Physical_passive;
 import es.ull.etsii.pai.practicafinal.physics.PhysicsEngine;
@@ -23,6 +25,7 @@ public class Scenario {
 	public static final String PAUSE_TEXTURE = "textures/pause.png";
 	RvsBKeyController keyController = new RvsBKeyController(); // Controlador de
 																// teclas.
+	private SceneManager scenemanager = null;
 	private boolean ended;
 	private boolean redWins;
 	private boolean blueWins;
@@ -38,12 +41,14 @@ public class Scenario {
 	 * @param width
 	 * @param height
 	 * @param mapName
+	 * @param sceneManager 
 	 */
-	public Scenario(Integer width, Integer height, String mapName) {
+	public Scenario(Integer width, Integer height, String mapName, SceneManager sceneManager) {
 //		setWidth(width);
 //		setHeight(height);
-
-		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
+		setScenemanager(sceneManager);
+		System.out.println(sceneManager);
+//		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		try {
 			setWorld(new RvsB_World(BvsR_Map.load(mapName)));
 		} catch (FileNotFoundException e) {
@@ -261,8 +266,7 @@ public class Scenario {
 		}
 
 		private void menu() {
-			// TODO Auto-generated method stub
-			System.exit(0);
+			getScenemanager().switchScenario(new MapSelector());
 			
 		}
 
@@ -336,6 +340,14 @@ public class Scenario {
 
 	public void setPhysicEngine(PhysicsEngine physicEngine) {
 		this.physicEngine = physicEngine;
+	}
+
+	public SceneManager getScenemanager() {
+		return scenemanager;
+	}
+
+	public void setScenemanager(SceneManager scenemanager) {
+		this.scenemanager = scenemanager;
 	}
 
 }

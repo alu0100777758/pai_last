@@ -23,7 +23,7 @@ public class Hook extends Weapon{
 	public static final int RELOADING_TIME = 90;
 	public static final int DAMAGE = 20;
 	public static final int SPEED = 20;
-	public static final int PUSH = 30;
+	public static final int PUSH = 0;
 	public static final int BULLET_SIZE = 15;
 	
 	public Hook(Player owner) {
@@ -61,6 +61,7 @@ public class Hook extends Weapon{
 		Point2D position = getOwner().getPosition();
 		position = position.add(0, addy);
 		Bullet breechBullet = new Rope_bullet(position, speed, DAMAGE, PUSH,getOwner(), BULLET_SIZE);
+		breechBullet.setMaxDistance(600);
 		addBullet(breechBullet);
 	}
 }

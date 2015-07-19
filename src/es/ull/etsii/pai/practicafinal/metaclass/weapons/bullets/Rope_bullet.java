@@ -108,7 +108,7 @@ public class Rope_bullet extends Bullet {
 
 	private void pullEnemy() {
 		Point location = getPhysicalShape().getLocation();
-		getTarget().setLocation((int) location.getX(), (int) location.getY());
+		getTarget().setLocation((int) location.getX(), (int) location.getY()-5);
 	}
 
 	private void initBackState() {
@@ -124,6 +124,9 @@ public class Rope_bullet extends Bullet {
 				setSpeed(new Point2D(0, 0));
 			}
 			setBackState(true);
+		}
+		else{
+			die();
 		}
 	}
 

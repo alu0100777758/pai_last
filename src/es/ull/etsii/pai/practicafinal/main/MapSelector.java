@@ -177,10 +177,10 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 	public void playMap(){
 		String path = getMaps().get(getCurrentMap());
 		if(path.substring(path.length() - 7).equals("0random"))
-			getSceneManager().switchScenario(new GameScenario(getMaps().get(new Random().nextInt(getMaps().size()-2)+1)));
+			getSceneManager().switchScenario(new GameScenario(getMaps().get(new Random().nextInt(getMaps().size()-2)+1),getSceneManager()));
 		else
 		 getSceneManager().switchScenario(
-				new GameScenario(getMaps().get(getCurrentMap())));
+				new GameScenario(getMaps().get(getCurrentMap()),getSceneManager()));
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -200,8 +200,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			break;
 		default:
 			if (((MapPreview) e.getSource()).isSelected())
-				getSceneManager().switchScenario(
-						new GameScenario(getMaps().get(getCurrentMap())));
+				playMap();
 			setCurrentMap(getMaps().indexOf(e.getActionCommand()));
 
 			try {
@@ -220,7 +219,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 
-			System.out.println(mapText.getText());
+//			System.out.println(mapText.getText());
 			repaint();
 			break;
 		}

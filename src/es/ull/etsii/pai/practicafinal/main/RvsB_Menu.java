@@ -45,7 +45,7 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 	public static final String EXIT_PICT = "textures/menu_exit.png";
 	public static final String DEFAULT_PICT = PLAY_PICT;
 	public static final String BACKGROUND = "textures/menu_background.png";
-	public static final int OPTIONS = 5;
+	public static final int OPTIONS = 4;
 	public static menuButton selection = null;
 	private int indexOfSelection = 1;
 

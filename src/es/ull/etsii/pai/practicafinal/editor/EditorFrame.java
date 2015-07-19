@@ -171,7 +171,7 @@ public class EditorFrame extends JFrame implements ActionListener,
 			 	frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			 	frame.setVisible(true);
 			 	frame.switchScenario(
-						new GameScenario(TEMP_FILE_MAP));
+						new GameScenario(TEMP_FILE_MAP,new SceneManager()));
 			 	frame.setResizable(false);
 				frame.addWindowListener(new WindowAdapter()
 		        {

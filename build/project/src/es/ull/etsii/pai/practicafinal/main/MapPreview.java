@@ -28,6 +28,7 @@ public class MapPreview extends JButton {
 		this.name = mapname;
 //		add(new JLabel(getName()));
 //		System.out.println("path: " + name);
+//		if(mapname != "void"){
 		try {
 			setMapa(BvsR_Map.load(name));
 		} catch (FileNotFoundException e) { 
@@ -39,6 +40,7 @@ public class MapPreview extends JButton {
 			e.printStackTrace();
 		}
 		setSnapshot(MapPainter.getPict(getMapa()));
+//		}
 		setActionCommand(getName());
 		setUI(new previewUi());
 		
@@ -103,7 +105,7 @@ public class MapPreview extends JButton {
 		@Override
 		public void paint(Graphics g, JComponent c) {
 			MapPreview c2 = (MapPreview) c;
-			c2.setBackground(Color.BLUE);
+			c2.setBackground(Color.ORANGE);
 			if (isSelected())
 				g.drawImage(c2.getSnapshot(), MARGIN, MARGIN, getWidth() - 2 * MARGIN, getHeight() - 2 * MARGIN, null);
 			else 

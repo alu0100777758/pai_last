@@ -19,6 +19,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
+import es.ull.etsii.pai.practicafinal.main.SceneManager;
 import es.ull.etsii.pai.practicafinal.scenes.WinnerScene;
 
 public class GameScenario extends ScenarioPanel{
@@ -28,8 +29,9 @@ public class GameScenario extends ScenarioPanel{
 	 * Crea un panel con un escenario con un determinado mapa.
 	 * @param mapName
 	 */
-	public GameScenario(String mapName) {
-		setScenario(new Scenario(getWidth(), getHeight(), mapName));
+	public GameScenario(String mapName, SceneManager scenemanager) {
+		setSceneManager(scenemanager);
+		setScenario(new Scenario(getWidth(), getHeight(), mapName,getSceneManager()));
 		setGameLoopHandler(new GameLoopHandler());
 
 		GameLoop.init(this.getGameLoopHandler());

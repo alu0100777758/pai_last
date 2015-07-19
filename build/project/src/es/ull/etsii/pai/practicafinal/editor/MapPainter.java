@@ -130,6 +130,7 @@ public class MapPainter extends JPanel {
 		 BufferedImage image = new BufferedImage(ScreenManager.getInstance().getWindWidth(), ScreenManager.getInstance().getWindHeight(), BufferedImage.TYPE_3BYTE_BGR);
 		 Graphics preview = image.getGraphics();
 		 paint(preview, mapa);
+		 paintForeground(preview, mapa);
 		 return image;
 	}
 

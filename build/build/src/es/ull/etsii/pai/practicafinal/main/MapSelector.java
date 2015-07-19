@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.Box;
@@ -55,7 +56,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		fillGrid();
 
 		img = ResourceManager.getInstance().getBufferedImage(BACKGROUND);
-
+		setCurrentMap(0);
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -97,6 +98,8 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		int end = (1 + getCurrentPreview()) * PREVIEW_COL * PREVIEW_ROW;
 		end = end < getMaps().size() ? end : getMaps().size();
 		int begin = getCurrentPreview() * PREVIEW_COL * PREVIEW_ROW;
+//		JButton random = new MapPreview("void");
+//		maps.add(random);
 		for (int i = begin; i < end; i++) {
 			JButton button = new MapPreview(getMaps().get(i));
 			maps.add(button);
@@ -129,26 +132,24 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		switch (keyCode) {
 		case KeyEvent.VK_SPACE:
 		case KeyEvent.VK_ENTER:
-			getSceneManager().switchScenario(
-					new GameScenario(getMaps().get(getCurrentMap())));
+			playMap();
 			break;
 		case KeyEvent.VK_D:
 		case KeyEvent.VK_RIGHT:
 			int map = getCurrentMap() + 1;
 
-			if (map >= getMaps().size())
-				map--;
+			if (map >= PREVIEW_ROW * PREVIEW_COL)
+				map = getCurrentMap();
 			setCurrentMap(map);
-			repaint();
+			
 			break;
 		case KeyEvent.VK_A:
 		case KeyEvent.VK_LEFT:
 			map = getCurrentMap() - 1;
-
 			if (map < 0)
-				map++;
+				map = getCurrentMap();
 			setCurrentMap(map);
-			repaint();
+			
 			break;
 		case KeyEvent.VK_W:
 		case KeyEvent.VK_UP:
@@ -157,31 +158,36 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 				if (map < 0)
 					map += PREVIEW_ROW;
 				setCurrentMap(map);
-				repaint();
+				
 				break;
 		case KeyEvent.VK_S:
 		case KeyEvent.VK_DOWN:
 			map = getCurrentMap() + PREVIEW_ROW;
 
-			if (map < 0)
-				map -= PREVIEW_ROW;
+			if (map >= PREVIEW_ROW * PREVIEW_COL)
+				map = getCurrentMap();
 			setCurrentMap(map);
-			repaint();
+			
 			break;
 			
 		default:
 			break;
 		}
-
 	}
-
+	public void playMap(){
+		String path = getMaps().get(getCurrentMap());
+		if(path.substring(path.length() - 7).equals("0random"))
+			getSceneManager().switchScenario(new GameScenario(getMaps().get(new Random().nextInt(getMaps().size()-2)+1),getSceneManager()));
+		else
+		 getSceneManager().switchScenario(
+				new GameScenario(getMaps().get(getCurrentMap()),getSceneManager()));
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// MapPreview prev = (MapPreview)e.getSource();
 		switch (e.getActionCommand()) {
 		case "play":
-			getSceneManager().switchScenario(
-					new GameScenario(getMaps().get(getCurrentMap())));
+			playMap();
 			break;
 		case "return":
 			getSceneManager().switchScenario(new RvsB_Menu());
@@ -194,8 +200,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 			break;
 		default:
 			if (((MapPreview) e.getSource()).isSelected())
-				getSceneManager().switchScenario(
-						new GameScenario(getMaps().get(getCurrentMap())));
+				playMap();
 			setCurrentMap(getMaps().indexOf(e.getActionCommand()));
 
 			try {
@@ -214,7 +219,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 				e1.printStackTrace();
 			}
 
-			System.out.println(mapText.getText());
+//			System.out.println(mapText.getText());
 			repaint();
 			break;
 		}
@@ -250,6 +255,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		for (MapPreview button : getLevels())
 			button.setSelected(false);
 		getLevels().get(currentMap).setSelected(true);
+		repaint();
 	}
 
 	public ArrayList<MapPreview> getLevels() {
