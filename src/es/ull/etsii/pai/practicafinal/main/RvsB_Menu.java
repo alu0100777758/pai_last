@@ -64,7 +64,7 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		// mainMenu.setBackground(Color.GREEN);
 		// getMenuButtons().setLayout(new BoxLayout(getMenuButtons(),
 		// BoxLayout.Y_AXIS));
-		getMenuButtons().setLayout(new GridLayout(7, 2));
+		getMenuButtons().setLayout(new GridLayout(6, 2));
 
 		getMenuButtons().add(Box.createVerticalStrut(20));
 
@@ -83,11 +83,11 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 		button3.addActionListener(this);
 		getMenuButtons().add(button3);
 
-		menuButton score = new menuButton("Puntuaciones");
+		/*menuButton score = new menuButton("Puntuaciones");
 		score.setActionCommand("score");
 		score.addActionListener(this);
 		getMenuButtons().add(score);
-		
+		*/
 		menuButton button4 = new menuButton("Salir");
 		button4.setActionCommand("exit");
 		button4.addActionListener(this);
@@ -128,10 +128,10 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			getPict().setImage(
 					ResourceManager.getInstance().getBufferedImage(EXIT_PICT));
 			break;
-		case "score":
-			getPict().setImage(
-					ResourceManager.getInstance().getBufferedImage(LADDER_PICT));
-			break;
+		//case "score":
+		//	getPict().setImage(
+		//			ResourceManager.getInstance().getBufferedImage(LADDER_PICT));
+		//	break;
 		default:
 			break;
 		}
@@ -159,9 +159,9 @@ public class RvsB_Menu extends ScenarioPanel implements ActionListener {
 			frame1.setFocusable(true);
 			frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			break;
-		case "score":
-			getSceneManager().switchScenario(new ScoreScene());
-			break;
+	//	case "score":
+	//		getSceneManager().switchScenario(new ScoreScene());
+	//		break;
 		case "exit":
 			System.exit(0);
 		default:

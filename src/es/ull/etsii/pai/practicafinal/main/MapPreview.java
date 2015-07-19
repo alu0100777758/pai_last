@@ -103,7 +103,7 @@ public class MapPreview extends JButton {
 		@Override
 		public void paint(Graphics g, JComponent c) {
 			MapPreview c2 = (MapPreview) c;
-			c2.setBackground(Color.BLUE);
+			c2.setBackground(Color.ORANGE);
 			if (isSelected())
 				g.drawImage(c2.getSnapshot(), MARGIN, MARGIN, getWidth() - 2 * MARGIN, getHeight() - 2 * MARGIN, null);
 			else 

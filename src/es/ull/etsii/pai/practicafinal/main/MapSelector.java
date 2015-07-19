@@ -55,7 +55,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		fillGrid();
 
 		img = ResourceManager.getInstance().getBufferedImage(BACKGROUND);
-
+		setCurrentMap(0);
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -136,19 +136,18 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		case KeyEvent.VK_RIGHT:
 			int map = getCurrentMap() + 1;
 
-			if (map >= getMaps().size())
-				map--;
+			if (map >= PREVIEW_ROW * PREVIEW_COL)
+				map = getCurrentMap();
 			setCurrentMap(map);
-			repaint();
+			
 			break;
 		case KeyEvent.VK_A:
 		case KeyEvent.VK_LEFT:
 			map = getCurrentMap() - 1;
-
 			if (map < 0)
-				map++;
+				map = getCurrentMap();
 			setCurrentMap(map);
-			repaint();
+			
 			break;
 		case KeyEvent.VK_W:
 		case KeyEvent.VK_UP:
@@ -157,22 +156,21 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 				if (map < 0)
 					map += PREVIEW_ROW;
 				setCurrentMap(map);
-				repaint();
+				
 				break;
 		case KeyEvent.VK_S:
 		case KeyEvent.VK_DOWN:
 			map = getCurrentMap() + PREVIEW_ROW;
 
-			if (map < 0)
-				map -= PREVIEW_ROW;
+			if (map >= PREVIEW_ROW * PREVIEW_COL)
+				map = getCurrentMap();
 			setCurrentMap(map);
-			repaint();
+			
 			break;
 			
 		default:
 			break;
 		}
-
 	}
 
 	@Override
@@ -250,6 +248,7 @@ public class MapSelector extends ScenarioPanel implements ActionListener {
 		for (MapPreview button : getLevels())
 			button.setSelected(false);
 		getLevels().get(currentMap).setSelected(true);
+		repaint();
 	}
 
 	public ArrayList<MapPreview> getLevels() {
