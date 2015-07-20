@@ -1,5 +1,11 @@
 package es.ull.etsii.pai.practicafinal.metaclass.weapons.bullets;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ */
 import es.ull.etsii.pai.practicafinal.redvsblue.Bullet;
 import es.ull.etsii.pai.practicafinal.redvsblue.Player;
 import es.ull.etsii.pai.prct9.geometry.Point2D;

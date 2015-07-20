@@ -1,5 +1,11 @@
 package es.ull.etsii.pai.practicafinal.editor;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ */
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -11,15 +17,6 @@ import javax.swing.JFrame;
 
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
 
-
-
-/**
- * Progamacion de aplicaciones interactivas.
- * Universidad de La Laguna.
- * 
- * @author Sabato Ceruso sab7093@gmail.com
- * @author Javier Martin Hernandez alu0100777758@ull.edu.es
- */
 /**
  * clase abstracta que representa cualquier herramienta del editor
  *
