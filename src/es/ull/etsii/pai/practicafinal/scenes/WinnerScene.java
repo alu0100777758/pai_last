@@ -1,5 +1,11 @@
 package es.ull.etsii.pai.practicafinal.scenes;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -11,6 +17,7 @@ import es.ull.etsii.pai.practicafinal.main.MapSelector;
 import es.ull.etsii.pai.practicafinal.main.RvsB_Menu;
 import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.Ladder;
 import es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses.LadderEntry;
+import es.ull.etsii.pai.practicafinal.redvsblue.GameLoop;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScenarioPanel;
 import es.ull.etsii.pai.practicafinal.redvsblue.ScreenManager;
 
@@ -25,23 +32,16 @@ public class WinnerScene extends ScenarioPanel {
 	
 	private String winnerName;
 	private int winnerScore;
-	
+	/**
+	 * TODO Hacer que verifique la puntuacion e insertar o no el 
+	 * jugador en el ladder.
+	 */
 	public WinnerScene(String name, int score) {
 		this.winnerName = name;
 		
 		this.setBackground(Color.BLACK);
 		setWinnerScore(score);
-		Ladder ladder = null;
-		/*    ladder = Ladder.getInstance();
 		
-		if (ladder.canEnter(score)) {
-			String aux = JOptionPane.showInputDialog("¡¡Escribe tu nombre!!");
-			LadderEntry entry = new LadderEntry(aux, score);
-			
-			ladder.insertEntry(entry);
-			ladder.saveLadder();
-		}
-		*/
 		
 	}
 
@@ -73,8 +73,9 @@ public class WinnerScene extends ScenarioPanel {
 
 	@Override
 	public void releasedKey(int keyCode, char keyChar) {
-		if (keyCode == KeyEvent.VK_SPACE)
-			getSceneManager().switchScenario(new MapSelector());
+		if (keyCode == KeyEvent.VK_SPACE) 		
+			getSceneManager().switchScenario(new MapSelector());	
+		
 	}
 
 	@Override

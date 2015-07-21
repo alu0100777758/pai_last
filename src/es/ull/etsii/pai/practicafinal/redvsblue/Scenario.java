@@ -266,20 +266,13 @@ public class Scenario {
 		}
 
 		private void menu() {
+			GameLoop.stepTimer.stop();
 			getScenemanager().switchScenario(new MapSelector());
 			
 		}
 
 		private void pause() {
-			// if (isPaused()) {
-			// GameLoop.stepTimer.start();
-			// } else {
-			// GameLoop.stepTimer.stop();
-			//
-			// }
 			setPaused(!isPaused());
-			// TODO Auto-generated method stub
-
 		}
 
 		/**
