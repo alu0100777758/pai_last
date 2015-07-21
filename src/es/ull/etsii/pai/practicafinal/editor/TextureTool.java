@@ -65,7 +65,7 @@ public class TextureTool extends DefaultTool {
 					+ fseparator
 					+ c.getSelectedFile().getName();
 //			File f = new File(filePathString);
-			System.out.println("setting texture from: "+filePathString);
+//			System.out.println("setting texture from: "+filePathString);
 			if (ResourceManager.getInstance().getBufferedImage("textures"+System.getProperty("file.separator")+c.getSelectedFile().getName()) == ResourceManager.getInstance().getNotFound())
 				try {
 					System.out.println("copiando");

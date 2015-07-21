@@ -4,11 +4,12 @@ import java.awt.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
-
-
 
 import es.ull.etsii.pai.practicafinal.graphics.GraphicRectangle;
 public class BvsR_Map implements Serializable {
@@ -187,6 +188,23 @@ public class BvsR_Map implements Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public static BvsR_Map load(InputStream resourceAsStream) throws IOException, ClassNotFoundException {
+		BvsR_Map map = null;
+		ObjectInputStream save = new ObjectInputStream(resourceAsStream);
+		map = (BvsR_Map) save.readObject();
+		save.close();
+		return map;
+	}
+
+	public static BvsR_Map load(URL resource) throws IOException, ClassNotFoundException {
+		URLConnection connection = resource.openConnection();
+		BvsR_Map map = null;
+		ObjectInputStream save = new ObjectInputStream(connection.getInputStream());
+		map = (BvsR_Map) save.readObject();
+		save.close();
+		return map;
 	}
 	
 	

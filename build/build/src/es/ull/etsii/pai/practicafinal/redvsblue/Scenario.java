@@ -47,7 +47,7 @@ public class Scenario {
 //		setWidth(width);
 //		setHeight(height);
 		setScenemanager(sceneManager);
-		System.out.println(sceneManager);
+//		System.out.println(sceneManager);
 //		AudioManager.reproduceAudio("Fall_Walk_Run_-_Do_or_Die.wav");
 		try {
 			setWorld(new RvsB_World(BvsR_Map.load(mapName)));

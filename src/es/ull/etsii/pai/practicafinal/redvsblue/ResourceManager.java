@@ -1,4 +1,5 @@
 package es.ull.etsii.pai.practicafinal.redvsblue;
+
 /**
  * Progamacion de aplicaciones interactivas.
  * Universidad de La Laguna.
@@ -11,10 +12,19 @@ import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
 
 import javax.imageio.ImageIO;
 
@@ -24,46 +34,64 @@ public class ResourceManager {
 	public static final String NOT_FOUND = "textures/texture_not_found.png";
 	private Random randGen = new Random();
 	private BufferedImage notFound;
-	private static String userDir =  System.getProperty("user.dir");
-	private static ResourceManager instance = null;		// Unica instancia de esta clase.
-	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); // Mapa de imagenes con su nombre asociado.
-	private HashMap<String, BufferedImage> runtimeBufferedImages = new HashMap<String, BufferedImage>(); // Mapa de imagenes con su nombre asociado
+	private static String userDir = System.getProperty("user.dir");
+	private static ResourceManager instance = null; // Unica instancia de esta
+													// clase.
+	private HashMap<String, BufferedImage> bufferedImages = new HashMap<String, BufferedImage>(); // Mapa
+																									// de
+																									// imagenes
+																									// con
+																									// su
+																									// nombre
+																									// asociado.
+	private HashMap<String, BufferedImage> runtimeBufferedImages = new HashMap<String, BufferedImage>(); // Mapa
+																											// de
+																											// imagenes
+																											// con
+																											// su
+																											// nombre
+																											// asociado
+
 	/**
 	 * Constructor privado.
 	 */
-	private ResourceManager(){
+	private ResourceManager() {
 		try {
-			setNotFound(ImageIO.read(Texture.class.getClassLoader().getResource(NOT_FOUND)));
+			setNotFound(ImageIO.read(getClass().getClassLoader().getResource(
+					NOT_FOUND)));
 		} catch (IOException e) {
 			System.out.println("No se ha encontrado la textura \"Not Found\"");
 			e.printStackTrace();
 		}
 	}
-	
-	public static  ResourceManager getInstance(){
-		if(instance == null)
+
+	public static ResourceManager getInstance() {
+		if (instance == null)
 			instance = new ResourceManager();
 		return instance;
 	}
-	
+
 	public Random getRandGen() {
 		return randGen;
 	}
+
 	public void setRandGen(Random randGen) {
 		this.randGen = randGen;
 	}
 
 	/**
 	 * Obtiene una imagen a partir de un path.
+	 * 
 	 * @param path
 	 * @return
 	 */
 
 	public BufferedImage getBufferedImage(String path){
+		String separator = System.getProperty("file.separator");
 		BufferedImage found = getBufferedImages().get(path);
 		if(found == null){
 			try {
-				found = ImageIO.read(Texture.class.getClassLoader().getResource(path));
+					found = ImageIO.read(getClass().getClassLoader().getResource(path));	
 				getBufferedImages().put(path, found);
 			} catch (Exception e) {
 				found = null;
@@ -72,24 +100,36 @@ public class ResourceManager {
 		if(found == null){
 			try {
 				System.out.println("no se ha encontrado en el jar buscando en textures " + getUserDir()+System.getProperty("file.separator")+path);
-				found = ImageIO.read(new File(getUserDir()+System.getProperty("file.separator")+path));
+				found = ImageIO.read(new File(getUserDir()+System.getProperty("file.separator")+"textures"+System.getProperty("file.separator")+path));
 				getBufferedImages().put(path, found);
 			} catch (Exception e) {
 				System.out.println("no se ha encontrado en el directorio");
-				found = getBufferedImages().get(NOT_FOUND);
+				found = null;
 			}
 		}
+		if(found == null){
+			try {
+				Path p = Paths.get(path);
+				found = ImageIO.read(getClass().getClassLoader().getResource("textures/"+p.getFileName().toString()));
+				getBufferedImages().put(path, found);
+			} catch (Exception e) {
+				System.out.println("no se ha encontrado en el directorio");
+				found = getNotFound();
+			}
+		}
+//		if( found == null)
+//			found = getBufferedImages().get(NOT_FOUND);
 		return toCompatibleImage(found);
 	}
-	private BufferedImage toCompatibleImage(BufferedImage image)
-	{
+
+	private BufferedImage toCompatibleImage(BufferedImage image) {
 		// obtain the current system graphical settings
-		GraphicsConfiguration gfx_config = GraphicsEnvironment.
-			getLocalGraphicsEnvironment().getDefaultScreenDevice().
-			getDefaultConfiguration();
+		GraphicsConfiguration gfx_config = GraphicsEnvironment
+				.getLocalGraphicsEnvironment().getDefaultScreenDevice()
+				.getDefaultConfiguration();
 
 		/*
-		 * if image is already compatible and optimized for current system 
+		 * if image is already compatible and optimized for current system
 		 * settings, simply return it
 		 */
 		if (image.getColorModel().equals(gfx_config.getColorModel()))
@@ -107,14 +147,43 @@ public class ResourceManager {
 		g2d.dispose();
 
 		// return the new optimized image
-		return new_image; 
+		return new_image;
 	}
-	public BufferedImage getRunTimeBufferedImage(String path){
+
+	public BufferedImage getRunTimeBufferedImage(String path) {
 		BufferedImage found = getBufferedImages().get(path);
 		return found;
 	}
+
+	public void extractFromJar(String src, String dest) {
+		try {
+			String home = getClass().getProtectionDomain().getCodeSource()
+					.getLocation().toString();
+			JarFile jar = new JarFile(home);
+			ZipEntry entry = jar.getEntry(src);
+			File efile = new File(dest, entry.getName());
+
+			InputStream in = new BufferedInputStream(jar.getInputStream(entry));
+			OutputStream out = new BufferedOutputStream(new FileOutputStream(
+					efile));
+			byte[] buffer = new byte[2048];
+			for (;;) {
+				int nBytes = in.read(buffer);
+				if (nBytes <= 0)
+					break;
+				out.write(buffer, 0, nBytes);
+			}
+			out.flush();
+			out.close();
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * Getters y setters.
+	 * 
 	 * @return
 	 */
 	public HashMap<String, BufferedImage> getBufferedImages() {
@@ -145,7 +214,5 @@ public class ResourceManager {
 			HashMap<String, BufferedImage> runtimeBufferedImages) {
 		this.runtimeBufferedImages = runtimeBufferedImages;
 	}
-	
-	
-	
+
 }
