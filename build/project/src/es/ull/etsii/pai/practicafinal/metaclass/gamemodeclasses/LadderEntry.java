@@ -1,5 +1,11 @@
 package es.ull.etsii.pai.practicafinal.metaclass.gamemodeclasses;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ */
 import java.io.Serializable;
 
 public class LadderEntry implements Serializable, Comparable<LadderEntry>{
@@ -34,14 +40,9 @@ public class LadderEntry implements Serializable, Comparable<LadderEntry>{
 	public void setScore(int score) {
 		this.score = score;
 	}
-	/* @Override
-	public int compare(LadderEntry arg0, LadderEntry arg1) {
-		return arg0.getScore() - arg1.getScore();
-	}
-	*/
+
 	@Override
 	public int compareTo(LadderEntry arg0) {
-		// TODO Auto-generated method stub
 		return this.getScore() - arg0.getScore();
 	}
 	

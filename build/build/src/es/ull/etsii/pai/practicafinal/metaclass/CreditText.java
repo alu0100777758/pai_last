@@ -8,8 +8,6 @@ package es.ull.etsii.pai.practicafinal.metaclass;
  *
  */
 
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 

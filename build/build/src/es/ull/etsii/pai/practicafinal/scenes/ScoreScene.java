@@ -1,5 +1,11 @@
 package es.ull.etsii.pai.practicafinal.scenes;
-
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ */
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -26,18 +32,6 @@ public class ScoreScene extends ScenarioPanel {
 		ladder = Ladder.getInstance();
 		this.setBackground(BACKGROUND_COLOR);
 		this.setLayout(new GridLayout(2, 3));
-	/*	ArrayList<LadderEntry> entries = ladder.getAllEntries();
-		Font font = new Font(FONT, Font.ITALIC, 48);
-		JLabel aux = null;
-		
-		for (int i = entries.size() - 1; i >= 0; i--) {
-			aux = new JLabel(entries.get(i).getName() + "    " + entries.get(i).getScore());
-			aux.setFont(font);
-			add(Box.createVerticalStrut(0));
-			add(aux);
-			add(Box.createHorizontalStrut(0));
-		}
-		*/
 		
 	}
 	@Override

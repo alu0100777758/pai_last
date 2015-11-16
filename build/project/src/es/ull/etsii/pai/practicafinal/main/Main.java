@@ -50,20 +50,3 @@ public class Main {
 			}
 		}
 } 
-
-/** Seria bueno contar como funcionan las clases singleton para los mas "avanzados"
-  * 
-  * Cuidado en el setUpdater del gameLoop!!! no se si esta del todo bien y si hace lo que creo 
-  * que se supone que hace.
-  *	
-  *	Ahora que miro el GameLoop, creo que seria bueno tener un metodo para pararlo cuando tenemos escenarios
-  * estaticos como la pantalla de ganador.
-  *
-  * Averiguar en que momento se para el gameloop al setearse a true el atributo ended del escenario de juego.
-  *
-  * Glitch en el screen manager, si se explicita el ancho y alto de la ventana a la resolucion del monitor
-  * todo correcto, si se cambia durante la ejecucion como se esta haciendo en el main falla.
-  * Ademas, cambiar el x rate, e y rate a valores distintos de 1 da comportamientos extraños tanto en el selector
-  * como en la pantalla de ganador. (Estas cosas pasan en mi portatil porque tiene resolucion 1366x768, en el 
-  * sobremesa no pasa).
-**/

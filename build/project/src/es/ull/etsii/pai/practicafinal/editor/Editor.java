@@ -1,23 +1,23 @@
 package es.ull.etsii.pai.practicafinal.editor;
-
-import java.io.BufferedInputStream;
+/**
+ * Progamacion de aplicaciones interactivas.
+ * Universidad de La Laguna.
+ * 
+ * @author Sabato Ceruso sab7093@gmail.com
+ * @author Javier Martin Hernandez alu0100777758@ull.edu.es
+ */
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.sql.Savepoint;
-import java.util.jar.JarFile;
-import java.util.zip.ZipEntry;
 
 import javax.swing.JFrame;
 
 import es.ull.etsii.pai.practicafinal.redvsblue.BvsR_Map;
-import es.ull.etsii.pai.practicafinal.redvsblue.ResourceManager;
 
 public class Editor {
 	public static final String[] MAPS = { "0random", "caida.rvsbm",
